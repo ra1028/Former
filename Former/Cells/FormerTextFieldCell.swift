@@ -33,12 +33,6 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         return self.titleLabel
     }
     
-    public override func configure() {
-        
-        super.configure()
-        self.selectionStyle = .None
-    }
-    
     public override func configureWithRowFormer(rowFormer: RowFormer) {
         
         super.configureWithRowFormer(rowFormer)

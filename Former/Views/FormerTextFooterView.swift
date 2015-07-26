@@ -22,13 +22,15 @@ public class FormerTextFooterView: FormerHeaderFooterView, TextFormableView {
         super.setup()
         
         let formerTextLabel = UILabel()
+        formerTextLabel.textAlignment = .Center
+        formerTextLabel.numberOfLines = 0
         formerTextLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(formerTextLabel, atIndex: 0)
         self.formerTextLabel = formerTextLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-5-[label(>=0)]",
+                "V:|-5-[label]-5-|",
                 options: [],
                 metrics: nil,
                 views: ["label": formerTextLabel]

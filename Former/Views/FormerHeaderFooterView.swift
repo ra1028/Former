@@ -24,7 +24,7 @@ public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     
     public func configureWithViewFormer(viewFormer: ViewFormer) {
         
-        self.backgroundView?.backgroundColor = viewFormer.backgroundColor
+        
     }
     
     public func setup() {

@@ -13,6 +13,7 @@ public class FormerCell: UITableViewCell, FormableRow {
     private weak var topSeparatorView: UIView!
     private weak var bottomSeparatorView: UIView!
     private weak var bottomSeparatorLeftConst: NSLayoutConstraint!
+    private var separatorColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
     
     required public init?(coder aDecoder: NSCoder) {
         
@@ -30,10 +31,9 @@ public class FormerCell: UITableViewCell, FormableRow {
     
     public func configureWithRowFormer(rowFormer: RowFormer) {
         
-        self.accessoryType = rowFormer.accessoryType
-        self.backgroundColor = rowFormer.backgroundColor
-        self.topSeparatorView.backgroundColor = rowFormer.isTop ? rowFormer.separatorColor : nil
-        self.bottomSeparatorView.backgroundColor = rowFormer.separatorColor
+        self.separatorColor =? rowFormer.separatorColor
+        self.topSeparatorView.backgroundColor = rowFormer.isTop ? self.separatorColor : nil
+        self.bottomSeparatorView.backgroundColor = self.separatorColor
         self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : 10.0
     }
     

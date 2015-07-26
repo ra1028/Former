@@ -19,6 +19,7 @@ public class TextRowFormer: RowFormer {
     public var font: UIFont?
     public var textColor: UIColor?
     public var textAlignment: NSTextAlignment?
+    public var textNumberOfLines: Int?
     
     init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
@@ -28,7 +29,9 @@ public class TextRowFormer: RowFormer {
             super.init(cellType: cellType, selectedHandler: selectedHandler)
             self.text = text
     }
-    public override func cellConfigreIfFormable() {
+    public override func cellConfigure() {
+        
+        super.cellConfigure()
         
         guard let cell = self.cell as? TextFormableRow else { return }
         
@@ -37,5 +40,6 @@ public class TextRowFormer: RowFormer {
         textLabel.font = self.font
         textLabel.textColor = self.textColor
         textLabel.textAlignment =? self.textAlignment
+        textLabel.numberOfLines =? self.textNumberOfLines
     }
 }

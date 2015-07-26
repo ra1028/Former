@@ -17,14 +17,8 @@ public protocol TextFieldFormableRow: FormableRow {
 public class TextFieldRowFormer: RowFormer {
     
     private let observer = FormerObserver()
-    public var textChangedHandler: (String -> Void)? {
-        get {
-            return self.observer.textObservedHandler
-        }
-        set {
-            self.observer.textObservedHandler = newValue
-        }
-    }
+    
+    public var textChangedHandler: (String -> Void)?
     public var text: String?
     public var placeholder: String?
     public var font: UIFont?
@@ -38,6 +32,7 @@ public class TextFieldRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleTextColor: UIColor?
+    public var titleTextEditingColor: UIColor?
     
     public var enabled: Bool = true
     public var unabledTextColor: UIColor?
@@ -51,38 +46,24 @@ public class TextFieldRowFormer: RowFormer {
         textChangedHandler: (String -> Void)? = nil
         ) {
             
-            super.init(cellType: cellType)
-            self.selectedHandler = { [weak self] indexPath in
-                
-                if let cell = self?.cell as? FormerTextFieldCell {
-                    let textField = cell.formerTextField()
-                    if textField.isFirstResponder() {
-                        textField.resignFirstResponder()
-                    } else {
-                        textField.becomeFirstResponder()
-                    }
-                }
-                selectedHandler?(indexPath)
-            }
-            self.textChangedHandler = { [weak self] text in
-                
-                self?.text = text
-                textChangedHandler?(text)
-            }
+            super.init(cellType: cellType, selectedHandler: selectedHandler)
+            self.textChangedHandler = textChangedHandler
             self.text = text
             self.title = title
             self.placeholder = placeholder
-            self.accessoryType = .None
+            self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
-    public override func cellConfigreIfFormable() {
+    public override func cellConfigure() {
+        
+        super.cellConfigure()
         
         guard let cell = cell as? TextFieldFormableRow else { return }
         
         let textField = cell.formerTextField()
         let titleLabel = cell.formerTitleLabel()
         
-        self.observer.addObservedObject(textField)
+        self.observer.setObservedFormer(self)
         
         textField.text = self.text
         textField.placeholder = self.placeholder
@@ -103,5 +84,36 @@ public class TextFieldRowFormer: RowFormer {
             textField.textColor = unabledTextColor
             titleLabel.textColor = unabledTextColor
         }
+    }
+    
+    public override func cellSelected(indexPath: NSIndexPath) {
+        
+        super.cellSelected(indexPath)
+        
+        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        let textField = cell.formerTextField()
+        
+        textField.becomeFirstResponder()
+    }
+    
+    public dynamic func textChanged() {
+        
+        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        let text = cell.formerTextField().text ?? ""
+        
+        self.text = text
+        self.textChangedHandler?(text)
+    }
+    
+    public dynamic func editingDidBegin() {
+        
+        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        cell.formerTitleLabel().textColor =? self.titleTextEditingColor
+    }
+    
+    public dynamic func editingDidEnd() {
+        
+        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        cell.formerTitleLabel().textColor = self.titleTextColor
     }
 }

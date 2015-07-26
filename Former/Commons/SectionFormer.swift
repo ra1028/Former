@@ -11,8 +11,8 @@ import UIKit
 public final class SectionFormer {
     
     private(set) var rowFormers = [RowFormer]()
-    private(set) var headerViewFormer = ViewFormer(viewType: FormerHeaderFooterView.self)
-    private(set) var footerViewFormer = ViewFormer(viewType: FormerHeaderFooterView.self)
+    private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self)
+    private(set) var footerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self)
     
     public var numberOfRowFormers: Int {
         return self.rowFormers.count
@@ -36,13 +36,13 @@ public final class SectionFormer {
         return self
     }
     
-    public func setHeaderViewFormer(viewFormer: ViewFormer) -> SectionFormer {
+    public func setHeaderViewFormer(viewFormer: ViewFormer?) -> SectionFormer {
         
         self.headerViewFormer = viewFormer
         return self
     }
     
-    public func setFooterViewFormer(viewFormer: ViewFormer) -> SectionFormer {
+    public func setFooterViewFormer(viewFormer: ViewFormer?) -> SectionFormer {
         
         self.footerViewFormer = viewFormer
         return self

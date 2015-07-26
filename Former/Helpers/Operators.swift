@@ -16,7 +16,15 @@ assignment
 
 func =?<T> (inout lhs: T, rhs: T?) {
     
-    if let rhs = rhs {
-        lhs = rhs
-    }
+    rhs.map { lhs = $0 }
+}
+
+func =?<T> (inout lhs: T?, rhs: T?) {
+    
+    rhs.map { lhs = $0 }
+}
+
+func =?<T> (inout lhs: T!, rhs: T?) {
+    
+    rhs.map { lhs = $0 }
 }

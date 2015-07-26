@@ -28,32 +28,16 @@ public class CheckRowFormer: RowFormer {
         selectedHandler: (NSIndexPath -> Void)? = nil,
         checkChangedHandler: (Bool -> Void)? = nil) {
             
-            super.init(cellType: cellType)
+            super.init(cellType: cellType, selectedHandler: selectedHandler)
             
-            self.selectedHandler = { [weak self] indexPath in
-                if let strongSelf = self {
-                    strongSelf.checkChangedHandler?(!strongSelf.checked)
-                }
-                selectedHandler?(indexPath)
-            }
-            
-            self.checkChangedHandler = { [weak self] checked in
-                if let strongSelf = self {
-                    let type: UITableViewCellAccessoryType = checked ? .Checkmark : .None
-                    strongSelf.cell?.accessoryType = type
-                    strongSelf.accessoryType = type
-                    strongSelf.checked = checked
-                }
-                checkChangedHandler?(checked)
-            }
+            self.checkChangedHandler = checkChangedHandler
             self.checked = checked
             self.title = title
-            self.accessoryType = self.checked ? .Checkmark : .None
     }
     
-    public override func cellConfigreIfFormable() {
+    public override func cellConfigure() {
         
-        super.cellConfigreIfFormable()
+        super.cellConfigure()
         
         guard let cell = self.cell as? CheckFormableRow else { return }
         
@@ -62,5 +46,17 @@ public class CheckRowFormer: RowFormer {
         titleLabel.text = self.title
         titleLabel.font = self.titleFont
         titleLabel.textColor = self.titleTextColor
+        self.cell?.accessoryType = self.checked ? .Checkmark : .None
+    }
+    
+    public override func cellSelected(indexPath: NSIndexPath) {
+        
+        super.cellSelected(indexPath)
+        
+        self.checked = !self.checked
+        self.checkChangedHandler?(self.checked)
+        
+        self.cell?.setSelected(false, animated: true)
+        self.cell?.accessoryType = self.checked ? .Checkmark : .None
     }
 }

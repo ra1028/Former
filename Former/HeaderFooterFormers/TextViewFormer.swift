@@ -26,7 +26,7 @@ public class TextViewFormer: ViewFormer {
         self.text = text
     }
     
-    public override func viewConfigureIfFormable() {
+    public override func viewConfigure() {
         
         guard let view = self.view as? TextFormableView else { return }
         

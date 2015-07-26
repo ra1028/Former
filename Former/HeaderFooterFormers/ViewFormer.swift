@@ -23,17 +23,20 @@ public class ViewFormer {
     
     public final weak var view: UITableViewHeaderFooterView? {
         didSet {
-            self.viewConfigureIfFormable()
+            self.viewConfigure()
         }
     }
     public private(set) var viewType: UITableViewHeaderFooterView.Type
     public var viewHeight: CGFloat = 30.0
-    public var backgroundColor = UIColor.groupTableViewBackgroundColor()
+    public var backgroundColor: UIColor?
     
     public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type) {
         
         self.viewType = viewType
     }
     
-    public func viewConfigureIfFormable() {}
+    public func viewConfigure() {
+        
+        self.view?.backgroundView?.backgroundColor =? self.backgroundColor
+    }
 }

@@ -62,19 +62,10 @@ public final class Former: NSObject {
         return self
     }
     
-    public func reloadSectionFormer(sectionFormer: SectionFormer, section: Int, rowAnimation: UITableViewRowAnimation = .None) {
+    public func reloadSectionFormer(section: Int, rowAnimation: UITableViewRowAnimation = .None) {
         
-        assert(self.sectionFormers.count < section, "Invalid section index.")
-        self.sectionFormers[section] = sectionFormer
+        guard self.sectionFormers.count > section && section >= 0 else { return }
         self.tableView?.reloadSections(NSIndexSet(index: section), withRowAnimation: rowAnimation)
-    }
-
-    public func reloadSectionFormers(sectionFormers: [SectionFormer], sections: [Int], rowAnimation: UITableViewRowAnimation = .None) {
-        
-        assert(sectionFormers.count == sections.count, "Number of sectionFormers and number of sections does not correspond.")
-        sections.map {
-            self.reloadSectionFormer(sectionFormers[$0], section: $0, rowAnimation: rowAnimation)
-        }
     }
     
     public func reloadFormer() {
@@ -124,7 +115,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let rowFormer = self.rowFormer(indexPath)
-        rowFormer.selectedHandler?(indexPath: indexPath)
+        rowFormer.cellSelected(indexPath)
     }
     
     public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -151,7 +142,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        return self.rowFormer(indexPath).rowHeight
+        return self.rowFormer(indexPath).cellHeight
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -162,10 +153,10 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
             cellType.reuseIdentifier,
             forIndexPath: indexPath
         )
-        rowFormer.cell = cell
         if let FormableRow = cell as? FormableRow {
             FormableRow.configureWithRowFormer(rowFormer)
         }
+        rowFormer.cell = cell
         return cell
     }
     
@@ -173,37 +164,37 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        return self[section].headerViewFormer.viewHeight
+        return self[section].headerViewFormer?.viewHeight ?? 0
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
-        return self[section].footerViewFormer.viewHeight
+        return self[section].footerViewFormer?.viewHeight ?? 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let viewFormer = self[section].headerViewFormer
+        guard let viewFormer = self[section].headerViewFormer else { return nil }
         let viewType = viewFormer.viewType
         let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(viewType.reuseIdentifier)
-        viewFormer.view = headerView
         if let formableHeaderView = headerView as? FormableView {
             formableHeaderView.configureWithViewFormer(viewFormer)
         }
+        viewFormer.view = headerView
         return headerView
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        let viewFormer = self[section].footerViewFormer
+        guard let viewFormer = self[section].footerViewFormer else { return nil }
         let viewType = viewFormer.viewType
         let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(
             viewType.reuseIdentifier
         )
-        viewFormer.view = footerView
         if let formableFooterView = footerView as? FormableView {
             formableFooterView.configureWithViewFormer(viewFormer)
         }
+        viewFormer.view = footerView
         return footerView
     }
 }

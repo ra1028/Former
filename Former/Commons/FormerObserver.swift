@@ -13,13 +13,14 @@ public class FormerObserver: NSObject {
     private enum KeyPath: String {
         
         case Text = "text"
+        case On = "on"
         var key: String {
             return self.rawValue
         }
     }
     
-    public var textObservedHandler: (String -> Void)?
     
+    private weak var observedRowFormer: RowFormer?
     private weak var observedObject: NSObject?
     private var observedKeyPath: KeyPath?
     
@@ -27,28 +28,26 @@ public class FormerObserver: NSObject {
         super.init()
     }
     
-    init(inout textField: UITextField, textObservedHandler: (String -> Void)?) {
+    convenience init(inout rowFormer: RowFormer) {
         
-        super.init()
-        self.addObservedObject(textField)
-        self.textObservedHandler = textObservedHandler
+        self.init()
+        self.observedRowFormer = rowFormer
     }
     
     deinit {
-        
         self.removeSuitableObserver()
     }
     
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
         if keyPath == self.observedKeyPath?.key {
-            self.handleSuitableHandler()
+            self.handleSuitableFormer()
         }
     }
     
-    public func addObservedObject(object: NSObject) {
+    public func setObservedFormer(rowFormer: RowFormer) {
         self.removeSuitableObserver()
-        self.observedObject = object
+        self.observedRowFormer = rowFormer
         self.addSuitableObserver()
     }
     
@@ -57,25 +56,44 @@ public class FormerObserver: NSObject {
         if case let (object?, keyPath?) = (self.observedObject, self.observedKeyPath) {
             object.removeObserver(self, forKeyPath: keyPath.key)
         }
+        self.observedRowFormer = nil
         self.observedObject = nil
         self.observedKeyPath = nil
     }
     
     private func addSuitableObserver() {
         
-        guard let object = self.observedObject else { return }
+        guard let rowFormer = self.observedRowFormer else { return }
         
         var keyPath: KeyPath?
-        switch object {
+        var object: NSObject?
+        var targetComponent = [(Selector, UIControlEvents)]()
+        switch rowFormer {
             
-        case let object as UITextField:
+        case let rowFormer as TextFieldRowFormer:
+            guard let cell = rowFormer.cell as? TextFieldFormableRow else { return }
             keyPath = .Text
-            object.addTarget(self, action: "handleSuitableHandler", forControlEvents: .EditingChanged)
+            object = cell.formerTextField()
+            targetComponent = [
+                ("editingDidBegin", .EditingDidBegin),
+                ("editingDidEnd", .EditingDidEnd),
+                ("textChanged", .EditingChanged)
+            ]
+        case let rowFormer as SwitchRowFormer:
+            guard let cell = rowFormer.cell as? SwitchFormableRow else { return }
+            keyPath = .On
+            object = cell.formerSwitch()
+            targetComponent = [("switchChanged", .ValueChanged)]
         default: break
         }
         
+        targetComponent.map {
+            (object as? UIControl)?.addTarget(rowFormer, action: $0.0, forControlEvents: $0.1)
+        }
+        
         self.observedKeyPath = keyPath
-        if let keyPath = keyPath {
+        self.observedObject = object
+        if case let (keyPath?, object?) = (keyPath, object) {
             object.addObserver(
                 self,
                 forKeyPath: keyPath.key,
@@ -85,12 +103,14 @@ public class FormerObserver: NSObject {
         }
     }
     
-    private dynamic func handleSuitableHandler() {
+    private dynamic func handleSuitableFormer() {
         
-        switch self.observedObject {
+        switch self.observedRowFormer {
         
-        case let textField as UITextField:
-            self.textObservedHandler?(textField.text ?? "")
+        case let rowFormer as TextFieldRowFormer:
+            rowFormer.textChanged()
+        case let rowFormer as SwitchRowFormer:
+            rowFormer.switchChanged()
         default: break
         }
     }

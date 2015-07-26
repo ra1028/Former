@@ -23,15 +23,17 @@ public class RowFormer {
     
     public final weak var cell: UITableViewCell? {
         didSet {
-            self.cellConfigreIfFormable()
+            self.cellConfigure()
         }
     }
     public private(set) var cellType: UITableViewCell.Type
     public var selectedHandler: ((indexPath: NSIndexPath) -> ())?
-    public var rowHeight: CGFloat = 44.0
-    public var backgroundColor = UIColor.whiteColor()
-    public var accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-    public var separatorColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
+    public var cellHeight: CGFloat = 44.0
+    public var backgroundColor: UIColor?
+    public var accessoryType: UITableViewCellAccessoryType?
+    public var selectionStyle: UITableViewCellSelectionStyle?
+    public var separatorColor: UIColor?
+    
     var isTop: Bool = false
     var isBottom: Bool = false
     
@@ -41,18 +43,28 @@ public class RowFormer {
         self.selectedHandler = selectedHandler
     }
     
-    public func cellConfigreIfFormable() {}
+    public func cellConfigure() {
+        
+        self.cell?.backgroundColor =? self.backgroundColor
+        self.cell?.selectionStyle =? self.selectionStyle
+        self.cell?.accessoryType =? self.accessoryType
+    }
+    
+    public func cellSelected(indexPath: NSIndexPath) {
+        
+        self.selectedHandler?(indexPath: indexPath)
+    }
     
     public final func resignCellFirstResponder() {
         
         guard let cell = self.cell else { return }
-        
         func resignSubViewsFirstResponder(view: UIView) {
             if view.isFirstResponder() {
                 view.resignFirstResponder()
+                return
             }
-            for subview in view.subviews {
-                resignSubViewsFirstResponder(subview)
+            view.subviews.map {
+                resignSubViewsFirstResponder($0)
             }
         }
         resignSubViewsFirstResponder(cell)

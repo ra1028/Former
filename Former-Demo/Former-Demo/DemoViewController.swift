@@ -24,6 +24,7 @@ class DemoViewController: FormerViewController {
         self.former.registerCellClass(FormerTextCell)
         self.former.registerCellClass(FormerTextFieldCell)
         self.former.registerCellClass(FormerCheckCell)
+        self.former.registerCellClass(FormerSwitchCell)
         self.former.registerViewClass(FormerTextHeaderView)
         self.former.registerViewClass(FormerTextFooterView)
         
@@ -38,38 +39,50 @@ class DemoViewController: FormerViewController {
         
         let rowFormer2 = TextFieldRowFormer(
             cellType: FormerTextFieldCell.self,
-            title: "Title",
-            placeholder: "Placeholder",
+            title: "Name",
+            placeholder: "Exaple",
             textChangedHandler: { text in
                 print(text)
             }
         )
+        rowFormer2.titleTextEditingColor = .redColor()
         
         let rowFormer3 = CheckRowFormer(
             cellType: FormerCheckCell.self,
             checked: true,
             title: "Check",
-            checkChangedHandler: { [weak self] checked in
+            checkChangedHandler: { checked in
                 print(checked)
-                self?.former.deselectSelectedCell(true)
+            }
+        )
+        
+        let rowFormer4 = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            switched: true,
+            title: "Switch",
+            switchChangedHandler:{ switched in
+                print(switched)
             }
         )
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self)
         header1.text = "Header"
-        header1.viewHeight = 60
         
         let footer1 = TextViewFormer(viewType: FormerTextFooterView.self)
-        footer1.text = "Footer"
-        footer1.viewHeight = 100
+        footer1.text = "Footer Footer Footer\nFooter Footer Footer"
+        footer1.viewHeight = 60
+        
+        let dammySectionFormer = SectionFormer()
+            .setHeaderViewFormer(nil)
+            .setFooterViewFormer(header1)
         
         let sectionFormer = SectionFormer()
-        .addRowFormers([rowFormer1, rowFormer2, rowFormer3])
-        .setHeaderViewFormer(header1)
-        .setFooterViewFormer(footer1)
+            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4])
+            .setHeaderViewFormer(nil)
+            .setFooterViewFormer(footer1)
         
-        self.former.addSectionFormer(sectionFormer)
-        .reloadFormer()
+        self.former.addSectionFormers([dammySectionFormer, sectionFormer])
+            .reloadFormer()
     }
 }
 
