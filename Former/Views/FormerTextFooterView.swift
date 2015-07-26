@@ -25,7 +25,7 @@ public class FormerTextFooterView: FormerHeaderFooterView, TextFormableView {
         formerTextLabel.textAlignment = .Center
         formerTextLabel.numberOfLines = 0
         formerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(formerTextLabel, atIndex: 0)
+        self.insertSubview(formerTextLabel, atIndex: 0)
         self.formerTextLabel = formerTextLabel
         
         let constraints = [
@@ -42,6 +42,6 @@ public class FormerTextFooterView: FormerHeaderFooterView, TextFormableView {
                 views: ["label": formerTextLabel]
             )
         ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+        self.addConstraints(constraints.flatMap { $0 })
     }
 }
