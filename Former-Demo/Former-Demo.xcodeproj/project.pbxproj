@@ -11,26 +11,26 @@
 		2A0E63591B600AD30083BC65 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0E63581B600AD30083BC65 /* DemoViewController.swift */; };
 		2A0E635E1B600AD30083BC65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635D1B600AD30083BC65 /* Assets.xcassets */; };
 		2A0E63611B600AD30083BC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635F1B600AD30083BC65 /* LaunchScreen.storyboard */; };
-		2AD841561B64A032003A10FF /* FormerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8413C1B64A032003A10FF /* FormerCell.swift */; };
-		2AD841571B64A032003A10FF /* FormerCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8413D1B64A032003A10FF /* FormerCheckCell.swift */; };
-		2AD841581B64A032003A10FF /* FormerTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8413E1B64A032003A10FF /* FormerTextCell.swift */; };
-		2AD841591B64A032003A10FF /* FormerTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8413F1B64A032003A10FF /* FormerTextFieldCell.swift */; };
-		2AD8415A1B64A032003A10FF /* Former.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841411B64A032003A10FF /* Former.swift */; };
-		2AD8415B1B64A032003A10FF /* FormerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841421B64A032003A10FF /* FormerObserver.swift */; };
-		2AD8415C1B64A032003A10FF /* SectionFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841431B64A032003A10FF /* SectionFormer.swift */; };
-		2AD8415D1B64A032003A10FF /* FomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841451B64A032003A10FF /* FomerViewController.swift */; };
-		2AD8415E1B64A032003A10FF /* TextViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841471B64A032003A10FF /* TextViewFormer.swift */; };
-		2AD8415F1B64A032003A10FF /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841481B64A032003A10FF /* ViewFormer.swift */; };
-		2AD841601B64A032003A10FF /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8414A1B64A032003A10FF /* Operators.swift */; };
-		2AD841611B64A032003A10FF /* UITableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8414B1B64A032003A10FF /* UITableViewCellExt.swift */; };
-		2AD841621B64A032003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8414C1B64A032003A10FF /* UITableViewHeaderFooterViewExt.swift */; };
-		2AD841631B64A032003A10FF /* CheckRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8414E1B64A032003A10FF /* CheckRowFormer.swift */; };
-		2AD841641B64A032003A10FF /* RowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8414F1B64A032003A10FF /* RowFormer.swift */; };
-		2AD841651B64A032003A10FF /* TextFieldRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841501B64A032003A10FF /* TextFieldRowFormer.swift */; };
-		2AD841661B64A032003A10FF /* TextRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841511B64A032003A10FF /* TextRowFormer.swift */; };
-		2AD841671B64A032003A10FF /* FormerHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841531B64A032003A10FF /* FormerHeaderFooterView.swift */; };
-		2AD841681B64A032003A10FF /* FormerTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841541B64A032003A10FF /* FormerTextFooterView.swift */; };
-		2AD841691B64A032003A10FF /* FormerTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841551B64A032003A10FF /* FormerTextHeaderView.swift */; };
+		2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416C1B64A0F4003A10FF /* FormerCell.swift */; };
+		2AD841871B64A0F4003A10FF /* FormerCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */; };
+		2AD841881B64A0F4003A10FF /* FormerTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416E1B64A0F4003A10FF /* FormerTextCell.swift */; };
+		2AD841891B64A0F4003A10FF /* FormerTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416F1B64A0F4003A10FF /* FormerTextFieldCell.swift */; };
+		2AD8418A1B64A0F4003A10FF /* Former.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841711B64A0F4003A10FF /* Former.swift */; };
+		2AD8418B1B64A0F4003A10FF /* FormerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841721B64A0F4003A10FF /* FormerObserver.swift */; };
+		2AD8418C1B64A0F4003A10FF /* SectionFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841731B64A0F4003A10FF /* SectionFormer.swift */; };
+		2AD8418D1B64A0F4003A10FF /* FomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841751B64A0F4003A10FF /* FomerViewController.swift */; };
+		2AD8418E1B64A0F4003A10FF /* TextViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841771B64A0F4003A10FF /* TextViewFormer.swift */; };
+		2AD8418F1B64A0F4003A10FF /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841781B64A0F4003A10FF /* ViewFormer.swift */; };
+		2AD841901B64A0F4003A10FF /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8417A1B64A0F4003A10FF /* Operators.swift */; };
+		2AD841911B64A0F4003A10FF /* UITableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8417B1B64A0F4003A10FF /* UITableViewCellExt.swift */; };
+		2AD841921B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8417C1B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift */; };
+		2AD841931B64A0F4003A10FF /* CheckRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */; };
+		2AD841941B64A0F4003A10FF /* RowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8417F1B64A0F4003A10FF /* RowFormer.swift */; };
+		2AD841951B64A0F4003A10FF /* TextFieldRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */; };
+		2AD841961B64A0F4003A10FF /* TextRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841811B64A0F4003A10FF /* TextRowFormer.swift */; };
+		2AD841971B64A0F4003A10FF /* FormerHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841831B64A0F4003A10FF /* FormerHeaderFooterView.swift */; };
+		2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */; };
+		2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,26 +40,26 @@
 		2A0E635D1B600AD30083BC65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A0E63601B600AD30083BC65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A0E63621B600AD30083BC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AD8413C1B64A032003A10FF /* FormerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCell.swift; sourceTree = "<group>"; };
-		2AD8413D1B64A032003A10FF /* FormerCheckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCheckCell.swift; sourceTree = "<group>"; };
-		2AD8413E1B64A032003A10FF /* FormerTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextCell.swift; sourceTree = "<group>"; };
-		2AD8413F1B64A032003A10FF /* FormerTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFieldCell.swift; sourceTree = "<group>"; };
-		2AD841411B64A032003A10FF /* Former.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Former.swift; sourceTree = "<group>"; };
-		2AD841421B64A032003A10FF /* FormerObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerObserver.swift; sourceTree = "<group>"; };
-		2AD841431B64A032003A10FF /* SectionFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFormer.swift; sourceTree = "<group>"; };
-		2AD841451B64A032003A10FF /* FomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FomerViewController.swift; sourceTree = "<group>"; };
-		2AD841471B64A032003A10FF /* TextViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewFormer.swift; sourceTree = "<group>"; };
-		2AD841481B64A032003A10FF /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormer.swift; sourceTree = "<group>"; };
-		2AD8414A1B64A032003A10FF /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		2AD8414B1B64A032003A10FF /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
-		2AD8414C1B64A032003A10FF /* UITableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
-		2AD8414E1B64A032003A10FF /* CheckRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckRowFormer.swift; sourceTree = "<group>"; };
-		2AD8414F1B64A032003A10FF /* RowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowFormer.swift; sourceTree = "<group>"; };
-		2AD841501B64A032003A10FF /* TextFieldRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldRowFormer.swift; sourceTree = "<group>"; };
-		2AD841511B64A032003A10FF /* TextRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRowFormer.swift; sourceTree = "<group>"; };
-		2AD841531B64A032003A10FF /* FormerHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerHeaderFooterView.swift; sourceTree = "<group>"; };
-		2AD841541B64A032003A10FF /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
-		2AD841551B64A032003A10FF /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
+		2AD8416C1B64A0F4003A10FF /* FormerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCell.swift; sourceTree = "<group>"; };
+		2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCheckCell.swift; sourceTree = "<group>"; };
+		2AD8416E1B64A0F4003A10FF /* FormerTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextCell.swift; sourceTree = "<group>"; };
+		2AD8416F1B64A0F4003A10FF /* FormerTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFieldCell.swift; sourceTree = "<group>"; };
+		2AD841711B64A0F4003A10FF /* Former.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Former.swift; sourceTree = "<group>"; };
+		2AD841721B64A0F4003A10FF /* FormerObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerObserver.swift; sourceTree = "<group>"; };
+		2AD841731B64A0F4003A10FF /* SectionFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFormer.swift; sourceTree = "<group>"; };
+		2AD841751B64A0F4003A10FF /* FomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FomerViewController.swift; sourceTree = "<group>"; };
+		2AD841771B64A0F4003A10FF /* TextViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewFormer.swift; sourceTree = "<group>"; };
+		2AD841781B64A0F4003A10FF /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormer.swift; sourceTree = "<group>"; };
+		2AD8417A1B64A0F4003A10FF /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		2AD8417B1B64A0F4003A10FF /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
+		2AD8417C1B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
+		2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckRowFormer.swift; sourceTree = "<group>"; };
+		2AD8417F1B64A0F4003A10FF /* RowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowFormer.swift; sourceTree = "<group>"; };
+		2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldRowFormer.swift; sourceTree = "<group>"; };
+		2AD841811B64A0F4003A10FF /* TextRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRowFormer.swift; sourceTree = "<group>"; };
+		2AD841831B64A0F4003A10FF /* FormerHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerHeaderFooterView.swift; sourceTree = "<group>"; };
+		2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
+		2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 		2A0E634A1B600AD30083BC65 = {
 			isa = PBXGroup;
 			children = (
-				2AD8413A1B64A032003A10FF /* Former */,
+				2AD8416A1B64A0F4003A10FF /* Former */,
 				2A0E63551B600AD30083BC65 /* Former-Demo */,
 				2A0E63541B600AD30083BC65 /* Products */,
 			);
@@ -102,85 +102,86 @@
 			path = "Former-Demo";
 			sourceTree = "<group>";
 		};
-		2AD8413A1B64A032003A10FF /* Former */ = {
+		2AD8416A1B64A0F4003A10FF /* Former */ = {
 			isa = PBXGroup;
 			children = (
-				2AD8413B1B64A032003A10FF /* Cells */,
-				2AD841401B64A032003A10FF /* Commons */,
-				2AD841441B64A032003A10FF /* Controllers */,
-				2AD841461B64A032003A10FF /* HeaderFooterFormers */,
-				2AD841491B64A032003A10FF /* Helpers */,
-				2AD8414D1B64A032003A10FF /* RowFormers */,
-				2AD841521B64A032003A10FF /* Views */,
+				2AD8416B1B64A0F4003A10FF /* Cells */,
+				2AD841701B64A0F4003A10FF /* Commons */,
+				2AD841741B64A0F4003A10FF /* Controllers */,
+				2AD841761B64A0F4003A10FF /* HeaderFooterFormers */,
+				2AD841791B64A0F4003A10FF /* Helpers */,
+				2AD8417D1B64A0F4003A10FF /* RowFormers */,
+				2AD841821B64A0F4003A10FF /* Views */,
 			);
-			path = Former;
+			name = Former;
+			path = ../Former;
 			sourceTree = "<group>";
 		};
-		2AD8413B1B64A032003A10FF /* Cells */ = {
+		2AD8416B1B64A0F4003A10FF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2AD8413C1B64A032003A10FF /* FormerCell.swift */,
-				2AD8413D1B64A032003A10FF /* FormerCheckCell.swift */,
-				2AD8413E1B64A032003A10FF /* FormerTextCell.swift */,
-				2AD8413F1B64A032003A10FF /* FormerTextFieldCell.swift */,
+				2AD8416C1B64A0F4003A10FF /* FormerCell.swift */,
+				2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */,
+				2AD8416E1B64A0F4003A10FF /* FormerTextCell.swift */,
+				2AD8416F1B64A0F4003A10FF /* FormerTextFieldCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		2AD841401B64A032003A10FF /* Commons */ = {
+		2AD841701B64A0F4003A10FF /* Commons */ = {
 			isa = PBXGroup;
 			children = (
-				2AD841411B64A032003A10FF /* Former.swift */,
-				2AD841421B64A032003A10FF /* FormerObserver.swift */,
-				2AD841431B64A032003A10FF /* SectionFormer.swift */,
+				2AD841711B64A0F4003A10FF /* Former.swift */,
+				2AD841721B64A0F4003A10FF /* FormerObserver.swift */,
+				2AD841731B64A0F4003A10FF /* SectionFormer.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
 		};
-		2AD841441B64A032003A10FF /* Controllers */ = {
+		2AD841741B64A0F4003A10FF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2AD841451B64A032003A10FF /* FomerViewController.swift */,
+				2AD841751B64A0F4003A10FF /* FomerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		2AD841461B64A032003A10FF /* HeaderFooterFormers */ = {
+		2AD841761B64A0F4003A10FF /* HeaderFooterFormers */ = {
 			isa = PBXGroup;
 			children = (
-				2AD841471B64A032003A10FF /* TextViewFormer.swift */,
-				2AD841481B64A032003A10FF /* ViewFormer.swift */,
+				2AD841771B64A0F4003A10FF /* TextViewFormer.swift */,
+				2AD841781B64A0F4003A10FF /* ViewFormer.swift */,
 			);
 			path = HeaderFooterFormers;
 			sourceTree = "<group>";
 		};
-		2AD841491B64A032003A10FF /* Helpers */ = {
+		2AD841791B64A0F4003A10FF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2AD8414A1B64A032003A10FF /* Operators.swift */,
-				2AD8414B1B64A032003A10FF /* UITableViewCellExt.swift */,
-				2AD8414C1B64A032003A10FF /* UITableViewHeaderFooterViewExt.swift */,
+				2AD8417A1B64A0F4003A10FF /* Operators.swift */,
+				2AD8417B1B64A0F4003A10FF /* UITableViewCellExt.swift */,
+				2AD8417C1B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		2AD8414D1B64A032003A10FF /* RowFormers */ = {
+		2AD8417D1B64A0F4003A10FF /* RowFormers */ = {
 			isa = PBXGroup;
 			children = (
-				2AD8414E1B64A032003A10FF /* CheckRowFormer.swift */,
-				2AD8414F1B64A032003A10FF /* RowFormer.swift */,
-				2AD841501B64A032003A10FF /* TextFieldRowFormer.swift */,
-				2AD841511B64A032003A10FF /* TextRowFormer.swift */,
+				2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */,
+				2AD8417F1B64A0F4003A10FF /* RowFormer.swift */,
+				2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */,
+				2AD841811B64A0F4003A10FF /* TextRowFormer.swift */,
 			);
 			path = RowFormers;
 			sourceTree = "<group>";
 		};
-		2AD841521B64A032003A10FF /* Views */ = {
+		2AD841821B64A0F4003A10FF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2AD841531B64A032003A10FF /* FormerHeaderFooterView.swift */,
-				2AD841541B64A032003A10FF /* FormerTextFooterView.swift */,
-				2AD841551B64A032003A10FF /* FormerTextHeaderView.swift */,
+				2AD841831B64A0F4003A10FF /* FormerHeaderFooterView.swift */,
+				2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */,
+				2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -254,28 +255,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AD841631B64A032003A10FF /* CheckRowFormer.swift in Sources */,
-				2AD841581B64A032003A10FF /* FormerTextCell.swift in Sources */,
-				2AD8415E1B64A032003A10FF /* TextViewFormer.swift in Sources */,
-				2AD841561B64A032003A10FF /* FormerCell.swift in Sources */,
-				2AD8415B1B64A032003A10FF /* FormerObserver.swift in Sources */,
-				2AD841621B64A032003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */,
-				2AD841571B64A032003A10FF /* FormerCheckCell.swift in Sources */,
-				2AD8415F1B64A032003A10FF /* ViewFormer.swift in Sources */,
-				2AD8415D1B64A032003A10FF /* FomerViewController.swift in Sources */,
+				2AD841931B64A0F4003A10FF /* CheckRowFormer.swift in Sources */,
+				2AD841881B64A0F4003A10FF /* FormerTextCell.swift in Sources */,
+				2AD8418E1B64A0F4003A10FF /* TextViewFormer.swift in Sources */,
+				2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */,
+				2AD8418B1B64A0F4003A10FF /* FormerObserver.swift in Sources */,
+				2AD841921B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */,
+				2AD841871B64A0F4003A10FF /* FormerCheckCell.swift in Sources */,
+				2AD8418F1B64A0F4003A10FF /* ViewFormer.swift in Sources */,
+				2AD8418D1B64A0F4003A10FF /* FomerViewController.swift in Sources */,
 				2A0E63591B600AD30083BC65 /* DemoViewController.swift in Sources */,
-				2AD841591B64A032003A10FF /* FormerTextFieldCell.swift in Sources */,
-				2AD841691B64A032003A10FF /* FormerTextHeaderView.swift in Sources */,
-				2AD841681B64A032003A10FF /* FormerTextFooterView.swift in Sources */,
-				2AD841601B64A032003A10FF /* Operators.swift in Sources */,
+				2AD841891B64A0F4003A10FF /* FormerTextFieldCell.swift in Sources */,
+				2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */,
+				2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */,
+				2AD841901B64A0F4003A10FF /* Operators.swift in Sources */,
 				2A0E63571B600AD30083BC65 /* AppDelegate.swift in Sources */,
-				2AD841651B64A032003A10FF /* TextFieldRowFormer.swift in Sources */,
-				2AD841641B64A032003A10FF /* RowFormer.swift in Sources */,
-				2AD841611B64A032003A10FF /* UITableViewCellExt.swift in Sources */,
-				2AD841661B64A032003A10FF /* TextRowFormer.swift in Sources */,
-				2AD841671B64A032003A10FF /* FormerHeaderFooterView.swift in Sources */,
-				2AD8415C1B64A032003A10FF /* SectionFormer.swift in Sources */,
-				2AD8415A1B64A032003A10FF /* Former.swift in Sources */,
+				2AD841951B64A0F4003A10FF /* TextFieldRowFormer.swift in Sources */,
+				2AD841941B64A0F4003A10FF /* RowFormer.swift in Sources */,
+				2AD841911B64A0F4003A10FF /* UITableViewCellExt.swift in Sources */,
+				2AD841961B64A0F4003A10FF /* TextRowFormer.swift in Sources */,
+				2AD841971B64A0F4003A10FF /* FormerHeaderFooterView.swift in Sources */,
+				2AD8418C1B64A0F4003A10FF /* SectionFormer.swift in Sources */,
+				2AD8418A1B64A0F4003A10FF /* Former.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
