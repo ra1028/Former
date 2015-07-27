@@ -44,16 +44,18 @@ public class FormerCell: UITableViewCell, FormableRow {
     
     public func configureViews() {
         
+        self.backgroundView = UIView()
+        
         let topSeparatorView = UIView()
         topSeparatorView.userInteractionEnabled = false
         topSeparatorView.translatesAutoresizingMaskIntoConstraints = false
-        self.insertSubview(topSeparatorView, atIndex: 0)
+        self.backgroundView?.insertSubview(topSeparatorView, atIndex: 0)
         self.topSeparatorView = topSeparatorView
         
         let bottomSeparatorView = UIView()
         bottomSeparatorView.userInteractionEnabled = false
         bottomSeparatorView.translatesAutoresizingMaskIntoConstraints = false
-        self.insertSubview(bottomSeparatorView, atIndex: 0)
+        self.backgroundView?.insertSubview(bottomSeparatorView, atIndex: 0)
         self.bottomSeparatorView = bottomSeparatorView
         
         let constraints = [
@@ -86,13 +88,13 @@ public class FormerCell: UITableViewCell, FormableRow {
             item: bottomSeparatorView,
             attribute: .Leading,
             relatedBy: .Equal,
-            toItem: self,
+            toItem: self.backgroundView,
             attribute: .Leading,
             multiplier: 1.0,
             constant: 10.0
         )
-        self.addConstraint(bottomSeparatorLeftConst)
+        
+        self.backgroundView?.addConstraints(constraints.flatMap { $0 } + [bottomSeparatorLeftConst])
         self.bottomSeparatorLeftConst = bottomSeparatorLeftConst
-        self.addConstraints(constraints.flatMap { $0 })
     }
 }

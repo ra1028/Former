@@ -81,14 +81,6 @@ public final class Former: NSObject {
         self.selectedCellIndexPath = nil
     }
     
-    public func resignSelectedCellFirstResponder() {
-        
-        if let selectedCellIndexPath = self.selectedCellIndexPath {
-            self.rowFormer(selectedCellIndexPath).resignCellFirstResponder()
-        }
-        self.selectedCellIndexPath = nil
-    }
-    
     private func setupTableView() {
         
         self.registerViewClass(FormerHeaderFooterView)
@@ -102,12 +94,12 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        self.resignSelectedCellFirstResponder()
+        self.tableView?.endEditing(true)
     }
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
-        self.resignSelectedCellFirstResponder()
+        self.tableView?.endEditing(true)
         self.selectedCellIndexPath = indexPath
         return indexPath
     }
@@ -157,6 +149,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
             FormableRow.configureWithRowFormer(rowFormer)
         }
         rowFormer.cell = cell
+        rowFormer.indexPath = indexPath
         return cell
     }
     

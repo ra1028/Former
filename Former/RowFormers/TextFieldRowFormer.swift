@@ -89,11 +89,6 @@ public class TextFieldRowFormer: RowFormer {
     public override func cellSelected(indexPath: NSIndexPath) {
         
         super.cellSelected(indexPath)
-        
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
-        let textField = cell.formerTextField()
-        
-        textField.becomeFirstResponder()
     }
     
     public dynamic func textChanged() {
@@ -109,6 +104,9 @@ public class TextFieldRowFormer: RowFormer {
         
         guard let cell = self.cell as? TextFieldFormableRow else { return }
         cell.formerTitleLabel().textColor =? self.titleTextEditingColor
+        
+        guard let indexPath = self.indexPath else { return }
+        self.selectedHandler?(indexPath: indexPath)
     }
     
     public dynamic func editingDidEnd() {

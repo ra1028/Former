@@ -41,6 +41,9 @@ class DemoViewController: FormerViewController {
             cellType: FormerTextFieldCell.self,
             title: "Name",
             placeholder: "Exaple",
+            selectedHandler: { indexPath in
+                print(indexPath)
+            },
             textChangedHandler: { text in
                 print(text)
             }

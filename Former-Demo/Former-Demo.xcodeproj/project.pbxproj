@@ -174,8 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				2AD8417F1B64A0F4003A10FF /* RowFormer.swift */,
-				2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */,
 				2AD841811B64A0F4003A10FF /* TextRowFormer.swift */,
+				2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */,
 				2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */,
 				2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */,
 			);

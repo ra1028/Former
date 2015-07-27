@@ -10,16 +10,7 @@ import UIKit
 
 public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     
-    private class UnhitTextField: UITextField {
-        private override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-            if CGRectContainsPoint(self.clearButtonRectForBounds(self.bounds), point) {
-                return super.hitTest(point, withEvent: event)
-            }
-            return nil
-        }
-    }
-    
-    private weak var textField: UnhitTextField!
+    private weak var textField: UITextField!
     private weak var titleLabel: UILabel!
     private weak var leftConst: NSLayoutConstraint!
 
@@ -51,7 +42,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
-        let textField = UnhitTextField()
+        let textField = UITextField()
         textField.backgroundColor = .clearColor()
         textField.clearButtonMode = .WhileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false

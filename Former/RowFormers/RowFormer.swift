@@ -26,6 +26,7 @@ public class RowFormer {
             self.cellConfigure()
         }
     }
+    public final weak var indexPath: NSIndexPath?
     public private(set) var cellType: UITableViewCell.Type
     public var selectedHandler: ((indexPath: NSIndexPath) -> ())?
     public var cellHeight: CGFloat = 44.0
@@ -53,20 +54,5 @@ public class RowFormer {
     public func cellSelected(indexPath: NSIndexPath) {
         
         self.selectedHandler?(indexPath: indexPath)
-    }
-    
-    public final func resignCellFirstResponder() {
-        
-        guard let cell = self.cell else { return }
-        func resignSubViewsFirstResponder(view: UIView) {
-            if view.isFirstResponder() {
-                view.resignFirstResponder()
-                return
-            }
-            view.subviews.map {
-                resignSubViewsFirstResponder($0)
-            }
-        }
-        resignSubViewsFirstResponder(cell)
     }
 }
