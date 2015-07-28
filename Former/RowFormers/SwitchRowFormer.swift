@@ -23,7 +23,7 @@ public class SwitchRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleTextColor: UIColor?
-    public var switchWithCellSelected: Bool = true
+    public var switchWithdidSelectCell: Bool = true
     public var switchOnTintColor: UIColor?
     public var switchThumbTintColor: UIColor?
     public var switchTintColor: UIColor?
@@ -59,18 +59,18 @@ public class SwitchRowFormer: RowFormer {
         switchButton.thumbTintColor =? self.switchThumbTintColor
         switchButton.tintColor =? self.switchTintColor
         
-        self.cell?.selectionStyle = self.switchWithCellSelected ?
+        self.cell?.selectionStyle = self.switchWithdidSelectCell ?
             self.selectionStyle ?? .Default :
             .None
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {
+    public override func didSelectCell(indexPath: NSIndexPath) {
         
-        super.cellSelected(indexPath)
+        super.didSelectCell(indexPath)
         
         self.cell?.setSelected(false, animated: true)
         
-        if self.switchWithCellSelected {
+        if self.switchWithdidSelectCell {
             
             guard let cell = self.cell as? SwitchFormableRow else { return }
             let switchButton = cell.formerSwitch()

@@ -21,11 +21,12 @@ extension FormableRow {
 
 public class RowFormer {
     
-    public final weak var cell: UITableViewCell? {
+    public internal(set) final weak var cell: UITableViewCell? {
         didSet {
             self.cellConfigure()
         }
     }
+    public internal(set) final weak var former: Former?
     public internal(set) final var indexPath: NSIndexPath?
     public internal(set) final var isTop: Bool = false
     public internal(set) final var isBottom: Bool = false
@@ -56,7 +57,7 @@ public class RowFormer {
         self.cell?.accessoryType =? self.accessoryType
     }
     
-    public func cellSelected(indexPath: NSIndexPath) {
+    public func didSelectCell(indexPath: NSIndexPath) {
         
         self.selectedHandler?(indexPath: indexPath)
     }

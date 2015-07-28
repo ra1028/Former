@@ -69,35 +69,32 @@ class DemoViewController: FormerViewController {
                 print(text)
             }
         )
-        rowFormer5.cellHeight = 200
+        rowFormer5.cellHeight = 100
         rowFormer5.title = "TextView"
         rowFormer5.titleTextEditingColor = .redColor()
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
-        header1.text = "Header"
+        header1.text = "Header1"
+        
+        let header2 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
+        header2.text = "Header2"
+        header2.viewHeight = 50
         
         let footer1 = TextViewFormer(viewType: FormerTextFooterView.self, registerType: .Class)
         footer1.text = "Footer Footer Footer\nFooter Footer Footer"
         footer1.viewHeight = 60
         
-        let dammySectionFormer = SectionFormer()
-            .setHeaderViewFormer(nil)
-            .setFooterViewFormer(header1)
-        
         let sectionFormer1 = SectionFormer()
             .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4])
-            .setHeaderViewFormer(nil)
-            .setFooterViewFormer(footer1)
+            .setHeaderViewFormer(header1)
         
         let sectionFormer2 = SectionFormer()
             .addRowFormers([rowFormer5])
+            .setHeaderViewFormer(header2)
+            .setFooterViewFormer(footer1)
         
         self.former.addSectionFormers(
-            [
-                dammySectionFormer,
-                sectionFormer1,
-                sectionFormer2
-            ]
+            [sectionFormer1,sectionFormer2]
             )
             .reloadFormer()
     }

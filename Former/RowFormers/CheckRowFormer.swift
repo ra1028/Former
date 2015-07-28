@@ -46,9 +46,9 @@ public class CheckRowFormer: RowFormer {
         self.cell?.accessoryType = self.checked ? .Checkmark : .None
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {
+    public override func didSelectCell(indexPath: NSIndexPath) {
         
-        super.cellSelected(indexPath)
+        super.didSelectCell(indexPath)
         
         self.checked = !self.checked
         self.checkChangedHandler?(self.checked)

@@ -10,7 +10,7 @@ import UIKit
 
 public protocol TextFormableView: FormableView {
     
-    func formableTextLabel() -> UILabel
+    func formerTextLabel() -> UILabel?
 }
 
 public class TextViewFormer: ViewFormer {
@@ -28,12 +28,14 @@ public class TextViewFormer: ViewFormer {
     
     public override func viewConfigure() {
         
+        super.viewConfigure()
+        
         guard let view = self.view as? TextFormableView else { return }
         
-        let textLabel = view.formableTextLabel()
-        textLabel.text = self.text
-        textLabel.font = self.font
-        textLabel.textColor = self.textColor
-        textLabel.textAlignment =? self.textAlignment
+        let textLabel = view.formerTextLabel()
+        textLabel?.text = self.text
+        textLabel?.font =? self.font
+        textLabel?.textColor =? self.textColor
+        textLabel?.textAlignment =? self.textAlignment
     }
 }

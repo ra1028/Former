@@ -19,7 +19,6 @@ public class FormerObserver: NSObject {
         }
     }
     
-    
     private weak var observedRowFormer: RowFormer?
     private weak var observedObject: NSObject?
     private var observedKeyPath: KeyPath?
@@ -93,11 +92,6 @@ public class FormerObserver: NSObject {
             textView.delegate = self
             self.observedKeyPath = .Text
             self.observedObject = textView
-            self.targetComponents = [
-                ("didChangeText", .EditingChanged),
-                ("didBeginEditing", .EditingDidBegin),
-                ("didEndEditing", .EditingDidEnd)
-            ]
         case let rowFormer as SwitchRowFormer:
             guard let cell = rowFormer.cell as? SwitchFormableRow else { return }
             self.observedKeyPath = .On

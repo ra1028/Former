@@ -42,6 +42,7 @@ public class TextViewRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.textChangedHandler = textChangedHandler
+            self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure() {
@@ -66,11 +67,22 @@ public class TextViewRowFormer: RowFormer {
         titleLabel?.font =? self.font
         titleLabel?.textColor = self.titleTextColor
         
-        textView.userInteractionEnabled = self.enabled
+        textView.userInteractionEnabled = false
         if let disabledTextColor = self.disabledTextColor where !self.enabled {
             textView.textColor = disabledTextColor
             titleLabel?.textColor = disabledTextColor
         }
+    }
+    
+    public override func didSelectCell(indexPath: NSIndexPath) {
+        
+        super.didSelectCell(indexPath)
+        
+        guard let cell = self.cell as? TextViewFormableRow else { return }
+        let textView = cell.formerTextView()
+        
+        textView.becomeFirstResponder()
+        textView.userInteractionEnabled = self.enabled
     }
     
     public dynamic func didChangeText() {
@@ -86,14 +98,12 @@ public class TextViewRowFormer: RowFormer {
         
         guard let cell = self.cell as? TextViewFormableRow else { return }
         cell.formerTitleLabel()?.textColor =? self.titleTextEditingColor
-        
-        guard let indexPath = self.indexPath else { return }
-        self.cellSelected(indexPath)
     }
     
     public dynamic func didEndEditing() {
         
         guard let cell = self.cell as? TextViewFormableRow else { return }
         cell.formerTitleLabel()?.textColor = self.titleTextColor
+        cell.formerTextView().userInteractionEnabled = false
     }
 }

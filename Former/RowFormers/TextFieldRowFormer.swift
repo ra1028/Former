@@ -73,10 +73,22 @@ public class TextFieldRowFormer: RowFormer {
         titleLabel?.textColor = self.titleTextColor
         titleLabel?.font = self.font
         
-        textField.userInteractionEnabled = self.enabled
+        textField.userInteractionEnabled = false
         if let disabledTextColor = self.disabledTextColor where !self.enabled {
             textField.textColor = disabledTextColor
             titleLabel?.textColor = disabledTextColor
+        }
+    }
+    
+    public override func didSelectCell(indexPath: NSIndexPath) {
+        
+        super.didSelectCell(indexPath)
+        
+        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        let textField = cell.formerTextField()
+        if !textField.editing {
+            textField.userInteractionEnabled = self.enabled
+            textField.becomeFirstResponder()
         }
     }
     
@@ -93,15 +105,14 @@ public class TextFieldRowFormer: RowFormer {
         
         guard let cell = self.cell as? TextFieldFormableRow else { return }
         cell.formerTitleLabel()?.textColor =? self.titleTextEditingColor
-        
-        guard let indexPath = self.indexPath else { return }
-        self.selectedHandler?(indexPath: indexPath)
-        self.cellSelected(indexPath)
     }
     
     public dynamic func didEndEditing() {
         
         guard let cell = self.cell as? TextFieldFormableRow else { return }
-        cell.formerTitleLabel()?.textColor = self.titleTextColor
+        let titleLabel = cell.formerTitleLabel()
+        let textField = cell.formerTextField()
+        titleLabel?.textColor = self.titleTextColor
+        textField.userInteractionEnabled = false
     }
 }

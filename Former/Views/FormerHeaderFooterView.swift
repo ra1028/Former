@@ -22,10 +22,7 @@ public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
         self.setup()
     }
     
-    public func configureWithViewFormer(viewFormer: ViewFormer) {
-        
-        
-    }
+    public func configureWithViewFormer(viewFormer: ViewFormer) {}
     
     public func setup() {
         

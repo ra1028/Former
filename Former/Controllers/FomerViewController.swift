@@ -10,7 +10,7 @@ import UIKit
 
 public class FormerViewController: UIViewController {
     
-    public private(set) var tableView: UITableView = UITableView()
+    public private(set) var tableView: UITableView = UITableView(frame: CGRect.zeroRect, style: .Grouped)
     public lazy var former: Former = {
         
         return Former(tableView: self.tableView)
@@ -31,8 +31,6 @@ public class FormerViewController: UIViewController {
     private func setup() {
         
         self.tableView.backgroundColor = .clearColor()
-        self.tableView.tableHeaderView = UIView()
-        self.tableView.tableFooterView = UIView()
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.insertSubview(self.tableView, atIndex: 0)
         let tableConstraints = [

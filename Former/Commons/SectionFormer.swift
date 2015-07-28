@@ -10,9 +10,9 @@ import UIKit
 
 public final class SectionFormer {
     
-    public private(set) var rowFormers = [RowFormer]()
+    private(set) var rowFormers = [RowFormer]()
     public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class)
-    public private(set) var footerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class)
+    public private(set) var footerViewFormer: ViewFormer?
     
     public var numberOfRowFormers: Int {
         return self.rowFormers.count

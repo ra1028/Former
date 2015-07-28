@@ -10,6 +10,8 @@ import UIKit
 
 public final class Former: NSObject {
     
+    // MARK: Public
+    
     public enum RegisterType {
         
         case Nib(nibName: String, bundle: NSBundle?)
@@ -26,14 +28,18 @@ public final class Former: NSObject {
         return self.sectionFormers.count
     }
     
-    private(set) var sectionFormers = [SectionFormer]()
-    private var selectedCellIndexPath: NSIndexPath?
+    private var sectionFormers = [SectionFormer]()
+    public internal(set) var selectedCellIndexPath: NSIndexPath?
     
     public init(tableView: UITableView) {
         
         super.init()
         self.tableView = tableView
         self.setupTableView()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     public subscript(index: Int) -> SectionFormer {
@@ -89,10 +95,10 @@ public final class Former: NSObject {
     public func addSectionFormers(sectionFormers: [SectionFormer], autoRegister: Bool = true) -> Former {
         
         if autoRegister {
-            let register: (SectionFormer -> Void) = { s in
-                if let h = s.headerViewFormer { self.registerView(h) }
-                if let f = s.footerViewFormer { self.registerView(f) }
-                s.rowFormers.map {
+            let register: (SectionFormer -> Void) = { sectionFormer in
+                if let header = sectionFormer.headerViewFormer { self.registerView(header) }
+                if let footer = sectionFormer.footerViewFormer { self.registerView(footer) }
+                sectionFormer.rowFormers.map {
                     self.registerCell($0)
                 }
             }
@@ -123,19 +129,100 @@ public final class Former: NSObject {
         self.selectedCellIndexPath = nil
     }
     
+    // MARK: Private
+    
+    private var oldBottomContentInset: CGFloat?
+    private var contentInsetAdjusted = false
+    
     private func setupTableView() {
         
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.tableView?.separatorStyle = .None
+        self.tableView?.sectionHeaderHeight = 0
+        self.tableView?.sectionFooterHeight = 0
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    private func findFirstResponder(view: UIView?) -> UIView? {
+        
+        if view?.isFirstResponder() ?? false {
+            return view
+        }
+        for subView in view?.subviews ?? [] {
+            if let firstResponder = self.findFirstResponder(subView) {
+                return firstResponder
+            }
+        }
+        return nil
+    }
+    
+    private func findRowFormer(view: UIView?) -> UITableViewCell? {
+        
+        if let view = view {
+            if let cell = view as? UITableViewCell {
+                return cell
+            }
+            return self.findRowFormer(view.superview)
+        }
+        return nil
+    }
+    
+    private dynamic func keyboardWillAppear(notification: NSNotification) {
+        
+        guard let keyboardInfo = notification.userInfo else { return }
+        
+        if case let (tableView?, cell?) = (self.tableView, self.findRowFormer(self.findFirstResponder(self.tableView))) where !self.contentInsetAdjusted {
+            
+            let frame = keyboardInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue
+            let keyboardFrame = tableView.window!.convertRect(frame, toView: tableView.superview!)
+            let bottomInset = CGRectGetMinY(tableView.frame) + CGRectGetHeight(tableView.frame) - CGRectGetMinY(keyboardFrame)
+            guard bottomInset > 0 else { return }
+            
+            self.oldBottomContentInset = tableView.contentInset.bottom
+            let duration = keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue!
+            let curve = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
+            guard let indexPath = tableView.indexPathForCell(cell) else { return }
+            
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(duration)
+            UIView.setAnimationCurve(UIViewAnimationCurve(rawValue: curve)!)
+            tableView.contentInset.bottom = bottomInset
+            tableView.scrollIndicatorInsets.bottom = bottomInset
+            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: false)
+            UIView.commitAnimations()
+            self.contentInsetAdjusted = true
+        }
+    }
+    
+    private dynamic func keyboardWillDisappear(notification: NSNotification) {
+        
+        guard let keyboardInfo = notification.userInfo else { return }
+        
+        if case let (tableView?, inset?) = (self.tableView, self.oldBottomContentInset) {
+            
+            let duration = keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue!
+            let curve = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
+            
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(duration)
+            UIView.setAnimationCurve(UIViewAnimationCurve(rawValue: curve)!)
+            tableView.contentInset.bottom = inset
+            tableView.scrollIndicatorInsets.bottom = inset
+            UIView.commitAnimations()
+            self.contentInsetAdjusted = false
+        }
     }
 }
 
 extension Former: UITableViewDelegate, UITableViewDataSource {
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
         self.tableView?.endEditing(true)
+        self.selectedCellIndexPath = nil
     }
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
@@ -148,7 +235,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let rowFormer = self.rowFormer(indexPath)
-        rowFormer.cellSelected(indexPath)
+        rowFormer.didSelectCell(indexPath)
     }
     
     public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -191,6 +278,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         }
         rowFormer.cell = cell
         rowFormer.indexPath = indexPath
+        rowFormer.former = self
         return cell
     }
     
