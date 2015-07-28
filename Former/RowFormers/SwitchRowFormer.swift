@@ -10,7 +10,7 @@ import UIKit
 
 public protocol SwitchFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel
+    func formerTitleLabel() -> UILabel?
     func formerSwitch() -> UISwitch
 }
 
@@ -52,9 +52,9 @@ public class SwitchRowFormer: RowFormer {
         
         self.observer.setObservedFormer(self)
         
-        titleLabel.text =? self.title
-        titleLabel.font =? self.titleFont
-        titleLabel.textColor =? self.titleTextColor
+        titleLabel?.text =? self.title
+        titleLabel?.font =? self.titleFont
+        titleLabel?.textColor =? self.titleTextColor
         
         switchButton.on = self.switched
         switchButton.onTintColor =? self.switchOnTintColor

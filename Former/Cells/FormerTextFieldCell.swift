@@ -19,7 +19,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         return self.textField
     }
     
-    public func formerTitleLabel() -> UILabel {
+    public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
     }

@@ -12,7 +12,7 @@ public class FormerCheckCell: FormerCell, CheckFormableRow {
     
     private weak var titleLabel: UILabel!
     
-    public func formerTitleLabel() -> UILabel {
+    public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
     }

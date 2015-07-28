@@ -13,7 +13,7 @@ public class FormerSwitchCell: FormerCell, SwitchFormableRow {
     private weak var titleLabel: UILabel!
     private weak var switchButton: UISwitch!
     
-    public func formerTitleLabel() -> UILabel {
+    public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
     }

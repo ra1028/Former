@@ -26,7 +26,10 @@ public class RowFormer {
             self.cellConfigure()
         }
     }
-    public final weak var indexPath: NSIndexPath?
+    public internal(set) final var indexPath: NSIndexPath?
+    public internal(set) final var isTop: Bool = false
+    public internal(set) final var isBottom: Bool = false
+    
     public private(set) var cellType: UITableViewCell.Type
     public var selectedHandler: ((indexPath: NSIndexPath) -> ())?
     public var cellHeight: CGFloat = 44.0
@@ -34,9 +37,6 @@ public class RowFormer {
     public var accessoryType: UITableViewCellAccessoryType?
     public var selectionStyle: UITableViewCellSelectionStyle?
     public var separatorColor: UIColor?
-    
-    var isTop: Bool = false
-    var isBottom: Bool = false
     
     public init<T: UITableViewCell where T: FormableRow>(cellType: T.Type, selectedHandler: (NSIndexPath -> Void)? = nil) {
         

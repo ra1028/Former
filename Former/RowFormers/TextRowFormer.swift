@@ -10,7 +10,7 @@ import UIKit
 
 public protocol TextFormableRow: FormableRow {
     
-    func formerTextLabel() -> UILabel
+    func formerTextLabel() -> UILabel?
 }
 
 public class TextRowFormer: RowFormer {
@@ -36,10 +36,10 @@ public class TextRowFormer: RowFormer {
         guard let cell = self.cell as? TextFormableRow else { return }
         
         let textLabel = cell.formerTextLabel()
-        textLabel.text = self.text
-        textLabel.font = self.font
-        textLabel.textColor = self.textColor
-        textLabel.textAlignment =? self.textAlignment
-        textLabel.numberOfLines =? self.textNumberOfLines
+        textLabel?.text = self.text
+        textLabel?.font = self.font
+        textLabel?.textColor = self.textColor
+        textLabel?.textAlignment =? self.textAlignment
+        textLabel?.numberOfLines =? self.textNumberOfLines
     }
 }

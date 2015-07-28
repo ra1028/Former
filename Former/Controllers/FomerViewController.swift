@@ -10,7 +10,7 @@ import UIKit
 
 public class FormerViewController: UIViewController {
     
-    private var tableView: UITableView = UITableView()
+    public private(set) var tableView: UITableView = UITableView()
     public lazy var former: Former = {
         
         return Former(tableView: self.tableView)

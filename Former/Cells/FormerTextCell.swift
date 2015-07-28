@@ -10,8 +10,8 @@ import UIKit
 
 public class FormerTextCell: FormerCell, TextFormableRow {
     
-    public func formerTextLabel() -> UILabel {
+    public func formerTextLabel() -> UILabel? {
         
-        return self.textLabel!
+        return self.textLabel
     }
 }

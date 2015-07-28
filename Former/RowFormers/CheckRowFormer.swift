@@ -10,7 +10,7 @@ import UIKit
 
 public protocol CheckFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel
+    func formerTitleLabel() -> UILabel?
 }
 
 public class CheckRowFormer: RowFormer {
@@ -43,9 +43,9 @@ public class CheckRowFormer: RowFormer {
         
         let titleLabel = cell.formerTitleLabel()
         
-        titleLabel.text = self.title
-        titleLabel.font = self.titleFont
-        titleLabel.textColor = self.titleTextColor
+        titleLabel?.text = self.title
+        titleLabel?.font = self.titleFont
+        titleLabel?.textColor = self.titleTextColor
         self.cell?.accessoryType = self.checked ? .Checkmark : .None
     }
     

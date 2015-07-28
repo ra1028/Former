@@ -11,7 +11,7 @@ import UIKit
 public protocol TextFieldFormableRow: FormableRow {
     
     func formerTextField() -> UITextField
-    func formerTitleLabel() -> UILabel
+    func formerTitleLabel() -> UILabel?
 }
 
 public class TextFieldRowFormer: RowFormer {
@@ -51,6 +51,7 @@ public class TextFieldRowFormer: RowFormer {
             self.text = text
             self.title = title
             self.placeholder = placeholder
+            
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
@@ -75,14 +76,14 @@ public class TextFieldRowFormer: RowFormer {
         textField.keyboardType =? self.keyboardType
         textField.returnKeyType =? self.returnKeyType
         
-        titleLabel.text = self.title
-        titleLabel.textColor = self.titleTextColor
-        titleLabel.font = self.font
+        titleLabel?.text = self.title
+        titleLabel?.textColor = self.titleTextColor
+        titleLabel?.font = self.font
         
         textField.userInteractionEnabled = self.enabled
         if let unabledTextColor = self.unabledTextColor {
             textField.textColor = unabledTextColor
-            titleLabel.textColor = unabledTextColor
+            titleLabel?.textColor = unabledTextColor
         }
     }
     
@@ -103,7 +104,7 @@ public class TextFieldRowFormer: RowFormer {
     public dynamic func editingDidBegin() {
         
         guard let cell = self.cell as? TextFieldFormableRow else { return }
-        cell.formerTitleLabel().textColor =? self.titleTextEditingColor
+        cell.formerTitleLabel()?.textColor =? self.titleTextEditingColor
         
         guard let indexPath = self.indexPath else { return }
         self.selectedHandler?(indexPath: indexPath)
@@ -112,6 +113,6 @@ public class TextFieldRowFormer: RowFormer {
     public dynamic func editingDidEnd() {
         
         guard let cell = self.cell as? TextFieldFormableRow else { return }
-        cell.formerTitleLabel().textColor = self.titleTextColor
+        cell.formerTitleLabel()?.textColor = self.titleTextColor
     }
 }
