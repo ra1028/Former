@@ -32,14 +32,11 @@ public class SwitchRowFormer: RowFormer {
         cellType: T.Type,
         registerType: Former.RegisterType,
         switched: Bool = false,
-        title: String? = nil,
-        selectedHandler: (NSIndexPath -> Void)? = nil,
         switchChangedHandler: (Bool -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
+            super.init(cellType: cellType, registerType: registerType)
             self.switchChangedHandler = switchChangedHandler
             self.switched = switched
-            self.title = title
     }
     
     public override func cellConfigure() {

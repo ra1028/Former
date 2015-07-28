@@ -11,6 +11,7 @@
 		2A0E63591B600AD30083BC65 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0E63581B600AD30083BC65 /* DemoViewController.swift */; };
 		2A0E635E1B600AD30083BC65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635D1B600AD30083BC65 /* Assets.xcassets */; };
 		2A0E63611B600AD30083BC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635F1B600AD30083BC65 /* LaunchScreen.storyboard */; };
+		2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */; };
 		2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */; };
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
 		2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416C1B64A0F4003A10FF /* FormerCell.swift */; };
@@ -33,6 +34,7 @@
 		2AD841971B64A0F4003A10FF /* FormerHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841831B64A0F4003A10FF /* FormerHeaderFooterView.swift */; };
 		2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */; };
 		2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */; };
+		2AE25D6F1B6748D8001B5302 /* TextViewRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,7 @@
 		2A0E635D1B600AD30083BC65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A0E63601B600AD30083BC65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A0E63621B600AD30083BC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchRowFormer.swift; sourceTree = "<group>"; };
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
 		2AD8416C1B64A0F4003A10FF /* FormerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCell.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		2AD841831B64A0F4003A10FF /* FormerHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerHeaderFooterView.swift; sourceTree = "<group>"; };
 		2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
 		2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
+		2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewRowFormer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 				2AD8416C1B64A0F4003A10FF /* FormerCell.swift */,
 				2AD8416E1B64A0F4003A10FF /* FormerTextCell.swift */,
 				2AD8416F1B64A0F4003A10FF /* FormerTextFieldCell.swift */,
+				2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */,
 				2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */,
 				2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */,
 			);
@@ -176,6 +181,7 @@
 				2AD8417F1B64A0F4003A10FF /* RowFormer.swift */,
 				2AD841811B64A0F4003A10FF /* TextRowFormer.swift */,
 				2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */,
+				2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */,
 				2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */,
 				2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */,
 			);
@@ -268,6 +274,7 @@
 				2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */,
 				2AD8418B1B64A0F4003A10FF /* FormerObserver.swift in Sources */,
 				2AD841921B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */,
+				2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */,
 				2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */,
 				2AD841871B64A0F4003A10FF /* FormerCheckCell.swift in Sources */,
 				2AD8418F1B64A0F4003A10FF /* ViewFormer.swift in Sources */,
@@ -280,6 +287,7 @@
 				2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */,
 				2A0E63571B600AD30083BC65 /* AppDelegate.swift in Sources */,
 				2AD841951B64A0F4003A10FF /* TextFieldRowFormer.swift in Sources */,
+				2AE25D6F1B6748D8001B5302 /* TextViewRowFormer.swift in Sources */,
 				2AD841941B64A0F4003A10FF /* RowFormer.swift in Sources */,
 				2AD841911B64A0F4003A10FF /* UITableViewCellExt.swift in Sources */,
 				2AD841961B64A0F4003A10FF /* TextRowFormer.swift in Sources */,

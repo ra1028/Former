@@ -25,15 +25,11 @@ public class CheckRowFormer: RowFormer {
         cellType: T.Type,
         registerType: Former.RegisterType,
         checked: Bool = false,
-        title: String? = nil,
-        selectedHandler: (NSIndexPath -> Void)? = nil,
         checkChangedHandler: (Bool -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
-            
+            super.init(cellType: cellType, registerType: registerType)            
             self.checkChangedHandler = checkChangedHandler
             self.checked = checked
-            self.title = title
     }
     
     public override func cellConfigure() {

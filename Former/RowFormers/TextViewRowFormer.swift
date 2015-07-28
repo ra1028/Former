@@ -1,31 +1,29 @@
 //
-//  TextFieldRowFormer.swift
+//  TextViewRowFormer.swift
 //  Former-Demo
 //
-//  Created by Ryo Aoyama on 7/25/15.
+//  Created by Ryo Aoyama on 7/28/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
 
-public protocol TextFieldFormableRow: FormableRow {
+public protocol TextViewFormableRow: FormableRow {
     
-    func formerTextField() -> UITextField
     func formerTitleLabel() -> UILabel?
+    func formerTextView() -> UITextView
 }
 
-public class TextFieldRowFormer: RowFormer {
+public class TextViewRowFormer: RowFormer {
     
     private let observer = FormerObserver()
     
     public var textChangedHandler: (String -> Void)?
+    
     public var text: String?
-    public var placeholder: String?
     public var font: UIFont?
     public var textColor: UIColor?
     public var textAlignment: NSTextAlignment?
-    public var tintColor: UIColor?
-    public var clearButtonMode: UITextFieldViewMode?
     public var keyboardType: UIKeyboardType?
     public var returnKeyType: UIReturnKeyType?
     
@@ -37,53 +35,48 @@ public class TextFieldRowFormer: RowFormer {
     public var enabled: Bool = true
     public var disabledTextColor: UIColor?
     
-    init<T: UITableViewCell where T: TextFieldFormableRow>(
+    init<T : UITableViewCell where T : FormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        textChangedHandler: (String -> Void)? = nil
-        ) {
+        textChangedHandler: (String -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
             self.textChangedHandler = textChangedHandler
-            self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure() {
         
         super.cellConfigure()
         
-        guard let cell = cell as? TextFieldFormableRow else { return }
-        
-        let textField = cell.formerTextField()
-        let titleLabel = cell.formerTitleLabel()
+        guard let cell = self.cell as? TextViewFormableRow else { return }
         
         self.observer.setObservedFormer(self)
         
-        textField.text = self.text
-        textField.placeholder = self.placeholder
-        textField.font = self.font
-        textField.textColor = self.textColor
-        textField.textAlignment =? self.textAlignment
-        textField.tintColor = self.tintColor
-        textField.clearButtonMode =? self.clearButtonMode
-        textField.keyboardType =? self.keyboardType
-        textField.returnKeyType =? self.returnKeyType
+        let textView = cell.formerTextView()
+        let titleLabel = cell.formerTitleLabel()
         
-        titleLabel?.text = self.title
+        textView.text =? self.text
+        textView.font =? self.font
+        textView.textColor =? self.textColor
+        textView.textAlignment =? self.textAlignment
+        textView.keyboardType =? self.keyboardType
+        textView.returnKeyType =? self.returnKeyType
+        
+        titleLabel?.text =? self.title
+        titleLabel?.font =? self.font
         titleLabel?.textColor = self.titleTextColor
-        titleLabel?.font = self.font
         
-        textField.userInteractionEnabled = self.enabled
+        textView.userInteractionEnabled = self.enabled
         if let disabledTextColor = self.disabledTextColor where !self.enabled {
-            textField.textColor = disabledTextColor
+            textView.textColor = disabledTextColor
             titleLabel?.textColor = disabledTextColor
         }
     }
     
     public dynamic func didChangeText() {
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
-        let text = cell.formerTextField().text ?? ""
+        guard let cell = self.cell as? TextViewFormableRow else { return }
+        let text = cell.formerTextView().text ?? ""
         
         self.text = text
         self.textChangedHandler?(text)
@@ -91,17 +84,16 @@ public class TextFieldRowFormer: RowFormer {
     
     public dynamic func didBeginEditing() {
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        guard let cell = self.cell as? TextViewFormableRow else { return }
         cell.formerTitleLabel()?.textColor =? self.titleTextEditingColor
         
         guard let indexPath = self.indexPath else { return }
-        self.selectedHandler?(indexPath: indexPath)
         self.cellSelected(indexPath)
     }
     
     public dynamic func didEndEditing() {
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
+        guard let cell = self.cell as? TextViewFormableRow else { return }
         cell.formerTitleLabel()?.textColor = self.titleTextColor
     }
 }
