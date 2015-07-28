@@ -23,12 +23,13 @@ public class CheckRowFormer: RowFormer {
     
     init<T : UITableViewCell where T : FormableRow>(
         cellType: T.Type,
+        registerType: Former.RegisterType,
         checked: Bool = false,
         title: String? = nil,
         selectedHandler: (NSIndexPath -> Void)? = nil,
         checkChangedHandler: (Bool -> Void)? = nil) {
             
-            super.init(cellType: cellType, selectedHandler: selectedHandler)
+            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
             
             self.checkChangedHandler = checkChangedHandler
             self.checked = checked

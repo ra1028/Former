@@ -10,6 +10,12 @@ import UIKit
 
 public final class Former: NSObject {
     
+    public enum RegisterType {
+        
+        case Nib(nibName: String, bundle: NSBundle?)
+        case Class
+    }
+    
     public weak var tableView: UITableView? {
         didSet {
             self.setupTableView()
@@ -35,14 +41,38 @@ public final class Former: NSObject {
         return self.sectionFormers[index]
     }
     
-    public func registerCellClass<T: UITableViewCell where T: FormableRow>(cellType: T.Type) {
+    public func registerCell(cellType: UITableViewCell.Type, registerType: RegisterType) {
         
-        self.tableView?.registerClass(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        switch registerType {
+            
+        case .Nib(let nibName, let bundle):
+            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forCellReuseIdentifier: cellType.reuseIdentifier)
+        case .Class:
+            self.tableView?.registerClass(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+        }
     }
     
-    public func registerViewClass<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type) {
+    public func registerView(viewType: UITableViewHeaderFooterView.Type, registerType: RegisterType) {
         
         self.tableView?.registerClass(viewType, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+        
+        switch registerType {
+            
+        case .Nib(let nibName, let bundle):
+            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+        case .Class:
+            self.tableView?.registerClass(viewType, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+        }
+    }
+    
+    public func registerCell(rowFormer: RowFormer) {
+        
+        self.registerCell(rowFormer.cellType, registerType: rowFormer.registerType)
+    }
+    
+    public func registerView(viewFormer: ViewFormer) {
+        
+        self.registerView(viewFormer.viewType, registerType: viewFormer.registerType)
     }
     
     public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
@@ -50,14 +80,26 @@ public final class Former: NSObject {
         return self[indexPath.section][indexPath.row]
     }
     
-    public func addSectionFormer(sectionFormer: SectionFormer) -> Former {
+    public func addSectionFormer(sectionFormer: SectionFormer, autoRegister: Bool = true) -> Former {
         
-        self.addSectionFormers([sectionFormer])
+        self.addSectionFormers([sectionFormer], autoRegister: autoRegister)
         return self
     }
     
-    public func addSectionFormers(sectionFormers: [SectionFormer]) -> Former {
+    public func addSectionFormers(sectionFormers: [SectionFormer], autoRegister: Bool = true) -> Former {
         
+        if autoRegister {
+            let register: (SectionFormer -> Void) = { s in
+                if let h = s.headerViewFormer { self.registerView(h) }
+                if let f = s.footerViewFormer { self.registerView(f) }
+                s.rowFormers.map {
+                    self.registerCell($0)
+                }
+            }
+            sectionFormers.map {
+                register($0)
+            }
+        }
         self.sectionFormers += sectionFormers
         return self
     }
@@ -83,7 +125,6 @@ public final class Former: NSObject {
     
     private func setupTableView() {
         
-        self.registerViewClass(FormerHeaderFooterView)
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.tableView?.separatorStyle = .None

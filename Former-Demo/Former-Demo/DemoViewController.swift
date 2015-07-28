@@ -21,15 +21,9 @@ class DemoViewController: FormerViewController {
         self.title = "DemoViewController"
         self.view.backgroundColor = .groupTableViewBackgroundColor()
         
-        self.former.registerCellClass(FormerTextCell)
-        self.former.registerCellClass(FormerTextFieldCell)
-        self.former.registerCellClass(FormerCheckCell)
-        self.former.registerCellClass(FormerSwitchCell)
-        self.former.registerViewClass(FormerTextHeaderView)
-        self.former.registerViewClass(FormerTextFooterView)
-        
         let rowFormer1 = TextRowFormer(
             cellType: FormerTextCell.self,
+            registerType: .Class,
             text: "Apple",
             selectedHandler: { [weak self] indexPath in
                 self?.former.deselectSelectedCell(true)
@@ -39,7 +33,7 @@ class DemoViewController: FormerViewController {
         
         let rowFormer2 = TextFieldRowFormer(
             cellType: FormerTextFieldCell.self,
-            title: "Name",
+            registerType: .Class,
             placeholder: "Exaple",
             selectedHandler: { indexPath in
                 print(indexPath)
@@ -52,6 +46,7 @@ class DemoViewController: FormerViewController {
         
         let rowFormer3 = CheckRowFormer(
             cellType: FormerCheckCell.self,
+            registerType: .Class,
             checked: true,
             title: "Check",
             checkChangedHandler: { checked in
@@ -61,6 +56,7 @@ class DemoViewController: FormerViewController {
         
         let rowFormer4 = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
+            registerType: .Class,
             switched: true,
             title: "Switch",
             switchChangedHandler:{ switched in
@@ -68,10 +64,10 @@ class DemoViewController: FormerViewController {
             }
         )
         
-        let header1 = TextViewFormer(viewType: FormerTextHeaderView.self)
+        let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header"
         
-        let footer1 = TextViewFormer(viewType: FormerTextFooterView.self)
+        let footer1 = TextViewFormer(viewType: FormerTextFooterView.self, registerType: .Class)
         footer1.text = "Footer Footer Footer\nFooter Footer Footer"
         footer1.viewHeight = 60
         

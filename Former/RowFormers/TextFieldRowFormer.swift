@@ -39,19 +39,17 @@ public class TextFieldRowFormer: RowFormer {
     
     init<T: UITableViewCell where T: TextFieldFormableRow>(
         cellType: T.Type,
-        title: String? = nil,
+        registerType: Former.RegisterType,
         text: String? = nil,
         placeholder: String? = nil,
         selectedHandler: (NSIndexPath -> Void)? = nil,
         textChangedHandler: (String -> Void)? = nil
         ) {
             
-            super.init(cellType: cellType, selectedHandler: selectedHandler)
+            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
             self.textChangedHandler = textChangedHandler
             self.text = text
-            self.title = title
             self.placeholder = placeholder
-            
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     

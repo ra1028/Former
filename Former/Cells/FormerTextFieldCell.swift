@@ -29,7 +29,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         super.configureWithRowFormer(rowFormer)
         
         guard let rowFormer = rowFormer as? TextFieldRowFormer else { return }
-        self.leftConst.constant = rowFormer.title?.isEmpty ?? false ? 5.0 : 15.0
+        self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
     }
     
     override public func configureViews() {

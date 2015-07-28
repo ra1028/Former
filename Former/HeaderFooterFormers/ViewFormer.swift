@@ -27,12 +27,14 @@ public class ViewFormer {
         }
     }
     public private(set) var viewType: UITableViewHeaderFooterView.Type
+    public private(set) var registerType: Former.RegisterType
     public var viewHeight: CGFloat = 30.0
     public var backgroundColor: UIColor?
     
-    public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type) {
+    public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type, registerType: Former.RegisterType) {
         
         self.viewType = viewType
+        self.registerType = registerType
     }
     
     public func viewConfigure() {

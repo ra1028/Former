@@ -30,12 +30,13 @@ public class SwitchRowFormer: RowFormer {
     
     init<T : UITableViewCell where T : FormableRow>(
         cellType: T.Type,
+        registerType: Former.RegisterType,
         switched: Bool = false,
         title: String? = nil,
         selectedHandler: (NSIndexPath -> Void)? = nil,
         switchChangedHandler: (Bool -> Void)? = nil) {
             
-            super.init(cellType: cellType, selectedHandler: selectedHandler)
+            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
             self.switchChangedHandler = switchChangedHandler
             self.switched = switched
             self.title = title

@@ -23,10 +23,11 @@ public class TextRowFormer: RowFormer {
     
     init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
+        registerType: Former.RegisterType,
         text: String? = nil,
         selectedHandler: (NSIndexPath -> Void)? = nil) {
         
-            super.init(cellType: cellType, selectedHandler: selectedHandler)
+            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
             self.text = text
     }
     public override func cellConfigure() {
