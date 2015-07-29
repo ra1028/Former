@@ -71,7 +71,8 @@ class DemoViewController: FormerViewController {
         )
         rowFormer5.cellHeight = 100
         rowFormer5.title = "TextView"
-        rowFormer5.titleTextEditingColor = .redColor()
+        rowFormer5.titleEditingColor = .redColor()
+        rowFormer5.placeholder = "Example"
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header1"
