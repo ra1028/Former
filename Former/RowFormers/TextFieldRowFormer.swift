@@ -31,8 +31,8 @@ public class TextFieldRowFormer: RowFormer {
     
     public var title: String?
     public var titleFont: UIFont?
-    public var titleTextColor: UIColor?
-    public var titleTextEditingColor: UIColor?
+    public var titleColor: UIColor?
+    public var titleEditingColor: UIColor?
     
     public var enabled: Bool = true
     public var disabledTextColor: UIColor?
@@ -70,7 +70,7 @@ public class TextFieldRowFormer: RowFormer {
         textField.returnKeyType =? self.returnKeyType
         
         titleLabel?.text = self.title
-        titleLabel?.textColor = self.titleTextColor
+        titleLabel?.textColor = self.titleColor
         titleLabel?.font = self.font
         
         textField.userInteractionEnabled = false
@@ -104,7 +104,7 @@ public class TextFieldRowFormer: RowFormer {
     public dynamic func didBeginEditing() {
         
         guard let cell = self.cell as? TextFieldFormableRow else { return }
-        cell.formerTitleLabel()?.textColor =? self.titleTextEditingColor
+        cell.formerTitleLabel()?.textColor =? self.titleEditingColor
     }
     
     public dynamic func didEndEditing() {
@@ -112,7 +112,7 @@ public class TextFieldRowFormer: RowFormer {
         guard let cell = self.cell as? TextFieldFormableRow else { return }
         let titleLabel = cell.formerTitleLabel()
         let textField = cell.formerTextField()
-        titleLabel?.textColor = self.titleTextColor
+        titleLabel?.textColor = self.titleColor
         textField.userInteractionEnabled = false
     }
 }

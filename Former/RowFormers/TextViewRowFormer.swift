@@ -35,7 +35,7 @@ public class TextViewRowFormer: RowFormer {
     
     public var placeholder: String?
     public var placeholderFont: UIFont?
-    public var placeholderColor: UIColor?
+    public var placeholderColor: UIColor? = .lightGrayColor()
     
     public var enabled: Bool = true
     public var disabledTextColor: UIColor?
@@ -74,7 +74,6 @@ public class TextViewRowFormer: RowFormer {
         
         if self.placeholderLabel == nil {
             let placeholderLabel = UILabel()
-            placeholderLabel.textColor = UIColor.lightGrayColor()
             placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
             textView.insertSubview(placeholderLabel, atIndex: 0)
             self.placeholderLabel = placeholderLabel
@@ -142,7 +141,7 @@ public class TextViewRowFormer: RowFormer {
     private func updatePlaceholderColor(text: String?) {
         
         self.placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
-            (self.placeholderColor ?? .lightGrayColor()) :
+            self.placeholderColor :
             .clearColor()
     }
 }

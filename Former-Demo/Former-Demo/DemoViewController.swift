@@ -40,7 +40,7 @@ class DemoViewController: FormerViewController {
         )
         rowFormer2.title = "TextField"
         rowFormer2.placeholder = "Example"
-        rowFormer2.titleTextEditingColor = .redColor()
+        rowFormer2.titleEditingColor = .redColor()
         
         let rowFormer3 = CheckRowFormer(
             cellType: FormerCheckCell.self,
@@ -55,24 +55,31 @@ class DemoViewController: FormerViewController {
         let rowFormer4 = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             registerType: .Class,
-            switched: true,
             switchChangedHandler:{ switched in
                 print(switched)
             }
         )
         rowFormer4.title = "Switch"
         
-        let rowFormer5 = TextViewRowFormer(
+        let rowFormer5 = StepperRowFormer(
+            cellType: FormerStepperCell.self,
+            registerType: .Class) { value -> Void in
+                print(value)
+        }
+        rowFormer5.title = "Stepper"
+        rowFormer5.displayTextFromValue = { "\(Int($0))" }
+        
+        let rowFormer6 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             registerType: .Class,
             textChangedHandler: { text in
                 print(text)
             }
         )
-        rowFormer5.cellHeight = 100
-        rowFormer5.title = "TextView"
-        rowFormer5.titleEditingColor = .redColor()
-        rowFormer5.placeholder = "Example"
+        rowFormer6.cellHeight = 100
+        rowFormer6.title = "TextView"
+        rowFormer6.titleEditingColor = .redColor()
+        rowFormer6.placeholder = "Example"
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header1"
@@ -86,11 +93,11 @@ class DemoViewController: FormerViewController {
         footer1.viewHeight = 60
         
         let sectionFormer1 = SectionFormer()
-            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4])
+            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4, rowFormer5])
             .setHeaderViewFormer(header1)
         
         let sectionFormer2 = SectionFormer()
-            .addRowFormers([rowFormer5])
+            .addRowFormers([rowFormer6])
             .setHeaderViewFormer(header2)
             .setFooterViewFormer(footer1)
         

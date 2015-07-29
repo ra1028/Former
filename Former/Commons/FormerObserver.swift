@@ -14,6 +14,7 @@ public class FormerObserver: NSObject {
         
         case Text = "text"
         case On = "on"
+        case Value = "value"
         var key: String {
             return self.rawValue
         }
@@ -96,7 +97,12 @@ public class FormerObserver: NSObject {
             guard let cell = rowFormer.cell as? SwitchFormableRow else { return }
             self.observedKeyPath = .On
             self.observedObject = cell.formerSwitch()
-            self.targetComponents = [("switchChanged", .ValueChanged)]
+            self.targetComponents = [("didChangeSwitch", .ValueChanged)]
+        case let rowFormer as StepperRowFormer:
+            guard let cell = rowFormer.cell as? StepperFormableRow else { return }
+            self.observedKeyPath = .Value
+            self.observedObject = cell.formerStepper()
+            self.targetComponents = [("didChangeValue", .ValueChanged)]
         default: break
         }
         
@@ -122,7 +128,9 @@ public class FormerObserver: NSObject {
         case let rowFormer as TextViewRowFormer :
             rowFormer.didChangeText()
         case let rowFormer as SwitchRowFormer:
-            rowFormer.switchChanged()
+            rowFormer.didChangeSwitch()
+        case let rowFormer as StepperRowFormer:
+            rowFormer.didChangeValue()
         default: break
         }
     }

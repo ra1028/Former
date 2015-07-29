@@ -14,6 +14,8 @@
 		2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */; };
 		2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */; };
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
+		2AA46CCC1B692B7800909F61 /* StepperRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */; };
+		2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */; };
 		2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416C1B64A0F4003A10FF /* FormerCell.swift */; };
 		2AD841871B64A0F4003A10FF /* FormerCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */; };
 		2AD841881B64A0F4003A10FF /* FormerTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8416E1B64A0F4003A10FF /* FormerTextCell.swift */; };
@@ -47,6 +49,8 @@
 		2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchRowFormer.swift; sourceTree = "<group>"; };
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
+		2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperRowFormer.swift; sourceTree = "<group>"; };
+		2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerStepperCell.swift; sourceTree = "<group>"; };
 		2AD8416C1B64A0F4003A10FF /* FormerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCell.swift; sourceTree = "<group>"; };
 		2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCheckCell.swift; sourceTree = "<group>"; };
 		2AD8416E1B64A0F4003A10FF /* FormerTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextCell.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */,
 				2AD8416D1B64A0F4003A10FF /* FormerCheckCell.swift */,
 				2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */,
+				2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -184,6 +189,7 @@
 				2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */,
 				2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */,
 				2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */,
+				2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */,
 			);
 			path = RowFormers;
 			sourceTree = "<group>";
@@ -284,6 +290,7 @@
 				2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */,
 				2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */,
 				2AD841901B64A0F4003A10FF /* Operators.swift in Sources */,
+				2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */,
 				2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */,
 				2A0E63571B600AD30083BC65 /* AppDelegate.swift in Sources */,
 				2AD841951B64A0F4003A10FF /* TextFieldRowFormer.swift in Sources */,
@@ -291,6 +298,7 @@
 				2AD841941B64A0F4003A10FF /* RowFormer.swift in Sources */,
 				2AD841911B64A0F4003A10FF /* UITableViewCellExt.swift in Sources */,
 				2AD841961B64A0F4003A10FF /* TextRowFormer.swift in Sources */,
+				2AA46CCC1B692B7800909F61 /* StepperRowFormer.swift in Sources */,
 				2AD841971B64A0F4003A10FF /* FormerHeaderFooterView.swift in Sources */,
 				2AD8418C1B64A0F4003A10FF /* SectionFormer.swift in Sources */,
 				2AD8418A1B64A0F4003A10FF /* Former.swift in Sources */,

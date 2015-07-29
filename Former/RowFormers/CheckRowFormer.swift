@@ -19,7 +19,7 @@ public class CheckRowFormer: RowFormer {
     public var checked = false
     public var title: String?
     public var titleFont: UIFont?
-    public var titleTextColor: UIColor?
+    public var titleColor: UIColor?
     
     init<T : UITableViewCell where T : FormableRow>(
         cellType: T.Type,
@@ -42,7 +42,7 @@ public class CheckRowFormer: RowFormer {
         
         titleLabel?.text = self.title
         titleLabel?.font = self.titleFont
-        titleLabel?.textColor = self.titleTextColor
+        titleLabel?.textColor = self.titleColor
         self.cell?.accessoryType = self.checked ? .Checkmark : .None
     }
     

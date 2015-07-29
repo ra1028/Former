@@ -19,24 +19,23 @@ public class SwitchRowFormer: RowFormer {
     private let observer = FormerObserver()
     
     public var switchChangedHandler: (Bool -> Void)?
-    public var switched = false
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleTextColor: UIColor?
-    public var switchWithdidSelectCell: Bool = true
+    public var switched: Bool?
     public var switchOnTintColor: UIColor?
     public var switchThumbTintColor: UIColor?
     public var switchTintColor: UIColor?
+    public var switchWithCellSelected = true
+    
+    public var title: String?
+    public var titleFont: UIFont?
+    public var titleColor: UIColor?
     
     init<T : UITableViewCell where T : FormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        switched: Bool = false,
         switchChangedHandler: (Bool -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
             self.switchChangedHandler = switchChangedHandler
-            self.switched = switched
     }
     
     public override func cellConfigure() {
@@ -52,14 +51,14 @@ public class SwitchRowFormer: RowFormer {
         
         titleLabel?.text =? self.title
         titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleTextColor
+        titleLabel?.textColor =? self.titleColor
         
-        switchButton.on = self.switched
+        switchButton.on =? self.switched
         switchButton.onTintColor =? self.switchOnTintColor
         switchButton.thumbTintColor =? self.switchThumbTintColor
         switchButton.tintColor =? self.switchTintColor
         
-        self.cell?.selectionStyle = self.switchWithdidSelectCell ?
+        self.cell?.selectionStyle = self.switchWithCellSelected ?
             self.selectionStyle ?? .Default :
             .None
     }
@@ -68,24 +67,22 @@ public class SwitchRowFormer: RowFormer {
         
         super.didSelectCell(indexPath)
         
-        self.cell?.setSelected(false, animated: true)
-        
-        if self.switchWithdidSelectCell {
+        if self.switchWithCellSelected {
             
             guard let cell = self.cell as? SwitchFormableRow else { return }
             let switchButton = cell.formerSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
-            self.switchChanged()
+            self.didChangeSwitch()
         }
     }
     
-    public dynamic func switchChanged() {
+    public dynamic func didChangeSwitch() {
         
         guard let cell = self.cell as? SwitchFormableRow else { return }
         let switchButton = cell.formerSwitch()
         let switched = switchButton.on
         
         self.switched = switched
-        self.switchChangedHandler?(self.switched)
+        self.switchChangedHandler?(switched)
     }
 }
