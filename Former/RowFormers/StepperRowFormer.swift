@@ -20,7 +20,7 @@ public class StepperRowFormer: RowFormer {
     private let observer = FormerObserver()
     
     public var stepChangedHandler: (Double -> Void)?
-    public var displayTextFromValue: (Double -> String)?
+    public var displayTextFromValue: (Double -> String?)?
     public var value: Double = 0
     public var tintColor: UIColor?
     public var continuous: Bool?

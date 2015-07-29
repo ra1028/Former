@@ -66,6 +66,7 @@ public class SwitchRowFormer: RowFormer {
     public override func didSelectCell(indexPath: NSIndexPath) {
         
         super.didSelectCell(indexPath)
+        self.cell?.setSelected(false, animated: true)
         
         if self.switchWithCellSelected {
             

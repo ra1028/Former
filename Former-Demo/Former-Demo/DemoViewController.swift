@@ -69,17 +69,27 @@ class DemoViewController: FormerViewController {
         rowFormer5.title = "Stepper"
         rowFormer5.displayTextFromValue = { "\(Int($0))" }
         
-        let rowFormer6 = TextViewRowFormer(
+        let rowFormer6 = SegmentedRowFormer(
+            cellType: FormerSegmentedCell.self,
+            registerType: .Class,
+            segmentTitles: ["Apple", "Orange", "Grape"],
+            segmentChangedHandler: { index in
+                print(index)
+            }
+        )
+        rowFormer6.title = "Segmented"
+        
+        let rowFormer7 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             registerType: .Class,
             textChangedHandler: { text in
                 print(text)
             }
         )
-        rowFormer6.cellHeight = 100
-        rowFormer6.title = "TextView"
-        rowFormer6.titleEditingColor = .redColor()
-        rowFormer6.placeholder = "Example"
+        rowFormer7.cellHeight = 100
+        rowFormer7.title = "TextView"
+        rowFormer7.titleEditingColor = .redColor()
+        rowFormer7.placeholder = "Example"
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header1"
@@ -93,11 +103,11 @@ class DemoViewController: FormerViewController {
         footer1.viewHeight = 60
         
         let sectionFormer1 = SectionFormer()
-            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4, rowFormer5])
+            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4, rowFormer5, rowFormer6])
             .setHeaderViewFormer(header1)
         
         let sectionFormer2 = SectionFormer()
-            .addRowFormers([rowFormer6])
+            .addRowFormers([rowFormer7])
             .setHeaderViewFormer(header2)
             .setFooterViewFormer(footer1)
         

@@ -15,6 +15,7 @@ public class FormerObserver: NSObject {
         case Text = "text"
         case On = "on"
         case Value = "value"
+        case Segmented = "selectedSegmentIndex"
         var key: String {
             return self.rawValue
         }
@@ -102,7 +103,10 @@ public class FormerObserver: NSObject {
             guard let cell = rowFormer.cell as? StepperFormableRow else { return }
             self.observedKeyPath = .Value
             self.observedObject = cell.formerStepper()
-            self.targetComponents = [("didChangeValue", .ValueChanged)]
+        case let rowFormer as SegmentedRowFormer:
+            guard let cell = rowFormer.cell as? SegmentedFormableRow else { return }
+            self.observedKeyPath = .Segmented
+            self.observedObject = cell.formerSegmented()
         default: break
         }
         
@@ -130,6 +134,8 @@ public class FormerObserver: NSObject {
         case let rowFormer as SwitchRowFormer:
             rowFormer.didChangeSwitch()
         case let rowFormer as StepperRowFormer:
+            rowFormer.didChangeValue()
+        case let rowFormer as SegmentedRowFormer:
             rowFormer.didChangeValue()
         default: break
         }
