@@ -27,7 +27,7 @@ public class SegmentedRowFormer: RowFormer {
     public var titleFont: UIFont?
     public var titleColor: UIColor?
     
-    init<T : UITableViewCell where T : FormableRow>(
+    init<T : UITableViewCell where T : SegmentedFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         segmentTitles: [String],

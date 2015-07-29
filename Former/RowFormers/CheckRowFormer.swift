@@ -21,7 +21,7 @@ public class CheckRowFormer: RowFormer {
     public var titleFont: UIFont?
     public var titleColor: UIColor?
     
-    init<T : UITableViewCell where T : FormableRow>(
+    init<T : UITableViewCell where T : CheckFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         checked: Bool = false,

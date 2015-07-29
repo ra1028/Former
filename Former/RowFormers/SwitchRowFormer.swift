@@ -29,7 +29,7 @@ public class SwitchRowFormer: RowFormer {
     public var titleFont: UIFont?
     public var titleColor: UIColor?
     
-    init<T : UITableViewCell where T : FormableRow>(
+    init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         switchChangedHandler: (Bool -> Void)? = nil) {

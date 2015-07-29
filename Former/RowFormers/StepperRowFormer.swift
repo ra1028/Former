@@ -37,7 +37,7 @@ public class StepperRowFormer: RowFormer {
     public var displayFont: UIFont?
     public var displayColor: UIColor?
     
-    init<T : UITableViewCell where T : FormableRow>(
+    init<T : UITableViewCell where T : StepperFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         stepChangedHandler: (Double -> Void)? = nil) {

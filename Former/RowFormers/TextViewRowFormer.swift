@@ -40,7 +40,7 @@ public class TextViewRowFormer: RowFormer {
     public var enabled: Bool = true
     public var disabledTextColor: UIColor?
     
-    init<T : UITableViewCell where T : FormableRow>(
+    init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         textChangedHandler: (String -> Void)? = nil) {
