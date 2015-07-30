@@ -14,6 +14,8 @@
 		2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */; };
 		2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */; };
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
+		2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7471B6A866B00985361 /* SliderRowFormer.swift */; };
+		2A63E74A1B6A89D500985361 /* FormerSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7491B6A89D500985361 /* FormerSliderCell.swift */; };
 		2AA46CCC1B692B7800909F61 /* StepperRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */; };
 		2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */; };
 		2AA46CD01B693A6C00909F61 /* SegmentedRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */; };
@@ -51,6 +53,8 @@
 		2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchRowFormer.swift; sourceTree = "<group>"; };
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
+		2A63E7471B6A866B00985361 /* SliderRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderRowFormer.swift; sourceTree = "<group>"; };
+		2A63E7491B6A89D500985361 /* FormerSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSliderCell.swift; sourceTree = "<group>"; };
 		2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperRowFormer.swift; sourceTree = "<group>"; };
 		2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerStepperCell.swift; sourceTree = "<group>"; };
 		2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedRowFormer.swift; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 				2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */,
 				2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */,
 				2AA46CD11B69412700909F61 /* FormerSegmentedCell.swift */,
+				2A63E7491B6A89D500985361 /* FormerSliderCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 				2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */,
 				2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */,
 				2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */,
+				2A63E7471B6A866B00985361 /* SliderRowFormer.swift */,
 			);
 			path = RowFormers;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */,
 				2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */,
 				2AD841901B64A0F4003A10FF /* Operators.swift in Sources */,
+				2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */,
 				2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */,
 				2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */,
 				2A0E63571B600AD30083BC65 /* AppDelegate.swift in Sources */,
@@ -310,6 +317,7 @@
 				2AD841971B64A0F4003A10FF /* FormerHeaderFooterView.swift in Sources */,
 				2AD8418C1B64A0F4003A10FF /* SectionFormer.swift in Sources */,
 				2AD8418A1B64A0F4003A10FF /* Former.swift in Sources */,
+				2A63E74A1B6A89D500985361 /* FormerSliderCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

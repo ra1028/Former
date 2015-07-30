@@ -13,6 +13,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     private weak var textField: UITextField!
     private weak var titleLabel: UILabel!
     private weak var leftConst: NSLayoutConstraint!
+    private weak var rightConst: NSLayoutConstraint!
 
     public func formerTextField() -> UITextField {
         
@@ -30,6 +31,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         
         guard let rowFormer = rowFormer as? TextFieldRowFormer else { return }
         self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
+        self.rightConst.constant = (rowFormer.textAlignment == .Right) ? -15.0 : 0
     }
     
     override public func configureViews() {
@@ -63,7 +65,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
                 views: ["field": textField]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:[label]-10-[field]-5-|",
+                "H:[label]-10-[field]",
                 options: [],
                 metrics: nil,
                 views: ["label": titleLabel, "field": textField]
@@ -78,7 +80,18 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
             multiplier: 1.0,
             constant: 15.0
         )
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [leftConst])
+        let rightConst = NSLayoutConstraint(
+            item: textField,
+            attribute: .Trailing,
+            relatedBy: .Equal,
+            toItem: self.contentView,
+            attribute: .Trailing,
+            multiplier: 1.0,
+            constant: 0
+        )
+        
+        self.contentView.addConstraints(constraints.flatMap { $0 } + [leftConst, rightConst])
         self.leftConst = leftConst
+        self.rightConst = rightConst
     }
 }

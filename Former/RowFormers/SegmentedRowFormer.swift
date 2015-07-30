@@ -18,7 +18,7 @@ public class SegmentedRowFormer: RowFormer {
     
     private let observer = FormerObserver()
     
-    public var segmentChangedHandler: (Int -> Void)?
+    public var segmentChangedHandler: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
     public var tintColor: UIColor?
     public var selectedIndex: Int = 0
@@ -31,7 +31,7 @@ public class SegmentedRowFormer: RowFormer {
         cellType: T.Type,
         registerType: Former.RegisterType,
         segmentTitles: [String],
-        segmentChangedHandler: (Int -> Void)? = nil) {
+        segmentChangedHandler: ((Int, String) -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
             self.segmentChangedHandler = segmentChangedHandler
@@ -45,14 +45,10 @@ public class SegmentedRowFormer: RowFormer {
         
         guard let cell = self.cell as? SegmentedFormableRow else { return }
         
-        let titleLabel = cell.formerTitleLabel()
         let segmented = cell.formerSegmented()
+        let titleLabel = cell.formerTitleLabel()
         
         self.observer.setObservedFormer(self)
-        
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleColor
         
         segmented.removeAllSegments()
         for (index, title) in self.segmentTitles.enumerate() {
@@ -60,6 +56,10 @@ public class SegmentedRowFormer: RowFormer {
         }
         segmented.tintColor =? self.tintColor
         segmented.selectedSegmentIndex = self.selectedIndex
+        
+        titleLabel?.text =? self.title
+        titleLabel?.font =? self.titleFont
+        titleLabel?.textColor =? self.titleColor
     }
     
     public dynamic func didChangeValue() {
@@ -68,7 +68,8 @@ public class SegmentedRowFormer: RowFormer {
         let segment = cell.formerSegmented()
         
         let selectedIndex = segment.selectedSegmentIndex
+        let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
         self.selectedIndex = selectedIndex
-        self.segmentChangedHandler?(selectedIndex)
+        self.segmentChangedHandler?(selectedIndex, selectedTitle)
     }
 }

@@ -39,6 +39,7 @@ public class RowFormer {
     public var accessoryType: UITableViewCellAccessoryType?
     public var selectionStyle: UITableViewCellSelectionStyle?
     public var separatorColor: UIColor?
+    public var separatorInsets: UIEdgeInsets?
     
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,

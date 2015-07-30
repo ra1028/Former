@@ -59,10 +59,6 @@ public class StepperRowFormer: RowFormer {
         
         self.observer.setObservedFormer(self)
         
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleColor
-        
         stepper.value = self.value
         stepper.tintColor =? self.tintColor
         stepper.continuous =? self.continuous
@@ -71,6 +67,10 @@ public class StepperRowFormer: RowFormer {
         stepper.minimumValue =? self.minimumValue
         stepper.maximumValue =? self.maximumValue
         stepper.stepValue =? self.stepValue
+        
+        titleLabel?.text =? self.title
+        titleLabel?.font =? self.titleFont
+        titleLabel?.textColor =? self.titleColor
         
         displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
         displayLabel?.font =? self.displayFont

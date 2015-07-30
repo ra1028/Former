@@ -79,13 +79,13 @@ public class TextViewRowFormer: RowFormer {
             self.placeholderLabel = placeholderLabel
             let constraints = [
                 NSLayoutConstraint.constraintsWithVisualFormat(
-                    "V:|-10-[label(>=0)]",
+                    "V:|-8-[label(>=0)]",
                     options: [],
                     metrics: nil,
                     views: ["label": placeholderLabel]
                 ),
                 NSLayoutConstraint.constraintsWithVisualFormat(
-                    "H:|-5-[label(>=0)]|",
+                    "H:|-5-[label]-0-|",
                     options: [],
                     metrics: nil,
                     views: ["label": placeholderLabel]

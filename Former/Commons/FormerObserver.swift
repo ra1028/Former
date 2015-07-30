@@ -107,6 +107,10 @@ public class FormerObserver: NSObject {
             guard let cell = rowFormer.cell as? SegmentedFormableRow else { return }
             self.observedKeyPath = .Segmented
             self.observedObject = cell.formerSegmented()
+        case let rowFormer as SliderRowFormer:
+            guard let cell = rowFormer.cell as? SliderFormableRow else { return }
+            self.observedObject = cell.formerSlider()
+            self.targetComponents = [("didChangeValue", .ValueChanged)]
         default: break
         }
         
@@ -136,6 +140,8 @@ public class FormerObserver: NSObject {
         case let rowFormer as StepperRowFormer:
             rowFormer.didChangeValue()
         case let rowFormer as SegmentedRowFormer:
+            rowFormer.didChangeValue()
+        case let rowFormer as SliderRowFormer:
             rowFormer.didChangeValue()
         default: break
         }

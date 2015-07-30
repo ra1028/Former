@@ -13,7 +13,7 @@ public class FormerCell: UITableViewCell, FormableRow {
     private weak var topSeparatorView: UIView!
     private weak var bottomSeparatorView: UIView!
     private weak var bottomSeparatorLeftConst: NSLayoutConstraint!
-    private var separatorColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
+    private weak var bottomSeparatorRightConst: NSLayoutConstraint!
     
     required public init?(coder aDecoder: NSCoder) {
         
@@ -31,10 +31,11 @@ public class FormerCell: UITableViewCell, FormableRow {
     
     public func configureWithRowFormer(rowFormer: RowFormer) {
         
-        self.separatorColor =? rowFormer.separatorColor
-        self.topSeparatorView.backgroundColor = rowFormer.isTop ? self.separatorColor : nil
-        self.bottomSeparatorView.backgroundColor = self.separatorColor
-        self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : 10.0
+        self.topSeparatorView.backgroundColor = rowFormer.isTop ? rowFormer.separatorColor : .clearColor()
+        self.bottomSeparatorView.backgroundColor =? rowFormer.separatorColor
+        self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.left ?? 10)
+        self.bottomSeparatorRightConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.right ?? 0)
+        self.separatorInset =? rowFormer.separatorInsets
     }
     
     public func configure() {
@@ -47,12 +48,14 @@ public class FormerCell: UITableViewCell, FormableRow {
         self.backgroundView = UIView()
         
         let topSeparatorView = UIView()
+        topSeparatorView.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
         topSeparatorView.userInteractionEnabled = false
         topSeparatorView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundView?.insertSubview(topSeparatorView, atIndex: 0)
         self.topSeparatorView = topSeparatorView
         
         let bottomSeparatorView = UIView()
+        bottomSeparatorView.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
         bottomSeparatorView.userInteractionEnabled = false
         bottomSeparatorView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundView?.insertSubview(bottomSeparatorView, atIndex: 0)
@@ -76,12 +79,6 @@ public class FormerCell: UITableViewCell, FormableRow {
                 options: [],
                 metrics: nil,
                 views: ["separator": topSeparatorView]
-            ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:[separator]-0-|",
-                options: [],
-                metrics: nil,
-                views: ["separator": bottomSeparatorView]
             )
         ]
         let bottomSeparatorLeftConst = NSLayoutConstraint(
@@ -91,10 +88,20 @@ public class FormerCell: UITableViewCell, FormableRow {
             toItem: self.backgroundView,
             attribute: .Leading,
             multiplier: 1.0,
-            constant: 10.0
+            constant: 0
+        )
+        let bottomSeparatorRightConst = NSLayoutConstraint(
+            item: bottomSeparatorView,
+            attribute: .Trailing,
+            relatedBy: .Equal,
+            toItem: self.backgroundView,
+            attribute: .Trailing,
+            multiplier: 1.0,
+            constant: 0
         )
         
-        self.backgroundView?.addConstraints(constraints.flatMap { $0 } + [bottomSeparatorLeftConst])
+        self.backgroundView?.addConstraints(constraints.flatMap { $0 } + [bottomSeparatorLeftConst, bottomSeparatorRightConst])
         self.bottomSeparatorLeftConst = bottomSeparatorLeftConst
+        self.bottomSeparatorRightConst = bottomSeparatorRightConst
     }
 }

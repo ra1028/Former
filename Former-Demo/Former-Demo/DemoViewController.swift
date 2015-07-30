@@ -24,12 +24,13 @@ class DemoViewController: FormerViewController {
         let rowFormer1 = TextRowFormer(
             cellType: FormerTextCell.self,
             registerType: .Class,
-            text: "Apple",
             selectedHandler: { [weak self] indexPath in
                 self?.former.deselectSelectedCell(true)
                 print("Selected\(indexPath)")
             }
         )
+        rowFormer1.text = "Former"
+        rowFormer1.subText = "former"
         
         let rowFormer2 = TextFieldRowFormer(
             cellType: FormerTextFieldCell.self,
@@ -73,23 +74,34 @@ class DemoViewController: FormerViewController {
             cellType: FormerSegmentedCell.self,
             registerType: .Class,
             segmentTitles: ["Apple", "Orange", "Grape"],
-            segmentChangedHandler: { index in
-                print(index)
+            segmentChangedHandler: { (index, title) in
+                print("\(index), \(title)")
             }
         )
         rowFormer6.title = "Segmented"
         
-        let rowFormer7 = TextViewRowFormer(
+        let rowFormer7 = SliderRowFormer(
+            cellType: FormerSliderCell.self,
+            registerType: .Class,
+            sliderChangedHandler: { value in
+                print(value)
+            }
+        )
+        rowFormer7.title = "Slider"
+        rowFormer7.adjustedValueFromValue = { Float(round($0 * 10) / 10) }
+        rowFormer7.displayTextFromValue = { "\($0)" }
+        
+        let rowFormer8 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             registerType: .Class,
             textChangedHandler: { text in
                 print(text)
             }
         )
-        rowFormer7.cellHeight = 100
-        rowFormer7.title = "TextView"
-        rowFormer7.titleEditingColor = .redColor()
-        rowFormer7.placeholder = "Example"
+        rowFormer8.cellHeight = 100
+        rowFormer8.title = "TextView"
+        rowFormer8.titleEditingColor = .redColor()
+        rowFormer8.placeholder = "Example"
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header1"
@@ -103,11 +115,11 @@ class DemoViewController: FormerViewController {
         footer1.viewHeight = 60
         
         let sectionFormer1 = SectionFormer()
-            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4, rowFormer5, rowFormer6])
+            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4, rowFormer5, rowFormer6, rowFormer7])
             .setHeaderViewFormer(header1)
         
         let sectionFormer2 = SectionFormer()
-            .addRowFormers([rowFormer7])
+            .addRowFormers([rowFormer8])
             .setHeaderViewFormer(header2)
             .setFooterViewFormer(footer1)
         
