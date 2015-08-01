@@ -33,23 +33,23 @@ public class TextRowFormer: RowFormer {
         
             super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
     }
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
+        super.cellConfigure(cell)
         
-        guard let cell = self.cell as? TextFormableRow else { return }
-        
-        let textLabel = cell.formerTextLabel()
-        let subTextLabel = cell.formerSubTextLabel()
-        
-        textLabel?.text = self.text
-        textLabel?.font = self.font
-        textLabel?.textColor = self.textColor
-        textLabel?.textAlignment =? self.textAlignment
-        textLabel?.numberOfLines =? self.numberOfLines
-        
-        subTextLabel?.text =? self.subText
-        subTextLabel?.font =? self.subTextFont
-        subTextLabel?.textColor =? self.subTextColor
+        if let row = self.cell as? TextFormableRow {
+            
+            let textLabel = row.formerTextLabel()
+            textLabel?.text =? self.text
+            textLabel?.font =? self.font
+            textLabel?.textColor = self.textColor
+            textLabel?.textAlignment =? self.textAlignment
+            textLabel?.numberOfLines =? self.numberOfLines
+            
+            let subTextLabel = row.formerSubTextLabel()
+            subTextLabel?.text =? self.subText
+            subTextLabel?.font =? self.subTextFont
+            subTextLabel?.textColor =? self.subTextColor
+        }
     }
 }

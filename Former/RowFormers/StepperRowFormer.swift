@@ -10,9 +10,9 @@ import UIKit
 
 public protocol StepperFormableRow: FormableRow {
     
+    func formerStepper() -> UIStepper
     func formerTitleLabel() -> UILabel?
     func formerDisplayLabel() -> UILabel?
-    func formerStepper() -> UIStepper
 }
 
 public class StepperRowFormer: RowFormer {
@@ -47,45 +47,43 @@ public class StepperRowFormer: RowFormer {
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
-        
-        guard let cell = self.cell as? StepperFormableRow else { return }
-        
-        let titleLabel = cell.formerTitleLabel()
-        let displayLabel = cell.formerDisplayLabel()
-        let stepper = cell.formerStepper()
+        super.cellConfigure(cell)
         
         self.observer.setObservedFormer(self)
         
-        stepper.value = self.value
-        stepper.tintColor =? self.tintColor
-        stepper.continuous =? self.continuous
-        stepper.autorepeat =? self.autorepeat
-        stepper.wraps =? self.wraps
-        stepper.minimumValue =? self.minimumValue
-        stepper.maximumValue =? self.maximumValue
-        stepper.stepValue =? self.stepValue
-        
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleColor
-        
-        displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
-        displayLabel?.font =? self.displayFont
-        displayLabel?.textColor =? self.displayColor ?? stepper.tintColor
+        if let row = self.cell as? StepperFormableRow {
+            
+            let stepper = row.formerStepper()
+            stepper.value = self.value
+            stepper.tintColor =? self.tintColor
+            stepper.continuous =? self.continuous
+            stepper.autorepeat =? self.autorepeat
+            stepper.wraps =? self.wraps
+            stepper.minimumValue =? self.minimumValue
+            stepper.maximumValue =? self.maximumValue
+            stepper.stepValue =? self.stepValue
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text =? self.title
+            titleLabel?.font =? self.titleFont
+            titleLabel?.textColor =? self.titleColor
+            
+            let displayLabel = row.formerDisplayLabel()
+            displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
+            displayLabel?.font =? self.displayFont
+            displayLabel?.textColor =? self.displayColor ?? stepper.tintColor
+        }
     }
     
     public dynamic func didChangeValue() {
         
-        guard let cell = self.cell as? StepperFormableRow else { return }
-        let stepper = cell.formerStepper()
-        let display = cell.formerDisplayLabel()
-
-        let value = stepper.value
-        self.value = value
-        display?.text = self.displayTextFromValue?(value) ?? "\(value)"
-        self.stepChangedHandler?(value)
+        if let row = self.cell as? StepperFormableRow {
+            let value = row.formerStepper().value
+            self.value = value
+            row.formerDisplayLabel()?.text = self.displayTextFromValue?(value) ?? "\(value)"
+            self.stepChangedHandler?(value)
+        }
     }
 }

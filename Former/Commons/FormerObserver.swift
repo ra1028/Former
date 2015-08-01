@@ -10,20 +10,8 @@ import UIKit
 
 public class FormerObserver: NSObject {
     
-    private enum KeyPath: String {
-        
-        case Text = "text"
-        case On = "on"
-        case Value = "value"
-        case Segmented = "selectedSegmentIndex"
-        var key: String {
-            return self.rawValue
-        }
-    }
-    
     private weak var observedRowFormer: RowFormer?
     private weak var observedObject: NSObject?
-    private var observedKeyPath: KeyPath?
     private var targetComponents: [(Selector, UIControlEvents)]?
     
     override init() {
@@ -40,13 +28,6 @@ public class FormerObserver: NSObject {
         self.removeSuitableObserver()
     }
     
-    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        
-        if keyPath == self.observedKeyPath?.key {
-            self.handleSuitableFormer()
-        }
-    }
-    
     public func setObservedFormer(rowFormer: RowFormer) {
         self.removeSuitableObserver()
         self.observedRowFormer = rowFormer
@@ -55,21 +36,13 @@ public class FormerObserver: NSObject {
     
     public func removeSuitableObserver() {
         
-        switch (self.observedObject, self.observedKeyPath, self.targetComponents) {
-        case (let object?, let keyPath?, let components?):
-            object.removeObserver(self, forKeyPath: keyPath.key)
+        if case let (object?, components?) = (self.observedObject, self.targetComponents) {
             components.map {
                 (object as! UIControl).removeTarget(object, action: $0.0, forControlEvents: $0.1)
             }
-        case (let object?, _, let components?):
-            components.map {
-                (object as! UIControl).removeTarget(object, action: $0.0, forControlEvents: $0.1)
-            }
-        default: break
         }
         self.observedRowFormer = nil
         self.observedObject = nil
-        self.observedKeyPath = nil
         self.targetComponents = nil
     }
     
@@ -80,70 +53,43 @@ public class FormerObserver: NSObject {
         switch rowFormer {
             
         case let rowFormer as TextFieldRowFormer:
-            guard let cell = rowFormer.cell as? TextFieldFormableRow else { return }
-            self.observedKeyPath = .Text
+            guard let cell = rowFormer.cell as? TextFieldFormableRow else { break }
             self.observedObject = cell.formerTextField()
             self.targetComponents = [
                 ("didChangeText", .EditingChanged),
-                ("didBeginEditing", .EditingDidBegin),
-                ("didEndEditing", .EditingDidEnd)
+                ("editingDidBegin", .EditingDidBegin),
+                ("editingDidEnd", .EditingDidEnd)
             ]
         case let rowFormer as TextViewRowFormer:
-            guard let cell = rowFormer.cell as? TextViewFormableRow else { return }
+            guard let cell = rowFormer.cell as? TextViewFormableRow else { break }
             let textView = cell.formerTextView()
             textView.delegate = self
-            self.observedKeyPath = .Text
             self.observedObject = textView
         case let rowFormer as SwitchRowFormer:
-            guard let cell = rowFormer.cell as? SwitchFormableRow else { return }
-            self.observedKeyPath = .On
+            guard let cell = rowFormer.cell as? SwitchFormableRow else { break }
             self.observedObject = cell.formerSwitch()
             self.targetComponents = [("didChangeSwitch", .ValueChanged)]
         case let rowFormer as StepperRowFormer:
-            guard let cell = rowFormer.cell as? StepperFormableRow else { return }
-            self.observedKeyPath = .Value
+            guard let cell = rowFormer.cell as? StepperFormableRow else { break }
             self.observedObject = cell.formerStepper()
+            self.targetComponents = [("didChangeValue", .ValueChanged)]
         case let rowFormer as SegmentedRowFormer:
-            guard let cell = rowFormer.cell as? SegmentedFormableRow else { return }
-            self.observedKeyPath = .Segmented
+            guard let cell = rowFormer.cell as? SegmentedFormableRow else { break }
             self.observedObject = cell.formerSegmented()
+            self.targetComponents = [("didChangeValue", .ValueChanged)]
         case let rowFormer as SliderRowFormer:
-            guard let cell = rowFormer.cell as? SliderFormableRow else { return }
+            guard let cell = rowFormer.cell as? SliderFormableRow else { break }
             self.observedObject = cell.formerSlider()
             self.targetComponents = [("didChangeValue", .ValueChanged)]
+        case let rowFormer as DatePickerRowFormer:
+            guard let cell = rowFormer.cell as? DatePickerFormableRow else { break }
+            self.observedObject = cell.formerDatePicker()
+            self.targetComponents = [("didChangeDate", .ValueChanged)]
         default: break
         }
-        
+
         self.targetComponents?.map {
             (self.observedObject as? UIControl)?.addTarget(rowFormer, action: $0.0, forControlEvents: $0.1)
-        }
-        if case let (object?, keyPath?) = (self.observedObject, self.observedKeyPath) {
-            object.addObserver(
-                self,
-                forKeyPath: keyPath.key,
-                options: .New,
-                context: nil
-            )
-        }
-    }
-    
-    private dynamic func handleSuitableFormer() {
-        
-        switch self.observedRowFormer {
-        
-        case let rowFormer as TextFieldRowFormer:
-            rowFormer.didChangeText()
-        case let rowFormer as TextViewRowFormer :
-            rowFormer.didChangeText()
-        case let rowFormer as SwitchRowFormer:
-            rowFormer.didChangeSwitch()
-        case let rowFormer as StepperRowFormer:
-            rowFormer.didChangeValue()
-        case let rowFormer as SegmentedRowFormer:
-            rowFormer.didChangeValue()
-        case let rowFormer as SliderRowFormer:
-            rowFormer.didChangeValue()
-        default: break
         }
     }
 }
@@ -155,10 +101,10 @@ extension FormerObserver: UITextViewDelegate {
     }
     
     public func textViewDidBeginEditing(textView: UITextView) {
-        (self.observedRowFormer as! TextViewRowFormer).didBeginEditing()
+        (self.observedRowFormer as! TextViewRowFormer).editingDidBegin()
     }
     
     public func textViewDidEndEditing(textView: UITextView) {
-        (self.observedRowFormer as! TextViewRowFormer).didEndEditing()
+        (self.observedRowFormer as! TextViewRowFormer).editingDidEnd()
     }
 }

@@ -48,35 +48,35 @@ public class TextFieldRowFormer: RowFormer {
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
-        
-        guard let cell = cell as? TextFieldFormableRow else { return }
-        
-        let textField = cell.formerTextField()
-        let titleLabel = cell.formerTitleLabel()
+        super.cellConfigure(cell)
         
         self.observer.setObservedFormer(self)
         
-        textField.text = self.text
-        textField.placeholder = self.placeholder
-        textField.font = self.font
-        textField.textColor = self.textColor
-        textField.textAlignment =? self.textAlignment
-        textField.tintColor = self.tintColor
-        textField.clearButtonMode =? self.clearButtonMode
-        textField.keyboardType =? self.keyboardType
-        textField.returnKeyType =? self.returnKeyType
-        
-        titleLabel?.text = self.title
-        titleLabel?.textColor = self.titleColor
-        titleLabel?.font = self.font
-        
-        textField.userInteractionEnabled = false
-        if let disabledTextColor = self.disabledTextColor where !self.enabled {
-            textField.textColor = disabledTextColor
-            titleLabel?.textColor = disabledTextColor
+        if let row = cell as? TextFieldFormableRow {
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text = self.title
+            titleLabel?.textColor = self.titleColor
+            titleLabel?.font = self.font
+            
+            let textField = row.formerTextField()
+            textField.text = self.text
+            textField.placeholder = self.placeholder
+            textField.font = self.font
+            textField.textColor = self.textColor
+            textField.textAlignment =? self.textAlignment
+            textField.tintColor = self.tintColor
+            textField.clearButtonMode =? self.clearButtonMode
+            textField.keyboardType =? self.keyboardType
+            textField.returnKeyType =? self.returnKeyType
+            textField.userInteractionEnabled = false
+            
+            if let disabledTextColor = self.disabledTextColor where !self.enabled {
+                textField.textColor = disabledTextColor
+                titleLabel?.textColor = disabledTextColor
+            }
         }
     }
     
@@ -84,35 +84,36 @@ public class TextFieldRowFormer: RowFormer {
         
         super.didSelectCell(indexPath)
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
-        let textField = cell.formerTextField()
-        if !textField.editing {
-            textField.userInteractionEnabled = self.enabled
-            textField.becomeFirstResponder()
+        if let row = self.cell as? TextFieldFormableRow {
+            let textField = row.formerTextField()
+            if !textField.editing {
+                textField.userInteractionEnabled = self.enabled
+                textField.becomeFirstResponder()
+            }
         }
     }
     
     public dynamic func didChangeText() {
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
-        let text = cell.formerTextField().text ?? ""
-        
-        self.text = text
-        self.textChangedHandler?(text)
+        if let row = self.cell as? TextFieldFormableRow {
+            let text = row.formerTextField().text ?? ""
+            self.text = text
+            self.textChangedHandler?(text)
+        }
     }
     
-    public dynamic func didBeginEditing() {
+    public dynamic func editingDidBegin() {
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
-        cell.formerTitleLabel()?.textColor =? self.titleEditingColor
+        if let row = self.cell as? TextFieldFormableRow {
+            row.formerTitleLabel()?.textColor =? self.titleEditingColor
+        }
     }
     
-    public dynamic func didEndEditing() {
+    public dynamic func editingDidEnd() {
         
-        guard let cell = self.cell as? TextFieldFormableRow else { return }
-        let titleLabel = cell.formerTitleLabel()
-        let textField = cell.formerTextField()
-        titleLabel?.textColor = self.titleColor
-        textField.userInteractionEnabled = false
+        if let row = self.cell as? TextFieldFormableRow {
+            row.formerTitleLabel()?.textColor = self.titleColor
+            row.formerTextField().userInteractionEnabled = false
+        }
     }
 }

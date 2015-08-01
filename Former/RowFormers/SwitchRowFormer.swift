@@ -10,8 +10,8 @@ import UIKit
 
 public protocol SwitchFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel?
     func formerSwitch() -> UISwitch
+    func formerTitleLabel() -> UILabel?
 }
 
 public class SwitchRowFormer: RowFormer {
@@ -23,7 +23,7 @@ public class SwitchRowFormer: RowFormer {
     public var switchOnTintColor: UIColor?
     public var switchThumbTintColor: UIColor?
     public var switchTintColor: UIColor?
-    public var switchWithCellSelected = true
+    public var switchWithCellSelected = false
     
     public var title: String?
     public var titleFont: UIFont?
@@ -38,29 +38,29 @@ public class SwitchRowFormer: RowFormer {
             self.switchChangedHandler = switchChangedHandler
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
+        super.cellConfigure(cell)
         
-        guard let cell = self.cell as? SwitchFormableRow else { return }
-        
-        let titleLabel = cell.formerTitleLabel()
-        let switchButton = cell.formerSwitch()
-        
-        self.observer.setObservedFormer(self)
-        
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleColor
-        
-        switchButton.on =? self.switched
-        switchButton.onTintColor =? self.switchOnTintColor
-        switchButton.thumbTintColor =? self.switchThumbTintColor
-        switchButton.tintColor =? self.switchTintColor
-        
-        self.cell?.selectionStyle = self.switchWithCellSelected ?
+        cell.selectionStyle = self.switchWithCellSelected ?
             self.selectionStyle ?? .Default :
             .None
+        
+        if let row = self.cell as? SwitchFormableRow {
+            
+            self.observer.setObservedFormer(self)
+            
+            let switchButton = row.formerSwitch()
+            switchButton.on =? self.switched
+            switchButton.onTintColor =? self.switchOnTintColor
+            switchButton.thumbTintColor =? self.switchThumbTintColor
+            switchButton.tintColor =? self.switchTintColor
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text =? self.title
+            titleLabel?.font =? self.titleFont
+            titleLabel?.textColor =? self.titleColor
+        }
     }
     
     public override func didSelectCell(indexPath: NSIndexPath) {
@@ -68,10 +68,8 @@ public class SwitchRowFormer: RowFormer {
         super.didSelectCell(indexPath)
         self.cell?.setSelected(false, animated: true)
         
-        if self.switchWithCellSelected {
-            
-            guard let cell = self.cell as? SwitchFormableRow else { return }
-            let switchButton = cell.formerSwitch()
+        if let row = self.cell as? SwitchFormableRow where self.switchWithCellSelected {
+            let switchButton = row.formerSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
             self.didChangeSwitch()
         }
@@ -79,11 +77,10 @@ public class SwitchRowFormer: RowFormer {
     
     public dynamic func didChangeSwitch() {
         
-        guard let cell = self.cell as? SwitchFormableRow else { return }
-        let switchButton = cell.formerSwitch()
-        let switched = switchButton.on
-        
-        self.switched = switched
-        self.switchChangedHandler?(switched)
+        if let row = self.cell as? SwitchFormableRow {
+            let switched = row.formerSwitch().on
+            self.switched = switched
+            self.switchChangedHandler?(switched)
+        }
     }
 }

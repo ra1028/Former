@@ -10,8 +10,8 @@ import UIKit
 
 public protocol SegmentedFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel?
     func formerSegmented() -> UISegmentedControl
+    func formerTitleLabel() -> UILabel?
 }
 
 public class SegmentedRowFormer: RowFormer {
@@ -39,37 +39,37 @@ public class SegmentedRowFormer: RowFormer {
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
-        
-        guard let cell = self.cell as? SegmentedFormableRow else { return }
-        
-        let segmented = cell.formerSegmented()
-        let titleLabel = cell.formerTitleLabel()
+        super.cellConfigure(cell)
         
         self.observer.setObservedFormer(self)
         
-        segmented.removeAllSegments()
-        for (index, title) in self.segmentTitles.enumerate() {
-            segmented.insertSegmentWithTitle(title, atIndex: index, animated: false)
+        if let row = self.cell as? SegmentedFormableRow {
+            
+            let segmented = row.formerSegmented()
+            segmented.removeAllSegments()
+            for (index, title) in self.segmentTitles.enumerate() {
+                segmented.insertSegmentWithTitle(title, atIndex: index, animated: false)
+            }
+            segmented.tintColor =? self.tintColor
+            segmented.selectedSegmentIndex = self.selectedIndex
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text =? self.title
+            titleLabel?.font =? self.titleFont
+            titleLabel?.textColor =? self.titleColor
         }
-        segmented.tintColor =? self.tintColor
-        segmented.selectedSegmentIndex = self.selectedIndex
-        
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleColor
     }
     
     public dynamic func didChangeValue() {
         
-        guard let cell = self.cell as? SegmentedFormableRow else { return }
-        let segment = cell.formerSegmented()
-        
-        let selectedIndex = segment.selectedSegmentIndex
-        let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
-        self.selectedIndex = selectedIndex
-        self.segmentChangedHandler?(selectedIndex, selectedTitle)
+        if let cell = self.cell as? SegmentedFormableRow {
+            let segment = cell.formerSegmented()
+            let selectedIndex = segment.selectedSegmentIndex
+            let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
+            self.selectedIndex = selectedIndex
+            self.segmentChangedHandler?(selectedIndex, selectedTitle)
+        }
     }
 }

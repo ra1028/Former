@@ -1,34 +1,34 @@
 //
-//  FormerTextCell.swift
+//  FormerDateInlinepickerCell.swift
 //  Former-Demo
 //
-//  Created by Ryo Aoyama on 7/24/15.
+//  Created by Ryo Aoyama on 8/1/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
 
-public class FormerTextCell: FormerCell, TextFormableRow {
+public class FormerDateInlinePickerCell: FormerCell, DateInlinePickerFormableRow {
     
     private var titleLabel: UILabel!
-    private var subTextLabel: UILabel!
-    private var subTextLabelRightConst: NSLayoutConstraint!
+    private var displayField: UITextField!
+    private var displayFieldRightConst: NSLayoutConstraint!
     
-    public func formerTextLabel() -> UILabel? {
+    public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
     }
     
-    public func formerSubTextLabel() -> UILabel? {
-        
-        return self.subTextLabel
+    public func formerDisplayFieldView() -> UITextField? {
+     
+        return self.displayField
     }
     
     public override func configureWithRowFormer(rowFormer: RowFormer) {
         
         super.configureWithRowFormer(rowFormer)
         
-        self.subTextLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
+        self.displayFieldRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
     }
     
     public override func configureViews() {
@@ -41,12 +41,12 @@ public class FormerTextCell: FormerCell, TextFormableRow {
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
-        let subTextLabel = UILabel()
-        subTextLabel.textColor = .lightGrayColor()
-        subTextLabel.textAlignment = .Right
-        subTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(subTextLabel, atIndex: 0)
-        self.subTextLabel = subTextLabel
+        let displayField = UITextField()
+        displayField.textColor = .lightGrayColor()
+        displayField.textAlignment = .Right
+        displayField.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.insertSubview(displayField, atIndex: 0)
+        self.displayField = displayField
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
@@ -56,20 +56,20 @@ public class FormerTextCell: FormerCell, TextFormableRow {
                 views: ["title": titleLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[sub]-0-|",
+                "V:|-0-[display]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["sub": subTextLabel]
+                views: ["display": displayField]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]-10-[sub]",
+                "H:|-15-[title(>=0)]-10-[display(>=0)]",
                 options: [],
                 metrics: nil,
-                views: ["title": titleLabel, "sub": subTextLabel]
+                views: ["title": titleLabel, "display": displayField]
             )
         ]
-        let subTextLabelRightConst = NSLayoutConstraint(
-            item: subTextLabel,
+        let displayFieldRightConst = NSLayoutConstraint(
+            item: displayField,
             attribute: .Trailing,
             relatedBy: .Equal,
             toItem: self.contentView,
@@ -78,7 +78,7 @@ public class FormerTextCell: FormerCell, TextFormableRow {
             constant: 0
         )
         
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [subTextLabelRightConst])
-        self.subTextLabelRightConst = subTextLabelRightConst
+        self.contentView.addConstraints(constraints.flatMap { $0 } + [displayFieldRightConst])
+        self.displayFieldRightConst = displayFieldRightConst
     }
 }

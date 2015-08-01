@@ -19,17 +19,34 @@ extension FormableRow {
     public func configureWithRowFormer(rowFormer: RowFormer) {}
 }
 
+public protocol InlinePickableRow {
+    
+    var pickerRowFormer: RowFormer { get }
+    
+    // Optional
+    func editingDidBegin()
+    func editingDidEnd()
+}
+
+extension InlinePickableRow {
+    
+    func editingDidBegin() {}
+    func editingDidEnd() {}
+}
+
 public class RowFormer {
     
     public internal(set) final weak var cell: UITableViewCell? {
         didSet {
-            self.cellConfigure()
+            if let cell = cell {
+                self.cellConfigure(cell)
+            }
         }
     }
     public internal(set) final weak var former: Former?
-    public internal(set) final var indexPath: NSIndexPath?
     public internal(set) final var isTop: Bool = false
     public internal(set) final var isBottom: Bool = false
+    public internal(set) final var registered: Bool = false
     
     public private(set) var cellType: UITableViewCell.Type
     public private(set) var registerType: Former.RegisterType
@@ -51,11 +68,11 @@ public class RowFormer {
         self.selectedHandler = selectedHandler
     }
     
-    public func cellConfigure() {
+    public func cellConfigure(cell: UITableViewCell) {
         
-        self.cell?.backgroundColor =? self.backgroundColor
-        self.cell?.selectionStyle =? self.selectionStyle
-        self.cell?.accessoryType =? self.accessoryType
+        cell.backgroundColor =? self.backgroundColor
+        cell.selectionStyle =? self.selectionStyle
+        cell.accessoryType =? self.accessoryType
     }
     
     public func didSelectCell(indexPath: NSIndexPath) {

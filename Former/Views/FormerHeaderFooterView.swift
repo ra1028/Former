@@ -10,6 +10,8 @@ import UIKit
 
 public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     
+    public private(set) var baseView: UIView!
+    
     required public init?(coder aDecoder: NSCoder) {
         
         super.init(coder: aDecoder)
@@ -27,5 +29,27 @@ public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     public func setup() {
         
         self.backgroundView = UIView()
+        self.backgroundView?.backgroundColor = .groupTableViewBackgroundColor()
+        
+        let baseView = UIView()
+        baseView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(baseView)
+        self.baseView = baseView
+        
+        let constraints = [
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "V:|-0-[view]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["view": baseView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "H:|-0-[view]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["view": baseView]
+            )
+        ]
+        self.addConstraints(constraints.flatMap{ $0 })
     }
 }

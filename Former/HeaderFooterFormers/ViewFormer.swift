@@ -26,6 +26,7 @@ public class ViewFormer {
             self.viewConfigure()
         }
     }
+    public internal(set) final var registered: Bool = false
     public private(set) var viewType: UITableViewHeaderFooterView.Type
     public private(set) var registerType: Former.RegisterType
     public var viewHeight: CGFloat = 30.0

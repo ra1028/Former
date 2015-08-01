@@ -32,18 +32,18 @@ public class CheckRowFormer: RowFormer {
             self.checked = checked
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
+        super.cellConfigure(cell)
         
-        guard let cell = self.cell as? CheckFormableRow else { return }
+        cell.accessoryType = self.checked ? .Checkmark : .None
         
-        let titleLabel = cell.formerTitleLabel()
-        
-        titleLabel?.text = self.title
-        titleLabel?.font = self.titleFont
-        titleLabel?.textColor = self.titleColor
-        self.cell?.accessoryType = self.checked ? .Checkmark : .None
+        if let row = cell as? CheckFormableRow {
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text = self.title
+            titleLabel?.font = self.titleFont
+            titleLabel?.textColor = self.titleColor
+        }
     }
     
     public override func didSelectCell(indexPath: NSIndexPath) {

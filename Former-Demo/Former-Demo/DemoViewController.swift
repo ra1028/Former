@@ -16,6 +16,11 @@ class DemoViewController: FormerViewController {
         self.configure()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.former.reloadFormer()
+    }
+    
     private func configure() {
         
         self.title = "DemoViewController"
@@ -91,35 +96,61 @@ class DemoViewController: FormerViewController {
         rowFormer7.adjustedValueFromValue = { Float(round($0 * 10) / 10) }
         rowFormer7.displayTextFromValue = { "\($0)" }
         
-        let rowFormer8 = TextViewRowFormer(
+        let textFromDate: (NSDate -> String) = { date in
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.locale = .currentLocale()
+            dateFormatter.timeStyle = .NoStyle
+            dateFormatter.dateStyle = .MediumStyle
+            return dateFormatter.stringFromDate(date)
+        }
+        let rowFormer8 = DateInlinePickerRowFormer(
+            cellType: FormerDateInlinePickerCell.self,
+            registerType: .Class,
+            dateChangedHandler: { date in
+                print(textFromDate(date))
+            }
+        )
+        rowFormer8.title = "InlineDatePicker"
+        rowFormer8.datePickerMode = .Date
+        rowFormer8.minimumDate = {
+            let calendar = NSCalendar.currentCalendar()
+            return calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -1, toDate: NSDate(), options: [])
+            }()
+        rowFormer8.displayTextFromDate = textFromDate
+        rowFormer8.displayTextEditingColor = .redColor()
+        
+        let rowFormer9 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             registerType: .Class,
             textChangedHandler: { text in
                 print(text)
             }
         )
-        rowFormer8.cellHeight = 100
-        rowFormer8.title = "TextView"
-        rowFormer8.titleEditingColor = .redColor()
-        rowFormer8.placeholder = "Example"
+        rowFormer9.cellHeight = 100
+        rowFormer9.title = "TextView"
+        rowFormer9.titleEditingColor = .redColor()
+        rowFormer9.placeholder = "Example"
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header1"
         
         let header2 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header2.text = "Header2"
-        header2.viewHeight = 50
         
         let footer1 = TextViewFormer(viewType: FormerTextFooterView.self, registerType: .Class)
         footer1.text = "Footer Footer Footer\nFooter Footer Footer"
         footer1.viewHeight = 60
         
         let sectionFormer1 = SectionFormer()
-            .addRowFormers([rowFormer1, rowFormer2, rowFormer3, rowFormer4, rowFormer5, rowFormer6, rowFormer7])
+            .addRowFormers(
+                [rowFormer1, rowFormer2, rowFormer3,
+                    rowFormer4, rowFormer5, rowFormer6,
+                    rowFormer7, rowFormer8]
+            )
             .setHeaderViewFormer(header1)
         
         let sectionFormer2 = SectionFormer()
-            .addRowFormers([rowFormer8])
+            .addRowFormer(rowFormer9)
             .setHeaderViewFormer(header2)
             .setFooterViewFormer(footer1)
         
@@ -129,4 +160,3 @@ class DemoViewController: FormerViewController {
             .reloadFormer()
     }
 }
-

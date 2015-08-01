@@ -16,6 +16,10 @@
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
 		2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7471B6A866B00985361 /* SliderRowFormer.swift */; };
 		2A63E74A1B6A89D500985361 /* FormerSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7491B6A89D500985361 /* FormerSliderCell.swift */; };
+		2A8F62731B6BD70F00860BE6 /* DatePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F62721B6BD70F00860BE6 /* DatePickerRowFormer.swift */; };
+		2A8F62751B6BDBDE00860BE6 /* FormerDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F62741B6BDBDE00860BE6 /* FormerDatePickerCell.swift */; };
+		2A8F62771B6C06AA00860BE6 /* DateInlinePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F62761B6C06AA00860BE6 /* DateInlinePickerRowFormer.swift */; };
+		2A8F627B1B6C13B700860BE6 /* FormerDateInlinePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8F627A1B6C13B700860BE6 /* FormerDateInlinePickerCell.swift */; };
 		2AA46CCC1B692B7800909F61 /* StepperRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */; };
 		2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */; };
 		2AA46CD01B693A6C00909F61 /* SegmentedRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */; };
@@ -55,6 +59,10 @@
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
 		2A63E7471B6A866B00985361 /* SliderRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderRowFormer.swift; sourceTree = "<group>"; };
 		2A63E7491B6A89D500985361 /* FormerSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSliderCell.swift; sourceTree = "<group>"; };
+		2A8F62721B6BD70F00860BE6 /* DatePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRowFormer.swift; sourceTree = "<group>"; };
+		2A8F62741B6BDBDE00860BE6 /* FormerDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerDatePickerCell.swift; sourceTree = "<group>"; };
+		2A8F62761B6C06AA00860BE6 /* DateInlinePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateInlinePickerRowFormer.swift; sourceTree = "<group>"; };
+		2A8F627A1B6C13B700860BE6 /* FormerDateInlinePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerDateInlinePickerCell.swift; sourceTree = "<group>"; };
 		2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepperRowFormer.swift; sourceTree = "<group>"; };
 		2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerStepperCell.swift; sourceTree = "<group>"; };
 		2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedRowFormer.swift; sourceTree = "<group>"; };
@@ -73,7 +81,7 @@
 		2AD8417B1B64A0F4003A10FF /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
 		2AD8417C1B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
 		2AD8417E1B64A0F4003A10FF /* CheckRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckRowFormer.swift; sourceTree = "<group>"; };
-		2AD8417F1B64A0F4003A10FF /* RowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowFormer.swift; sourceTree = "<group>"; };
+		2AD8417F1B64A0F4003A10FF /* RowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RowFormer.swift; path = ../RowFormers/RowFormer.swift; sourceTree = "<group>"; };
 		2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldRowFormer.swift; sourceTree = "<group>"; };
 		2AD841811B64A0F4003A10FF /* TextRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRowFormer.swift; sourceTree = "<group>"; };
 		2AD841831B64A0F4003A10FF /* FormerHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerHeaderFooterView.swift; sourceTree = "<group>"; };
@@ -149,6 +157,8 @@
 				2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */,
 				2AA46CD11B69412700909F61 /* FormerSegmentedCell.swift */,
 				2A63E7491B6A89D500985361 /* FormerSliderCell.swift */,
+				2A8F62741B6BDBDE00860BE6 /* FormerDatePickerCell.swift */,
+				2A8F627A1B6C13B700860BE6 /* FormerDateInlinePickerCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -158,6 +168,7 @@
 			children = (
 				2AD841711B64A0F4003A10FF /* Former.swift */,
 				2AD841731B64A0F4003A10FF /* SectionFormer.swift */,
+				2AD8417F1B64A0F4003A10FF /* RowFormer.swift */,
 				2AD841721B64A0F4003A10FF /* FormerObserver.swift */,
 			);
 			path = Commons;
@@ -193,7 +204,6 @@
 		2AD8417D1B64A0F4003A10FF /* RowFormers */ = {
 			isa = PBXGroup;
 			children = (
-				2AD8417F1B64A0F4003A10FF /* RowFormer.swift */,
 				2AD841811B64A0F4003A10FF /* TextRowFormer.swift */,
 				2AD841801B64A0F4003A10FF /* TextFieldRowFormer.swift */,
 				2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */,
@@ -202,6 +212,8 @@
 				2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */,
 				2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */,
 				2A63E7471B6A866B00985361 /* SliderRowFormer.swift */,
+				2A8F62721B6BD70F00860BE6 /* DatePickerRowFormer.swift */,
+				2A8F62761B6C06AA00860BE6 /* DateInlinePickerRowFormer.swift */,
 			);
 			path = RowFormers;
 			sourceTree = "<group>";
@@ -288,10 +300,12 @@
 			files = (
 				2AD841931B64A0F4003A10FF /* CheckRowFormer.swift in Sources */,
 				2AD841881B64A0F4003A10FF /* FormerTextCell.swift in Sources */,
+				2A8F627B1B6C13B700860BE6 /* FormerDateInlinePickerCell.swift in Sources */,
 				2AD8418E1B64A0F4003A10FF /* TextViewFormer.swift in Sources */,
 				2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */,
 				2AA46CD01B693A6C00909F61 /* SegmentedRowFormer.swift in Sources */,
 				2AA46CD21B69412700909F61 /* FormerSegmentedCell.swift in Sources */,
+				2A8F62751B6BDBDE00860BE6 /* FormerDatePickerCell.swift in Sources */,
 				2AD8418B1B64A0F4003A10FF /* FormerObserver.swift in Sources */,
 				2AD841921B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */,
 				2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */,
@@ -301,11 +315,13 @@
 				2AD8418D1B64A0F4003A10FF /* FomerViewController.swift in Sources */,
 				2A0E63591B600AD30083BC65 /* DemoViewController.swift in Sources */,
 				2AD841891B64A0F4003A10FF /* FormerTextFieldCell.swift in Sources */,
+				2A8F62771B6C06AA00860BE6 /* DateInlinePickerRowFormer.swift in Sources */,
 				2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */,
 				2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */,
 				2AD841901B64A0F4003A10FF /* Operators.swift in Sources */,
 				2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */,
 				2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */,
+				2A8F62731B6BD70F00860BE6 /* DatePickerRowFormer.swift in Sources */,
 				2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */,
 				2A0E63571B600AD30083BC65 /* AppDelegate.swift in Sources */,
 				2AD841951B64A0F4003A10FF /* TextFieldRowFormer.swift in Sources */,

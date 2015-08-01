@@ -50,57 +50,57 @@ public class TextViewRowFormer: RowFormer {
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
-        
-        guard let cell = self.cell as? TextViewFormableRow else { return }
+        super.cellConfigure(cell)
         
         self.observer.setObservedFormer(self)
         
-        let textView = cell.formerTextView()
-        let titleLabel = cell.formerTitleLabel()
-        
-        textView.text =? self.text
-        textView.font =? self.font
-        textView.textColor =? self.textColor
-        textView.textAlignment =? self.textAlignment
-        textView.keyboardType =? self.keyboardType
-        textView.returnKeyType =? self.returnKeyType
-        
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.font
-        titleLabel?.textColor = self.titleColor
-        
-        if self.placeholderLabel == nil {
-            let placeholderLabel = UILabel()
-            placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-            textView.insertSubview(placeholderLabel, atIndex: 0)
-            self.placeholderLabel = placeholderLabel
-            let constraints = [
-                NSLayoutConstraint.constraintsWithVisualFormat(
-                    "V:|-8-[label(>=0)]",
-                    options: [],
-                    metrics: nil,
-                    views: ["label": placeholderLabel]
-                ),
-                NSLayoutConstraint.constraintsWithVisualFormat(
-                    "H:|-5-[label]-0-|",
-                    options: [],
-                    metrics: nil,
-                    views: ["label": placeholderLabel]
-                )
-            ]
-            textView.addConstraints(constraints.flatMap {$0})
-        }
-        self.placeholderLabel?.text =? self.placeholder
-        self.placeholderLabel?.font =? self.placeholderFont
-        self.updatePlaceholderColor(textView.text)
-        
-        textView.userInteractionEnabled = false
-        if let disabledTextColor = self.disabledTextColor where !self.enabled {
-            textView.textColor = disabledTextColor
-            titleLabel?.textColor = disabledTextColor
+        if let row = self.cell as? TextViewFormableRow {
+            
+            let textView = row.formerTextView()
+            textView.text =? self.text
+            textView.font =? self.font
+            textView.textColor =? self.textColor
+            textView.textAlignment =? self.textAlignment
+            textView.keyboardType =? self.keyboardType
+            textView.returnKeyType =? self.returnKeyType
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text =? self.title
+            titleLabel?.font =? self.font
+            titleLabel?.textColor = self.titleColor
+            
+            textView.userInteractionEnabled = false
+            if let disabledTextColor = self.disabledTextColor where !self.enabled {
+                textView.textColor = disabledTextColor
+                titleLabel?.textColor = disabledTextColor
+            }
+            
+            if self.placeholderLabel == nil {
+                let placeholderLabel = UILabel()
+                placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+                textView.insertSubview(placeholderLabel, atIndex: 0)
+                self.placeholderLabel = placeholderLabel
+                let constraints = [
+                    NSLayoutConstraint.constraintsWithVisualFormat(
+                        "V:|-8-[label(>=0)]",
+                        options: [],
+                        metrics: nil,
+                        views: ["label": placeholderLabel]
+                    ),
+                    NSLayoutConstraint.constraintsWithVisualFormat(
+                        "H:|-5-[label]-0-|",
+                        options: [],
+                        metrics: nil,
+                        views: ["label": placeholderLabel]
+                    )
+                ]
+                textView.addConstraints(constraints.flatMap { $0 })
+            }
+            self.placeholderLabel?.text =? self.placeholder
+            self.placeholderLabel?.font =? self.placeholderFont
+            self.updatePlaceholderColor(textView.text)
         }
     }
     
@@ -108,34 +108,36 @@ public class TextViewRowFormer: RowFormer {
         
         super.didSelectCell(indexPath)
         
-        guard let cell = self.cell as? TextViewFormableRow else { return }
-        let textView = cell.formerTextView()
-        
-        textView.becomeFirstResponder()
-        textView.userInteractionEnabled = self.enabled
+        if let row = self.cell as? TextViewFormableRow {
+            let textView = row.formerTextView()
+            textView.becomeFirstResponder()
+            textView.userInteractionEnabled = self.enabled
+        }
     }
     
     public dynamic func didChangeText() {
         
-        guard let cell = self.cell as? TextViewFormableRow else { return }
-        let text = cell.formerTextView().text ?? ""
-        
-        self.text = text
-        self.textChangedHandler?(text)
-        self.updatePlaceholderColor(text)
+        if let row = self.cell as? TextViewFormableRow {
+            let text = row.formerTextView().text ?? ""
+            self.text = text
+            self.textChangedHandler?(text)
+            self.updatePlaceholderColor(text)
+        }
     }
     
-    public dynamic func didBeginEditing() {
+    public dynamic func editingDidBegin() {
         
-        guard let cell = self.cell as? TextViewFormableRow else { return }
-        cell.formerTitleLabel()?.textColor =? self.titleEditingColor
+        if let row = self.cell as? TextViewFormableRow {
+            row.formerTitleLabel()?.textColor =? self.titleEditingColor
+        }
     }
     
-    public dynamic func didEndEditing() {
+    public dynamic func editingDidEnd() {
         
-        guard let cell = self.cell as? TextViewFormableRow else { return }
-        cell.formerTitleLabel()?.textColor = self.titleColor
-        cell.formerTextView().userInteractionEnabled = false
+        if let row = self.cell as? TextViewFormableRow {
+            row.formerTitleLabel()?.textColor = self.titleColor
+            row.formerTextView().userInteractionEnabled = false
+        }
     }
     
     private func updatePlaceholderColor(text: String?) {

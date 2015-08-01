@@ -30,10 +30,55 @@ public final class SectionFormer {
     
     public func addRowFormers(rowFormers: [RowFormer]) -> SectionFormer {
         
-        rowFormers.first?.isTop = true
-        rowFormers.last?.isBottom = true
+        self.rowFormers.last?.isBottom = false
         self.rowFormers += rowFormers
+        
+        self.rowFormers.first?.isTop = true
+        self.rowFormers.last?.isBottom = true
         return self
+    }
+    
+    public func insertRowFormer(rowFormer: RowFormer, atIndex: Int) -> SectionFormer {
+        
+        return self.insertRowFormers([rowFormer], atIndex: atIndex)
+    }
+    
+    public func insertRowFormers(rowFormers: [RowFormer], atIndex: Int) -> SectionFormer {
+        
+        self.rowFormers.first?.isTop = false
+        self.rowFormers.last?.isBottom = false
+        
+        let count = self.rowFormers.count
+        
+        if count == 0 ||  atIndex >= count {
+            self.addRowFormers(rowFormers)
+        } else if atIndex == 0 {
+            self.rowFormers = rowFormers + self.rowFormers
+        } else {
+            let last = self.rowFormers.count - 1
+            self.rowFormers = self.rowFormers[0...(atIndex - 1)] + rowFormers + self.rowFormers[atIndex...last]
+        }
+        
+        self.rowFormers.first?.isTop = true
+        self.rowFormers.last?.isBottom = true
+        return self
+    }
+    
+    public func removeRowFormer(rowFormer: RowFormer) -> Int? {
+        
+        for (index, oldRowFormers) in self.rowFormers.enumerate() {
+            
+            if oldRowFormers === rowFormer {
+                self.removeRowFormer(index)
+                return index
+            }
+        }
+        return nil
+    }
+    
+    public func removeRowFormer(atIndex: Int) {
+        
+        self.rowFormers.removeAtIndex(atIndex)
     }
     
     public func setHeaderViewFormer(viewFormer: ViewFormer?) -> SectionFormer {

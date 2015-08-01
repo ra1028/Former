@@ -21,14 +21,12 @@ public class FormerTextFooterView: FormerHeaderFooterView, TextFormableView {
         
         super.setup()
         
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        
         let footerTextLabel = UILabel()
         footerTextLabel.font = UIFont.systemFontOfSize(14.0)
         footerTextLabel.textAlignment = .Center
         footerTextLabel.numberOfLines = 0
         footerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(footerTextLabel, atIndex: 0)
+        self.baseView.insertSubview(footerTextLabel, atIndex: 0)
         self.footerTextLabel = footerTextLabel
         
         let constraints = [
@@ -45,6 +43,6 @@ public class FormerTextFooterView: FormerHeaderFooterView, TextFormableView {
                 views: ["label": footerTextLabel]
             )
         ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+        self.baseView.addConstraints(constraints.flatMap { $0 })
     }
 }

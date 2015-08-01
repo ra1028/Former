@@ -10,9 +10,9 @@ import UIKit
 
 public protocol SliderFormableRow: FormableRow {
     
+    func formerSlider() -> UISlider
     func formerTitleLabel() -> UILabel?
     func formerDisplayLabel() -> UILabel?
-    func formerSlider() -> UISlider
 }
 
 public class SliderRowFormer: RowFormer {
@@ -46,44 +46,45 @@ public class SliderRowFormer: RowFormer {
             self.cellHeight = 80
     }
     
-    public override func cellConfigure() {
+    public override func cellConfigure(cell: UITableViewCell) {
         
-        super.cellConfigure()
-        
-        guard let cell = self.cell as? SliderFormableRow else { return }
-        
-        let slider = cell.formerSlider()
-        let titleLabel = cell.formerTitleLabel()
-        let displayLabel = cell.formerDisplayLabel()
+        super.cellConfigure(cell)
         
         self.observer.setObservedFormer(self)
         
-        slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
-        slider.continuous =? self.continuous
-        slider.minimumValue =? self.minimumValue
-        slider.maximumValue =? self.maximumValue
-        slider.tintColor =? self.tintColor
-        
-        titleLabel?.text =? self.title
-        titleLabel?.font =? self.titleFont
-        titleLabel?.textColor =? self.titleColor
-        
-        displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
-        displayLabel?.font =? self.displayFont
-        displayLabel?.textColor =? self.displayColor
+        if let row = self.cell as? SliderFormableRow {
+            
+            let slider = row.formerSlider()
+            slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
+            slider.continuous =? self.continuous
+            slider.minimumValue =? self.minimumValue
+            slider.maximumValue =? self.maximumValue
+            slider.tintColor =? self.tintColor
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text =? self.title
+            titleLabel?.font =? self.titleFont
+            titleLabel?.textColor =? self.titleColor
+            
+            let displayLabel = row.formerDisplayLabel()
+            displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
+            displayLabel?.font =? self.displayFont
+            displayLabel?.textColor =? self.displayColor
+        }
     }
     
     public dynamic func didChangeValue() {
         
-        guard let cell = self.cell as? SliderFormableRow else { return }
-        let slider = cell.formerSlider()
-        let displayLabel = cell.formerDisplayLabel()
-        let value = slider.value
-        let adjustedValue = self.adjustedValueFromValue?(value) ?? value
-        
-        self.value = adjustedValue
-        slider.value = adjustedValue
-        displayLabel?.text = self.displayTextFromValue?(adjustedValue) ?? "\(adjustedValue)"
-        self.sliderChangedHandler?(adjustedValue)
+        if let cell = self.cell as? SliderFormableRow {
+            let slider = cell.formerSlider()
+            let displayLabel = cell.formerDisplayLabel()
+            
+            let value = slider.value
+            let adjustedValue = self.adjustedValueFromValue?(value) ?? value
+            self.value = adjustedValue
+            slider.value = adjustedValue
+            displayLabel?.text = self.displayTextFromValue?(adjustedValue) ?? "\(adjustedValue)"
+            self.sliderChangedHandler?(adjustedValue)
+        }
     }
 }

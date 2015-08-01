@@ -31,16 +31,18 @@ public class FormerCell: UITableViewCell, FormableRow {
     
     public func configureWithRowFormer(rowFormer: RowFormer) {
         
-        self.topSeparatorView.backgroundColor = rowFormer.isTop ? rowFormer.separatorColor : .clearColor()
+        self.topSeparatorView.backgroundColor = rowFormer.isTop ?
+            (rowFormer.separatorColor ?? UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)) :
+            .clearColor()
         self.bottomSeparatorView.backgroundColor =? rowFormer.separatorColor
         self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.left ?? 10)
         self.bottomSeparatorRightConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.right ?? 0)
-        self.separatorInset =? rowFormer.separatorInsets
     }
     
     public func configure() {
         
         self.textLabel?.backgroundColor = .clearColor()
+        self.separatorInset.left = CGRectGetWidth(self.bounds)
     }
     
     public func configureViews() {

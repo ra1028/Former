@@ -21,12 +21,10 @@ public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
         
         super.setup()
         
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        
         let headerTextLabel = UILabel()
         headerTextLabel.font = UIFont.systemFontOfSize(14.0)
         headerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(headerTextLabel, atIndex: 0)
+        self.baseView.insertSubview(headerTextLabel, atIndex: 0)
         self.headerTextLabel = headerTextLabel
         
         let constraints = [
@@ -43,6 +41,6 @@ public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
                 views: ["label": headerTextLabel]
             )
         ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+        self.baseView.addConstraints(constraints.flatMap { $0 })
     }
 }
