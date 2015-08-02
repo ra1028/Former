@@ -96,6 +96,17 @@ class DemoViewController: FormerViewController {
         rowFormer7.adjustedValueFromValue = { Float(round($0 * 10) / 10) }
         rowFormer7.displayTextFromValue = { "\($0)" }
         
+        let rowFormer8 = InlinePickerRowFormer(
+            cellType: FormerInlinePickerCell.self,
+            registerType: .Class,
+            valueChangedHandler: { (row, title) in
+                print("\(row), \(title)")
+            }
+        )
+        rowFormer8.title = "InlinePicker"
+        rowFormer8.valueTitles = ["A", "B", "C", "D", "E", "F"]
+        rowFormer8.displayTextEditingColor = .redColor()
+        
         let textFromDate: (NSDate -> String) = { date in
             let dateFormatter = NSDateFormatter()
             dateFormatter.locale = .currentLocale()
@@ -103,33 +114,81 @@ class DemoViewController: FormerViewController {
             dateFormatter.dateStyle = .MediumStyle
             return dateFormatter.stringFromDate(date)
         }
-        let rowFormer8 = DateInlinePickerRowFormer(
-            cellType: FormerDateInlinePickerCell.self,
+        let rowFormer9 = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
             registerType: .Class,
             dateChangedHandler: { date in
                 print(textFromDate(date))
             }
         )
-        rowFormer8.title = "InlineDatePicker"
-        rowFormer8.datePickerMode = .Date
-        rowFormer8.minimumDate = {
+        rowFormer9.title = "InlineDatePicker"
+        rowFormer9.datePickerMode = .Date
+        rowFormer9.minimumDate = {
             let calendar = NSCalendar.currentCalendar()
             return calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -1, toDate: NSDate(), options: [])
             }()
-        rowFormer8.displayTextFromDate = textFromDate
-        rowFormer8.displayTextEditingColor = .redColor()
+        rowFormer9.displayTextFromDate = textFromDate
+        rowFormer9.displayTextEditingColor = .redColor()
         
-        let rowFormer9 = TextViewRowFormer(
+        let rowFormer11 = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
+            registerType: .Class,
+            dateChangedHandler: { date in
+                print(textFromDate(date))
+            }
+        )
+        rowFormer11.title = "InlineDatePicker"
+        rowFormer11.datePickerMode = .Date
+        rowFormer11.minimumDate = {
+            let calendar = NSCalendar.currentCalendar()
+            return calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -1, toDate: NSDate(), options: [])
+            }()
+        rowFormer11.displayTextFromDate = textFromDate
+        rowFormer11.displayTextEditingColor = .redColor()
+        
+        let rowFormer12 = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
+            registerType: .Class,
+            dateChangedHandler: { date in
+                print(textFromDate(date))
+            }
+        )
+        rowFormer12.title = "InlineDatePicker"
+        rowFormer12.datePickerMode = .Date
+        rowFormer12.minimumDate = {
+            let calendar = NSCalendar.currentCalendar()
+            return calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -1, toDate: NSDate(), options: [])
+            }()
+        rowFormer12.displayTextFromDate = textFromDate
+        rowFormer12.displayTextEditingColor = .redColor()
+        
+        let rowFormer13 = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
+            registerType: .Class,
+            dateChangedHandler: { date in
+                print(textFromDate(date))
+            }
+        )
+        rowFormer13.title = "InlineDatePicker"
+        rowFormer13.datePickerMode = .Date
+        rowFormer13.minimumDate = {
+            let calendar = NSCalendar.currentCalendar()
+            return calendar.dateByAddingUnit(NSCalendarUnit.Day, value: -1, toDate: NSDate(), options: [])
+            }()
+        rowFormer13.displayTextFromDate = textFromDate
+        rowFormer13.displayTextEditingColor = .redColor()
+        
+        let rowFormer10 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             registerType: .Class,
             textChangedHandler: { text in
                 print(text)
             }
         )
-        rowFormer9.cellHeight = 100
-        rowFormer9.title = "TextView"
-        rowFormer9.titleEditingColor = .redColor()
-        rowFormer9.placeholder = "Example"
+        rowFormer10.cellHeight = 100
+        rowFormer10.title = "TextView"
+        rowFormer10.titleEditingColor = .redColor()
+        rowFormer10.placeholder = "Example"
         
         let header1 = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class)
         header1.text = "Header1"
@@ -145,12 +204,12 @@ class DemoViewController: FormerViewController {
             .addRowFormers(
                 [rowFormer1, rowFormer2, rowFormer3,
                     rowFormer4, rowFormer5, rowFormer6,
-                    rowFormer7, rowFormer8]
+                    rowFormer7, rowFormer8, rowFormer9, rowFormer11, rowFormer12]
             )
             .setHeaderViewFormer(header1)
         
         let sectionFormer2 = SectionFormer()
-            .addRowFormer(rowFormer9)
+            .addRowFormers([rowFormer10, rowFormer13])
             .setHeaderViewFormer(header2)
             .setFooterViewFormer(footer1)
         

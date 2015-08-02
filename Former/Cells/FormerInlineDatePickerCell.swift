@@ -1,5 +1,5 @@
 //
-//  FormerDateInlinepickerCell.swift
+//  FormerInlineDatePickerCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/1/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerDateInlinePickerCell: FormerCell, DateInlinePickerFormableRow {
+public class FormerInlineDatePickerCell: FormerCell, InlineDatePickerFormableRow {
     
     private var titleLabel: UILabel!
     private var displayField: UITextField!
@@ -28,7 +28,8 @@ public class FormerDateInlinePickerCell: FormerCell, DateInlinePickerFormableRow
         
         super.configureWithRowFormer(rowFormer)
         
-        self.displayFieldRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
+        self.displayFieldRightConst.constant =
+            (self.accessoryType == .None && self.accessoryView == nil) ? -15.0 : 0
     }
     
     public override func configureViews() {

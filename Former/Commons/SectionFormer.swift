@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class SectionFormer {
+public final class SectionFormer: NSObject {
     
     private(set) var rowFormers = [RowFormer]()
     public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class)
@@ -38,25 +38,25 @@ public final class SectionFormer {
         return self
     }
     
-    public func insertRowFormer(rowFormer: RowFormer, atIndex: Int) -> SectionFormer {
+    public func insertRowFormer(rowFormer: RowFormer, toIndex: Int) -> SectionFormer {
         
-        return self.insertRowFormers([rowFormer], atIndex: atIndex)
+        return self.insertRowFormers([rowFormer], toIndex: toIndex)
     }
     
-    public func insertRowFormers(rowFormers: [RowFormer], atIndex: Int) -> SectionFormer {
+    public func insertRowFormers(rowFormers: [RowFormer], toIndex: Int) -> SectionFormer {
         
         self.rowFormers.first?.isTop = false
         self.rowFormers.last?.isBottom = false
         
         let count = self.rowFormers.count
         
-        if count == 0 ||  atIndex >= count {
+        if count == 0 ||  toIndex >= count {
             self.addRowFormers(rowFormers)
-        } else if atIndex == 0 {
+        } else if toIndex == 0 {
             self.rowFormers = rowFormers + self.rowFormers
         } else {
             let last = self.rowFormers.count - 1
-            self.rowFormers = self.rowFormers[0...(atIndex - 1)] + rowFormers + self.rowFormers[atIndex...last]
+            self.rowFormers = self.rowFormers[0...(toIndex - 1)] + rowFormers + self.rowFormers[toIndex...last]
         }
         
         self.rowFormers.first?.isTop = true

@@ -35,7 +35,7 @@ public class DatePickerRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.dateChangedHandler = dateChangedHandler
-            self.cellHeight = 230
+            self.cellHeight = 216.0
             self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
@@ -62,8 +62,8 @@ public class DatePickerRowFormer: RowFormer {
     
     public dynamic func didChangeDate() {
         
-        if let cell = self.cell as? DatePickerFormableRow {
-            let date = cell.formerDatePicker().date
+        if let row = self.cell as? DatePickerFormableRow {
+            let date = row.formerDatePicker().date
             self.date = date
             self.dateChangedHandler?(date)
         }

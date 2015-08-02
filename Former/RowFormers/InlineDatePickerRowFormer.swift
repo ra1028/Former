@@ -1,5 +1,5 @@
 //
-//  DateInlinePickerRowFormer.swift
+//  InlineDatePickerRowFormer.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/1/15.
@@ -8,16 +8,15 @@
 
 import UIKit
 
-public protocol DateInlinePickerFormableRow: FormableRow {
+public protocol InlineDatePickerFormableRow: FormableRow {
     
     func formerTitleLabel() -> UILabel?
     func formerDisplayFieldView() -> UITextField?
 }
 
-public class DateInlinePickerRowFormer: RowFormer, InlinePickableRow {
+public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
     
-    private let observer = FormerObserver()
-    public var pickerRowFormer: RowFormer = DatePickerRowFormer(
+    public private(set) var pickerRowFormer: RowFormer = DatePickerRowFormer(
         cellType: FormerDatePickerCell.self,
         registerType: .Class
     )
@@ -45,7 +44,7 @@ public class DateInlinePickerRowFormer: RowFormer, InlinePickableRow {
     public var titleColor: UIColor?
     public var titleEditingColor: UIColor?
     
-    init<T : UITableViewCell where T : DateInlinePickerFormableRow>(
+    init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         dateChangedHandler: (NSDate -> Void)? = nil) {
@@ -59,7 +58,7 @@ public class DateInlinePickerRowFormer: RowFormer, InlinePickableRow {
         
         super.cellConfigure(cell)
         
-        if let row = self.cell as? DateInlinePickerFormableRow {
+        if let row = self.cell as? InlineDatePickerFormableRow {
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text =? self.title
@@ -90,9 +89,9 @@ public class DateInlinePickerRowFormer: RowFormer, InlinePickableRow {
         }
     }
     
-    public func didChangeDate(date: NSDate) {
+    private func didChangeDate(date: NSDate) {
         
-        if let row = self.cell as? DateInlinePickerFormableRow {
+        if let row = self.cell as? InlineDatePickerFormableRow {
             self.date = date
             row.formerDisplayFieldView()?.text = self.displayTextFromDate?(date) ?? "\(date)"
             self.dateChangedHandler?(date)
@@ -105,7 +104,7 @@ public class DateInlinePickerRowFormer: RowFormer, InlinePickableRow {
     
     public func editingDidBegin() {
         
-        if let row = self.cell as? DateInlinePickerFormableRow {
+        if let row = self.cell as? InlineDatePickerFormableRow {
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
             row.formerDisplayFieldView()?.textColor =? self.displayTextEditingColor
         }
@@ -113,7 +112,7 @@ public class DateInlinePickerRowFormer: RowFormer, InlinePickableRow {
     
     public func editingDidEnd() {
         
-        if let row = self.cell as? DateInlinePickerFormableRow {
+        if let row = self.cell as? InlineDatePickerFormableRow {
             row.formerTitleLabel()?.textColor = self.titleColor
             row.formerDisplayFieldView()?.textColor = self.displayTextColor
         }

@@ -34,7 +34,7 @@ extension InlinePickableRow {
     func editingDidEnd() {}
 }
 
-public class RowFormer {
+public class RowFormer: NSObject {
     
     public internal(set) final weak var cell: UITableViewCell? {
         didSet {
@@ -43,7 +43,6 @@ public class RowFormer {
             }
         }
     }
-    public internal(set) final weak var former: Former?
     public internal(set) final var isTop: Bool = false
     public internal(set) final var isBottom: Bool = false
     public internal(set) final var registered: Bool = false

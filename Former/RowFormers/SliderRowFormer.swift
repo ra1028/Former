@@ -43,7 +43,7 @@ public class SliderRowFormer: RowFormer {
             super.init(cellType: cellType, registerType: registerType)
             self.sliderChangedHandler = sliderChangedHandler
             self.selectionStyle = UITableViewCellSelectionStyle.None
-            self.cellHeight = 80
+            self.cellHeight = 88.0
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
