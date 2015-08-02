@@ -41,6 +41,7 @@ public class FormerCell: UITableViewCell, FormableRow {
     
     public func configure() {
         
+        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.textLabel?.backgroundColor = .clearColor()
         self.separatorInset.left = CGRectGetWidth(self.bounds)
     }
@@ -48,6 +49,7 @@ public class FormerCell: UITableViewCell, FormableRow {
     public func configureViews() {
         
         self.backgroundView = UIView()
+        self.backgroundView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         let topSeparatorView = UIView()
         topSeparatorView.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
