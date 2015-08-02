@@ -32,18 +32,17 @@ public class FormerCell: UITableViewCell, FormableRow {
     public func configureWithRowFormer(rowFormer: RowFormer) {
         
         self.topSeparatorView.backgroundColor = rowFormer.isTop ?
-            (rowFormer.separatorColor ?? UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)) :
+            rowFormer.separatorColor :
             .clearColor()
-        self.bottomSeparatorView.backgroundColor =? rowFormer.separatorColor
-        self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.left ?? 10)
-        self.bottomSeparatorRightConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.right ?? 0)
+        self.bottomSeparatorView.backgroundColor = rowFormer.separatorColor
+        self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : rowFormer.separatorInsets.left
+        self.bottomSeparatorRightConst.constant = rowFormer.isBottom ? 0 : rowFormer.separatorInsets.right
     }
     
     public func configure() {
         
         self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.textLabel?.backgroundColor = .clearColor()
-        self.separatorInset.left = CGRectGetWidth(self.bounds)
     }
     
     public func configureViews() {
@@ -52,14 +51,12 @@ public class FormerCell: UITableViewCell, FormableRow {
         self.backgroundView?.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         
         let topSeparatorView = UIView()
-        topSeparatorView.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
         topSeparatorView.userInteractionEnabled = false
         topSeparatorView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundView?.insertSubview(topSeparatorView, atIndex: 0)
         self.topSeparatorView = topSeparatorView
         
         let bottomSeparatorView = UIView()
-        bottomSeparatorView.backgroundColor = UIColor(red: 209/255, green: 209/255, blue: 212/255, alpha: 1)
         bottomSeparatorView.userInteractionEnabled = false
         bottomSeparatorView.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundView?.insertSubview(bottomSeparatorView, atIndex: 0)

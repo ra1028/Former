@@ -17,6 +17,11 @@ public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
         return self.datePicker
     }
     
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        self.datePicker.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+    }
+    
     override public func configureViews() {
         
         super.configureViews()

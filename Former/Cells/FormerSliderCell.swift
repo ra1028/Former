@@ -29,6 +29,12 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
         return self.slider
     }
     
+    public override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        self.slider.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+    }
+    
     override public func configureViews() {
         
         super.configureViews()

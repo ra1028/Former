@@ -161,9 +161,7 @@ public final class Former: NSObject {
     public func removeRowFormer(rowFormer: RowFormer) -> NSIndexPath? {
         
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            
             if let row = sectionFormer.removeRowFormer(rowFormer) {
-                
                 return NSIndexPath(forRow: row, inSection: section)
             }
         }
@@ -182,8 +180,10 @@ public final class Former: NSObject {
     public func insertRowFormerAndUpdate(rowFormer: RowFormer, toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
         
         self.registerCell(rowFormer)
+        self.tableView?.beginUpdates()
         self[toIndexPath.section].insertRowFormer(rowFormer, toIndex: toIndexPath.row)
         self.tableView?.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: rowAnimation)
+        self.tableView?.endUpdates()
     }
     
     public func deselectSelectedCell(animated: Bool) {
@@ -203,9 +203,6 @@ public final class Former: NSObject {
         
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
-        self.tableView?.separatorStyle = .None
-        self.tableView?.sectionHeaderHeight = 0
-        self.tableView?.sectionFooterHeight = 0
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
@@ -363,7 +360,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+
         let rowFormer = self.rowFormer(indexPath)
         let cellType = rowFormer.cellType
         let cell = tableView.dequeueReusableCellWithIdentifier(

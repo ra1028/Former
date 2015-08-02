@@ -16,11 +16,6 @@ class DemoViewController: FormerViewController {
         self.configure()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.former.reloadFormer()
-    }
-    
     private func configure() {
         
         self.title = "DemoViewController"
@@ -118,10 +113,10 @@ class DemoViewController: FormerViewController {
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class,
             dateChangedHandler: { date in
-                print(textFromDate(date))
+                print(textFromDate(date) + " 1" )
             }
         )
-        rowFormer9.title = "InlineDatePicker"
+        rowFormer9.title = "InlineDatePicker1"
         rowFormer9.datePickerMode = .Date
         rowFormer9.minimumDate = {
             let calendar = NSCalendar.currentCalendar()
@@ -134,10 +129,10 @@ class DemoViewController: FormerViewController {
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class,
             dateChangedHandler: { date in
-                print(textFromDate(date))
+                print(textFromDate(date) + " 2" )
             }
         )
-        rowFormer11.title = "InlineDatePicker"
+        rowFormer11.title = "InlineDatePicker2"
         rowFormer11.datePickerMode = .Date
         rowFormer11.minimumDate = {
             let calendar = NSCalendar.currentCalendar()
@@ -150,10 +145,10 @@ class DemoViewController: FormerViewController {
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class,
             dateChangedHandler: { date in
-                print(textFromDate(date))
+                print(textFromDate(date) + " 3" )
             }
         )
-        rowFormer12.title = "InlineDatePicker"
+        rowFormer12.title = "InlineDatePicker3"
         rowFormer12.datePickerMode = .Date
         rowFormer12.minimumDate = {
             let calendar = NSCalendar.currentCalendar()
@@ -166,10 +161,10 @@ class DemoViewController: FormerViewController {
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class,
             dateChangedHandler: { date in
-                print(textFromDate(date))
+                print(textFromDate(date) + " 4" )
             }
         )
-        rowFormer13.title = "InlineDatePicker"
+        rowFormer13.title = "InlineDatePicker4"
         rowFormer13.datePickerMode = .Date
         rowFormer13.minimumDate = {
             let calendar = NSCalendar.currentCalendar()

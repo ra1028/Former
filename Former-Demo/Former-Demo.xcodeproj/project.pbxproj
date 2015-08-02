@@ -166,9 +166,9 @@
 				2AA46CD11B69412700909F61 /* FormerSegmentedCell.swift */,
 				2A63E7491B6A89D500985361 /* FormerSliderCell.swift */,
 				2A8B737E1B6D8B0A009252F7 /* FormerPickerCell.swift */,
+				2A8B73841B6D922A009252F7 /* FormerInlinePickerCell.swift */,
 				2A8F62741B6BDBDE00860BE6 /* FormerDatePickerCell.swift */,
 				2A8F627A1B6C13B700860BE6 /* FormerInlineDatePickerCell.swift */,
-				2A8B73841B6D922A009252F7 /* FormerInlinePickerCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

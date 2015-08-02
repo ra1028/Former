@@ -25,6 +25,12 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         return self.titleLabel
     }
     
+    public override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        self.textField.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+    }
+    
     public override func configureWithRowFormer(rowFormer: RowFormer) {
         
         super.configureWithRowFormer(rowFormer)

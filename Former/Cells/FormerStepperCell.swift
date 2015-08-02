@@ -29,6 +29,12 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
         return self.stepper
     }
     
+        public override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        self.stepper.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+    }
+    
     override public func configureViews() {
         
         super.configureViews()

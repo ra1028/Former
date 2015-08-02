@@ -31,6 +31,9 @@ public class FormerViewController: UIViewController {
     private func setup() {
         
         self.tableView.backgroundColor = .clearColor()
+        self.tableView.sectionHeaderHeight = 0
+        self.tableView.sectionFooterHeight = 0
+        self.tableView.separatorStyle = .None
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.insertSubview(self.tableView, atIndex: 0)
         let tableConstraints = [

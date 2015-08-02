@@ -16,11 +16,9 @@ public protocol TextViewFormableRow: FormableRow {
 
 public class TextViewRowFormer: RowFormer {
     
-    private let observer = FormerObserver()
     private weak var placeholderLabel: UILabel?
     
     public var textChangedHandler: (String -> Void)?
-    
     public var text: String?
     public var font: UIFont?
     public var textColor: UIColor?
@@ -54,11 +52,10 @@ public class TextViewRowFormer: RowFormer {
         
         super.cellConfigure(cell)
         
-        self.observer.setObservedFormer(self)
-        
         if let row = self.cell as? TextViewFormableRow {
             
             let textView = row.formerTextView()
+            textView.delegate = self
             textView.text =? self.text
             textView.font =? self.font
             textView.textColor =? self.textColor
@@ -115,7 +112,17 @@ public class TextViewRowFormer: RowFormer {
         }
     }
     
-    public dynamic func didChangeText() {
+    private func updatePlaceholderColor(text: String?) {
+        
+        self.placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
+            self.placeholderColor :
+            .clearColor()
+    }
+}
+
+extension TextViewRowFormer: UITextViewDelegate {
+    
+    public func textViewDidChange(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow {
             let text = row.formerTextView().text ?? ""
@@ -125,25 +132,18 @@ public class TextViewRowFormer: RowFormer {
         }
     }
     
-    public dynamic func editingDidBegin() {
+    public func textViewDidBeginEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow {
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
         }
     }
     
-    public dynamic func editingDidEnd() {
+    public func textViewDidEndEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow {
             row.formerTitleLabel()?.textColor = self.titleColor
             row.formerTextView().userInteractionEnabled = false
         }
-    }
-    
-    private func updatePlaceholderColor(text: String?) {
-        
-        self.placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
-            self.placeholderColor :
-            .clearColor()
     }
 }

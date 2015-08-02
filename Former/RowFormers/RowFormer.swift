@@ -54,8 +54,8 @@ public class RowFormer: NSObject {
     public var backgroundColor: UIColor?
     public var accessoryType: UITableViewCellAccessoryType?
     public var selectionStyle: UITableViewCellSelectionStyle?
-    public var separatorColor: UIColor?
-    public var separatorInsets: UIEdgeInsets?
+    public var separatorColor: UIColor = UIColor(red: 209.0 / 255.0, green: 209.0 / 255.0, blue: 212.0 / 255.0, alpha: 1.0)
+    public var separatorInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 0)
     
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,

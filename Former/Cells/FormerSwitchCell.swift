@@ -23,6 +23,12 @@ public class FormerSwitchCell: FormerCell, SwitchFormableRow {
         return self.switchButton
     }
     
+        public override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        self.switchButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+    }
+    
     override public func configureViews() {
         
         super.configureViews()

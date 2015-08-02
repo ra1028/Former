@@ -23,6 +23,12 @@ public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
         return self.segmentedControl
     }
     
+    public override func prepareForReuse() {
+        
+        super.prepareForReuse()
+        self.segmentedControl.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
+    }
+    
     override public func configureViews() {
         
         super.configureViews()
