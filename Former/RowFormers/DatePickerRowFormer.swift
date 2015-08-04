@@ -43,11 +43,12 @@ public class DatePickerRowFormer: RowFormer {
         
         super.cellConfigure(cell)
         
-        self.observer.setObservedFormer(self)
-        
         if let row = self.cell as? DatePickerFormableRow {
             
             let datePicker = row.formerDatePicker()
+            self.observer.setTargetRowFormer(self, control: datePicker, actionEvents: [
+                ("didChangeDate", .ValueChanged)
+                ])
             datePicker.calendar =? self.calendar
             datePicker.minuteInterval =? self.minuteInterval
             datePicker.minimumDate =? self.minimumDate

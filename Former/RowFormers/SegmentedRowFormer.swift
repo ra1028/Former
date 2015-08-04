@@ -43,11 +43,12 @@ public class SegmentedRowFormer: RowFormer {
         
         super.cellConfigure(cell)
         
-        self.observer.setObservedFormer(self)
-        
         if let row = self.cell as? SegmentedFormableRow {
             
             let segmented = row.formerSegmented()
+            self.observer.setTargetRowFormer(self, control: segmented, actionEvents: [
+                ("didChangeValue", .ValueChanged)
+                ])
             segmented.removeAllSegments()
             for (index, title) in self.segmentTitles.enumerate() {
                 segmented.insertSegmentWithTitle(title, atIndex: index, animated: false)

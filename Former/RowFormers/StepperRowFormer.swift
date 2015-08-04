@@ -51,11 +51,12 @@ public class StepperRowFormer: RowFormer {
         
         super.cellConfigure(cell)
         
-        self.observer.setObservedFormer(self)
-        
         if let row = self.cell as? StepperFormableRow {
             
             let stepper = row.formerStepper()
+            self.observer.setTargetRowFormer(self, control: stepper, actionEvents: [
+                ("didChangeValue", .ValueChanged)
+                ])
             stepper.value = self.value
             stepper.tintColor =? self.tintColor
             stepper.continuous =? self.continuous

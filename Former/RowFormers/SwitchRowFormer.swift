@@ -48,9 +48,10 @@ public class SwitchRowFormer: RowFormer {
         
         if let row = self.cell as? SwitchFormableRow {
             
-            self.observer.setObservedFormer(self)
-            
             let switchButton = row.formerSwitch()
+            self.observer.setTargetRowFormer(self, control: switchButton, actionEvents: [
+                ("didChangeSwitch", .ValueChanged)
+                ])
             switchButton.on =? self.switched
             switchButton.onTintColor =? self.switchOnTintColor
             switchButton.thumbTintColor =? self.switchThumbTintColor

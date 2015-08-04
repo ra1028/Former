@@ -52,16 +52,14 @@ public class TextFieldRowFormer: RowFormer {
         
         super.cellConfigure(cell)
         
-        self.observer.setObservedFormer(self)
-        
         if let row = cell as? TextFieldFormableRow {
             
-            let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
-            titleLabel?.textColor = self.titleColor
-            titleLabel?.font = self.font
-            
             let textField = row.formerTextField()
+            self.observer.setTargetRowFormer(self, control: textField, actionEvents: [
+                ("didChangeText", .EditingChanged),
+                ("editingDidBegin", .EditingDidBegin),
+                ("editingDidEnd", .EditingDidEnd)
+                ])
             textField.text = self.text
             textField.placeholder = self.placeholder
             textField.font = self.font
@@ -72,6 +70,11 @@ public class TextFieldRowFormer: RowFormer {
             textField.keyboardType =? self.keyboardType
             textField.returnKeyType =? self.returnKeyType
             textField.userInteractionEnabled = false
+            
+            let titleLabel = row.formerTitleLabel()
+            titleLabel?.text = self.title
+            titleLabel?.textColor = self.titleColor
+            titleLabel?.font = self.font
             
             if let disabledTextColor = self.disabledTextColor where !self.enabled {
                 textField.textColor = disabledTextColor

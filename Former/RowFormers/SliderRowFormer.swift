@@ -50,11 +50,12 @@ public class SliderRowFormer: RowFormer {
         
         super.cellConfigure(cell)
         
-        self.observer.setObservedFormer(self)
-        
         if let row = self.cell as? SliderFormableRow {
             
             let slider = row.formerSlider()
+            self.observer.setTargetRowFormer(self, control: slider, actionEvents: [
+                ("didChangeValue", .ValueChanged)
+                ])
             slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
             slider.continuous =? self.continuous
             slider.minimumValue =? self.minimumValue

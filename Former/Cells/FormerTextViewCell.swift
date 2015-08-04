@@ -28,8 +28,9 @@ public class FormerTextViewCell: FormerCell, TextViewFormableRow {
         
         super.configureWithRowFormer(rowFormer)
         
-        guard let rowFormer = rowFormer as? TextViewRowFormer else { return }
-        self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
+        if let rowFormer = rowFormer as? TextViewRowFormer {
+            self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
+        }
     }
     
     override public func configureViews() {
