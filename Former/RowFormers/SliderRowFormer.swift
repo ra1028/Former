@@ -31,9 +31,11 @@ public class SliderRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     
     public var displayFont: UIFont?
     public var displayColor: UIColor?
+    public var displayDisabledColor: UIColor?
     
     init<T : UITableViewCell where T : SliderFormableRow>(
         cellType: T.Type,
@@ -42,8 +44,16 @@ public class SliderRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.sliderChangedHandler = sliderChangedHandler
-            self.selectionStyle = UITableViewCellSelectionStyle.None
-            self.cellHeight = 88.0
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.titleDisabledColor = .lightGrayColor()
+        self.displayColor = .lightGrayColor()
+        self.displayDisabledColor = .lightGrayColor()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
+        self.cellHeight = 88.0
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -61,22 +71,23 @@ public class SliderRowFormer: RowFormer {
             slider.minimumValue =? self.minimumValue
             slider.maximumValue =? self.maximumValue
             slider.tintColor =? self.tintColor
+            slider.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
+            titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor =? self.titleColor
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
             displayLabel?.font =? self.displayFont
-            displayLabel?.textColor =? self.displayColor
+            displayLabel?.textColor = self.enabled ? self.displayColor : self.displayDisabledColor
         }
     }
     
     public dynamic func didChangeValue() {
         
-        if let cell = self.cell as? SliderFormableRow {
+        if let cell = self.cell as? SliderFormableRow where self.enabled {
             let slider = cell.formerSlider()
             let displayLabel = cell.formerDisplayLabel()
             

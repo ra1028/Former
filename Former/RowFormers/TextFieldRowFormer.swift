@@ -23,6 +23,7 @@ public class TextFieldRowFormer: RowFormer {
     public var placeholder: String?
     public var font: UIFont?
     public var textColor: UIColor?
+    public var textDisabledColor: UIColor?
     public var textAlignment: NSTextAlignment?
     public var tintColor: UIColor?
     public var clearButtonMode: UITextFieldViewMode?
@@ -32,10 +33,8 @@ public class TextFieldRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
-    
-    public var enabled: Bool = true
-    public var disabledTextColor: UIColor?
     
     init<T: UITableViewCell where T: TextFieldFormableRow>(
         cellType: T.Type,
@@ -45,7 +44,14 @@ public class TextFieldRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.textChangedHandler = textChangedHandler
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.textDisabledColor = .lightGrayColor()
+        self.titleDisabledColor = .lightGrayColor()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -62,10 +68,10 @@ public class TextFieldRowFormer: RowFormer {
                 ])
             textField.text = self.text
             textField.placeholder = self.placeholder
-            textField.font = self.font
-            textField.textColor = self.textColor
+            textField.font =? self.font
+            textField.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textField.textAlignment =? self.textAlignment
-            textField.tintColor = self.tintColor
+            textField.tintColor =? self.tintColor
             textField.clearButtonMode =? self.clearButtonMode
             textField.keyboardType =? self.keyboardType
             textField.returnKeyType =? self.returnKeyType
@@ -73,13 +79,8 @@ public class TextFieldRowFormer: RowFormer {
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
-            titleLabel?.textColor = self.titleColor
-            titleLabel?.font = self.font
-            
-            if let disabledTextColor = self.disabledTextColor where !self.enabled {
-                textField.textColor = disabledTextColor
-                titleLabel?.textColor = disabledTextColor
-            }
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            titleLabel?.font =? self.font
         }
     }
     
@@ -87,10 +88,11 @@ public class TextFieldRowFormer: RowFormer {
         
         super.didSelectCell(indexPath)
         
-        if let row = self.cell as? TextFieldFormableRow {
+        if let row = self.cell as? TextFieldFormableRow where self.enabled {
+            
             let textField = row.formerTextField()
             if !textField.editing {
-                textField.userInteractionEnabled = self.enabled
+                textField.userInteractionEnabled = true
                 textField.becomeFirstResponder()
             }
         }
@@ -98,7 +100,7 @@ public class TextFieldRowFormer: RowFormer {
     
     public dynamic func didChangeText() {
         
-        if let row = self.cell as? TextFieldFormableRow {
+        if let row = self.cell as? TextFieldFormableRow where self.enabled {
             let text = row.formerTextField().text ?? ""
             self.text = text
             self.textChangedHandler?(text)
@@ -107,7 +109,7 @@ public class TextFieldRowFormer: RowFormer {
     
     public dynamic func editingDidBegin() {
         
-        if let row = self.cell as? TextFieldFormableRow {
+        if let row = self.cell as? TextFieldFormableRow where self.enabled {
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
         }
     }
@@ -115,7 +117,7 @@ public class TextFieldRowFormer: RowFormer {
     public dynamic func editingDidEnd() {
         
         if let row = self.cell as? TextFieldFormableRow {
-            row.formerTitleLabel()?.textColor = self.titleColor
+            row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             row.formerTextField().userInteractionEnabled = false
         }
     }

@@ -9,11 +9,30 @@
 import UIKit
 
 class DemoViewController: FormerViewController {
+    
+    private var enabled = true
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         self.configure()
+        
+        let rightBarButton = UIBarButtonItem(
+            title: "disable",
+            style: .Plain,
+            target: self,
+            action: "switchEnabled"
+        )
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        
+    }
+    
+    private dynamic func switchEnabled() {
+        
+        self.enabled = !self.enabled
+        self.former.rowFormers.map { $0.enabled = self.enabled }
+        self.former.reloadFormer()
+        self.navigationItem.rightBarButtonItem?.title = self.enabled ? "disable" : "enable"
     }
     
     private func configure() {

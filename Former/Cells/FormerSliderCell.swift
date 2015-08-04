@@ -45,7 +45,6 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
-        displayLabel.textColor = .lightGrayColor()
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel

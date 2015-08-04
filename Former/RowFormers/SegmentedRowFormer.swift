@@ -26,6 +26,7 @@ public class SegmentedRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     
     init<T : UITableViewCell where T : SegmentedFormableRow>(
         cellType: T.Type,
@@ -36,7 +37,13 @@ public class SegmentedRowFormer: RowFormer {
             super.init(cellType: cellType, registerType: registerType)
             self.segmentChangedHandler = segmentChangedHandler
             self.segmentTitles = segmentTitles
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.titleDisabledColor = .lightGrayColor()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -55,17 +62,18 @@ public class SegmentedRowFormer: RowFormer {
             }
             segmented.tintColor =? self.tintColor
             segmented.selectedSegmentIndex = self.selectedIndex
+            segmented.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
+            titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor =? self.titleColor
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
         }
     }
     
     public dynamic func didChangeValue() {
         
-        if let cell = self.cell as? SegmentedFormableRow {
+        if let cell = self.cell as? SegmentedFormableRow where self.enabled {
             let segment = cell.formerSegmented()
             let selectedIndex = segment.selectedSegmentIndex
             let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!

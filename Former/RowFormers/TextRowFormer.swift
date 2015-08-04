@@ -19,12 +19,14 @@ public class TextRowFormer: RowFormer {
     public var text: String?
     public var font: UIFont?
     public var textColor: UIColor?
+    public var textDisabledColor: UIColor?
     public var textAlignment: NSTextAlignment?
     public var numberOfLines: Int?
     
     public var subText: String?
     public var subTextFont: UIFont?
     public var subTextColor: UIColor?
+    public var subTextDisabledColor: UIColor?
     
     override init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
@@ -33,6 +35,15 @@ public class TextRowFormer: RowFormer {
         
             super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
     }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.textDisabledColor = .lightGrayColor()
+        self.subTextColor = .lightGrayColor()
+        self.subTextDisabledColor = .lightGrayColor()
+    }
+    
     public override func cellConfigure(cell: UITableViewCell) {
         
         super.cellConfigure(cell)
@@ -40,16 +51,16 @@ public class TextRowFormer: RowFormer {
         if let row = self.cell as? TextFormableRow {
             
             let textLabel = row.formerTextLabel()
-            textLabel?.text =? self.text
+            textLabel?.text = self.text
             textLabel?.font =? self.font
-            textLabel?.textColor = self.textColor
+            textLabel?.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textLabel?.textAlignment =? self.textAlignment
             textLabel?.numberOfLines =? self.numberOfLines
             
             let subTextLabel = row.formerSubTextLabel()
-            subTextLabel?.text =? self.subText
+            subTextLabel?.text = self.subText
             subTextLabel?.font =? self.subTextFont
-            subTextLabel?.textColor =? self.subTextColor
+            subTextLabel?.textColor = self.enabled ? self.subTextColor : self.subTextDisabledColor
         }
     }
 }

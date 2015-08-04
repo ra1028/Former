@@ -28,13 +28,15 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
     
     public var placeholder: String?
     public var displayTextFont: UIFont?
-    public var displayTextColor: UIColor? = .lightGrayColor()
+    public var displayTextColor: UIColor?
+    public var displayDisabledTextColor: UIColor?
     public var displayTextAlignment: NSTextAlignment?
     public var displayTextEditingColor: UIColor?
     
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
     
     init<T : UITableViewCell where T : InlinePickerFormableRow>(
@@ -44,7 +46,15 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
             
             super.init(cellType: cellType, registerType: registerType)
             self.valueChangedHandler = valueChangedHandler
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.titleDisabledColor = .lightGrayColor()
+        self.displayTextColor = .lightGrayColor()
+        self.displayDisabledTextColor = .lightGrayColor()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -54,15 +64,15 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         if let row = self.cell as? InlinePickerFormableRow {
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
+            titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor =? self.titleColor
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             
             let displayField = row.formerDisplayFieldView()
             displayField?.text = self.valueTitles[self.selectedRow]
-            displayField?.placeholder =? self.placeholder
+            displayField?.placeholder = self.placeholder
             displayField?.font =? self.displayTextFont
-            displayField?.textColor =? self.displayTextColor
+            displayField?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
             displayField?.textAlignment =? self.displayTextAlignment
             displayField?.userInteractionEnabled = false
         }
@@ -73,26 +83,23 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
             pickerRowFormer.valueTitles = self.valueTitles
             pickerRowFormer.selectedRow = self.selectedRow
             pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
+            pickerRowFormer.enabled = self.enabled
         }
     }
     
     private func didChangeValue(row: Int, title: String) {
         
-        if let pickerRow = self.cell as? InlinePickerFormableRow {
+        if let pickerRow = self.cell as? InlinePickerFormableRow where self.enabled {
             self.selectedRow = row
             pickerRow.formerDisplayFieldView()?.text = title
             self.valueChangedHandler?((row, title))
-        }
-        
-        if let pickerRowFormer = self.pickerRowFormer as? PickerRowFormer {
-            pickerRowFormer.selectedRow = row
         }
     }
     
     public func editingDidBegin() {
         
-        if let row = self.cell as? InlinePickerFormableRow {
-            row.formerTitleLabel()?.textColor =? self.titleEditingColor
+        if let row = self.cell as? InlinePickerFormableRow where self.enabled {
+            row.formerTitleLabel()?.textColor = self.titleEditingColor
             row.formerDisplayFieldView()?.textColor =? self.displayTextEditingColor
         }
     }
@@ -100,8 +107,8 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
     public func editingDidEnd() {
         
         if let row = self.cell as? InlinePickerFormableRow {
-            row.formerTitleLabel()?.textColor = self.titleColor
-            row.formerDisplayFieldView()?.textColor = self.displayTextColor
+            row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            row.formerDisplayFieldView()?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
         }
     }
 }

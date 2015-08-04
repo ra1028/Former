@@ -30,7 +30,10 @@ public final class Former: NSObject {
     
     public internal(set) var selectedCellIndexPath: NSIndexPath?
     
-    private var sectionFormers = [SectionFormer]()
+    public private(set) var sectionFormers = [SectionFormer]()
+    public var rowFormers: [RowFormer] {
+        return self.sectionFormers.map { $0.rowFormers }.flatMap { $0 }
+    }
     private weak var inlinePickerRowFormer: RowFormer?
     
     public init(tableView: UITableView) {
@@ -124,6 +127,13 @@ public final class Former: NSObject {
     public func reloadFormer() {
         
         self.tableView?.reloadData()
+        
+        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
+            
+            self.removeRowFormerAndUpdate(oldPickerRowFormer, rowAnimation: .Middle)
+            (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
+            self.inlinePickerRowFormer = nil
+        }
     }
     
     public func reloadSectionFormer(section: Int, rowAnimation: UITableViewRowAnimation = .None) {
@@ -297,6 +307,8 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let rowFormer = self.rowFormer(indexPath)
+        guard rowFormer.enabled else { return }
+        
         rowFormer.didSelectCell(indexPath)
         
         if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {

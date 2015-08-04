@@ -19,7 +19,7 @@ public class SwitchRowFormer: RowFormer {
     private let observer = FormerObserver()
     
     public var switchChangedHandler: (Bool -> Void)?
-    public var switched: Bool?
+    public var switched: Bool = false
     public var switchOnTintColor: UIColor?
     public var switchThumbTintColor: UIColor?
     public var switchTintColor: UIColor?
@@ -28,6 +28,7 @@ public class SwitchRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     
     init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
@@ -36,6 +37,12 @@ public class SwitchRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.switchChangedHandler = switchChangedHandler
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.titleDisabledColor = .lightGrayColor()
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -52,15 +59,16 @@ public class SwitchRowFormer: RowFormer {
             self.observer.setTargetRowFormer(self, control: switchButton, actionEvents: [
                 ("didChangeSwitch", .ValueChanged)
                 ])
-            switchButton.on =? self.switched
+            switchButton.on = self.switched
             switchButton.onTintColor =? self.switchOnTintColor
             switchButton.thumbTintColor =? self.switchThumbTintColor
             switchButton.tintColor =? self.switchTintColor
+            switchButton.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
+            titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor =? self.titleColor
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
         }
     }
     
@@ -69,7 +77,7 @@ public class SwitchRowFormer: RowFormer {
         super.didSelectCell(indexPath)
         self.cell?.setSelected(false, animated: true)
         
-        if let row = self.cell as? SwitchFormableRow where self.switchWithCellSelected {
+        if let row = self.cell as? SwitchFormableRow where self.switchWithCellSelected && self.enabled {
             let switchButton = row.formerSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
             self.didChangeSwitch()
@@ -78,7 +86,7 @@ public class SwitchRowFormer: RowFormer {
     
     public dynamic func didChangeSwitch() {
         
-        if let row = self.cell as? SwitchFormableRow {
+        if let row = self.cell as? SwitchFormableRow where self.enabled {
             let switched = row.formerSwitch().on
             self.switched = switched
             self.switchChangedHandler?(switched)

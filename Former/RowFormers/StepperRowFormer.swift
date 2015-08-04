@@ -33,9 +33,11 @@ public class StepperRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     
     public var displayFont: UIFont?
     public var displayColor: UIColor?
+    public var displayDisabledColor: UIColor?
     
     init<T : UITableViewCell where T : StepperFormableRow>(
         cellType: T.Type,
@@ -44,7 +46,14 @@ public class StepperRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.stepChangedHandler = stepChangedHandler
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
+        self.titleDisabledColor = .lightGrayColor()
+        self.displayDisabledColor = .lightGrayColor()
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -65,22 +74,23 @@ public class StepperRowFormer: RowFormer {
             stepper.minimumValue =? self.minimumValue
             stepper.maximumValue =? self.maximumValue
             stepper.stepValue =? self.stepValue
+            stepper.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
+            titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor =? self.titleColor
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
             displayLabel?.font =? self.displayFont
-            displayLabel?.textColor =? self.displayColor ?? stepper.tintColor
+            displayLabel?.textColor = (self.enabled ? self.displayColor : self.displayDisabledColor) ?? stepper.tintColor
         }
     }
     
     public dynamic func didChangeValue() {
         
-        if let row = self.cell as? StepperFormableRow {
+        if let row = self.cell as? StepperFormableRow where self.enabled {
             let value = row.formerStepper().value
             self.value = value
             row.formerDisplayLabel()?.text = self.displayTextFromValue?(value) ?? "\(value)"

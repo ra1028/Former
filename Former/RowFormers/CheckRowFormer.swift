@@ -20,6 +20,7 @@ public class CheckRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     
     init<T : UITableViewCell where T : CheckFormableRow>(
         cellType: T.Type,
@@ -32,6 +33,12 @@ public class CheckRowFormer: RowFormer {
             self.checked = checked
     }
     
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.titleDisabledColor = .lightGrayColor()
+    }
+    
     public override func cellConfigure(cell: UITableViewCell) {
         
         super.cellConfigure(cell)
@@ -41,8 +48,8 @@ public class CheckRowFormer: RowFormer {
         if let row = cell as? CheckFormableRow {
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
-            titleLabel?.font = self.titleFont
-            titleLabel?.textColor = self.titleColor
+            titleLabel?.font =? self.titleFont
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
         }
     }
     
@@ -50,10 +57,12 @@ public class CheckRowFormer: RowFormer {
         
         super.didSelectCell(indexPath)
         
-        self.checked = !self.checked
-        self.checkChangedHandler?(self.checked)
-        
-        self.cell?.setSelected(false, animated: true)
-        self.cell?.accessoryType = self.checked ? .Checkmark : .None
+        if self.enabled {
+            self.checked = !self.checked
+            self.checkChangedHandler?(self.checked)
+            
+            self.cell?.setSelected(false, animated: true)
+            self.cell?.accessoryType = self.checked ? .Checkmark : .None
+        }
     }
 }

@@ -27,8 +27,13 @@ public class PickerRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.valueChangedHandler = valueChangedHandler
-            self.cellHeight = 216.0
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.cellHeight = 216.0
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     deinit {
@@ -37,7 +42,6 @@ public class PickerRowFormer: RowFormer {
             let datePicker = row.formerPickerView()
             datePicker.delegate = nil
             datePicker.dataSource = nil
-            datePicker.selectRow(self.selectedRow, inComponent: 0, animated: false)
         }
     }
     
@@ -50,7 +54,9 @@ public class PickerRowFormer: RowFormer {
             let datePicker = row.formerPickerView()
             datePicker.delegate = self
             datePicker.dataSource = self
+            datePicker.selectRow(self.selectedRow, inComponent: 0, animated: false)
             datePicker.showsSelectionIndicator =? self.showsSelectionIndicator
+            datePicker.userInteractionEnabled = self.enabled
         }
     }
 }
@@ -59,8 +65,10 @@ extension PickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
     
     public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        self.selectedRow = row
-        self.valueChangedHandler?(row, self.valueTitles[row])
+        if self.enabled {
+            self.selectedRow = row
+            self.valueChangedHandler?(row, self.valueTitles[row])
+        }
     }
     
     public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {

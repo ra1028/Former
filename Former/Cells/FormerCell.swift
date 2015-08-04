@@ -35,8 +35,8 @@ public class FormerCell: UITableViewCell, FormableRow {
             rowFormer.separatorColor :
             .clearColor()
         self.bottomSeparatorView.backgroundColor = rowFormer.separatorColor
-        self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : rowFormer.separatorInsets.left
-        self.bottomSeparatorRightConst.constant = rowFormer.isBottom ? 0 : rowFormer.separatorInsets.right
+        self.bottomSeparatorLeftConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.left ?? 15.0)
+        self.bottomSeparatorRightConst.constant = rowFormer.isBottom ? 0 : (rowFormer.separatorInsets?.right ?? 0)
     }
     
     public func configure() {

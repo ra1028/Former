@@ -22,6 +22,7 @@ public class TextViewRowFormer: RowFormer {
     public var text: String?
     public var font: UIFont?
     public var textColor: UIColor?
+    public var textDisabledColor: UIColor?
     public var textAlignment: NSTextAlignment?
     public var keyboardType: UIKeyboardType?
     public var returnKeyType: UIReturnKeyType?
@@ -29,14 +30,12 @@ public class TextViewRowFormer: RowFormer {
     public var title: String?
     public var titleFont: UIFont?
     public var titleColor: UIColor?
+    public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
     
     public var placeholder: String?
     public var placeholderFont: UIFont?
     public var placeholderColor: UIColor? = .lightGrayColor()
-    
-    public var enabled: Bool = true
-    public var disabledTextColor: UIColor?
     
     init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
@@ -45,7 +44,14 @@ public class TextViewRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.textChangedHandler = textChangedHandler
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.textDisabledColor = .lightGrayColor()
+        self.titleDisabledColor = .lightGrayColor()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -56,23 +62,18 @@ public class TextViewRowFormer: RowFormer {
             
             let textView = row.formerTextView()
             textView.delegate = self
-            textView.text =? self.text
+            textView.text = self.text
             textView.font =? self.font
-            textView.textColor =? self.textColor
+            textView.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textView.textAlignment =? self.textAlignment
             textView.keyboardType =? self.keyboardType
             textView.returnKeyType =? self.returnKeyType
+            textView.userInteractionEnabled = false
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
+            titleLabel?.text = self.title
             titleLabel?.font =? self.font
-            titleLabel?.textColor = self.titleColor
-            
-            textView.userInteractionEnabled = false
-            if let disabledTextColor = self.disabledTextColor where !self.enabled {
-                textView.textColor = disabledTextColor
-                titleLabel?.textColor = disabledTextColor
-            }
+            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             
             if self.placeholderLabel == nil {
                 let placeholderLabel = UILabel()
@@ -95,7 +96,7 @@ public class TextViewRowFormer: RowFormer {
                 ]
                 textView.addConstraints(constraints.flatMap { $0 })
             }
-            self.placeholderLabel?.text =? self.placeholder
+            self.placeholderLabel?.text = self.placeholder
             self.placeholderLabel?.font =? self.placeholderFont
             self.updatePlaceholderColor(textView.text)
         }
@@ -124,7 +125,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     
     public func textViewDidChange(textView: UITextView) {
         
-        if let row = self.cell as? TextViewFormableRow {
+        if let row = self.cell as? TextViewFormableRow where self.enabled {
             let text = row.formerTextView().text ?? ""
             self.text = text
             self.textChangedHandler?(text)
@@ -134,7 +135,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     
     public func textViewDidBeginEditing(textView: UITextView) {
         
-        if let row = self.cell as? TextViewFormableRow {
+        if let row = self.cell as? TextViewFormableRow where self.enabled {
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
         }
     }
@@ -142,7 +143,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     public func textViewDidEndEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow {
-            row.formerTitleLabel()?.textColor = self.titleColor
+            row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             row.formerTextView().userInteractionEnabled = false
         }
     }

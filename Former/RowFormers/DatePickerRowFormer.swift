@@ -35,8 +35,13 @@ public class DatePickerRowFormer: RowFormer {
             
             super.init(cellType: cellType, registerType: registerType)
             self.dateChangedHandler = dateChangedHandler
-            self.cellHeight = 216.0
-            self.selectionStyle = UITableViewCellSelectionStyle.None
+    }
+    
+    public override func configureRowFormer() {
+        
+        super.configureRowFormer()
+        self.cellHeight = 216.0
+        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -58,12 +63,13 @@ public class DatePickerRowFormer: RowFormer {
             datePicker.locale =? self.locale
             datePicker.timeZone =? self.timeZone
             datePicker.setDate(self.date, animated: false)
+            datePicker.enabled = self.enabled
         }
     }
     
     public dynamic func didChangeDate() {
         
-        if let row = self.cell as? DatePickerFormableRow {
+        if let row = self.cell as? DatePickerFormableRow where self.enabled {
             let date = row.formerDatePicker().date
             self.date = date
             self.dateChangedHandler?(date)
