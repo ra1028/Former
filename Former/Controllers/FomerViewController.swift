@@ -30,6 +30,7 @@ public class FormerViewController: UIViewController {
     
     private func setup() {
         
+        self.view.backgroundColor = .groupTableViewBackgroundColor()
         self.tableView.backgroundColor = .clearColor()
         self.tableView.sectionHeaderHeight = 0
         self.tableView.sectionFooterHeight = 0

@@ -73,13 +73,14 @@ public class RowFormer: NSObject {
     
     public func configureRowFormer() {
         
+        self.backgroundColor = .whiteColor()
         self.separatorColor = UIColor(red: 209.0 / 255.0, green: 209.0 / 255.0, blue: 212.0 / 255.0, alpha: 1.0)
         self.separatorInsets = UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 0)
     }
     
     public func cellConfigure(cell: UITableViewCell) {
         
-        cell.backgroundColor =? self.backgroundColor
+        cell.backgroundColor = self.backgroundColor
         cell.selectionStyle = self.enabled ?
             (self.selectionStyle ?? .Default) :
             UITableViewCellSelectionStyle.None

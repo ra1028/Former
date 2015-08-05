@@ -14,13 +14,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let navigationController = UINavigationController(rootViewController: DemoViewController())
+        let navigationController = UINavigationController(rootViewController: TopViewContoller())
+        self.configureNavigationBar(navigationController.navigationBar)
         self.window!.rootViewController = navigationController
         self.window!.makeKeyAndVisible()
         return true
+    }
+    
+    private func configureNavigationBar(navigationBar: UINavigationBar) {
+        
+        navigationBar.tintColor = .whiteColor()
+        navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor(),
+            NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)
+        ]
+        navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBar.shadowImage = UIImage()
+        navigationBar.subviews.map { (view: UIView) -> Void in
+            if view.isKindOfClass(NSClassFromString("_UINavigationBarBackground")!) {
+                view.backgroundColor = .formerColor()
+            }
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -54,7 +54,6 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
         self.displayDisabledTextColor = .lightGrayColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -85,6 +84,12 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
             pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
             pickerRowFormer.enabled = self.enabled
         }
+    }
+    
+    public override func didSelectCell(indexPath: NSIndexPath) {
+        
+        super.didSelectCell(indexPath)
+        self.cell?.setSelected(false, animated: true)
     }
     
     private func didChangeValue(row: Int, title: String) {

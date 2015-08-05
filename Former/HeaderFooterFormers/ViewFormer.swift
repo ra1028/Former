@@ -29,17 +29,24 @@ public class ViewFormer {
     public internal(set) final var registered: Bool = false
     public private(set) var viewType: UITableViewHeaderFooterView.Type
     public private(set) var registerType: Former.RegisterType
-    public var viewHeight: CGFloat = 30.0
+    public var viewHeight: CGFloat = 10.0
     public var backgroundColor: UIColor?
     
     public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type, registerType: Former.RegisterType) {
         
         self.viewType = viewType
         self.registerType = registerType
+        
+        self.configureViewFormer()
+    }
+    
+    public func configureViewFormer() {
+        
+        self.backgroundColor = .groupTableViewBackgroundColor()
     }
     
     public func viewConfigure() {
         
-        self.view?.backgroundView?.backgroundColor =? self.backgroundColor
+        self.view?.contentView.backgroundColor = self.backgroundColor
     }
 }

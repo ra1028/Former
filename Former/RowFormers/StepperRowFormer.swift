@@ -53,6 +53,7 @@ public class StepperRowFormer: RowFormer {
         super.configureRowFormer()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.titleDisabledColor = .lightGrayColor()
+        self.displayColor = .lightGrayColor()
         self.displayDisabledColor = .lightGrayColor()
     }
     
@@ -84,7 +85,7 @@ public class StepperRowFormer: RowFormer {
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
             displayLabel?.font =? self.displayFont
-            displayLabel?.textColor = (self.enabled ? self.displayColor : self.displayDisabledColor) ?? stepper.tintColor
+            displayLabel?.textColor = self.enabled ? self.displayColor : self.displayDisabledColor
         }
     }
     

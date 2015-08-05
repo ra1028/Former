@@ -27,6 +27,5 @@ public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     public func setup() {
         
         self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.backgroundView?.backgroundColor = .groupTableViewBackgroundColor()
     }
 }

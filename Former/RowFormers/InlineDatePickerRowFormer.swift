@@ -61,7 +61,6 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
         self.displayDisabledTextColor = .lightGrayColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -98,6 +97,12 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
             pickerRowFormer.date = self.date
             pickerRowFormer.enabled = self.enabled
         }
+    }
+    
+    public override func didSelectCell(indexPath: NSIndexPath) {
+        
+        super.didSelectCell(indexPath)
+        self.cell?.setSelected(false, animated: true)
     }
     
     private func didChangeDate(date: NSDate) {
