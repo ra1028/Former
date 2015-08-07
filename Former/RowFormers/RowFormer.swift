@@ -57,6 +57,7 @@ public class RowFormer: NSObject {
     public var selectionStyle: UITableViewCellSelectionStyle?
     public var separatorColor: UIColor?
     public var separatorInsets: UIEdgeInsets?
+    public var tintColor: UIColor?
     
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,
@@ -85,6 +86,7 @@ public class RowFormer: NSObject {
             (self.selectionStyle ?? .Default) :
             UITableViewCellSelectionStyle.None
         cell.accessoryType =? self.accessoryType
+        cell.tintColor =? self.tintColor
     }
     
     public func didSelectCell(indexPath: NSIndexPath) {

@@ -18,29 +18,29 @@ final class TopViewContoller: FormerViewController {
     
     private func configure() {
         
+        let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButton
         self.title = "Former"
         
         // Create RowFormers
         
         let firstComponets: [(String, (NSIndexPath -> Void)?)] = [
             ("Edit Profile", { [weak self] _ in
-                self?.former.deselectSelectedCell(true)
-                self?.navigationController?.pushViewController(DemoViewController(), animated: true)})
+                self?.former.deselectSelectedCell(true)})
         ]
         
         let secondComponents: [(String, (NSIndexPath -> Void)?)] = [
             ("Default UI", { [weak self] _ in
                 self?.former.deselectSelectedCell(true)
-                self?.navigationController?.pushViewController(DemoViewController(), animated: true)}),
+                self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)}),
             ("Examples", { [weak self] _ in
                 self?.former.deselectSelectedCell(true)
-                self?.navigationController?.pushViewController(DemoViewController(), animated: true)})
+                self?.navigationController?.pushViewController(DefaultExampleViewController(), animated: true)})
         ]
         
         let thirdComponents: [(String, (NSIndexPath -> Void)?)] = [
             ("Custom UI", { [weak self] _ in
-                self?.former.deselectSelectedCell(true)
-                self?.navigationController?.pushViewController(DemoViewController(), animated: true)})
+                self?.former.deselectSelectedCell(true)})
         ]
         
         let createMenu: ((String, (NSIndexPath -> Void)?) -> TextRowFormer) = {

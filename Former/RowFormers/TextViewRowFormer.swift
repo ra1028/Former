@@ -35,7 +35,7 @@ public class TextViewRowFormer: RowFormer {
     
     public var placeholder: String?
     public var placeholderFont: UIFont?
-    public var placeholderColor: UIColor? = .lightGrayColor()
+    public var placeholderColor: UIColor?
     
     init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
@@ -52,6 +52,7 @@ public class TextViewRowFormer: RowFormer {
         self.textDisabledColor = .lightGrayColor()
         self.titleDisabledColor = .lightGrayColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
+        self.cellHeight = 100.0
     }
     
     public override func cellConfigure(cell: UITableViewCell) {
@@ -72,11 +73,13 @@ public class TextViewRowFormer: RowFormer {
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
-            titleLabel?.font =? self.font
+            titleLabel?.font =? self.titleFont
             titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             
             if self.placeholderLabel == nil {
                 let placeholderLabel = UILabel()
+                placeholderLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
+                placeholderLabel.font = .boldSystemFontOfSize(16.0)
                 placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
                 textView.insertSubview(placeholderLabel, atIndex: 0)
                 self.placeholderLabel = placeholderLabel
@@ -115,7 +118,7 @@ public class TextViewRowFormer: RowFormer {
     
     private func updatePlaceholderColor(text: String?) {
         
-        self.placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
+        self.placeholderLabel?.textColor =? (text?.isEmpty ?? true) ?
             self.placeholderColor :
             .clearColor()
     }

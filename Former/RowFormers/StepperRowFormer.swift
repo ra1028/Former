@@ -22,7 +22,6 @@ public class StepperRowFormer: RowFormer {
     public var stepChangedHandler: (Double -> Void)?
     public var displayTextFromValue: (Double -> String?)?
     public var value: Double = 0
-    public var tintColor: UIColor?
     public var continuous: Bool?
     public var autorepeat: Bool?
     public var wraps: Bool?
@@ -68,7 +67,6 @@ public class StepperRowFormer: RowFormer {
                 ("didChangeValue", .ValueChanged)
                 ])
             stepper.value = self.value
-            stepper.tintColor =? self.tintColor
             stepper.continuous =? self.continuous
             stepper.autorepeat =? self.autorepeat
             stepper.wraps =? self.wraps

@@ -28,12 +28,13 @@ public final class Former: NSObject {
         return self.sectionFormers.count
     }
     
+    public var autoRegister = true
     public internal(set) var selectedCellIndexPath: NSIndexPath?
-    
     public private(set) var sectionFormers = [SectionFormer]()
     public var rowFormers: [RowFormer] {
         return self.sectionFormers.map { $0.rowFormers }.flatMap { $0 }
     }
+    
     private weak var inlinePickerRowFormer: RowFormer?
     
     public init(tableView: UITableView) {
@@ -90,26 +91,6 @@ public final class Former: NSObject {
         self.registerView(viewFormer.viewType, registerType: viewFormer.registerType)
     }
     
-    public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
-        
-        return self[indexPath.section][indexPath.row]
-    }
-    
-    public func addSectionFormer(sectionFormer: SectionFormer, autoRegister: Bool = true) -> Former {
-        
-        self.addSectionFormers([sectionFormer], autoRegister: autoRegister)
-        return self
-    }
-    
-    public func addSectionFormers(sectionFormers: [SectionFormer], autoRegister: Bool = true) -> Former {
-        
-        if autoRegister {
-            self.registerSectionAllCells(sectionFormers)
-        }
-        self.sectionFormers += sectionFormers
-        return self
-    }
-    
     public func registerSectionAllCells(sectionFormers: [SectionFormer]) {
         
         let register: (SectionFormer -> Void) = { sectionFormer in
@@ -122,6 +103,23 @@ public final class Former: NSObject {
         sectionFormers.map {
             register($0)
         }
+    }
+    
+    public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
+        
+        return self[indexPath.section][indexPath.row]
+    }
+    
+    public func addSectionFormer(sectionFormer: SectionFormer) -> Former {
+        
+        self.addSectionFormers([sectionFormer])
+        return self
+    }
+    
+    public func addSectionFormers(sectionFormers: [SectionFormer]) -> Former {
+        
+        self.sectionFormers += sectionFormers
+        return self
     }
     
     public func reloadFormer() {
@@ -164,35 +162,56 @@ public final class Former: NSObject {
     
     public func insertRowFormer(rowFormer: RowFormer, toIndexPath: NSIndexPath) {
         
-        self.registerCell(rowFormer)
         self[toIndexPath.section].insertRowFormer(rowFormer, toIndex: toIndexPath.row)
     }
     
-    public func removeRowFormer(rowFormer: RowFormer) -> NSIndexPath? {
+    public func insertRowFormerAndUpdate(rowFormer: RowFormer, toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
         
+        self.tableView?.beginUpdates()
+        self[toIndexPath.section].insertRowFormer(rowFormer, toIndex: toIndexPath.row)
+        self.tableView?.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: rowAnimation)
+        self.tableView?.endUpdates()
+    }
+    
+    public func insertRowFormersAndUpdate(rowFormers: [RowFormer], toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
+        
+        self.tableView?.beginUpdates()
+        self[toIndexPath.section].insertRowFormers(rowFormers, toIndex: toIndexPath.row)
+        let insertIndexPaths = (0..<rowFormers.count).map {
+            NSIndexPath(forRow: toIndexPath.row + $0, inSection: toIndexPath.section)
+        }
+        self.tableView?.insertRowsAtIndexPaths(insertIndexPaths, withRowAnimation: rowAnimation)
+        self.tableView?.endUpdates()
+    }
+    
+    public func removeRowFormers(rowFormers: [RowFormer]) -> [NSIndexPath] {
+        
+        var removeIndexPaths = [NSIndexPath]()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            if let row = sectionFormer.removeRowFormer(rowFormer) {
-                return NSIndexPath(forRow: row, inSection: section)
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+                if rowFormers.contains(rowFormer) {
+                    removeIndexPaths += [NSIndexPath(forRow: row, inSection: section)]
+                    sectionFormer.removeRowFormer(rowFormer)
+                }
             }
         }
-        return nil
+        return removeIndexPaths
     }
     
     public func removeRowFormerAndUpdate(rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .None) {
         
         self.tableView?.beginUpdates()
-        if let oldIndexPath = self.removeRowFormer(rowFormer) {
+        if let oldIndexPath = self.removeRowFormers([rowFormer]).first {
             self.tableView?.deleteRowsAtIndexPaths([oldIndexPath], withRowAnimation: rowAnimation)
         }
         self.tableView?.endUpdates()
     }
     
-    public func insertRowFormerAndUpdate(rowFormer: RowFormer, toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
+    public func removeRowFormersAndUpdate(rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) {
         
-        self.registerCell(rowFormer)
         self.tableView?.beginUpdates()
-        self[toIndexPath.section].insertRowFormer(rowFormer, toIndex: toIndexPath.row)
-        self.tableView?.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: rowAnimation)
+        let oldIndexPaths = self.removeRowFormers(rowFormers)
+        self.tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
         self.tableView?.endUpdates()
     }
     
@@ -317,7 +336,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
                 where rowFormer !== self.inlinePickerRowFormer {
                     
                     self.tableView?.beginUpdates()
-                    if let removedIndexPath = self.removeRowFormer(oldPickerRowFormer) {
+                    if let removedIndexPath = self.removeRowFormers([oldPickerRowFormer]).first {
                         let insertIndexPath =
                         (removedIndexPath.section == indexPath.section && removedIndexPath.row < indexPath.row)
                             ? indexPath : NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
@@ -374,6 +393,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let rowFormer = self.rowFormer(indexPath)
+        if self.autoRegister { self.registerCell(rowFormer) }
         let cellType = rowFormer.cellType
         let cell = tableView.dequeueReusableCellWithIdentifier(
             cellType.reuseIdentifier,
@@ -401,6 +421,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         guard let viewFormer = self[section].headerViewFormer else { return nil }
+        if self.autoRegister { self.registerView(viewFormer) }
         let viewType = viewFormer.viewType
         let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(viewType.reuseIdentifier)
         if let formableHeaderView = headerView as? FormableView {

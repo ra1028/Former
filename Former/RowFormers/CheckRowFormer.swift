@@ -25,12 +25,10 @@ public class CheckRowFormer: RowFormer {
     init<T : UITableViewCell where T : CheckFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        checked: Bool = false,
         checkChangedHandler: (Bool -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)            
             self.checkChangedHandler = checkChangedHandler
-            self.checked = checked
     }
     
     public override func configureRowFormer() {

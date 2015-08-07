@@ -20,7 +20,6 @@ public class SegmentedRowFormer: RowFormer {
     
     public var segmentChangedHandler: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
-    public var tintColor: UIColor?
     public var selectedIndex: Int = 0
     
     public var title: String?
@@ -60,7 +59,6 @@ public class SegmentedRowFormer: RowFormer {
             for (index, title) in self.segmentTitles.enumerate() {
                 segmented.insertSegmentWithTitle(title, atIndex: index, animated: false)
             }
-            segmented.tintColor =? self.tintColor
             segmented.selectedSegmentIndex = self.selectedIndex
             segmented.enabled = self.enabled
             

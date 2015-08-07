@@ -10,7 +10,7 @@ import UIKit
 
 public final class SectionFormer: NSObject {
     
-    private(set) var rowFormers = [RowFormer]()
+    public private(set) var rowFormers = [RowFormer]()
     public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class)
     public private(set) var footerViewFormer: ViewFormer?
     
@@ -67,7 +67,6 @@ public final class SectionFormer: NSObject {
     public func removeRowFormer(rowFormer: RowFormer) -> Int? {
         
         for (index, oldRowFormers) in self.rowFormers.enumerate() {
-            
             if oldRowFormers === rowFormer {
                 self.removeRowFormer(index)
                 return index
@@ -77,8 +76,18 @@ public final class SectionFormer: NSObject {
     }
     
     public func removeRowFormer(atIndex: Int) {
-        
+
         self.rowFormers.removeAtIndex(atIndex)
+    }
+    
+    public func removeRowFormer(range: Range<Int>) {
+        
+        self.rowFormers.removeRange(range)
+    }
+    
+    public func removeRowFormers(rowFormers: [RowFormer]) {
+        
+        rowFormers.map { self.removeRowFormer($0) }
     }
     
     public func setHeaderViewFormer(viewFormer: ViewFormer?) -> SectionFormer {

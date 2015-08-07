@@ -26,7 +26,6 @@ public class SliderRowFormer: RowFormer {
     public var continuous: Bool?
     public var minimumValue: Float?
     public var maximumValue: Float?
-    public var tintColor: UIColor?
     
     public var title: String?
     public var titleFont: UIFont?

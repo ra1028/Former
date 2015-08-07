@@ -25,7 +25,6 @@ public class TextFieldRowFormer: RowFormer {
     public var textColor: UIColor?
     public var textDisabledColor: UIColor?
     public var textAlignment: NSTextAlignment?
-    public var tintColor: UIColor?
     public var clearButtonMode: UITextFieldViewMode?
     public var keyboardType: UIKeyboardType?
     public var returnKeyType: UIReturnKeyType?
@@ -71,7 +70,6 @@ public class TextFieldRowFormer: RowFormer {
             textField.font =? self.font
             textField.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textField.textAlignment =? self.textAlignment
-            textField.tintColor =? self.tintColor
             textField.clearButtonMode =? self.clearButtonMode
             textField.keyboardType =? self.keyboardType
             textField.returnKeyType =? self.returnKeyType
