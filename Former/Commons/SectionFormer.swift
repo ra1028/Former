@@ -10,11 +10,14 @@ import UIKit
 
 public final class SectionFormer: NSObject {
     
+    // MARK: Public
+    
     public private(set) var rowFormers = [RowFormer]()
     public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class)
     public private(set) var footerViewFormer: ViewFormer?
     
-    public var numberOfRowFormers: Int {
+    public var numberOfRows: Int {
+        
         return self.rowFormers.count
     }
     
@@ -23,12 +26,7 @@ public final class SectionFormer: NSObject {
         return self.rowFormers[index]
     }
     
-    public func addRowFormer(rowFormer: RowFormer) -> SectionFormer {
-        
-        return self.addRowFormers([rowFormer])
-    }
-    
-    public func addRowFormers(rowFormers: [RowFormer]) -> SectionFormer {
+    public func add(rowFormers rowFormers: [RowFormer]) -> SectionFormer {
         
         self.rowFormers.last?.isBottom = false
         self.rowFormers += rowFormers
@@ -38,12 +36,7 @@ public final class SectionFormer: NSObject {
         return self
     }
     
-    public func insertRowFormer(rowFormer: RowFormer, toIndex: Int) -> SectionFormer {
-        
-        return self.insertRowFormers([rowFormer], toIndex: toIndex)
-    }
-    
-    public func insertRowFormers(rowFormers: [RowFormer], toIndex: Int) -> SectionFormer {
+    public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> SectionFormer {
         
         self.rowFormers.first?.isTop = false
         self.rowFormers.last?.isBottom = false
@@ -51,7 +44,7 @@ public final class SectionFormer: NSObject {
         let count = self.rowFormers.count
         
         if count == 0 ||  toIndex >= count {
-            self.addRowFormers(rowFormers)
+            self.add(rowFormers: rowFormers)
         } else if toIndex == 0 {
             self.rowFormers = rowFormers + self.rowFormers
         } else {
@@ -64,15 +57,13 @@ public final class SectionFormer: NSObject {
         return self
     }
     
-    public func removeRowFormer(rowFormer: RowFormer) -> Int? {
+    public func remove(rowFormers rowFormers: [RowFormer]) {
         
-        for (index, oldRowFormers) in self.rowFormers.enumerate() {
-            if oldRowFormers === rowFormer {
+        for (index, rowFormer) in self.rowFormers.enumerate() {
+            if rowFormers.contains(rowFormer) {
                 self.removeRowFormer(index)
-                return index
             }
         }
-        return nil
     }
     
     public func removeRowFormer(atIndex: Int) {
@@ -85,18 +76,13 @@ public final class SectionFormer: NSObject {
         self.rowFormers.removeRange(range)
     }
     
-    public func removeRowFormers(rowFormers: [RowFormer]) {
-        
-        rowFormers.map { self.removeRowFormer($0) }
-    }
-    
-    public func setHeaderViewFormer(viewFormer: ViewFormer?) -> SectionFormer {
+    public func set(headerViewFormer viewFormer: ViewFormer?) -> SectionFormer {
         
         self.headerViewFormer = viewFormer
         return self
     }
     
-    public func setFooterViewFormer(viewFormer: ViewFormer?) -> SectionFormer {
+    public func set(footerViewFormer viewFormer: ViewFormer?) -> SectionFormer {
         
         self.footerViewFormer = viewFormer
         return self

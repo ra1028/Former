@@ -38,9 +38,9 @@ public class SegmentedRowFormer: RowFormer {
             self.segmentTitles = segmentTitles
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
     }

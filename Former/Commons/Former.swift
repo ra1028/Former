@@ -24,18 +24,19 @@ public final class Former: NSObject {
         }
     }
     
-    public var numberOfSectionFormers: Int {
+    public var numberOfSections: Int {
+        
         return self.sectionFormers.count
     }
     
-    public var autoRegister = true
-    public internal(set) var selectedCellIndexPath: NSIndexPath?
-    public private(set) var sectionFormers = [SectionFormer]()
     public var rowFormers: [RowFormer] {
+        
         return self.sectionFormers.map { $0.rowFormers }.flatMap { $0 }
     }
     
-    private weak var inlinePickerRowFormer: RowFormer?
+    public private(set) var sectionFormers = [SectionFormer]()
+    
+    public var autoRegisterEnabled = true
     
     public init(tableView: UITableView) {
         
@@ -53,56 +54,40 @@ public final class Former: NSObject {
         return self.sectionFormers[index]
     }
     
-    public func registerCell(cellType: UITableViewCell.Type, registerType: RegisterType) {
+    public func register(cellType type: UITableViewCell.Type, registerType: RegisterType) {
         
         switch registerType {
             
         case .Nib(let nibName, let bundle):
-            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forCellReuseIdentifier: cellType.reuseIdentifier)
+            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forCellReuseIdentifier: type.reuseIdentifier)
         case .Class:
-            self.tableView?.registerClass(cellType, forCellReuseIdentifier: cellType.reuseIdentifier)
+            self.tableView?.registerClass(type, forCellReuseIdentifier: type.reuseIdentifier)
         }
     }
     
-    public func registerView(viewType: UITableViewHeaderFooterView.Type, registerType: RegisterType) {
-        
-        self.tableView?.registerClass(viewType, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+    public func register(viewType type: UITableViewHeaderFooterView.Type, registerType: RegisterType) {
         
         switch registerType {
             
         case .Nib(let nibName, let bundle):
-            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forHeaderFooterViewReuseIdentifier: type.reuseIdentifier)
         case .Class:
-            self.tableView?.registerClass(viewType, forHeaderFooterViewReuseIdentifier: viewType.reuseIdentifier)
+            self.tableView?.registerClass(type, forHeaderFooterViewReuseIdentifier: type.reuseIdentifier)
         }
     }
     
-    public func registerCell(rowFormer: RowFormer) {
+    public func register(rowFormer rowFormer: RowFormer) {
         
         if rowFormer.registered { return }
         rowFormer.registered = true
-        self.registerCell(rowFormer.cellType, registerType: rowFormer.registerType)
+        self.register(cellType: rowFormer.cellType, registerType: rowFormer.registerType)
     }
     
-    public func registerView(viewFormer: ViewFormer) {
+    public func register(viewFormer viewFormer: ViewFormer) {
         
         if viewFormer.registered { return }
         viewFormer.registered = true
-        self.registerView(viewFormer.viewType, registerType: viewFormer.registerType)
-    }
-    
-    public func registerSectionAllCells(sectionFormers: [SectionFormer]) {
-        
-        let register: (SectionFormer -> Void) = { sectionFormer in
-            if let header = sectionFormer.headerViewFormer { self.registerView(header) }
-            if let footer = sectionFormer.footerViewFormer { self.registerView(footer) }
-            sectionFormer.rowFormers.map {
-                self.registerCell($0)
-            }
-        }
-        sectionFormers.map {
-            register($0)
-        }
+        self.register(viewType: viewFormer.viewType, registerType: viewFormer.registerType)
     }
     
     public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
@@ -110,16 +95,27 @@ public final class Former: NSObject {
         return self[indexPath.section][indexPath.row]
     }
     
-    public func addSectionFormer(sectionFormer: SectionFormer) -> Former {
-        
-        self.addSectionFormers([sectionFormer])
-        return self
-    }
-    
-    public func addSectionFormers(sectionFormers: [SectionFormer]) -> Former {
+    public func add(sectionFormers sectionFormers: [SectionFormer]) -> Former {
         
         self.sectionFormers += sectionFormers
         return self
+    }
+    
+    public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
+        
+        self.tableView?.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: scrollPosition)
+    }
+    
+    public func select(rowFormer rowFormer: RowFormer, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) {
+        
+        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+            for (row, oldRowFormer) in sectionFormer.rowFormers.enumerate() {
+                if rowFormer === oldRowFormer {
+                    self.select(indexPath: NSIndexPath(forRow: row, inSection: section), animated: animated, scrollPosition: scrollPosition)
+                    return
+                }
+            }
+        }
     }
     
     public func reloadFormer() {
@@ -128,55 +124,44 @@ public final class Former: NSObject {
         
         if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
             
-            self.removeRowFormerAndUpdate(oldPickerRowFormer, rowAnimation: .Middle)
+            self.removeAndUpdate(rowFormers: [oldPickerRowFormer], rowAnimation: .Middle)
             (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
             self.inlinePickerRowFormer = nil
         }
     }
     
-    public func reloadSectionFormer(section: Int, rowAnimation: UITableViewRowAnimation = .None) {
+    public func reload(section section: Int, rowAnimation: UITableViewRowAnimation = .None) {
         
         guard self.sectionFormers.count > section && section >= 0 else { return }
         self.tableView?.reloadSections(NSIndexSet(index: section), withRowAnimation: rowAnimation)
     }
     
-    public func reloadRow(indexPaths: [NSIndexPath], rowAnimation: UITableViewRowAnimation) {
+    public func reload(indexPaths indexPaths: [NSIndexPath], rowAnimation: UITableViewRowAnimation) {
         
         self.tableView?.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
     }
     
-    public func reloadRowFormer(rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation) {
+    public func reload(rowFormer rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation) {
         
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             for (row, oldRowFormer) in sectionFormer.rowFormers.enumerate() {
                 if rowFormer === oldRowFormer {
-                    self.reloadRow(
-                        [NSIndexPath(forRow: row, inSection: section)],
-                        rowAnimation: rowAnimation
-                    )
+                    self.reload(indexPaths: [NSIndexPath(forRow: row, inSection: section)], rowAnimation: rowAnimation)
                     return
                 }
             }
         }
     }
     
-    public func insertRowFormer(rowFormer: RowFormer, toIndexPath: NSIndexPath) {
+    public func insert(rowFormer rowFormer: RowFormer, toIndexPath: NSIndexPath) {
         
-        self[toIndexPath.section].insertRowFormer(rowFormer, toIndex: toIndexPath.row)
+        self[toIndexPath.section].insert(rowFormers: [rowFormer], toIndex: toIndexPath.row)
     }
     
-    public func insertRowFormerAndUpdate(rowFormer: RowFormer, toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
+    public func insertAndUpdate(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
         
         self.tableView?.beginUpdates()
-        self[toIndexPath.section].insertRowFormer(rowFormer, toIndex: toIndexPath.row)
-        self.tableView?.insertRowsAtIndexPaths([toIndexPath], withRowAnimation: rowAnimation)
-        self.tableView?.endUpdates()
-    }
-    
-    public func insertRowFormersAndUpdate(rowFormers: [RowFormer], toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) {
-        
-        self.tableView?.beginUpdates()
-        self[toIndexPath.section].insertRowFormers(rowFormers, toIndex: toIndexPath.row)
+        self[toIndexPath.section].insert(rowFormers: rowFormers, toIndex: toIndexPath.row)
         let insertIndexPaths = (0..<rowFormers.count).map {
             NSIndexPath(forRow: toIndexPath.row + $0, inSection: toIndexPath.section)
         }
@@ -184,47 +169,40 @@ public final class Former: NSObject {
         self.tableView?.endUpdates()
     }
     
-    public func removeRowFormers(rowFormers: [RowFormer]) -> [NSIndexPath] {
+    public func remove(rowFormers rowFormers: [RowFormer]) -> [NSIndexPath] {
         
         var removeIndexPaths = [NSIndexPath]()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
                 if rowFormers.contains(rowFormer) {
                     removeIndexPaths += [NSIndexPath(forRow: row, inSection: section)]
-                    sectionFormer.removeRowFormer(rowFormer)
+                    sectionFormer.remove(rowFormers: [rowFormer])
                 }
             }
         }
         return removeIndexPaths
     }
     
-    public func removeRowFormerAndUpdate(rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .None) {
+    public func removeAndUpdate(rowFormers rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) {
         
         self.tableView?.beginUpdates()
-        if let oldIndexPath = self.removeRowFormers([rowFormer]).first {
-            self.tableView?.deleteRowsAtIndexPaths([oldIndexPath], withRowAnimation: rowAnimation)
-        }
-        self.tableView?.endUpdates()
-    }
-    
-    public func removeRowFormersAndUpdate(rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) {
-        
-        self.tableView?.beginUpdates()
-        let oldIndexPaths = self.removeRowFormers(rowFormers)
+        let oldIndexPaths = self.remove(rowFormers: rowFormers)
         self.tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
         self.tableView?.endUpdates()
     }
     
-    public func deselectSelectedCell(animated: Bool) {
+    public func deselect(animated: Bool) {
         
-        if let indexPath = self.selectedCellIndexPath {
+        if let indexPath = self.selectedIndexPath {
             self.tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
         }
-        self.selectedCellIndexPath = nil
+        self.selectedIndexPath = nil
     }
     
     // MARK: Private
     
+    private weak var inlinePickerRowFormer: RowFormer?
+    private var selectedIndexPath: NSIndexPath?
     private var oldBottomContentInset: CGFloat?
     private var contentInsetAdjusted = false
     
@@ -250,13 +228,13 @@ public final class Former: NSObject {
         return nil
     }
     
-    private func findRowFormer(view: UIView?) -> UITableViewCell? {
+    private func findCellWithSubView(view: UIView?) -> UITableViewCell? {
         
         if let view = view {
             if let cell = view as? UITableViewCell {
                 return cell
             }
-            return self.findRowFormer(view.superview)
+            return self.findCellWithSubView(view.superview)
         }
         return nil
     }
@@ -265,7 +243,7 @@ public final class Former: NSObject {
         
         guard let keyboardInfo = notification.userInfo else { return }
         
-        if case let (tableView?, cell?) = (self.tableView, self.findRowFormer(self.findFirstResponder(self.tableView))) where !self.contentInsetAdjusted {
+        if case let (tableView?, cell?) = (self.tableView, self.findCellWithSubView(self.findFirstResponder(self.tableView))) where !self.contentInsetAdjusted {
             
             let frame = keyboardInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue
             let keyboardFrame = tableView.window!.convertRect(frame, toView: tableView.superview!)
@@ -313,13 +291,13 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
         self.tableView?.endEditing(true)
-        self.selectedCellIndexPath = nil
+        self.selectedIndexPath = nil
     }
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
         self.tableView?.endEditing(true)
-        self.selectedCellIndexPath = indexPath
+        self.selectedIndexPath = indexPath
         return indexPath
     }
     
@@ -336,11 +314,11 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
                 where rowFormer !== self.inlinePickerRowFormer {
                     
                     self.tableView?.beginUpdates()
-                    if let removedIndexPath = self.removeRowFormers([oldPickerRowFormer]).first {
+                    if let removedIndexPath = self.remove(rowFormers: [oldPickerRowFormer]).first {
                         let insertIndexPath =
                         (removedIndexPath.section == indexPath.section && removedIndexPath.row < indexPath.row)
                             ? indexPath : NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
-                        self.insertRowFormer(currentPickerRowFormer, toIndexPath: insertIndexPath)
+                        self.insert(rowFormer: currentPickerRowFormer, toIndexPath: insertIndexPath)
                         self.tableView?.deleteRowsAtIndexPaths([removedIndexPath], withRowAnimation: .Middle)
                         self.tableView?.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Middle)
                     }
@@ -349,7 +327,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
                     (rowFormer as? InlinePickableRow)?.editingDidBegin()
                     self.inlinePickerRowFormer = rowFormer
             } else {
-                self.removeRowFormerAndUpdate(oldPickerRowFormer, rowAnimation: .Middle)
+                self.removeAndUpdate(rowFormers: [oldPickerRowFormer], rowAnimation: .Middle)
                 (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
                 self.inlinePickerRowFormer = nil
             }
@@ -357,7 +335,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
             
             let pickerRowFormer = inlinePickerRowFormer.pickerRowFormer
             let pickerIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
-            self.insertRowFormerAndUpdate(pickerRowFormer, toIndexPath: pickerIndexPath, rowAnimation: .Middle)
+            self.insertAndUpdate(rowFormers: [pickerRowFormer], toIndexPath: pickerIndexPath, rowAnimation: .Middle)
             (rowFormer as? InlinePickableRow)?.editingDidBegin()
             self.inlinePickerRowFormer = rowFormer
         }
@@ -377,12 +355,12 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return self.numberOfSectionFormers
+        return self.numberOfSections
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self[section].numberOfRowFormers
+        return self[section].numberOfRows
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -393,7 +371,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let rowFormer = self.rowFormer(indexPath)
-        if self.autoRegister { self.registerCell(rowFormer) }
+        if self.autoRegisterEnabled { self.register(rowFormer: rowFormer) }
         let cellType = rowFormer.cellType
         let cell = tableView.dequeueReusableCellWithIdentifier(
             cellType.reuseIdentifier,
@@ -421,7 +399,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         guard let viewFormer = self[section].headerViewFormer else { return nil }
-        if self.autoRegister { self.registerView(viewFormer) }
+        if self.autoRegisterEnabled { self.register(viewFormer: viewFormer) }
         let viewType = viewFormer.viewType
         let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(viewType.reuseIdentifier)
         if let formableHeaderView = headerView as? FormableView {

@@ -55,9 +55,9 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
             self.dateChangedHandler = dateChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
         self.displayDisabledTextColor = .lightGrayColor()

@@ -29,7 +29,7 @@ class DefaultUIViewController: FormerViewController {
             cellType: FormerTextCell.self,
             registerType: .Class,
             selectedHandler: { [weak self] indexPath in
-                self?.former.deselectSelectedCell(true)
+                self?.former.deselect(true)
             }
         )
         rowFormer1.text = "Text"
@@ -116,13 +116,12 @@ class DefaultUIViewController: FormerViewController {
         // Create SectionFormers
         
         let sectionFormer1 = SectionFormer()
-            .addRowFormers(
+            .add(rowFormers:
                 [rowFormer1, rowFormer2, rowFormer3,
                     rowFormer4, rowFormer5, rowFormer6,
                     rowFormer7, rowFormer8, rowFormer9,
-                    rowFormer10]
-            )
+                    rowFormer10])
         
-        self.former.addSectionFormer(sectionFormer1)
+        self.former.add(sectionFormers: [sectionFormer1])
     }
 }

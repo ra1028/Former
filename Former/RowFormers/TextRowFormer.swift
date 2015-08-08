@@ -36,9 +36,9 @@ public class TextRowFormer: RowFormer {
             super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.textDisabledColor = .lightGrayColor()
         self.subTextColor = .lightGrayColor()
         self.subTextDisabledColor = .lightGrayColor()

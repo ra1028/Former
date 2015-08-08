@@ -12,13 +12,14 @@ class DefaultExampleViewController: FormerViewController {
     
     private lazy var subRowFormers: [RowFormer] = {
         
-        return (1...5).map { index -> RowFormer in
+        return (1...3).map { index -> RowFormer in
             let row = CheckRowFormer(
                 cellType: FormerCheckCell.self,
                 registerType: .Class) { check in
             }
-            row.title = "Sub\(index)"
+            row.title = "Check\(index)"
             row.titleColor = .formerColor()
+            row.tintColor = .formerColor()
             row.titleFont = .boldSystemFontOfSize(16.0)
             return row
         }
@@ -42,22 +43,24 @@ class DefaultExampleViewController: FormerViewController {
                 
                 if let sSelf = self {
                     if on {
-                        sSelf.former.insertRowFormersAndUpdate(sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 0), rowAnimation: .Middle)
+                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 0), rowAnimation: .Middle)
                     } else {
-                        sSelf.former.removeRowFormersAndUpdate(sSelf.subRowFormers, rowAnimation: .Middle)
+                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Middle)
                     }
                 }
         }
         mainSwitch.title = "Switch"
         mainSwitch.titleColor = .formerColor()
+        mainSwitch.switchOnTintColor = .formerColor()
         mainSwitch.titleFont = .boldSystemFontOfSize(16.0)
+        mainSwitch.switchWhenSelected = true
         mainSwitch.switched = false
         
         // Create SectionFormers
         
         let section1 = SectionFormer()
-        .addRowFormers([mainSwitch])
+            .add(rowFormers: [mainSwitch])
         
-        self.former.addSectionFormers([section1])
+        self.former.add(sectionFormers: [section1])
     }
 }

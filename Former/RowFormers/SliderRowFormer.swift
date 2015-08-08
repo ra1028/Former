@@ -45,9 +45,9 @@ public class SliderRowFormer: RowFormer {
             self.sliderChangedHandler = sliderChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
         self.displayColor = .lightGrayColor()
         self.displayDisabledColor = .lightGrayColor()

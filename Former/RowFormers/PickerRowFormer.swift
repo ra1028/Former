@@ -29,9 +29,9 @@ public class PickerRowFormer: RowFormer {
             self.valueChangedHandler = valueChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.cellHeight = 216.0
         self.selectionStyle = UITableViewCellSelectionStyle.None
     }

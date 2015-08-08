@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerObserver: NSObject {
+final class FormerObserver: NSObject {
     
     private weak var observedRowFormer: RowFormer?
     private weak var observedControl: UIControl?
@@ -23,14 +23,14 @@ public class FormerObserver: NSObject {
         self.removeAllTarget()
     }
     
-    public func removeAllTarget() {
+    func removeAllTarget() {
         
         self.observedControl?.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
         self.observedRowFormer = nil
         self.observedControl = nil
     }
     
-    public func setTargetRowFormer(rowFormer: RowFormer, control: UIControl, actionEvents: [(Selector, UIControlEvents)]) {
+    func setTargetRowFormer(rowFormer: RowFormer, control: UIControl, actionEvents: [(Selector, UIControlEvents)]) {
         
         self.removeAllTarget()
         self.observedRowFormer = rowFormer

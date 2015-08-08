@@ -31,9 +31,9 @@ public class CheckRowFormer: RowFormer {
             self.checkChangedHandler = checkChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
     }
     

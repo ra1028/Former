@@ -69,10 +69,10 @@ public class RowFormer: NSObject {
             super.init()
             
             self.selectedHandler = selectedHandler
-            self.configureRowFormer()
+            self.initializeRowFomer()
     }
     
-    public func configureRowFormer() {
+    public func initializeRowFomer() {
         
         self.backgroundColor = .whiteColor()
         self.separatorColor = UIColor(red: 209.0 / 255.0, green: 209.0 / 255.0, blue: 212.0 / 255.0, alpha: 1.0)

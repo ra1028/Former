@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBar.tintColor = .whiteColor()
         navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor(),
-            NSFontAttributeName: UIFont.boldSystemFontOfSize(18.0)
+            NSFontAttributeName: UIFont.boldSystemFontOfSize(20.0)
         ]
         navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationBar.shadowImage = UIImage()

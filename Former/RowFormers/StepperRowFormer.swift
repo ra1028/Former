@@ -47,9 +47,9 @@ public class StepperRowFormer: RowFormer {
             self.stepChangedHandler = stepChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.titleDisabledColor = .lightGrayColor()
         self.displayColor = .lightGrayColor()

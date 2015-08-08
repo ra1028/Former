@@ -45,9 +45,9 @@ public class TextFieldRowFormer: RowFormer {
             self.textChangedHandler = textChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.textDisabledColor = .lightGrayColor()
         self.titleDisabledColor = .lightGrayColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None

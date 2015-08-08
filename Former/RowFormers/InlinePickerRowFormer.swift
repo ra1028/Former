@@ -48,9 +48,9 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
             self.valueChangedHandler = valueChangedHandler
     }
     
-    public override func configureRowFormer() {
+    public override func initializeRowFomer() {
         
-        super.configureRowFormer()
+        super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
         self.displayDisabledTextColor = .lightGrayColor()
