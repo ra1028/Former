@@ -37,13 +37,15 @@ public class CheckRowFormer: RowFormer {
         self.titleDisabledColor = .lightGrayColor()
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+
+    
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
-        cell.accessoryType = self.checked ? .Checkmark : .None
+        self.cell?.accessoryType = self.checked ? .Checkmark : .None
         
-        if let row = cell as? CheckFormableRow {
+        if let row = self.cell as? CheckFormableRow {
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont

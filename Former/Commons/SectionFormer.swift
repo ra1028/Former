@@ -26,7 +26,7 @@ public final class SectionFormer: NSObject {
         return self.rowFormers[index]
     }
     
-    public func add(rowFormers rowFormers: [RowFormer]) -> SectionFormer {
+    public func add(rowFormers rowFormers: [RowFormer]) -> Self {
         
         self.rowFormers.last?.isBottom = false
         self.rowFormers += rowFormers
@@ -36,7 +36,7 @@ public final class SectionFormer: NSObject {
         return self
     }
     
-    public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> SectionFormer {
+    public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> Self {
         
         self.rowFormers.first?.isTop = false
         self.rowFormers.last?.isBottom = false
@@ -57,32 +57,43 @@ public final class SectionFormer: NSObject {
         return self
     }
     
-    public func remove(rowFormers rowFormers: [RowFormer]) {
+    public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
         
         for (index, rowFormer) in self.rowFormers.enumerate() {
             if rowFormers.contains(rowFormer) {
                 self.removeRowFormer(index)
             }
         }
+        return self
     }
     
-    public func removeRowFormer(atIndex: Int) {
-
-        self.rowFormers.removeAtIndex(atIndex)
-    }
-    
-    public func removeRowFormer(range: Range<Int>) {
+    public func removeRowFormer(atIndex: Int) -> Self {
         
-        self.rowFormers.removeRange(range)
+        self.rowFormers.first?.isTop = false
+        self.rowFormers.last?.isBottom = false
+        self.rowFormers.removeAtIndex(atIndex)
+        self.rowFormers.first?.isTop = true
+        self.rowFormers.last?.isBottom = true
+        return self
     }
     
-    public func set(headerViewFormer viewFormer: ViewFormer?) -> SectionFormer {
+    public func removeRowFormer(range: Range<Int>) -> Self{
+        
+        self.rowFormers.first?.isTop = false
+        self.rowFormers.last?.isBottom = false
+        self.rowFormers.removeRange(range)
+        self.rowFormers.first?.isTop = true
+        self.rowFormers.last?.isBottom = true
+        return self
+    }
+    
+    public func set(headerViewFormer viewFormer: ViewFormer?) -> Self {
         
         self.headerViewFormer = viewFormer
         return self
     }
     
-    public func set(footerViewFormer viewFormer: ViewFormer?) -> SectionFormer {
+    public func set(footerViewFormer viewFormer: ViewFormer?) -> Self {
         
         self.footerViewFormer = viewFormer
         return self

@@ -55,9 +55,9 @@ public class TextViewRowFormer: RowFormer {
         self.cellHeight = 100.0
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
         if let row = self.cell as? TextViewFormableRow {
             
@@ -74,7 +74,9 @@ public class TextViewRowFormer: RowFormer {
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            titleLabel?.textColor = self.enabled ?
+                (self.isEditing ? self.titleEditingColor : self.titleColor) :
+                self.titleDisabledColor
             
             if self.placeholderLabel == nil {
                 let placeholderLabel = UILabel()
@@ -139,6 +141,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     public func textViewDidBeginEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow where self.enabled {
+            self.isEditing = true
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
         }
     }
@@ -146,6 +149,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     public func textViewDidEndEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow {
+            self.isEditing = false
             row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             row.formerTextView().userInteractionEnabled = false
         }

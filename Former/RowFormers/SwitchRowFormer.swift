@@ -45,11 +45,11 @@ public class SwitchRowFormer: RowFormer {
         self.titleDisabledColor = .lightGrayColor()
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
-        cell.selectionStyle = self.switchWhenSelected ?
+        self.cell?.selectionStyle = self.switchWhenSelected ?
             self.selectionStyle ?? .Default :
             .None
         

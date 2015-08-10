@@ -85,13 +85,6 @@ class DefaultUIViewController: FormerViewController {
         rowFormer8.valueTitles = ["A", "B", "C", "D", "E"]
         rowFormer8.displayTextEditingColor = .redColor()
         
-        let textFromDate: (NSDate -> String) = { date in
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.locale = .currentLocale()
-            dateFormatter.timeStyle = .NoStyle
-            dateFormatter.dateStyle = .MediumStyle
-            return dateFormatter.stringFromDate(date)
-        }
         let rowFormer9 = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class
@@ -99,28 +92,8 @@ class DefaultUIViewController: FormerViewController {
         rowFormer9.title = "InlineDatePicker"
         rowFormer9.datePickerMode = .Date
         rowFormer9.minimumDate = NSDate()
-        rowFormer9.displayTextFromDate = textFromDate
+        rowFormer9.displayTextFromDate = String.fullDate
         rowFormer9.displayTextEditingColor = .redColor()
-        
-        let rowFormer92 = InlineDatePickerRowFormer(
-            cellType: FormerInlineDatePickerCell.self,
-            registerType: .Class
-        )
-        rowFormer92.title = "InlineDatePicker"
-        rowFormer92.datePickerMode = .Date
-        rowFormer92.minimumDate = NSDate()
-        rowFormer92.displayTextFromDate = textFromDate
-        rowFormer92.displayTextEditingColor = .redColor()
-        
-        let rowFormer93 = InlineDatePickerRowFormer(
-            cellType: FormerInlineDatePickerCell.self,
-            registerType: .Class
-        )
-        rowFormer93.title = "InlineDatePicker"
-        rowFormer93.datePickerMode = .Date
-        rowFormer93.minimumDate = NSDate()
-        rowFormer93.displayTextFromDate = textFromDate
-        rowFormer93.displayTextEditingColor = .redColor()
         
         let rowFormer10 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
@@ -130,15 +103,38 @@ class DefaultUIViewController: FormerViewController {
         rowFormer10.placeholder = "Example"
         rowFormer10.titleEditingColor = .redColor()
         
+        let rowFormer11 = TextRowFormer(
+            cellType: FormerTextCell.self,
+            registerType: .Class
+        )
+        rowFormer11.selectedHandler = { [weak self, weak rowFormer11] _ in
+            if let sSelf = self {
+                sSelf.former.deselect(true)
+                rowFormer11?.text = sSelf.enabled ? "Enable" : "Disable"
+                sSelf.former[0].rowFormers.map { rowFormer -> Void in
+                    rowFormer.enabled = !sSelf.enabled
+                    rowFormer.update()
+                }
+                rowFormer11?.update()
+                sSelf.enabled = !sSelf.enabled
+            }
+        }
+        rowFormer11.text = "Disable"
+        
         // Create SectionFormers
         
         let sectionFormer1 = SectionFormer()
-            .add(rowFormers:
-                [rowFormer1, rowFormer2, rowFormer3,
-                    rowFormer4, rowFormer5, rowFormer6,
-                    rowFormer7, rowFormer8, rowFormer9, rowFormer92, rowFormer93, 
-                    rowFormer10])
+            .add(rowFormers: [
+                rowFormer1, rowFormer2, rowFormer3,
+                rowFormer4, rowFormer5, rowFormer6,
+                rowFormer7, rowFormer8, rowFormer9,
+                rowFormer10
+                ])
         
-        self.former.add(sectionFormers: [sectionFormer1])
+        let sectionFormer2 = SectionFormer()
+            .add(rowFormers: [rowFormer11])
+            .set(footerViewFormer: ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class))
+        
+        self.former.add(sectionFormers: [sectionFormer1, sectionFormer2])
     }
 }

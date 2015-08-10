@@ -63,24 +63,28 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         self.displayDisabledTextColor = .lightGrayColor()
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
         if let row = self.cell as? InlineDatePickerFormableRow {
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            titleLabel?.textColor = self.enabled ?
+                (self.isEditing ? self.titleEditingColor : self.titleColor) :
+                self.titleDisabledColor
             
             let displayField = row.formerDisplayFieldView()
             displayField?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
             displayField?.placeholder = self.placeholder
             displayField?.font =? self.displayTextFont
-            displayField?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
             displayField?.textAlignment =? self.displayTextAlignment
             displayField?.userInteractionEnabled = false
+            displayField?.textColor = self.enabled ?
+                (self.isEditing ? self.displayTextEditingColor : self.displayTextColor) :
+                self.displayDisabledTextColor
         }
         
         if let pickerRowFormer = self.pickerRowFormer as? DatePickerRowFormer {
@@ -96,6 +100,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
             pickerRowFormer.timeZone = self.timeZone
             pickerRowFormer.date = self.date
             pickerRowFormer.enabled = self.enabled
+            pickerRowFormer.update()
         }
     }
     
@@ -117,6 +122,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
     public func editingDidBegin() {
         
         if let row = self.cell as? InlineDatePickerFormableRow where self.enabled {
+            self.isEditing = true
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
             row.formerDisplayFieldView()?.textColor =? self.displayTextEditingColor
         }
@@ -125,6 +131,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
     public func editingDidEnd() {
         
         if let row = self.cell as? InlineDatePickerFormableRow {
+            self.isEditing = false
             row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             row.formerDisplayFieldView()?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
         }

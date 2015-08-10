@@ -36,16 +36,11 @@ extension InlinePickableRow {
 
 public class RowFormer: NSObject {
     
-    public internal(set) final weak var cell: UITableViewCell? {
-        didSet {
-            if let cell = cell {
-                self.cellConfigure(cell)
-            }
-        }
-    }
-    public internal(set) final var isTop: Bool = false
-    public internal(set) final var isBottom: Bool = false
-    public internal(set) final var registered: Bool = false
+    public private(set) final weak var cell: UITableViewCell?
+    public internal(set) final var isTop = false
+    public internal(set) final var isBottom = false
+    public internal(set) final var isEditing = false
+    public internal(set) final var registered = false
     
     public private(set) var cellType: UITableViewCell.Type
     public private(set) var registerType: Former.RegisterType
@@ -79,14 +74,27 @@ public class RowFormer: NSObject {
         self.separatorInsets = UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 0)
     }
     
-    public func cellConfigure(cell: UITableViewCell) {
+    final func cellConfigure(cell: UITableViewCell) {
         
-        cell.backgroundColor = self.backgroundColor
-        cell.selectionStyle = self.enabled ?
-            (self.selectionStyle ?? .Default) :
-            UITableViewCellSelectionStyle.None
-        cell.accessoryType =? self.accessoryType
-        cell.tintColor =? self.tintColor
+        self.cell = cell
+        self.update()
+    }
+    
+    public func update() {
+        
+        if let cell = self.cell {
+            
+            cell.backgroundColor = self.backgroundColor
+            cell.selectionStyle = self.enabled ?
+                (self.selectionStyle ?? .Default) :
+                UITableViewCellSelectionStyle.None
+            cell.accessoryType =? self.accessoryType
+            cell.tintColor =? self.tintColor
+            
+            if let row = cell as? FormableRow {
+                row.configureWithRowFormer(self)
+            }
+        }
     }
     
     public func didSelectCell(former: Former, indexPath: NSIndexPath) {

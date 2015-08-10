@@ -44,9 +44,9 @@ public class TextRowFormer: RowFormer {
         self.subTextDisabledColor = .lightGrayColor()
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
         if let row = self.cell as? TextFormableRow {
             

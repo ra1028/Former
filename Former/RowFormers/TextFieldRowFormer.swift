@@ -53,11 +53,11 @@ public class TextFieldRowFormer: RowFormer {
         self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
-        if let row = cell as? TextFieldFormableRow {
+        if let row = self.cell as? TextFieldFormableRow {
             
             let textField = row.formerTextField()
             textField.text = self.text

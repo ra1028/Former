@@ -55,9 +55,9 @@ public class SliderRowFormer: RowFormer {
         self.cellHeight = 88.0
     }
     
-    public override func cellConfigure(cell: UITableViewCell) {
+    public override func update() {
         
-        super.cellConfigure(cell)
+        super.update()
         
         if let row = self.cell as? SliderFormableRow {
             
