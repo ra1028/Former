@@ -57,7 +57,7 @@ final class TopViewContoller: FormerViewController {
         let createHeader: (String -> TextViewFormer) = {
             let header = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class, text: $0)
             header.textColor = .grayColor()
-            header.font = UIFont.systemFontOfSize(14.0)
+            header.font = .systemFontOfSize(14.0)
             header.viewHeight = 40.0
             return header
         }
@@ -65,7 +65,7 @@ final class TopViewContoller: FormerViewController {
         let createFooter: (String -> TextViewFormer) = {
             let footer = TextViewFormer(viewType: FormerTextFooterView.self, registerType: .Class, text: $0)
             footer.textColor = .grayColor()
-            footer.font = UIFont.systemFontOfSize(14.0)
+            footer.font = .systemFontOfSize(14.0)
             footer.viewHeight = 100.0
             return footer
         }

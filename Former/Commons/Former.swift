@@ -437,21 +437,24 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         if let formableHeaderView = headerView as? FormableView {
             formableHeaderView.configureWithViewFormer(viewFormer)
         }
-        viewFormer.view = headerView
+        if let headerView = headerView {
+            viewFormer.viewConfigure(headerView)
+        }
         return headerView
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         guard let viewFormer = self[section].footerViewFormer else { return nil }
+        if self.autoRegisterEnabled { self.register(viewFormer: viewFormer) }
         let viewType = viewFormer.viewType
-        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(
-            viewType.reuseIdentifier
-        )
+        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(viewType.reuseIdentifier)
         if let formableFooterView = footerView as? FormableView {
             formableFooterView.configureWithViewFormer(viewFormer)
         }
-        viewFormer.view = footerView
+        if let footerView = footerView {
+            viewFormer.viewConfigure(footerView)
+        }
         return footerView
     }
 }

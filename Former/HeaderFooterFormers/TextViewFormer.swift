@@ -32,16 +32,16 @@ public class TextViewFormer: ViewFormer {
         self.viewHeight = 30.0
     }
     
-    public override func viewConfigure() {
+    public override func update() {
         
-        super.viewConfigure()
+        super.update()
         
-        guard let view = self.view as? TextFormableView else { return }
-        
-        let textLabel = view.formerTextLabel()
-        textLabel?.text = self.text
-        textLabel?.font =? self.font
-        textLabel?.textColor =? self.textColor
-        textLabel?.textAlignment =? self.textAlignment
+        if let view = self.view as? TextFormableView {
+            let textLabel = view.formerTextLabel()
+            textLabel?.text = self.text
+            textLabel?.font =? self.font
+            textLabel?.textColor =? self.textColor
+            textLabel?.textAlignment =? self.textAlignment
+        }
     }
 }

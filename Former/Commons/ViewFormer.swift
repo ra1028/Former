@@ -21,11 +21,7 @@ extension FormableView {
 
 public class ViewFormer {
     
-    public final weak var view: UITableViewHeaderFooterView? {
-        didSet {
-            self.viewConfigure()
-        }
-    }
+    public private(set) final weak var view: UITableViewHeaderFooterView?
     public internal(set) final var registered: Bool = false
     public private(set) var viewType: UITableViewHeaderFooterView.Type
     public private(set) var registerType: Former.RegisterType
@@ -45,7 +41,13 @@ public class ViewFormer {
         self.backgroundColor = .groupTableViewBackgroundColor()
     }
     
-    public func viewConfigure() {
+    final func viewConfigure(view: UITableViewHeaderFooterView) {
+        
+        self.view = view
+        self.update()
+    }
+    
+    public func update() {
         
         self.view?.contentView.backgroundColor = self.backgroundColor
     }

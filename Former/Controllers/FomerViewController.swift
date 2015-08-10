@@ -28,7 +28,7 @@ public class FormerViewController: UIViewController {
         self.setup()
     }
     
-    private func setup() {
+    private final func setup() {
         
         self.view.backgroundColor = .groupTableViewBackgroundColor()
         self.tableView.backgroundColor = .clearColor()

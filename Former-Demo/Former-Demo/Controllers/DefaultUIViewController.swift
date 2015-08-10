@@ -41,7 +41,6 @@ class DefaultUIViewController: FormerViewController {
         )
         rowFormer2.title = "TextField"
         rowFormer2.placeholder = "Example"
-        rowFormer2.titleEditingColor = .redColor()
         
         let rowFormer3 = CheckRowFormer(
             cellType: FormerCheckCell.self,
@@ -65,7 +64,7 @@ class DefaultUIViewController: FormerViewController {
         let rowFormer6 = SegmentedRowFormer(
             cellType: FormerSegmentedCell.self,
             registerType: .Class,
-            segmentTitles: ["A", "B", "C"]
+            segmentTitles: ["  A  ", "  B  ", "  C  "]
         )
         rowFormer6.title = "Segmented"
         
@@ -83,7 +82,6 @@ class DefaultUIViewController: FormerViewController {
         )
         rowFormer8.title = "InlinePicker"
         rowFormer8.valueTitles = ["A", "B", "C", "D", "E"]
-        rowFormer8.displayTextEditingColor = .redColor()
         
         let rowFormer9 = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
@@ -91,9 +89,7 @@ class DefaultUIViewController: FormerViewController {
         )
         rowFormer9.title = "InlineDatePicker"
         rowFormer9.datePickerMode = .Date
-        rowFormer9.minimumDate = NSDate()
         rowFormer9.displayTextFromDate = String.fullDate
-        rowFormer9.displayTextEditingColor = .redColor()
         
         let rowFormer10 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
@@ -101,7 +97,6 @@ class DefaultUIViewController: FormerViewController {
         )
         rowFormer10.title = "TextView"
         rowFormer10.placeholder = "Example"
-        rowFormer10.titleEditingColor = .redColor()
         
         let rowFormer11 = TextRowFormer(
             cellType: FormerTextCell.self,

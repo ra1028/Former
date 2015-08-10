@@ -70,7 +70,7 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
                 views: ["title": titleLabel, "display": displayLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[slider]-15-|",
+                "H:|-20-[slider]-20-|",
                 options: [],
                 metrics: nil,
                 views: ["slider": slider]
