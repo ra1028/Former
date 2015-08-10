@@ -10,13 +10,13 @@ import UIKit
 
 public protocol SegmentedFormableRow: FormableRow {
     
+    var observer: FormerObserver { get }
+    
     func formerSegmented() -> UISegmentedControl
     func formerTitleLabel() -> UILabel?
 }
 
 public class SegmentedRowFormer: RowFormer {
-    
-    private let observer = FormerObserver()
     
     public var segmentChangedHandler: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
@@ -51,28 +51,29 @@ public class SegmentedRowFormer: RowFormer {
         
         if let row = self.cell as? SegmentedFormableRow {
             
-            let segmented = row.formerSegmented()
-            self.observer.setTargetRowFormer(self, control: segmented, actionEvents: [
-                ("didChangeValue", .ValueChanged)
-                ])
-            segmented.removeAllSegments()
+            let segment = row.formerSegmented()
+            segment.removeAllSegments()
             for (index, title) in self.segmentTitles.enumerate() {
-                segmented.insertSegmentWithTitle(title, atIndex: index, animated: false)
+                segment.insertSegmentWithTitle(title, atIndex: index, animated: false)
             }
-            segmented.selectedSegmentIndex = self.selectedIndex
-            segmented.enabled = self.enabled
+            segment.selectedSegmentIndex = self.selectedIndex
+            segment.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
             titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            
+            row.observer.setTargetRowFormer(self,
+                control: segment,
+                actionEvents: [("valueChanged:", .ValueChanged)]
+            )
         }
     }
     
-    public dynamic func didChangeValue() {
+    public func valueChanged(segment: UISegmentedControl) {
         
-        if let cell = self.cell as? SegmentedFormableRow where self.enabled {
-            let segment = cell.formerSegmented()
+        if self.enabled {
             let selectedIndex = segment.selectedSegmentIndex
             let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
             self.selectedIndex = selectedIndex

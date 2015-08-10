@@ -10,14 +10,14 @@ import UIKit
 
 public protocol SliderFormableRow: FormableRow {
     
+    var observer: FormerObserver { get }
+    
     func formerSlider() -> UISlider
     func formerTitleLabel() -> UILabel?
     func formerDisplayLabel() -> UILabel?
 }
 
 public class SliderRowFormer: RowFormer {
-    
-    private let observer = FormerObserver()
     
     public var sliderChangedHandler: (Float -> Void)?
     public var displayTextFromValue: (Float -> String)?
@@ -62,9 +62,6 @@ public class SliderRowFormer: RowFormer {
         if let row = self.cell as? SliderFormableRow {
             
             let slider = row.formerSlider()
-            self.observer.setTargetRowFormer(self, control: slider, actionEvents: [
-                ("didChangeValue", .ValueChanged)
-                ])
             slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
             slider.continuous =? self.continuous
             slider.minimumValue =? self.minimumValue
@@ -81,13 +78,17 @@ public class SliderRowFormer: RowFormer {
             displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
             displayLabel?.font =? self.displayFont
             displayLabel?.textColor = self.enabled ? self.displayColor : self.displayDisabledColor
+            
+            row.observer.setTargetRowFormer(self,
+                control: slider,
+                actionEvents: [("valueChanged:", .ValueChanged)]
+            )
         }
     }
     
-    public dynamic func didChangeValue() {
+    public func valueChanged(slider: UISlider) {
         
         if let cell = self.cell as? SliderFormableRow where self.enabled {
-            let slider = cell.formerSlider()
             let displayLabel = cell.formerDisplayLabel()
             
             let value = slider.value

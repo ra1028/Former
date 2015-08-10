@@ -85,7 +85,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         
         if let pickerRowFormer = self.pickerRowFormer as? DatePickerRowFormer {
             
-            pickerRowFormer.dateChangedHandler = self.didChangeDate
+            pickerRowFormer.dateChangedHandler = self.dateChanged
             pickerRowFormer.calendar = self.calendar
             pickerRowFormer.minuteInterval = self.minuteInterval
             pickerRowFormer.minimumDate = self.minimumDate
@@ -99,13 +99,13 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         }
     }
     
-    public override func didSelectCell(indexPath: NSIndexPath) {
+    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
         
-        super.didSelectCell(indexPath)
-        self.cell?.setSelected(false, animated: true)
+        super.didSelectCell(former, indexPath: indexPath)
+        former.deselect(true)
     }
     
-    private func didChangeDate(date: NSDate) {
+    private func dateChanged(date: NSDate) {
         
         if let row = self.cell as? InlineDatePickerFormableRow where self.enabled {
             self.date = date

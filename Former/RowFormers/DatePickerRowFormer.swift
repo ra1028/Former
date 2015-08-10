@@ -10,12 +10,12 @@ import UIKit
 
 public protocol DatePickerFormableRow: FormableRow {
     
+    var observer: FormerObserver { get }
+    
     func formerDatePicker() -> UIDatePicker
 }
 
 public class DatePickerRowFormer: RowFormer {
-    
-    private let observer = FormerObserver()
     
     public var dateChangedHandler: (NSDate -> Void)?
     @NSCopying public var calendar: NSCalendar!
@@ -51,9 +51,6 @@ public class DatePickerRowFormer: RowFormer {
         if let row = self.cell as? DatePickerFormableRow {
             
             let datePicker = row.formerDatePicker()
-            self.observer.setTargetRowFormer(self, control: datePicker, actionEvents: [
-                ("didChangeDate", .ValueChanged)
-                ])
             datePicker.calendar =? self.calendar
             datePicker.minuteInterval =? self.minuteInterval
             datePicker.minimumDate =? self.minimumDate
@@ -64,13 +61,18 @@ public class DatePickerRowFormer: RowFormer {
             datePicker.timeZone =? self.timeZone
             datePicker.setDate(self.date, animated: false)
             datePicker.enabled = self.enabled
+            
+            row.observer.setTargetRowFormer(self,
+                control: datePicker,
+                actionEvents: [("dateChanged:", .ValueChanged)]
+            )
         }
     }
     
-    public dynamic func didChangeDate() {
+    public func dateChanged(datePicker: UIDatePicker) {
         
-        if let row = self.cell as? DatePickerFormableRow where self.enabled {
-            let date = row.formerDatePicker().date
+        if self.enabled {
+            let date = datePicker.date
             self.date = date
             self.dateChangedHandler?(date)
         }

@@ -89,7 +89,7 @@ public class RowFormer: NSObject {
         cell.tintColor =? self.tintColor
     }
     
-    public func didSelectCell(indexPath: NSIndexPath) {
+    public func didSelectCell(former: Former, indexPath: NSIndexPath) {
         
         if self.enabled {
             self.selectedHandler?(indexPath: indexPath)

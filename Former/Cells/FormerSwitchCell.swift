@@ -10,6 +10,8 @@ import UIKit
 
 public class FormerSwitchCell: FormerCell, SwitchFormableRow {
     
+    public let observer = FormerObserver()
+    
     private weak var titleLabel: UILabel!
     private weak var switchButton: UISwitch!
     
@@ -21,12 +23,6 @@ public class FormerSwitchCell: FormerCell, SwitchFormableRow {
     public func formerSwitch() -> UISwitch {
         
         return self.switchButton
-    }
-    
-        public override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        self.switchButton.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
     }
     
     override public func configureViews() {

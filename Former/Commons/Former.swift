@@ -306,7 +306,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         let rowFormer = self.rowFormer(indexPath)
         guard rowFormer.enabled else { return }
         
-        rowFormer.didSelectCell(indexPath)
+        rowFormer.didSelectCell(self, indexPath: indexPath)
         
         if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
             

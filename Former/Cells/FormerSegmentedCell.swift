@@ -10,6 +10,8 @@ import UIKit
 
 public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
     
+    public let observer = FormerObserver()
+    
     private weak var titleLabel: UILabel!
     private weak var segmentedControl: UISegmentedControl!
     
@@ -21,12 +23,6 @@ public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
     public func formerSegmented() -> UISegmentedControl {
         
         return self.segmentedControl
-    }
-    
-    public override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        self.segmentedControl.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
     }
     
     override public func configureViews() {

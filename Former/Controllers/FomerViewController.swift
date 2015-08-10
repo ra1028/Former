@@ -34,6 +34,8 @@ public class FormerViewController: UIViewController {
         self.tableView.backgroundColor = .clearColor()
         self.tableView.sectionHeaderHeight = 0
         self.tableView.sectionFooterHeight = 0
+        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.01))
+        self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0.01))
         self.tableView.separatorStyle = .None
         self.tableView.translatesAutoresizingMaskIntoConstraints = false
         self.view.insertSubview(self.tableView, atIndex: 0)

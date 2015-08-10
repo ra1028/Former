@@ -51,15 +51,15 @@ public class CheckRowFormer: RowFormer {
         }
     }
     
-    public override func didSelectCell(indexPath: NSIndexPath) {
+    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
         
-        super.didSelectCell(indexPath)
+        super.didSelectCell(former, indexPath: indexPath)
+        former.deselect(true)
         
         if self.enabled {
             self.checked = !self.checked
             self.checkChangedHandler?(self.checked)
             
-            self.cell?.setSelected(false, animated: true)
             self.cell?.accessoryType = self.checked ? .Checkmark : .None
         }
     }

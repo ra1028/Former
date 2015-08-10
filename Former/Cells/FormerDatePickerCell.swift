@@ -10,17 +10,13 @@ import UIKit
 
 public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
     
+    public let observer = FormerObserver()
+    
     private weak var datePicker: UIDatePicker!
     
     public func formerDatePicker() -> UIDatePicker {
         
         return self.datePicker
-    }
-    
-    public override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        self.datePicker.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
     }
     
     override public func configureViews() {

@@ -8,15 +8,10 @@
 
 import UIKit
 
-final class FormerObserver: NSObject {
+final public class FormerObserver {
     
     private weak var observedRowFormer: RowFormer?
     private weak var observedControl: UIControl?
-    
-    override init() {
-        
-        super.init()
-    }
     
     deinit {
         

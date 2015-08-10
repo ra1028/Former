@@ -10,14 +10,14 @@ import UIKit
 
 public protocol StepperFormableRow: FormableRow {
     
+    var observer: FormerObserver { get }
+    
     func formerStepper() -> UIStepper
     func formerTitleLabel() -> UILabel?
     func formerDisplayLabel() -> UILabel?
 }
 
 public class StepperRowFormer: RowFormer {
-    
-    private let observer = FormerObserver()
     
     public var stepChangedHandler: (Double -> Void)?
     public var displayTextFromValue: (Double -> String?)?
@@ -63,9 +63,6 @@ public class StepperRowFormer: RowFormer {
         if let row = self.cell as? StepperFormableRow {
             
             let stepper = row.formerStepper()
-            self.observer.setTargetRowFormer(self, control: stepper, actionEvents: [
-                ("didChangeValue", .ValueChanged)
-                ])
             stepper.value = self.value
             stepper.continuous =? self.continuous
             stepper.autorepeat =? self.autorepeat
@@ -84,13 +81,18 @@ public class StepperRowFormer: RowFormer {
             displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
             displayLabel?.font =? self.displayFont
             displayLabel?.textColor = self.enabled ? self.displayColor : self.displayDisabledColor
+            
+            row.observer.setTargetRowFormer(self,
+                control: stepper,
+                actionEvents: [("valueChanged:", .ValueChanged)]
+            )
         }
     }
     
-    public dynamic func didChangeValue() {
+    public func valueChanged(stepper: UIStepper) {
         
         if let row = self.cell as? StepperFormableRow where self.enabled {
-            let value = row.formerStepper().value
+            let value = stepper.value
             self.value = value
             row.formerDisplayLabel()?.text = self.displayTextFromValue?(value) ?? "\(value)"
             self.stepChangedHandler?(value)

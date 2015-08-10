@@ -10,6 +10,8 @@ import UIKit
 
 public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     
+    public let observer = FormerObserver()
+    
     private weak var textField: UITextField!
     private weak var titleLabel: UILabel!
     private weak var leftConst: NSLayoutConstraint!
@@ -23,12 +25,6 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
-    }
-    
-    public override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        self.textField.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
     }
     
     public override func configureWithRowFormer(rowFormer: RowFormer) {

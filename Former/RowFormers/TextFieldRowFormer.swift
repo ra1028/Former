@@ -10,13 +10,13 @@ import UIKit
 
 public protocol TextFieldFormableRow: FormableRow {
     
+    var observer: FormerObserver { get }
+    
     func formerTextField() -> UITextField
     func formerTitleLabel() -> UILabel?
 }
 
 public class TextFieldRowFormer: RowFormer {
-    
-    private let observer = FormerObserver()
     
     public var textChangedHandler: (String -> Void)?
     public var text: String?
@@ -60,11 +60,6 @@ public class TextFieldRowFormer: RowFormer {
         if let row = cell as? TextFieldFormableRow {
             
             let textField = row.formerTextField()
-            self.observer.setTargetRowFormer(self, control: textField, actionEvents: [
-                ("didChangeText", .EditingChanged),
-                ("editingDidBegin", .EditingDidBegin),
-                ("editingDidEnd", .EditingDidEnd)
-                ])
             textField.text = self.text
             textField.placeholder = self.placeholder
             textField.font =? self.font
@@ -79,12 +74,21 @@ public class TextFieldRowFormer: RowFormer {
             titleLabel?.text = self.title
             titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             titleLabel?.font =? self.font
+            
+            row.observer.setTargetRowFormer(self,
+                control: textField,
+                actionEvents: [
+                    ("textChanged:", .EditingChanged),
+                    ("editingDidBegin:", .EditingDidBegin),
+                    ("editingDidEnd:", .EditingDidEnd)
+                ]
+            )
         }
     }
     
-    public override func didSelectCell(indexPath: NSIndexPath) {
+    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
         
-        super.didSelectCell(indexPath)
+        super.didSelectCell(former, indexPath: indexPath)
         
         if let row = self.cell as? TextFieldFormableRow where self.enabled {
             
@@ -96,23 +100,23 @@ public class TextFieldRowFormer: RowFormer {
         }
     }
     
-    public dynamic func didChangeText() {
+    public func textChanged(textField: UITextField) {
         
-        if let row = self.cell as? TextFieldFormableRow where self.enabled {
-            let text = row.formerTextField().text ?? ""
+        if self.enabled {
+            let text = textField.text ?? ""
             self.text = text
             self.textChangedHandler?(text)
         }
     }
     
-    public dynamic func editingDidBegin() {
+    public func editingDidBegin(textField: UITextField) {
         
         if let row = self.cell as? TextFieldFormableRow where self.enabled {
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
         }
     }
     
-    public dynamic func editingDidEnd() {
+    public func editingDidEnd(textField: UITextField) {
         
         if let row = self.cell as? TextFieldFormableRow {
             row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor

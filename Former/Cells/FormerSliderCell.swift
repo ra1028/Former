@@ -10,6 +10,8 @@ import UIKit
 
 public class FormerSliderCell: FormerCell, SliderFormableRow {
     
+    public let observer = FormerObserver()
+    
     private weak var titleLabel: UILabel!
     private weak var displayLabel: UILabel!
     private weak var slider: UISlider!
@@ -27,12 +29,6 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
     public func formerSlider() -> UISlider {
         
         return self.slider
-    }
-    
-    public override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        self.slider.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
     }
     
     override public func configureViews() {

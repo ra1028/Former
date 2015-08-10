@@ -102,12 +102,29 @@ class DefaultUIViewController: FormerViewController {
         rowFormer9.displayTextFromDate = textFromDate
         rowFormer9.displayTextEditingColor = .redColor()
         
+        let rowFormer92 = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
+            registerType: .Class
+        )
+        rowFormer92.title = "InlineDatePicker"
+        rowFormer92.datePickerMode = .Date
+        rowFormer92.minimumDate = NSDate()
+        rowFormer92.displayTextFromDate = textFromDate
+        rowFormer92.displayTextEditingColor = .redColor()
+        
+        let rowFormer93 = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
+            registerType: .Class
+        )
+        rowFormer93.title = "InlineDatePicker"
+        rowFormer93.datePickerMode = .Date
+        rowFormer93.minimumDate = NSDate()
+        rowFormer93.displayTextFromDate = textFromDate
+        rowFormer93.displayTextEditingColor = .redColor()
+        
         let rowFormer10 = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
-            registerType: .Class,
-            textChangedHandler: { text in
-                print(text)
-            }
+            registerType: .Class
         )
         rowFormer10.title = "TextView"
         rowFormer10.placeholder = "Example"
@@ -119,7 +136,7 @@ class DefaultUIViewController: FormerViewController {
             .add(rowFormers:
                 [rowFormer1, rowFormer2, rowFormer3,
                     rowFormer4, rowFormer5, rowFormer6,
-                    rowFormer7, rowFormer8, rowFormer9,
+                    rowFormer7, rowFormer8, rowFormer9, rowFormer92, rowFormer93, 
                     rowFormer10])
         
         self.former.add(sectionFormers: [sectionFormer1])

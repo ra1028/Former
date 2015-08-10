@@ -78,7 +78,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         
         if let pickerRowFormer = self.pickerRowFormer as? PickerRowFormer {
             
-            pickerRowFormer.valueChangedHandler = self.didChangeValue
+            pickerRowFormer.valueChangedHandler = self.valueChanged
             pickerRowFormer.valueTitles = self.valueTitles
             pickerRowFormer.selectedRow = self.selectedRow
             pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
@@ -86,13 +86,13 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         }
     }
     
-    public override func didSelectCell(indexPath: NSIndexPath) {
+    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
         
-        super.didSelectCell(indexPath)
-        self.cell?.setSelected(false, animated: true)
+        super.didSelectCell(former, indexPath: indexPath)
+        former.deselect(true)
     }
     
-    private func didChangeValue(row: Int, title: String) {
+    private func valueChanged(row: Int, title: String) {
         
         if let pickerRow = self.cell as? InlinePickerFormableRow where self.enabled {
             self.selectedRow = row

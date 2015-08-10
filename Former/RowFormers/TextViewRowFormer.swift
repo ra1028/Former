@@ -105,9 +105,9 @@ public class TextViewRowFormer: RowFormer {
         }
     }
     
-    public override func didSelectCell(indexPath: NSIndexPath) {
+    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
         
-        super.didSelectCell(indexPath)
+        super.didSelectCell(former, indexPath: indexPath)
         
         if let row = self.cell as? TextViewFormableRow {
             let textView = row.formerTextView()
@@ -128,8 +128,8 @@ extension TextViewRowFormer: UITextViewDelegate {
     
     public func textViewDidChange(textView: UITextView) {
         
-        if let row = self.cell as? TextViewFormableRow where self.enabled {
-            let text = row.formerTextView().text ?? ""
+        if self.enabled {
+            let text = textView.text ?? ""
             self.text = text
             self.textChangedHandler?(text)
             self.updatePlaceholderColor(text)

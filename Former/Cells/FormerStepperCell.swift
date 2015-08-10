@@ -10,6 +10,8 @@ import UIKit
 
 public class FormerStepperCell: FormerCell, StepperFormableRow {
     
+    public let observer = FormerObserver()
+    
     private weak var titleLabel: UILabel!
     private weak var displayLabel: UILabel!
     private weak var stepper: UIStepper!
@@ -27,12 +29,6 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
     public func formerStepper() -> UIStepper {
         
         return self.stepper
-    }
-    
-        public override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        self.stepper.removeTarget(nil, action: nil, forControlEvents: .AllEvents)
     }
     
     override public func configureViews() {
