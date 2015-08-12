@@ -28,6 +28,8 @@ public class TextFieldRowFormer: RowFormer {
     public var clearButtonMode: UITextFieldViewMode?
     public var keyboardType: UIKeyboardType?
     public var returnKeyType: UIReturnKeyType?
+    public var inputView: UIView?
+    public var inputAccessoryView: UIView?
     
     public var title: String?
     public var titleFont: UIFont?
@@ -68,6 +70,8 @@ public class TextFieldRowFormer: RowFormer {
             textField.clearButtonMode =? self.clearButtonMode
             textField.keyboardType =? self.keyboardType
             textField.returnKeyType =? self.returnKeyType
+            textField.inputView = self.inputView
+            textField.inputAccessoryView = self.inputAccessoryView
             textField.userInteractionEnabled = false
             
             let titleLabel = row.formerTitleLabel()

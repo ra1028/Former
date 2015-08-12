@@ -41,10 +41,11 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerTextCell.self,
             registerType: .Class
         )
+        let texts = ["Option1", "Option2", "Option3"]
         selector.selectedHandler = { [weak self, weak selector] _ in
             self?.former.deselect(true)
             let controller = TextSelectorViewContoller()
-            controller.texts = ["1", "2", "3"]
+            controller.texts = texts
             controller.selectedText = selector?.subText
             controller.selectedHandler = {
                 selector?.subText = $0
@@ -55,37 +56,50 @@ class DefaultExampleViewController: FormerViewController {
         selector.text = "Selector"
         selector.textColor = .formerColor()
         selector.font = .boldSystemFontOfSize(16.0)
-        selector.subText = "1"
+        selector.subText = texts.first
         selector.subTextColor = .formerSubColor()
         selector.subTextFont = .boldSystemFontOfSize(14.0)
         selector.accessoryType = .DisclosureIndicator
         
-        let date1 = InlineDatePickerRowFormer(
+        let accessory = TextFieldAccessoryView()
+            accessory.doneButtonHandler = { [weak self] in
+                self?.former.endEditing()
+            }
+            accessory.backButtonHandler = { [weak self] in
+                // WIP:
+            }
+            accessory.forwardButtonHandler = { [weak self] in
+                // WIP:
+        }
+        let textFields = (0...2).map { index -> TextFieldRowFormer in
+            let input = TextFieldRowFormer(
+                cellType: FormerTextFieldCell.self,
+                registerType: .Class
+            )
+            input.title = ["Custom Accessory View", "Field1", "Field2"][index]
+            input.placeholder = "Example"
+            input.titleColor = .formerColor()
+            input.textColor = .formerSubColor()
+            input.tintColor = .formerColor()
+            input.font = .boldSystemFontOfSize(16.0)
+            input.textAlignment = .Right
+            input.inputAccessoryView = accessory
+            return input
+        }
+        
+        let date = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class
         )
-        date1.title = "Date"
-        date1.titleColor = .formerColor()
-        date1.titleFont = .boldSystemFontOfSize(16.0)
-        date1.datePickerMode = .DateAndTime
-        date1.displayTextFromDate = String.mediumDateShortTime
-        date1.displayTextEditingColor = .formerSubColor()
-        date1.displayTextFont = .boldSystemFontOfSize(14.0)
+        date.title = "Date"
+        date.titleColor = .formerColor()
+        date.titleFont = .boldSystemFontOfSize(16.0)
+        date.datePickerMode = .DateAndTime
+        date.displayTextFromDate = String.mediumDateShortTime
+        date.displayTextEditingColor = .formerSubColor()
+        date.displayTextFont = .boldSystemFontOfSize(14.0)
         
-        let switch1 = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) {
-                date1.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
-                date1.datePickerMode = $0 ? .Date : .DateAndTime
-                date1.update()
-        }
-        switch1.title = "Switch Date Style"
-        switch1.titleColor = .formerColor()
-        switch1.switchOnTintColor = .formerSubColor()
-        switch1.titleFont = .boldSystemFontOfSize(16.0)
-        switch1.switched = false
-        
-        let switch2 = SwitchRowFormer(
+        let switchDateStyle = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             registerType: .Class) { [weak self] in
                 if let sSelf = self {
@@ -96,23 +110,38 @@ class DefaultExampleViewController: FormerViewController {
                     }
                 }
         }
-        switch2.title = "Insert Check Cells"
-        switch2.titleColor = .formerColor()
-        switch2.switchOnTintColor = .formerSubColor()
-        switch2.titleFont = .boldSystemFontOfSize(16.0)
-        switch2.switched = false
+        switchDateStyle.title = "Insert Cells"
+        switchDateStyle.titleColor = .formerColor()
+        switchDateStyle.switchOnTintColor = .formerSubColor()
+        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
+        switchDateStyle.switched = false
+        
+        let insertCells = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) {
+                date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
+                date.datePickerMode = $0 ? .Date : .DateAndTime
+                date.update()
+        }
+        insertCells.title = "Switch Date Style"
+        insertCells.titleColor = .formerColor()
+        insertCells.switchOnTintColor = .formerSubColor()
+        insertCells.titleFont = .boldSystemFontOfSize(16.0)
+        insertCells.switched = false
         
         // Create SectionFormers
         
         let section1 = SectionFormer()
             .add(rowFormers: [selector])
         let section2 = SectionFormer()
-            .add(rowFormers: [switch1, date1])
+            .add(rowFormers: textFields)
         let section3 = SectionFormer()
-            .add(rowFormers: [switch2])
+            .add(rowFormers: [switchDateStyle])
+        let section4 = SectionFormer()
+            .add(rowFormers: [insertCells, date])
         
         self.former.add(sectionFormers: [
-            section1, section2, section3
+            section1, section2, section3, section4
             ])
     }
 }

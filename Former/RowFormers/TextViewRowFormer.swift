@@ -26,6 +26,8 @@ public class TextViewRowFormer: RowFormer {
     public var textAlignment: NSTextAlignment?
     public var keyboardType: UIKeyboardType?
     public var returnKeyType: UIReturnKeyType?
+    public var inputView: UIView?
+    public var inputAccessoryView: UIView?
     
     public var title: String?
     public var titleFont: UIFont?
@@ -51,6 +53,7 @@ public class TextViewRowFormer: RowFormer {
         super.initializeRowFomer()
         self.textDisabledColor = .lightGrayColor()
         self.titleDisabledColor = .lightGrayColor()
+        self.placeholderColor = UIColor(white: 0.8, alpha: 1.0)
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.cellHeight = 100.0
     }
@@ -69,6 +72,8 @@ public class TextViewRowFormer: RowFormer {
             textView.textAlignment =? self.textAlignment
             textView.keyboardType =? self.keyboardType
             textView.returnKeyType =? self.returnKeyType
+            textView.inputView = self.inputView
+            textView.inputAccessoryView = self.inputAccessoryView
             textView.userInteractionEnabled = false
             
             let titleLabel = row.formerTitleLabel()
@@ -80,8 +85,6 @@ public class TextViewRowFormer: RowFormer {
             
             if self.placeholderLabel == nil {
                 let placeholderLabel = UILabel()
-                placeholderLabel.textColor = UIColor(white: 0.8, alpha: 1.0)
-                placeholderLabel.font = .boldSystemFontOfSize(16.0)
                 placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
                 textView.insertSubview(placeholderLabel, atIndex: 0)
                 self.placeholderLabel = placeholderLabel

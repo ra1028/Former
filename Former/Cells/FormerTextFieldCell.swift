@@ -16,6 +16,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     private weak var titleLabel: UILabel!
     private weak var leftConst: NSLayoutConstraint!
     private weak var rightConst: NSLayoutConstraint!
+    private var datepicker = UIDatePicker()
 
     public func formerTextField() -> UITextField {
         

@@ -103,6 +103,13 @@ public final class Former: NSObject {
         return self
     }
     
+    public func endEditing() -> Self {
+        
+        self.tableView?.endEditing(true)
+        self.deselect(false)
+        return self
+    }
+    
     public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
         self.tableView?.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: scrollPosition)
@@ -216,7 +223,12 @@ public final class Former: NSObject {
     public func removeAndUpdate(rowFormers rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         self.tableView?.beginUpdates()
-        let oldIndexPaths = self.remove(rowFormers: rowFormers)
+        var oldIndexPaths = self.remove(rowFormers: rowFormers)
+        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
+            oldIndexPaths += self.remove(rowFormers: [oldPickerRowFormer])
+            (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
+            self.inlinePickerRowFormer = nil
+        }
         self.tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
         self.tableView?.endUpdates()
         return self
@@ -322,13 +334,12 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        self.tableView?.endEditing(true)
-        self.selectedIndexPath = nil
+        self.endEditing()
     }
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
-        self.tableView?.endEditing(true)
+        self.endEditing()
         self.selectedIndexPath = indexPath
         return indexPath
     }
