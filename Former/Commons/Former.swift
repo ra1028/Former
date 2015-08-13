@@ -161,25 +161,29 @@ public final class Former: NSObject {
         let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
         let currentRowFormer = self.rowFormer(currentIndexPath)
         var indexPaths = [NSIndexPath]()
+        let becomeEditing: ([NSIndexPath] -> Void) = {
+            $0.last.map {
+                self.select(indexPath: $0, animated: false)
+                self.tableView(tableView, willSelectRowAtIndexPath: $0)
+                self.tableView(tableView, didSelectRowAtIndexPath: $0)
+                let scrollIndexPath = self.rowFormer($0) is InlinePickableRow ?
+                    NSIndexPath(forRow: $0.row + 1, inSection: $0.section) :
+                $0
+                tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
+                
+            }
+        }
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
                 if rowFormer == currentRowFormer {
-                    indexPaths.last.map {
-                        self.select(indexPath: $0, animated: true)
-                        self.tableView(tableView, willSelectRowAtIndexPath: $0)
-                        self.tableView(tableView, didSelectRowAtIndexPath: $0)
-                    }
+                    becomeEditing(indexPaths)
                     return self
                 } else if rowFormer.canBecomeEditing {
                     indexPaths += [NSIndexPath(forRow: row, inSection: section)]
                 }
             }
         }
-        indexPaths.last.map {
-            self.select(indexPath: $0, animated: true)
-            self.tableView(tableView, willSelectRowAtIndexPath: $0)
-            self.tableView(tableView, didSelectRowAtIndexPath: $0)
-        }
+        becomeEditing(indexPaths)
         return self
     }
     
@@ -190,14 +194,22 @@ public final class Former: NSObject {
         let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
         let currentRowFormer = self.rowFormer(currentIndexPath)
         var indexPaths = [NSIndexPath]()
+        let becomeEditing: ([NSIndexPath] -> Void) = {
+            $0.last.map {
+                self.select(indexPath: $0, animated: false)
+                self.tableView(tableView, willSelectRowAtIndexPath: $0)
+                self.tableView(tableView, didSelectRowAtIndexPath: $0)
+                let scrollIndexPath = self.rowFormer($0) is InlinePickableRow ?
+                    NSIndexPath(forRow: $0.row + 1, inSection: $0.section) :
+                $0
+                tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
+                
+            }
+        }
         for (sectionRev, sectionFormer) in self.sectionFormers.reverse().enumerate() {
             for (rowRev, rowFormer) in sectionFormer.rowFormers.reverse().enumerate() {
                 if rowFormer == currentRowFormer {
-                    indexPaths.last.map {
-                        self.select(indexPath: $0, animated: true)
-                        self.tableView(tableView, willSelectRowAtIndexPath: $0)
-                        self.tableView(tableView, didSelectRowAtIndexPath: $0)
-                    }
+                    becomeEditing(indexPaths)
                     return self
                 } else if rowFormer.canBecomeEditing {
                     let section = (tableView.numberOfSections - 1) - sectionRev
@@ -206,11 +218,7 @@ public final class Former: NSObject {
                 }
             }
         }
-        indexPaths.last.map {
-            self.select(indexPath: $0, animated: true)
-            self.tableView(tableView, willSelectRowAtIndexPath: $0)
-            self.tableView(tableView, didSelectRowAtIndexPath: $0)
-        }
+        becomeEditing(indexPaths)
         return self
     }
     
@@ -222,7 +230,7 @@ public final class Former: NSObject {
     
     public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
-        self.tableView?.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: scrollPosition)
+        self.tableView?.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
         return self
     }
     

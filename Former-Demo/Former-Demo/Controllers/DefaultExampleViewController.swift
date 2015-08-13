@@ -95,6 +95,7 @@ class DefaultExampleViewController: FormerViewController {
             input.font = .boldSystemFontOfSize(16.0)
             input.textAlignment = .Right
             input.inputAccessoryView = self.textFieldAccessoryView
+            input.returnKeyType = .Next
             return input
         }
         
@@ -150,6 +151,10 @@ class DefaultExampleViewController: FormerViewController {
             .add(rowFormers: [switchDateStyle])
         let section4 = SectionFormer()
             .add(rowFormers: [insertCells, date])
+            .set(footerViewFormer: ViewFormer(
+                viewType: FormerHeaderFooterView.self,
+                registerType: .Class
+                ))
         
         self.former.add(sectionFormers: [
             section1, section2, section3, section4
