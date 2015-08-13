@@ -37,10 +37,14 @@ extension InlinePickableRow {
 public class RowFormer: NSObject {
     
     public private(set) final weak var cell: UITableViewCell?
+    final weak var former: Former?
     public internal(set) final var isTop = false
     public internal(set) final var isBottom = false
-    public internal(set) final var isEditing = false
     public internal(set) final var registered = false
+    public internal(set) final var isEditing = false
+    public var canBecomeEditing: Bool {
+        return false
+    }
     
     public private(set) var cellType: UITableViewCell.Type
     public private(set) var registerType: Former.RegisterType
@@ -97,7 +101,7 @@ public class RowFormer: NSObject {
         }
     }
     
-    public func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public func cellSelected(indexPath: NSIndexPath) {
         
         if self.enabled {
             self.selectedHandler?(indexPath: indexPath)

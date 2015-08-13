@@ -53,10 +53,10 @@ public class CheckRowFormer: RowFormer {
         }
     }
     
-    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public override func cellSelected(indexPath: NSIndexPath) {
         
-        super.didSelectCell(former, indexPath: indexPath)
-        former.deselect(true)
+        super.cellSelected(indexPath)
+        self.former?.deselect(true)
         
         if self.enabled {
             self.checked = !self.checked

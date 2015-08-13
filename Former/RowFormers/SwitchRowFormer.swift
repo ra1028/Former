@@ -74,10 +74,10 @@ public class SwitchRowFormer: RowFormer {
         }
     }
     
-    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public override func cellSelected(indexPath: NSIndexPath) {
         
-        super.didSelectCell(former, indexPath: indexPath)
-        former.deselect(true)
+        super.cellSelected(indexPath)
+        self.former?.deselect(true)
         
         if let row = self.cell as? SwitchFormableRow where self.switchWhenSelected && self.enabled {
             let switchButton = row.formerSwitch()

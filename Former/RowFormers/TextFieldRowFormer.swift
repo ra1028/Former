@@ -18,6 +18,10 @@ public protocol TextFieldFormableRow: FormableRow {
 
 public class TextFieldRowFormer: RowFormer {
     
+    override public var canBecomeEditing: Bool {
+        return self.enabled
+    }
+    
     public var textChangedHandler: (String -> Void)?
     public var text: String?
     public var placeholder: String?
@@ -30,6 +34,7 @@ public class TextFieldRowFormer: RowFormer {
     public var returnKeyType: UIReturnKeyType?
     public var inputView: UIView?
     public var inputAccessoryView: UIView?
+    public var returnToNext = true
     
     public var title: String?
     public var titleFont: UIFont?
@@ -73,6 +78,7 @@ public class TextFieldRowFormer: RowFormer {
             textField.inputView = self.inputView
             textField.inputAccessoryView = self.inputAccessoryView
             textField.userInteractionEnabled = false
+            textField.delegate = self
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
@@ -90,9 +96,9 @@ public class TextFieldRowFormer: RowFormer {
         }
     }
     
-    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public override func cellSelected(indexPath: NSIndexPath) {
         
-        super.didSelectCell(former, indexPath: indexPath)
+        super.cellSelected(indexPath)
         
         if let row = self.cell as? TextFieldFormableRow where self.enabled {
             
@@ -126,5 +132,19 @@ public class TextFieldRowFormer: RowFormer {
             row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             row.formerTextField().userInteractionEnabled = false
         }
+    }
+}
+
+extension TextFieldRowFormer: UITextFieldDelegate {
+    
+    public func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        if self.returnToNext {
+            let returnToNext = (self.former?.canBecomeEditingNext() ?? false) ?
+                self.former?.becomeEditingNext :
+                self.former?.endEditing
+            returnToNext?()
+        }
+        return true
     }
 }

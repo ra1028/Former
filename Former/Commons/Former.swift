@@ -31,10 +31,12 @@ public final class Former: NSObject {
     
     public var rowFormers: [RowFormer] {
         
-        return self.sectionFormers.map { $0.rowFormers }.flatMap { $0 }
+        return self.sectionFormers.flatMap { $0.rowFormers }
     }
     
     public private(set) var sectionFormers = [SectionFormer]()
+    
+    public var cellSelectedHandler: ((indexPath: NSIndexPath) -> Void)?
     
     public var autoRegisterEnabled = true
     
@@ -103,10 +105,118 @@ public final class Former: NSObject {
         return self
     }
     
+    public func canBecomeEditingPrevious() -> Bool {
+        
+        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
+        let rowFormers = self.rowFormers
+        let previousCount: Int = {
+            var count = 0
+            self.sectionFormers[0..<currentIndexPath.section].forEach {
+                count += $0.rowFormers.count
+            }
+            count += self.sectionFormers[currentIndexPath.section].rowFormers[0...currentIndexPath.row].count
+            return count
+            }()
+        guard previousCount >= 1 else { return false }
+        
+        var canBecomeEditing = false
+        rowFormers[0..<previousCount - 1].forEach {
+            if $0.canBecomeEditing {
+                canBecomeEditing = true
+                return
+            }
+        }
+        return canBecomeEditing
+    }
+    
+    public func canBecomeEditingNext() -> Bool {
+        
+        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
+        let rowFormers = self.rowFormers
+        let lastIndex = rowFormers.count - 1
+        let previousCount: Int = {
+            var count = 0
+            self.sectionFormers[0..<currentIndexPath.section].forEach {
+                count += $0.rowFormers.count
+            }
+            count += self.sectionFormers[currentIndexPath.section].rowFormers[0...currentIndexPath.row].count
+            return count
+            }()
+        guard previousCount <= lastIndex else { return false }
+        
+        var canBecomeEditing = false
+        rowFormers[previousCount...lastIndex].forEach {
+            if $0.canBecomeEditing {
+                canBecomeEditing = true
+                return
+            }
+        }
+        return canBecomeEditing
+    }
+    
+    public func becomeEditingPrevious() -> Self {
+        
+        guard let tableView = self.tableView else { return self }
+        
+        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
+        let currentRowFormer = self.rowFormer(currentIndexPath)
+        var indexPaths = [NSIndexPath]()
+        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+                if rowFormer == currentRowFormer {
+                    indexPaths.last.map {
+                        self.select(indexPath: $0, animated: true)
+                        self.tableView(tableView, willSelectRowAtIndexPath: $0)
+                        self.tableView(tableView, didSelectRowAtIndexPath: $0)
+                    }
+                    return self
+                } else if rowFormer.canBecomeEditing {
+                    indexPaths += [NSIndexPath(forRow: row, inSection: section)]
+                }
+            }
+        }
+        indexPaths.last.map {
+            self.select(indexPath: $0, animated: true)
+            self.tableView(tableView, willSelectRowAtIndexPath: $0)
+            self.tableView(tableView, didSelectRowAtIndexPath: $0)
+        }
+        return self
+    }
+    
+    public func becomeEditingNext() -> Self {
+        
+        guard let tableView = self.tableView else { return self }
+        
+        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
+        let currentRowFormer = self.rowFormer(currentIndexPath)
+        var indexPaths = [NSIndexPath]()
+        for (sectionRev, sectionFormer) in self.sectionFormers.reverse().enumerate() {
+            for (rowRev, rowFormer) in sectionFormer.rowFormers.reverse().enumerate() {
+                if rowFormer == currentRowFormer {
+                    indexPaths.last.map {
+                        self.select(indexPath: $0, animated: true)
+                        self.tableView(tableView, willSelectRowAtIndexPath: $0)
+                        self.tableView(tableView, didSelectRowAtIndexPath: $0)
+                    }
+                    return self
+                } else if rowFormer.canBecomeEditing {
+                    let section = (tableView.numberOfSections - 1) - sectionRev
+                    let row = (tableView.numberOfRowsInSection(section) - 1) - rowRev
+                    indexPaths += [NSIndexPath(forRow: row, inSection: section)]
+                }
+            }
+        }
+        indexPaths.last.map {
+            self.select(indexPath: $0, animated: true)
+            self.tableView(tableView, willSelectRowAtIndexPath: $0)
+            self.tableView(tableView, didSelectRowAtIndexPath: $0)
+        }
+        return self
+    }
+    
     public func endEditing() -> Self {
         
         self.tableView?.endEditing(true)
-        self.deselect(false)
         return self
     }
     
@@ -340,6 +450,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
         self.endEditing()
+        self.deselect(false)
         self.selectedIndexPath = indexPath
         return indexPath
     }
@@ -349,7 +460,8 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         let rowFormer = self.rowFormer(indexPath)
         guard rowFormer.enabled else { return }
         
-        rowFormer.didSelectCell(self, indexPath: indexPath)
+        rowFormer.cellSelected(indexPath)
+        self.cellSelectedHandler?(indexPath: indexPath)
         
         if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
             
@@ -420,14 +532,15 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
             cellType.reuseIdentifier,
             forIndexPath: indexPath
         )
-        if let FormableRow = cell as? FormableRow {
-            FormableRow.configureWithRowFormer(rowFormer)
+        if let formableRow = cell as? FormableRow {
+            formableRow.configureWithRowFormer(rowFormer)
         }
+        if rowFormer.former == nil { rowFormer.former = self }
         rowFormer.cellConfigure(cell)
         return cell
     }
     
-    // MARK: HeaderFooterVeiw
+    // MARK: HeaderFooterView
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         

@@ -20,6 +20,9 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         cellType: FormerDatePickerCell.self,
         registerType: .Class
     )
+    override public var canBecomeEditing: Bool {
+        return self.enabled
+    }
     
     public var dateChangedHandler: (NSDate -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
@@ -104,10 +107,10 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         }
     }
     
-    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public override func cellSelected(indexPath: NSIndexPath) {
         
-        super.didSelectCell(former, indexPath: indexPath)
-        former.deselect(true)
+        super.cellSelected(indexPath)
+        self.former?.deselect(true)
     }
     
     private func dateChanged(date: NSDate) {

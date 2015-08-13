@@ -14,6 +14,12 @@ class TextFieldAccessoryView: UIToolbar {
     var forwardButtonHandler: (() -> Void)?
     var doneButtonHandler: (() -> Void)?
     
+    var getBackButtonEnabled: (() -> Bool)?
+    var getForwardButtonEnabled: (() -> Bool)?
+    
+    private weak var leftArrow: UIBarButtonItem!
+    private weak var rightArrow: UIBarButtonItem!
+    
     init() {
         
         super.init(frame: CGRect(origin: CGPointZero, size: CGSize(width: 0, height: 44.0)))
@@ -25,10 +31,17 @@ class TextFieldAccessoryView: UIToolbar {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func update() {
+        
+        self.leftArrow.enabled = self.getBackButtonEnabled?() ?? true
+        self.rightArrow.enabled = self.getForwardButtonEnabled?() ?? true
+    }
+    
     private func configure() {
         
         self.barTintColor = .whiteColor()
         self.tintColor = .formerSubColor()
+        self.userInteractionEnabled = true
         
         let flexible = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let leftArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 105)!, target: self, action: "handleBackButton")
@@ -38,6 +51,8 @@ class TextFieldAccessoryView: UIToolbar {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "handleDoneButton")
         let rightSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
         self.setItems([leftArrow, space, rightArrow, flexible, doneButton, rightSpace], animated: false)
+        self.leftArrow = leftArrow
+        self.rightArrow = rightArrow
         
         let leftLineView = UIView()
         leftLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
@@ -80,11 +95,13 @@ class TextFieldAccessoryView: UIToolbar {
     
     private dynamic func handleBackButton() {
         
+        self.update()
         self.backButtonHandler?()
     }
     
     private dynamic func handleForwardButton() {
         
+        self.update()
         self.forwardButtonHandler?()
     }
     

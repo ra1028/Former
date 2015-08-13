@@ -25,6 +25,27 @@ class DefaultExampleViewController: FormerViewController {
         }
         }()
     
+    private lazy var textFieldAccessoryView: TextFieldAccessoryView = {
+        
+        let accessory = TextFieldAccessoryView()
+        accessory.doneButtonHandler = { [weak self] in
+            self?.former.endEditing()
+        }
+        accessory.backButtonHandler = { [weak self] in
+            self?.former.becomeEditingPrevious()
+        }
+        accessory.forwardButtonHandler = { [weak self] in
+            self?.former.becomeEditingNext()
+        }
+        accessory.getBackButtonEnabled = { [weak self] in
+            self?.former.canBecomeEditingPrevious() ?? true
+        }
+        accessory.getForwardButtonEnabled = { [weak self] in
+            self?.former.canBecomeEditingNext() ?? true
+        }
+        return accessory
+    }()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -61,16 +82,6 @@ class DefaultExampleViewController: FormerViewController {
         selector.subTextFont = .boldSystemFontOfSize(14.0)
         selector.accessoryType = .DisclosureIndicator
         
-        let accessory = TextFieldAccessoryView()
-            accessory.doneButtonHandler = { [weak self] in
-                self?.former.endEditing()
-            }
-            accessory.backButtonHandler = { [weak self] in
-                // WIP:
-            }
-            accessory.forwardButtonHandler = { [weak self] in
-                // WIP:
-        }
         let textFields = (0...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
                 cellType: FormerTextFieldCell.self,
@@ -83,7 +94,7 @@ class DefaultExampleViewController: FormerViewController {
             input.tintColor = .formerColor()
             input.font = .boldSystemFontOfSize(16.0)
             input.textAlignment = .Right
-            input.inputAccessoryView = accessory
+            input.inputAccessoryView = self.textFieldAccessoryView
             return input
         }
         
@@ -143,5 +154,8 @@ class DefaultExampleViewController: FormerViewController {
         self.former.add(sectionFormers: [
             section1, section2, section3, section4
             ])
+            .cellSelectedHandler = { [weak self] _ in
+                self?.textFieldAccessoryView.update()
+        }
     }
 }

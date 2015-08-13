@@ -20,6 +20,9 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         cellType: FormerPickerCell.self,
         registerType: .Class
     )
+    override public var canBecomeEditing: Bool {
+        return self.enabled
+    }
     
     public var valueChangedHandler: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
@@ -91,10 +94,10 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         }
     }
     
-    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public override func cellSelected(indexPath: NSIndexPath) {
         
-        super.didSelectCell(former, indexPath: indexPath)
-        former.deselect(true)
+        super.cellSelected(indexPath)
+        self.former?.deselect(true)
     }
     
     private func valueChanged(row: Int, title: String) {

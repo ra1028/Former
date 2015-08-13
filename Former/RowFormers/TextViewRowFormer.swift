@@ -16,7 +16,9 @@ public protocol TextViewFormableRow: FormableRow {
 
 public class TextViewRowFormer: RowFormer {
     
-    private weak var placeholderLabel: UILabel?
+    override public var canBecomeEditing: Bool {
+        return self.enabled
+    }
     
     public var textChangedHandler: (String -> Void)?
     public var text: String?
@@ -35,6 +37,7 @@ public class TextViewRowFormer: RowFormer {
     public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
     
+    private weak var placeholderLabel: UILabel?
     public var placeholder: String?
     public var placeholderFont: UIFont?
     public var placeholderColor: UIColor?
@@ -110,9 +113,9 @@ public class TextViewRowFormer: RowFormer {
         }
     }
     
-    public override func didSelectCell(former: Former, indexPath: NSIndexPath) {
+    public override func cellSelected(indexPath: NSIndexPath) {
         
-        super.didSelectCell(former, indexPath: indexPath)
+        super.cellSelected(indexPath)
         
         if let row = self.cell as? TextViewFormableRow {
             let textView = row.formerTextView()
