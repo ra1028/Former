@@ -34,9 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ]
         navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationBar.shadowImage = UIImage()
-        navigationBar.subviews.map { (view: UIView) -> Void in
-            if view.isKindOfClass(NSClassFromString("_UINavigationBarBackground")!) {
-                view.backgroundColor = .formerColor()
+        navigationBar.subviews.forEach {
+            if $0.isKindOfClass(NSClassFromString("_UINavigationBarBackground")!) {
+                $0.backgroundColor = .formerColor()
             }
         }
     }

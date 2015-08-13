@@ -30,7 +30,7 @@ final public class FormerObserver {
         self.removeAllTarget()
         self.observedRowFormer = rowFormer
         self.observedControl = control
-        actionEvents.map {
+        actionEvents.forEach {
             control.addTarget(rowFormer, action: $0.0, forControlEvents: $0.1)
         }
     }

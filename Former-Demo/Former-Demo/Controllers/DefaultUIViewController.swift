@@ -106,9 +106,9 @@ class DefaultUIViewController: FormerViewController {
             if let sSelf = self {
                 sSelf.former.deselect(true)
                 rowFormer11?.text = sSelf.enabled ? "Enable" : "Disable"
-                sSelf.former[0].rowFormers.map { rowFormer -> Void in
-                    rowFormer.enabled = !sSelf.enabled
-                    rowFormer.update()
+                sSelf.former[0].rowFormers.forEach {
+                    $0.enabled = !sSelf.enabled
+                    $0.update()
                 }
                 rowFormer11?.update()
                 sSelf.enabled = !sSelf.enabled

@@ -18,8 +18,8 @@ class TextSelectorViewContoller: FormerViewController {
     
     var selectedText: String? {
         didSet {
-            self.former.rowFormers.map { row -> Void in
-                if let textRowFormer = row as? TextRowFormer
+            self.former.rowFormers.forEach {
+                if let textRowFormer = $0 as? TextRowFormer
                  where textRowFormer.text == self.selectedText {
                     textRowFormer.accessoryType = .Checkmark
                 }
