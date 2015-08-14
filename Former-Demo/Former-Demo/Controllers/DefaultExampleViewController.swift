@@ -52,42 +52,65 @@ class DefaultExampleViewController: FormerViewController {
         self.configure()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.former.deselect(true)
+    }
+    
     private func configure() {
         
         self.title = "Default Example"
         
         // Create RowFormers
         
-        let selector = TextRowFormer(
-            cellType: FormerTextCell.self,
-            registerType: .Class
-        )
-        let texts = ["Option1", "Option2", "Option3"]
-        selector.selectedHandler = { [weak self, weak selector] _ in
-            self?.former.deselect(true)
-            let controller = TextSelectorViewContoller()
-            controller.texts = texts
-            controller.selectedText = selector?.subText
-            controller.selectedHandler = {
-                selector?.subText = $0
-                selector?.update()
-            }
-            self?.navigationController?.pushViewController(controller, animated: true)
+        let selectors = (0...1).map { index -> TextRowFormer in
+            
+            let selector = TextRowFormer(
+                cellType: FormerTextCell.self,
+                registerType: .Class
+            )
+            let texts = ["Option1", "Option2", "Option3"]
+            selector.selectedHandler = [
+                { [weak self, weak selector] _ in
+                    let controller = TextSelectorViewContoller()
+                    controller.texts = texts
+                    controller.selectedText = selector?.subText
+                    controller.selectedHandler = {
+                        selector?.subText = $0
+                        selector?.update()
+                    }
+                    self?.navigationController?.pushViewController(controller, animated: true)
+                },
+                { [weak self] _ in
+                    let sheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    texts.map { title in
+                        sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak selector] _ in
+                            selector?.subText = title
+                            selector?.update()
+                            }))
+                    }
+                    sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                    self?.presentViewController(sheet, animated: true, completion: nil)
+                    self?.former.deselect(true)
+                }
+            ][index]
+            selector.text = "Selector " + ["Push", "Sheet"][index]
+            selector.textColor = .formerColor()
+            selector.font = .boldSystemFontOfSize(16.0)
+            selector.subText = texts.first
+            selector.subTextColor = .formerSubColor()
+            selector.subTextFont = .boldSystemFontOfSize(14.0)
+            selector.accessoryType = .DisclosureIndicator
+            return selector
         }
-        selector.text = "Selector"
-        selector.textColor = .formerColor()
-        selector.font = .boldSystemFontOfSize(16.0)
-        selector.subText = texts.first
-        selector.subTextColor = .formerSubColor()
-        selector.subTextFont = .boldSystemFontOfSize(14.0)
-        selector.accessoryType = .DisclosureIndicator
         
-        let textFields = (0...2).map { index -> TextFieldRowFormer in
+        let textFields = ["Custom Accessory View", "Example Field"].map { title -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
                 cellType: FormerTextFieldCell.self,
                 registerType: .Class
             )
-            input.title = ["Custom Accessory View", "Field1", "Field2"][index]
+            input.title = title
             input.placeholder = "Example"
             input.titleColor = .formerColor()
             input.textColor = .formerSubColor()
@@ -98,6 +121,17 @@ class DefaultExampleViewController: FormerViewController {
             input.returnKeyType = .Next
             return input
         }
+        
+        let picker = InlinePickerRowFormer(
+            cellType: FormerInlinePickerCell.self,
+            registerType: .Class
+        )
+        picker.title = "Example Inline Picker"
+        picker.titleColor = .formerColor()
+        picker.titleFont = .boldSystemFontOfSize(16.0)
+        picker.displayTextEditingColor = .formerSubColor()
+        picker.displayTextFont = .boldSystemFontOfSize(14.0)
+        picker.valueTitles = (1...20).map { "Option\($0)" }
         
         let date = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
@@ -151,9 +185,9 @@ class DefaultExampleViewController: FormerViewController {
         // Create SectionFormers
         
         let section1 = SectionFormer()
-            .add(rowFormers: [selector])
+            .add(rowFormers: selectors)
         let section2 = SectionFormer()
-            .add(rowFormers: textFields)
+            .add(rowFormers: textFields + [picker])
         let section3 = SectionFormer()
             .add(rowFormers: [switchDateStyle])
         let section4 = SectionFormer()
