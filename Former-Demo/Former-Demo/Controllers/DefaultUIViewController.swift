@@ -64,7 +64,7 @@ class DefaultUIViewController: FormerViewController {
         let rowFormer6 = SegmentedRowFormer(
             cellType: FormerSegmentedCell.self,
             registerType: .Class,
-            segmentTitles: ["  A  ", "  B  ", "  C  "]
+            segmentTitles: ["Apple", "Banana", "Cherry"]
         )
         rowFormer6.title = "Segmented"
         

@@ -107,118 +107,67 @@ public final class Former: NSObject {
     
     public func canBecomeEditingPrevious() -> Bool {
         
-        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
-        let rowFormers = self.rowFormers
-        let previousCount: Int = {
-            var count = 0
-            self.sectionFormers[0..<currentIndexPath.section].forEach {
-                count += $0.rowFormers.count
-            }
-            count += self.sectionFormers[currentIndexPath.section].rowFormers[0...currentIndexPath.row].count
-            return count
-            }()
-        guard previousCount >= 1 else { return false }
+        var section = self.selectedIndexPath?.section ?? 0
+        var row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row - 1 : 0
         
-        var canBecomeEditing = false
-        rowFormers[0..<previousCount - 1].forEach {
-            if $0.canBecomeEditing {
-                canBecomeEditing = true
-                return
-            }
+        guard section < self.sectionFormers.count else { return false }
+        if row < 0 {
+            section--
+            guard section >= 0 else { return false }
+            row = self[section].rowFormers.count - 1
         }
-        return canBecomeEditing
+        guard row < self[section].rowFormers.count else { return false }
+        
+        return self[section][row].canBecomeEditing
     }
     
     public func canBecomeEditingNext() -> Bool {
         
-        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
-        let rowFormers = self.rowFormers
-        let lastIndex = rowFormers.count - 1
-        let previousCount: Int = {
-            var count = 0
-            self.sectionFormers[0..<currentIndexPath.section].forEach {
-                count += $0.rowFormers.count
-            }
-            count += self.sectionFormers[currentIndexPath.section].rowFormers[0...currentIndexPath.row].count
-            return count
-            }()
-        guard previousCount <= lastIndex else { return false }
+        var section = self.selectedIndexPath?.section ?? 0
+        var row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row + 1 : 0
         
-        var canBecomeEditing = false
-        rowFormers[previousCount...lastIndex].forEach {
-            if $0.canBecomeEditing {
-                canBecomeEditing = true
-                return
-            }
+        guard section < self.sectionFormers.count else { return false }
+        if row >= self[section].rowFormers.count {
+            section++
+            guard section < self.sectionFormers.count else { return false }
+            row = 0
         }
-        return canBecomeEditing
+        guard row < self[section].rowFormers.count else { return false }
+        
+        return self[section][row].canBecomeEditing
     }
     
     public func becomeEditingPrevious() -> Self {
         
-        guard let tableView = self.tableView else { return self }
-        
-        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
-        let currentRowFormer = self.rowFormer(currentIndexPath)
-        var indexPaths = [NSIndexPath]()
-        let becomeEditing: ([NSIndexPath] -> Void) = {
-            $0.last.map {
-                self.select(indexPath: $0, animated: false)
-                self.tableView(tableView, willSelectRowAtIndexPath: $0)
-                self.tableView(tableView, didSelectRowAtIndexPath: $0)
-                let scrollIndexPath = self.rowFormer($0) is InlinePickableRow ?
-                    NSIndexPath(forRow: $0.row + 1, inSection: $0.section) :
-                $0
-                tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
-                
-            }
+        if let tableView = self.tableView where self.canBecomeEditingPrevious() {
+            
+            let section = self.selectedIndexPath?.section ?? 0
+            let row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row - 1 : 0
+            let indexPath = NSIndexPath(forRow: row, inSection: section)
+            self.select(indexPath: indexPath, animated: false)
+            self.tableView(tableView, willSelectRowAtIndexPath: indexPath)
+            self.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
+                NSIndexPath(forRow: row + 1, inSection: section) : indexPath
+            tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
         }
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
-                if rowFormer == currentRowFormer {
-                    becomeEditing(indexPaths)
-                    return self
-                } else if rowFormer.canBecomeEditing {
-                    indexPaths += [NSIndexPath(forRow: row, inSection: section)]
-                }
-            }
-        }
-        becomeEditing(indexPaths)
         return self
     }
     
     public func becomeEditingNext() -> Self {
         
-        guard let tableView = self.tableView else { return self }
-        
-        let currentIndexPath = self.selectedIndexPath ?? NSIndexPath(forRow: 0, inSection: 0)
-        let currentRowFormer = self.rowFormer(currentIndexPath)
-        var indexPaths = [NSIndexPath]()
-        let becomeEditing: ([NSIndexPath] -> Void) = {
-            $0.last.map {
-                self.select(indexPath: $0, animated: false)
-                self.tableView(tableView, willSelectRowAtIndexPath: $0)
-                self.tableView(tableView, didSelectRowAtIndexPath: $0)
-                let scrollIndexPath = self.rowFormer($0) is InlinePickableRow ?
-                    NSIndexPath(forRow: $0.row + 1, inSection: $0.section) :
-                $0
-                tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
-                
-            }
+        if let tableView = self.tableView where self.canBecomeEditingNext() {
+            
+            let section = self.selectedIndexPath?.section ?? 0
+            let row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row + 1 : 0
+            let indexPath = NSIndexPath(forRow: row, inSection: section)
+            self.select(indexPath: indexPath, animated: false)
+            self.tableView(tableView, willSelectRowAtIndexPath: indexPath)
+            self.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
+                NSIndexPath(forRow: row + 1, inSection: section) : indexPath
+            tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
         }
-        for (sectionRev, sectionFormer) in self.sectionFormers.reverse().enumerate() {
-            for (rowRev, rowFormer) in sectionFormer.rowFormers.reverse().enumerate() {
-                if rowFormer == currentRowFormer {
-                    becomeEditing(indexPaths)
-                    return self
-                } else if rowFormer.canBecomeEditing {
-                    let section = (tableView.numberOfSections - 1) - sectionRev
-                    let row = (tableView.numberOfRowsInSection(section) - 1) - rowRev
-                    indexPaths += [NSIndexPath(forRow: row, inSection: section)]
-                }
-            }
-        }
-        becomeEditing(indexPaths)
         return self
     }
     

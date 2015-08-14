@@ -141,6 +141,13 @@ class DefaultExampleViewController: FormerViewController {
         insertCells.titleFont = .boldSystemFontOfSize(16.0)
         insertCells.switched = false
         
+        // Create Headers and Footers
+        
+        let footer = ViewFormer(
+            viewType: FormerHeaderFooterView.self,
+            registerType: .Class
+        )
+        
         // Create SectionFormers
         
         let section1 = SectionFormer()
@@ -151,10 +158,7 @@ class DefaultExampleViewController: FormerViewController {
             .add(rowFormers: [switchDateStyle])
         let section4 = SectionFormer()
             .add(rowFormers: [insertCells, date])
-            .set(footerViewFormer: ViewFormer(
-                viewType: FormerHeaderFooterView.self,
-                registerType: .Class
-                ))
+            .set(footerViewFormer: footer)
         
         self.former.add(sectionFormers: [
             section1, section2, section3, section4

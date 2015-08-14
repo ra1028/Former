@@ -43,7 +43,8 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         super.configureViews()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
+        titleLabel.setContentHuggingPriority(500, forAxis: UILayoutConstraintAxis.Horizontal)
+        titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
