@@ -56,6 +56,11 @@ public final class Former: NSObject {
         return self.sectionFormers[index]
     }
     
+    public subscript(range: Range<Int>) -> [SectionFormer] {
+        
+        return Array<SectionFormer>(self.sectionFormers[range])
+    }
+    
     public func register(cellType type: UITableViewCell.Type, registerType: RegisterType) -> Self {
         
         switch registerType {
@@ -321,6 +326,7 @@ public final class Former: NSObject {
         
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
+        self.tableView?.separatorStyle = .None
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)

@@ -26,6 +26,11 @@ public final class SectionFormer: NSObject {
         return self.rowFormers[index]
     }
     
+    public subscript(range: Range<Int>) -> [RowFormer] {
+        
+        return Array<RowFormer>(self.rowFormers[range])
+    }
+    
     public func add(rowFormers rowFormers: [RowFormer]) -> Self {
         
         self.rowFormers.last?.isBottom = false

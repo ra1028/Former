@@ -51,12 +51,13 @@ public class PickerRowFormer: RowFormer {
         
         if let row = self.cell as? PickerFormableRow {
             
-            let datePicker = row.formerPickerView()
-            datePicker.delegate = self
-            datePicker.dataSource = self
-            datePicker.selectRow(self.selectedRow, inComponent: 0, animated: false)
-            datePicker.showsSelectionIndicator =? self.showsSelectionIndicator
-            datePicker.userInteractionEnabled = self.enabled
+            let picker = row.formerPickerView()
+            picker.delegate = self
+            picker.dataSource = self
+            picker.selectRow(self.selectedRow, inComponent: 0, animated: false)
+            picker.showsSelectionIndicator =? self.showsSelectionIndicator
+            picker.userInteractionEnabled = self.enabled
+            picker.alpha = self.enabled ? 1.0 : 0.5
         }
     }
 }

@@ -60,7 +60,8 @@ public class DatePickerRowFormer: RowFormer {
             datePicker.locale =? self.locale
             datePicker.timeZone =? self.timeZone
             datePicker.setDate(self.date, animated: false)
-            datePicker.enabled = self.enabled
+            datePicker.userInteractionEnabled = self.enabled
+            datePicker.alpha = self.enabled ? 1.0 : 0.5
             
             row.observer.setTargetRowFormer(self,
                 control: datePicker,

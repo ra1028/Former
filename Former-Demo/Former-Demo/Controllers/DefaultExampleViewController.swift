@@ -12,7 +12,7 @@ class DefaultExampleViewController: FormerViewController {
     
     private lazy var subRowFormers: [RowFormer] = {
         
-        return (1...3).map { index -> RowFormer in
+        return (1...2).map { index -> RowFormer in
             let row = CheckRowFormer(
                 cellType: FormerCheckCell.self,
                 registerType: .Class) { check in
@@ -95,7 +95,7 @@ class DefaultExampleViewController: FormerViewController {
                     self?.former.deselect(true)
                 }
             ][index]
-            selector.text = "Selector " + ["Push", "Sheet"][index]
+            selector.text = ["Push", "Sheet"][index]
             selector.textColor = .formerColor()
             selector.font = .boldSystemFontOfSize(16.0)
             selector.subText = texts.first
@@ -105,12 +105,12 @@ class DefaultExampleViewController: FormerViewController {
             return selector
         }
         
-        let textFields = ["Custom Accessory View", "Example Field"].map { title -> TextFieldRowFormer in
+        let textFields = (1...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
                 cellType: FormerTextFieldCell.self,
                 registerType: .Class
             )
-            input.title = title
+            input.title = "Field\(index)"
             input.placeholder = "Example"
             input.titleColor = .formerColor()
             input.textColor = .formerSubColor()
@@ -126,7 +126,7 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerInlinePickerCell.self,
             registerType: .Class
         )
-        picker.title = "Example Inline Picker"
+        picker.title = "Inline Picker"
         picker.titleColor = .formerColor()
         picker.titleFont = .boldSystemFontOfSize(16.0)
         picker.displayTextEditingColor = .formerSubColor()
@@ -156,7 +156,7 @@ class DefaultExampleViewController: FormerViewController {
                     }
                 }
         }
-        switchDateStyle.title = "Insert Cells"
+        switchDateStyle.title = "Insert"
         switchDateStyle.titleColor = .formerColor()
         switchDateStyle.switchOnTintColor = .formerSubColor()
         switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
@@ -177,6 +177,17 @@ class DefaultExampleViewController: FormerViewController {
         
         // Create Headers and Footers
         
+        let createHeader: (String -> ViewFormer) = {
+            let header = TextViewFormer(
+                viewType: FormerTextHeaderView.self,
+                registerType: .Class,
+                text: $0)
+            header.textColor = .grayColor()
+            header.font = .systemFontOfSize(14.0)
+            header.viewHeight = 40.0
+            return header
+        }
+        
         let footer = ViewFormer(
             viewType: FormerHeaderFooterView.self,
             registerType: .Class
@@ -186,12 +197,16 @@ class DefaultExampleViewController: FormerViewController {
         
         let section1 = SectionFormer()
             .add(rowFormers: selectors)
+            .set(headerViewFormer: createHeader("Selector Example"))
         let section2 = SectionFormer()
             .add(rowFormers: textFields + [picker])
+            .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
         let section3 = SectionFormer()
             .add(rowFormers: [switchDateStyle])
+            .set(headerViewFormer: createHeader("Insert Cells Example"))
         let section4 = SectionFormer()
             .add(rowFormers: [insertCells, date])
+            .set(headerViewFormer: createHeader("Date Setting Example"))
             .set(footerViewFormer: footer)
         
         self.former.add(sectionFormers: [

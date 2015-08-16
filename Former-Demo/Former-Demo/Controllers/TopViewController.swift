@@ -30,16 +30,16 @@ final class TopViewContoller: FormerViewController {
         ]
         
         let secondComponents: [(String, (NSIndexPath -> Void)?)] = [
-            ("Default UI", { [weak self] _ in
+            ("All Defaults", { [weak self] _ in
                 self?.former.deselect(true)
-                self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)}),
-            ("Examples", { [weak self] _ in
-                self?.former.deselect(true)
-                self?.navigationController?.pushViewController(DefaultExampleViewController(), animated: true)})
+                self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)})
         ]
         
         let thirdComponents: [(String, (NSIndexPath -> Void)?)] = [
-            ("Custom UI", { [weak self] _ in
+            ("Default Former Examples", { [weak self] _ in
+                self?.former.deselect(true)
+                self?.navigationController?.pushViewController(DefaultExampleViewController(), animated: true)}),
+            ("Custom Former Examples", { [weak self] _ in
                 self?.former.deselect(true)})
         ]
         
@@ -78,11 +78,11 @@ final class TopViewContoller: FormerViewController {
         
         let secondSection = SectionFormer()
             .add(rowFormers: secondComponents.map(createMenu))
-            .set(headerViewFormer: createHeader("Examples with Default UI"))
+            .set(headerViewFormer: createHeader("Default UI"))
         
         let thirdSection = SectionFormer()
             .add(rowFormers: thirdComponents.map(createMenu))
-            .set(headerViewFormer: createHeader("Examples with Custom UI"))
+            .set(headerViewFormer: createHeader("Usage Examples"))
             .set(footerViewFormer: createFooter("Former is a fully customizable Swift\"2.0\" library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
         self.former.add(sectionFormers: [firstSection, secondSection, thirdSection])

@@ -21,115 +21,132 @@ class DefaultUIViewController: FormerViewController {
     
     private func configure() {
         
-        self.title = "DefaultUI"
+        self.title = "Default UI"
         
         // Create RowFomers
         
-        let rowFormer1 = TextRowFormer(
+        let disableRow = TextRowFormer(
+            cellType: FormerTextCell.self,
+            registerType: .Class
+        )
+        let disableRowText: (Bool -> String) = {
+            return ($0 ? "Enable" : "Disable") + " All Cells"
+        }
+        disableRow.selectedHandler = { [weak self, weak disableRow] _ in
+            if let sSelf = self {
+                sSelf.former.deselect(true)
+                sSelf.former[1...2].flatMap { $0.rowFormers }.forEach {
+                    $0.enabled = !sSelf.enabled
+                    $0.update()
+                }
+                disableRow?.text = disableRowText(sSelf.enabled)
+                disableRow?.update()
+                sSelf.enabled = !sSelf.enabled
+            }
+        }
+        disableRow.text = disableRowText(false)
+        
+        let textRow = TextRowFormer(
             cellType: FormerTextCell.self,
             registerType: .Class,
             selectedHandler: { [weak self] indexPath in
                 self?.former.deselect(true)
             }
         )
-        rowFormer1.text = "Text"
-        rowFormer1.subText = "SubText"
+        textRow.text = "Text"
+        textRow.subText = "SubText"
         
-        let rowFormer2 = TextFieldRowFormer(
+        let textFieldRow = TextFieldRowFormer(
             cellType: FormerTextFieldCell.self,
             registerType: .Class
         )
-        rowFormer2.title = "TextField"
-        rowFormer2.placeholder = "Example"
+        textFieldRow.title = "TextField"
+        textFieldRow.placeholder = "Placeholder"
         
-        let rowFormer3 = CheckRowFormer(
+        let textViewRow = TextViewRowFormer(
+            cellType: FormerTextViewCell.self,
+            registerType: .Class
+        )
+        textViewRow.title = "TextView"
+        textViewRow.placeholder = "Placeholder"
+        
+        let checkRow = CheckRowFormer(
             cellType: FormerCheckCell.self,
             registerType: .Class
         )
-        rowFormer3.title = "Check"
+        checkRow.title = "Check"
         
-        let rowFormer4 = SwitchRowFormer(
+        let switchRow = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             registerType: .Class
         )
-        rowFormer4.title = "Switch"
+        switchRow.title = "Switch"
         
-        let rowFormer5 = StepperRowFormer(
+        let stepperRow = StepperRowFormer(
             cellType: FormerStepperCell.self,
             registerType: .Class
         )
-        rowFormer5.title = "Stepper"
-        rowFormer5.displayTextFromValue = { "\(Int($0))" }
+        stepperRow.title = "Stepper"
+        stepperRow.displayTextFromValue = { "\(Int($0))" }
         
-        let rowFormer6 = SegmentedRowFormer(
+        let segmentRow = SegmentedRowFormer(
             cellType: FormerSegmentedCell.self,
             registerType: .Class,
             segmentTitles: ["Apple", "Banana", "Cherry"]
         )
-        rowFormer6.title = "Segmented"
+        segmentRow.title = "Segmented"
         
-        let rowFormer7 = SliderRowFormer(
+        let sliderRow = SliderRowFormer(
             cellType: FormerSliderCell.self,
             registerType: .Class
         )
-        rowFormer7.title = "Slider"
-        rowFormer7.adjustedValueFromValue = { Float(round($0 * 10) / 10) }
-        rowFormer7.displayTextFromValue = { "\($0)" }
+        sliderRow.title = "Slider"
+        sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
         
-        let rowFormer8 = InlinePickerRowFormer(
+        let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
             registerType: .Class
         )
-        rowFormer8.title = "InlinePicker"
-        rowFormer8.valueTitles = ["A", "B", "C", "D", "E"]
+        inlinePickerRow.title = "InlinePicker"
+        inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
-        let rowFormer9 = InlineDatePickerRowFormer(
+        let inlineDateRow = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
             registerType: .Class
         )
-        rowFormer9.title = "InlineDatePicker"
-        rowFormer9.datePickerMode = .Date
-        rowFormer9.displayTextFromDate = String.fullDate
+        inlineDateRow.title = "InlineDatePicker"
+        inlineDateRow.datePickerMode = .Date
+        inlineDateRow.displayTextFromDate = String.fullDate
         
-        let rowFormer10 = TextViewRowFormer(
-            cellType: FormerTextViewCell.self,
+        let pickerRow = PickerRowFormer(
+            cellType: FormerPickerCell.self,
             registerType: .Class
         )
-        rowFormer10.title = "TextView"
-        rowFormer10.placeholder = "Example"
+        pickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
-        let rowFormer11 = TextRowFormer(
-            cellType: FormerTextCell.self,
+        let datePickerRow = DatePickerRowFormer(
+            cellType: FormerDatePickerCell.self,
             registerType: .Class
         )
-        rowFormer11.selectedHandler = { [weak self, weak rowFormer11] _ in
-            if let sSelf = self {
-                sSelf.former.deselect(true)
-                rowFormer11?.text = sSelf.enabled ? "Enable" : "Disable"
-                sSelf.former[0].rowFormers.forEach {
-                    $0.enabled = !sSelf.enabled
-                    $0.update()
-                }
-                rowFormer11?.update()
-                sSelf.enabled = !sSelf.enabled
-            }
-        }
-        rowFormer11.text = "Disable"
         
         // Create SectionFormers
         
         let sectionFormer1 = SectionFormer()
-            .add(rowFormers: [
-                rowFormer1, rowFormer2, rowFormer3,
-                rowFormer4, rowFormer5, rowFormer6,
-                rowFormer7, rowFormer8, rowFormer9,
-                rowFormer10
-                ])
+            .add(rowFormers: [disableRow])
         
         let sectionFormer2 = SectionFormer()
-            .add(rowFormers: [rowFormer11])
-            .set(footerViewFormer: ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class))
+            .add(rowFormers: [
+                textRow, textFieldRow, textViewRow,
+                checkRow, switchRow, stepperRow,
+                segmentRow, sliderRow, inlinePickerRow,
+                inlineDateRow])
+            
+        let sectionFormer3 = SectionFormer()
+            .add(rowFormers: [pickerRow, datePickerRow])
+            .set(footerViewFormer: ViewFormer(
+                viewType: FormerHeaderFooterView.self,
+                registerType: .Class))
         
-        self.former.add(sectionFormers: [sectionFormer1, sectionFormer2])
+        self.former.add(sectionFormers: [sectionFormer1, sectionFormer2, sectionFormer3])
     }
 }
