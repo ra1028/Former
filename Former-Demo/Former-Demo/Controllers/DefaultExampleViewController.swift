@@ -101,11 +101,11 @@ class DefaultExampleViewController: FormerViewController {
                     if self?.pickerSelectorView == nil {
                         self?.showPickerSelectorView(
                             texts,
+                            selectedTitle: selector?.subText ?? texts[0],
                             onValueChanged: { (_, text) -> Void in
                                 selector?.subText = text
                                 selector?.update()
-                            }
-                        )
+                        })
                     } else {
                         self?.hidePickerSelectorView()
                     }
@@ -121,7 +121,7 @@ class DefaultExampleViewController: FormerViewController {
             selector.accessoryType = .DisclosureIndicator
             return selector
         }
-        
+
         let textFields = (1...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
                 cellType: FormerTextFieldCell.self,
@@ -162,7 +162,7 @@ class DefaultExampleViewController: FormerViewController {
         date.displayTextEditingColor = .formerSubColor()
         date.displayTextFont = .boldSystemFontOfSize(14.0)
         
-        let switchDateStyle = SwitchRowFormer(
+        let insertCells = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             registerType: .Class) { [weak self] in
                 if let sSelf = self {
@@ -173,24 +173,24 @@ class DefaultExampleViewController: FormerViewController {
                     }
                 }
         }
-        switchDateStyle.title = "Insert"
-        switchDateStyle.titleColor = .formerColor()
-        switchDateStyle.switchOnTintColor = .formerSubColor()
-        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
-        switchDateStyle.switched = false
+        insertCells.title = "Insert"
+        insertCells.titleColor = .formerColor()
+        insertCells.switchOnTintColor = .formerSubColor()
+        insertCells.titleFont = .boldSystemFontOfSize(16.0)
+        insertCells.switched = false
         
-        let insertCells = SwitchRowFormer(
+        let switchDateStyle = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             registerType: .Class) {
                 date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
                 date.datePickerMode = $0 ? .Date : .DateAndTime
                 date.update()
         }
-        insertCells.title = "Switch Date Style"
-        insertCells.titleColor = .formerColor()
-        insertCells.switchOnTintColor = .formerSubColor()
-        insertCells.titleFont = .boldSystemFontOfSize(16.0)
-        insertCells.switched = false
+        switchDateStyle.title = "Switch Date Style"
+        switchDateStyle.titleColor = .formerColor()
+        switchDateStyle.switchOnTintColor = .formerSubColor()
+        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
+        switchDateStyle.switched = false
         
         // Create Headers and Footers
         
@@ -219,10 +219,10 @@ class DefaultExampleViewController: FormerViewController {
             .add(rowFormers: textFields + [picker])
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
         let section3 = SectionFormer()
-            .add(rowFormers: [switchDateStyle])
+            .add(rowFormers: [insertCells])
             .set(headerViewFormer: createHeader("Insert Cells Example"))
         let section4 = SectionFormer()
-            .add(rowFormers: [insertCells, date])
+            .add(rowFormers: [switchDateStyle, date])
             .set(headerViewFormer: createHeader("Date Setting Example"))
             .set(footerViewFormer: footer)
         
@@ -240,10 +240,11 @@ class DefaultExampleViewController: FormerViewController {
         }
     }
     
-    private func showPickerSelectorView(valueTitles: [String], onValueChanged: ((Int, String) -> Void)?) {
+    private func showPickerSelectorView(valueTitles: [String], selectedTitle: String, onValueChanged: ((Int, String) -> Void)?) {
         
         let pickerSelectorView = PickerSelectorView()
         pickerSelectorView.valueTitles = valueTitles
+        pickerSelectorView.selectedRow = valueTitles.indexOf(selectedTitle) ?? 0
         pickerSelectorView.onValueChanged = onValueChanged
         pickerSelectorView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(pickerSelectorView)
