@@ -18,7 +18,7 @@ public protocol SwitchFormableRow: FormableRow {
 
 public class SwitchRowFormer: RowFormer {
     
-    public var switchChangedHandler: (Bool -> Void)?
+    public var onSwitchChanged: (Bool -> Void)?
     public var switched: Bool = false
     public var switchOnTintColor: UIColor?
     public var switchThumbTintColor: UIColor?
@@ -33,10 +33,10 @@ public class SwitchRowFormer: RowFormer {
     init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        switchChangedHandler: (Bool -> Void)? = nil) {
+        onSwitchChanged: (Bool -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.switchChangedHandler = switchChangedHandler
+            self.onSwitchChanged = onSwitchChanged
     }
     
     public override func initializeRowFomer() {
@@ -91,7 +91,7 @@ public class SwitchRowFormer: RowFormer {
         if self.enabled {
             let switched = switchButton.on
             self.switched = switched
-            self.switchChangedHandler?(switched)
+            self.onSwitchChanged?(switched)
         }
     }
 }

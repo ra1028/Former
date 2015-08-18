@@ -44,7 +44,7 @@ final class TopViewContoller: FormerViewController {
         ]
         
         let createMenu: ((String, (NSIndexPath -> Void)?) -> TextRowFormer) = {
-            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, registerType: .Class, selectedHandler: $0.1)
+            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, registerType: .Class, onSelected: $0.1)
             rowFormer.text = $0.0
             rowFormer.textColor = .formerColor()
             rowFormer.font = UIFont.boldSystemFontOfSize(16.0)

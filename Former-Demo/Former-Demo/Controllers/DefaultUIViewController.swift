@@ -32,7 +32,7 @@ class DefaultUIViewController: FormerViewController {
         let disableRowText: (Bool -> String) = {
             return ($0 ? "Enable" : "Disable") + " All Cells"
         }
-        disableRow.selectedHandler = { [weak self, weak disableRow] _ in
+        disableRow.onSelected = { [weak self, weak disableRow] _ in
             if let sSelf = self {
                 sSelf.former.deselect(true)
                 sSelf.former[1...2].flatMap { $0.rowFormers }.forEach {
@@ -49,7 +49,7 @@ class DefaultUIViewController: FormerViewController {
         let textRow = TextRowFormer(
             cellType: FormerTextCell.self,
             registerType: .Class,
-            selectedHandler: { [weak self] indexPath in
+            onSelected: { [weak self] indexPath in
                 self?.former.deselect(true)
             }
         )

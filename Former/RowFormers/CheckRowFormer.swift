@@ -15,7 +15,7 @@ public protocol CheckFormableRow: FormableRow {
 
 public class CheckRowFormer: RowFormer {
     
-    public var checkChangedHandler: (Bool -> Void)?
+    public var onCheckChanged: (Bool -> Void)?
     public var checked = false
     public var title: String?
     public var titleFont: UIFont?
@@ -25,10 +25,10 @@ public class CheckRowFormer: RowFormer {
     init<T : UITableViewCell where T : CheckFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        checkChangedHandler: (Bool -> Void)? = nil) {
+        onCheckChanged: (Bool -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)            
-            self.checkChangedHandler = checkChangedHandler
+            self.onCheckChanged = onCheckChanged
     }
     
     public override func initializeRowFomer() {
@@ -60,7 +60,7 @@ public class CheckRowFormer: RowFormer {
         
         if self.enabled {
             self.checked = !self.checked
-            self.checkChangedHandler?(self.checked)
+            self.onCheckChanged?(self.checked)
             
             self.cell?.accessoryType = self.checked ? .Checkmark : .None
         }

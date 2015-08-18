@@ -19,7 +19,7 @@ public protocol StepperFormableRow: FormableRow {
 
 public class StepperRowFormer: RowFormer {
     
-    public var stepChangedHandler: (Double -> Void)?
+    public var onValueChanged: (Double -> Void)?
     public var displayTextFromValue: (Double -> String?)?
     public var value: Double = 0
     public var continuous: Bool?
@@ -41,10 +41,10 @@ public class StepperRowFormer: RowFormer {
     init<T : UITableViewCell where T : StepperFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        stepChangedHandler: (Double -> Void)? = nil) {
+        onValueChanged: (Double -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.stepChangedHandler = stepChangedHandler
+            self.onValueChanged = onValueChanged
     }
     
     public override func initializeRowFomer() {
@@ -95,7 +95,7 @@ public class StepperRowFormer: RowFormer {
             let value = stepper.value
             self.value = value
             row.formerDisplayLabel()?.text = self.displayTextFromValue?(value) ?? "\(value)"
-            self.stepChangedHandler?(value)
+            self.onValueChanged?(value)
         }
     }
 }

@@ -15,7 +15,7 @@ public protocol PickerFormableRow: FormableRow {
 
 public class PickerRowFormer: RowFormer {
     
-    public var valueChangedHandler: ((Int, String) -> Void)?
+    public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
     public var showsSelectionIndicator: Bool?
@@ -23,10 +23,10 @@ public class PickerRowFormer: RowFormer {
     init<T : UITableViewCell where T : PickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        valueChangedHandler: ((Int, String) -> Void)? = nil) {
+        onValueChanged: ((Int, String) -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.valueChangedHandler = valueChangedHandler
+            self.onValueChanged = onValueChanged
     }
     
     public override func initializeRowFomer() {
@@ -68,7 +68,7 @@ extension PickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
         
         if self.enabled {
             self.selectedRow = row
-            self.valueChangedHandler?(row, self.valueTitles[row])
+            self.onValueChanged?(row, self.valueTitles[row])
         }
     }
     

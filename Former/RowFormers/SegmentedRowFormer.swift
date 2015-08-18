@@ -18,7 +18,7 @@ public protocol SegmentedFormableRow: FormableRow {
 
 public class SegmentedRowFormer: RowFormer {
     
-    public var segmentChangedHandler: ((Int, String) -> Void)?
+    public var onSegmentSelected: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
     public var selectedIndex: Int = 0
     
@@ -31,10 +31,10 @@ public class SegmentedRowFormer: RowFormer {
         cellType: T.Type,
         registerType: Former.RegisterType,
         segmentTitles: [String],
-        segmentChangedHandler: ((Int, String) -> Void)? = nil) {
+        onSegmentSelected: ((Int, String) -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.segmentChangedHandler = segmentChangedHandler
+            self.onSegmentSelected = onSegmentSelected
             self.segmentTitles = segmentTitles
     }
     
@@ -77,7 +77,7 @@ public class SegmentedRowFormer: RowFormer {
             let selectedIndex = segment.selectedSegmentIndex
             let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
             self.selectedIndex = selectedIndex
-            self.segmentChangedHandler?(selectedIndex, selectedTitle)
+            self.onSegmentSelected?(selectedIndex, selectedTitle)
         }
     }
 }

@@ -27,7 +27,7 @@ class TextSelectorViewContoller: FormerViewController {
         }
     }
     
-    var selectedHandler: (String -> Void)?
+    var onSelected: (String -> Void)?
     
     private func update() {
         
@@ -37,8 +37,8 @@ class TextSelectorViewContoller: FormerViewController {
             let rowFormer = TextRowFormer(
                 cellType: FormerTextCell.self,
                 registerType: .Class,
-                selectedHandler: { [weak self] _ in
-                    self?.selectedHandler?(text)
+                onSelected: { [weak self] _ in
+                    self?.onSelected?(text)
                     self?.navigationController?.popViewControllerAnimated(true)
             })
             rowFormer.text = text

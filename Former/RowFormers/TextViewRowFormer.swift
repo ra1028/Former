@@ -20,7 +20,7 @@ public class TextViewRowFormer: RowFormer {
         return self.enabled
     }
     
-    public var textChangedHandler: (String -> Void)?
+    public var onTextChanged: (String -> Void)?
     public var text: String?
     public var font: UIFont?
     public var textColor: UIColor?
@@ -45,10 +45,10 @@ public class TextViewRowFormer: RowFormer {
     init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        textChangedHandler: (String -> Void)? = nil) {
+        onTextChanged: (String -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.textChangedHandler = textChangedHandler
+            self.onTextChanged = onTextChanged
     }
     
     public override func initializeRowFomer() {
@@ -139,7 +139,7 @@ extension TextViewRowFormer: UITextViewDelegate {
         if self.enabled {
             let text = textView.text ?? ""
             self.text = text
-            self.textChangedHandler?(text)
+            self.onTextChanged?(text)
             self.updatePlaceholderColor(text)
         }
     }

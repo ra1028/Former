@@ -22,7 +22,7 @@ public class TextFieldRowFormer: RowFormer {
         return self.enabled
     }
     
-    public var textChangedHandler: (String -> Void)?
+    public var onTextChanged: (String -> Void)?
     public var text: String?
     public var placeholder: String?
     public var font: UIFont?
@@ -34,7 +34,7 @@ public class TextFieldRowFormer: RowFormer {
     public var returnKeyType: UIReturnKeyType?
     public var inputView: UIView?
     public var inputAccessoryView: UIView?
-    public var returnToNext = true
+    public var returnToNextRow = true
     
     public var title: String?
     public var titleFont: UIFont?
@@ -45,11 +45,11 @@ public class TextFieldRowFormer: RowFormer {
     init<T: UITableViewCell where T: TextFieldFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        textChangedHandler: (String -> Void)? = nil
+        onTextChanged: (String -> Void)? = nil
         ) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.textChangedHandler = textChangedHandler
+            self.onTextChanged = onTextChanged
     }
     
     public override func initializeRowFomer() {
@@ -115,7 +115,7 @@ public class TextFieldRowFormer: RowFormer {
         if self.enabled {
             let text = textField.text ?? ""
             self.text = text
-            self.textChangedHandler?(text)
+            self.onTextChanged?(text)
         }
     }
     
@@ -139,12 +139,12 @@ extension TextFieldRowFormer: UITextFieldDelegate {
     
     public func textFieldShouldReturn(textField: UITextField) -> Bool {
         
-        if self.returnToNext {
-            let returnToNext = (self.former?.canBecomeEditingNext() ?? false) ?
+        if self.returnToNextRow {
+            let returnToNextRow = (self.former?.canBecomeEditingNext() ?? false) ?
                 self.former?.becomeEditingNext :
                 self.former?.endEditing
-            returnToNext?()
+            returnToNextRow?()
         }
-        return true
+        return !self.returnToNextRow
     }
 }

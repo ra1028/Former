@@ -17,7 +17,7 @@ public protocol DatePickerFormableRow: FormableRow {
 
 public class DatePickerRowFormer: RowFormer {
     
-    public var dateChangedHandler: (NSDate -> Void)?
+    public var onDateChanged: (NSDate -> Void)?
     @NSCopying public var calendar: NSCalendar!
     public var date: NSDate = NSDate()
     public var minuteInterval: Int?
@@ -31,10 +31,10 @@ public class DatePickerRowFormer: RowFormer {
     init<T : UITableViewCell where T : DatePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        dateChangedHandler: (NSDate -> Void)? = nil) {
+        onDateChanged: (NSDate -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.dateChangedHandler = dateChangedHandler
+            self.onDateChanged = onDateChanged
     }
     
     public override func initializeRowFomer() {
@@ -75,7 +75,7 @@ public class DatePickerRowFormer: RowFormer {
         if self.enabled {
             let date = datePicker.date
             self.date = date
-            self.dateChangedHandler?(date)
+            self.onDateChanged?(date)
         }
     }
 }

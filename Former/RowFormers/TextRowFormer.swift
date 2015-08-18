@@ -31,9 +31,9 @@ public class TextRowFormer: RowFormer {
     override init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        selectedHandler: (NSIndexPath -> Void)? = nil) {
+        onSelected: (NSIndexPath -> Void)? = nil) {
         
-            super.init(cellType: cellType, registerType: registerType, selectedHandler: selectedHandler)
+            super.init(cellType: cellType, registerType: registerType, onSelected: onSelected)
     }
     
     public override func initializeRowFomer() {

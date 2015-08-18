@@ -48,7 +48,7 @@ public class RowFormer: NSObject {
     
     public private(set) var cellType: UITableViewCell.Type
     public private(set) var registerType: Former.RegisterType
-    public var selectedHandler: ((indexPath: NSIndexPath) -> ())?
+    public var onSelected: ((indexPath: NSIndexPath) -> ())?
     public var cellHeight: CGFloat = 44.0
     public var enabled = true
     public var backgroundColor: UIColor?
@@ -61,13 +61,13 @@ public class RowFormer: NSObject {
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        selectedHandler: (NSIndexPath -> Void)? = nil) {
+        onSelected: (NSIndexPath -> Void)? = nil) {
             
             self.cellType = cellType
             self.registerType = registerType
             super.init()
             
-            self.selectedHandler = selectedHandler
+            self.onSelected = onSelected
             self.initializeRowFomer()
     }
     
@@ -104,7 +104,7 @@ public class RowFormer: NSObject {
     public func cellSelected(indexPath: NSIndexPath) {
         
         if self.enabled {
-            self.selectedHandler?(indexPath: indexPath)
+            self.onSelected?(indexPath: indexPath)
         }
     }
 }

@@ -36,7 +36,7 @@ public final class Former: NSObject {
     
     public private(set) var sectionFormers = [SectionFormer]()
     
-    public var cellSelectedHandler: ((indexPath: NSIndexPath) -> Void)?
+    public var cellonSelected: ((indexPath: NSIndexPath) -> Void)?
     
     public var autoRegisterEnabled = true
     
@@ -424,7 +424,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         guard rowFormer.enabled else { return }
         
         rowFormer.cellSelected(indexPath)
-        self.cellSelectedHandler?(indexPath: indexPath)
+        self.cellonSelected?(indexPath: indexPath)
         
         if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
             

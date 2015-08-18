@@ -24,7 +24,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         return self.enabled
     }
     
-    public var dateChangedHandler: (NSDate -> Void)?
+    public var onDateChanged: (NSDate -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
     @NSCopying public var calendar: NSCalendar!
     public var date: NSDate = NSDate()
@@ -52,10 +52,10 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
     init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        dateChangedHandler: (NSDate -> Void)? = nil) {
+        onDateChanged: (NSDate -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.dateChangedHandler = dateChangedHandler
+            self.onDateChanged = onDateChanged
     }
     
     public override func initializeRowFomer() {
@@ -92,7 +92,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         
         if let pickerRowFormer = self.pickerRowFormer as? DatePickerRowFormer {
             
-            pickerRowFormer.dateChangedHandler = self.dateChanged
+            pickerRowFormer.onDateChanged = self.dateChanged
             pickerRowFormer.calendar = self.calendar
             pickerRowFormer.minuteInterval = self.minuteInterval
             pickerRowFormer.minimumDate = self.minimumDate
@@ -118,7 +118,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         if let row = self.cell as? InlineDatePickerFormableRow where self.enabled {
             self.date = date
             row.formerDisplayFieldView()?.text = self.displayTextFromDate?(date) ?? "\(date)"
-            self.dateChangedHandler?(date)
+            self.onDateChanged?(date)
         }
     }
     

@@ -71,12 +71,12 @@ class DefaultExampleViewController: FormerViewController {
                 registerType: .Class
             )
             let texts = ["Option1", "Option2", "Option3"]
-            selector.selectedHandler = [
+            selector.onSelected = [
                 { [weak self, weak selector] _ in
                     let controller = TextSelectorViewContoller()
                     controller.texts = texts
                     controller.selectedText = selector?.subText
-                    controller.selectedHandler = {
+                    controller.onSelected = {
                         selector?.subText = $0
                         selector?.update()
                     }
@@ -212,7 +212,7 @@ class DefaultExampleViewController: FormerViewController {
         self.former.add(sectionFormers: [
             section1, section2, section3, section4
             ])
-            .cellSelectedHandler = { [weak self] _ in
+            .cellonSelected = { [weak self] _ in
                 self?.textFieldAccessoryView.update()
         }
     }

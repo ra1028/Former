@@ -19,7 +19,7 @@ public protocol SliderFormableRow: FormableRow {
 
 public class SliderRowFormer: RowFormer {
     
-    public var sliderChangedHandler: (Float -> Void)?
+    public var onValueChanged: (Float -> Void)?
     public var displayTextFromValue: (Float -> String)?
     public var adjustedValueFromValue: (Float -> Float)?
     public var value: Float = 0
@@ -39,10 +39,10 @@ public class SliderRowFormer: RowFormer {
     init<T : UITableViewCell where T : SliderFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        sliderChangedHandler: (Float -> Void)? = nil) {
+        onValueChanged: (Float -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.sliderChangedHandler = sliderChangedHandler
+            self.onValueChanged = onValueChanged
     }
     
     public override func initializeRowFomer() {
@@ -96,7 +96,7 @@ public class SliderRowFormer: RowFormer {
             self.value = adjustedValue
             slider.value = adjustedValue
             displayLabel?.text = self.displayTextFromValue?(adjustedValue) ?? "\(adjustedValue)"
-            self.sliderChangedHandler?(adjustedValue)
+            self.onValueChanged?(adjustedValue)
         }
     }
 }

@@ -24,7 +24,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         return self.enabled
     }
     
-    public var valueChangedHandler: ((Int, String) -> Void)?
+    public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
     public var showsSelectionIndicator: Bool?
@@ -45,10 +45,10 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
     init<T : UITableViewCell where T : InlinePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        valueChangedHandler: ((Int, String) -> Void)? = nil) {
+        onValueChanged: ((Int, String) -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.valueChangedHandler = valueChangedHandler
+            self.onValueChanged = onValueChanged
     }
     
     public override func initializeRowFomer() {
@@ -85,7 +85,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         
         if let pickerRowFormer = self.pickerRowFormer as? PickerRowFormer {
             
-            pickerRowFormer.valueChangedHandler = self.valueChanged
+            pickerRowFormer.onValueChanged = self.valueChanged
             pickerRowFormer.valueTitles = self.valueTitles
             pickerRowFormer.selectedRow = self.selectedRow
             pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
@@ -105,7 +105,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         if let pickerRow = self.cell as? InlinePickerFormableRow where self.enabled {
             self.selectedRow = row
             pickerRow.formerDisplayFieldView()?.text = title
-            self.valueChangedHandler?((row, title))
+            self.onValueChanged?((row, title))
         }
     }
     
