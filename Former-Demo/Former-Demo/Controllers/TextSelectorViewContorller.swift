@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextSelectorViewContoller: FormerViewController {
+final class TextSelectorViewContoller: FormerViewController {
     
     var texts = [String]() {
         didSet {

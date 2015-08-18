@@ -12,6 +12,7 @@
 		2A0E63611B600AD30083BC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635F1B600AD30083BC65 /* LaunchScreen.storyboard */; };
 		2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */; };
 		2A262B0E1B73B96100AAB3F1 /* DefaultExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A262B0D1B73B96100AAB3F1 /* DefaultExampleViewController.swift */; };
+		2A29B0121B83295C004CE399 /* PickerSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A29B0111B83295C004CE399 /* PickerSelectorView.swift */; };
 		2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */; };
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
 		2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7471B6A866B00985361 /* SliderRowFormer.swift */; };
@@ -65,6 +66,7 @@
 		2A0E63621B600AD30083BC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A262B0D1B73B96100AAB3F1 /* DefaultExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultExampleViewController.swift; sourceTree = "<group>"; };
+		2A29B0111B83295C004CE399 /* PickerSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerSelectorView.swift; sourceTree = "<group>"; };
 		2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchRowFormer.swift; sourceTree = "<group>"; };
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
 		2A63E7471B6A866B00985361 /* SliderRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderRowFormer.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 		2AE75CD31B7B9E89006C53F2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2A29B0111B83295C004CE399 /* PickerSelectorView.swift */,
 				2AE75CD41B7B9EA7006C53F2 /* TextFieldAccessoryView.swift */,
 			);
 			path = Views;
@@ -396,6 +399,7 @@
 				2AD8418C1B64A0F4003A10FF /* SectionFormer.swift in Sources */,
 				2AD8418A1B64A0F4003A10FF /* Former.swift in Sources */,
 				2AB7BF591B7905D900AF0B9E /* ViewFormer.swift in Sources */,
+				2A29B0121B83295C004CE399 /* PickerSelectorView.swift in Sources */,
 				2A89009F1B71BD1700101657 /* DefaultUIViewController.swift in Sources */,
 				2A63E74A1B6A89D500985361 /* FormerSliderCell.swift in Sources */,
 			);

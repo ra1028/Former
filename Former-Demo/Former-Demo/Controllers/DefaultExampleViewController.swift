@@ -44,7 +44,10 @@ class DefaultExampleViewController: FormerViewController {
             self?.former.canBecomeEditingNext() ?? true
         }
         return accessory
-    }()
+        }()
+    
+    private var pickerSelectorView: PickerSelectorView?
+    private var pickerViewBottom: NSLayoutConstraint?
     
     override func viewDidLoad() {
         
@@ -64,7 +67,7 @@ class DefaultExampleViewController: FormerViewController {
         
         // Create RowFormers
         
-        let selectors = (0...1).map { index -> TextRowFormer in
+        let selectors = (0...2).map { index -> TextRowFormer in
             
             let selector = TextRowFormer(
                 cellType: FormerTextCell.self,
@@ -93,9 +96,23 @@ class DefaultExampleViewController: FormerViewController {
                     sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     self?.presentViewController(sheet, animated: true, completion: nil)
                     self?.former.deselect(true)
+                },
+                { [weak self, weak selector] _ in
+                    if self?.pickerSelectorView == nil {
+                        self?.showPickerSelectorView(
+                            texts,
+                            onValueChanged: { (_, text) -> Void in
+                                selector?.subText = text
+                                selector?.update()
+                            }
+                        )
+                    } else {
+                        self?.hidePickerSelectorView()
+                    }
+                    self?.former.deselect(true)
                 }
-            ][index]
-            selector.text = ["Push", "Sheet"][index]
+                ][index]
+            selector.text = ["Push", "Sheet", "Picker"][index]
             selector.textColor = .formerColor()
             selector.font = .boldSystemFontOfSize(16.0)
             selector.subText = texts.first
@@ -212,8 +229,81 @@ class DefaultExampleViewController: FormerViewController {
         self.former.add(sectionFormers: [
             section1, section2, section3, section4
             ])
-            .cellonSelected = { [weak self] _ in
-                self?.textFieldAccessoryView.update()
+        self.former.onCellSelected = { [weak self] indexPath in
+            self?.textFieldAccessoryView.update()
+            if self?.former.rowFormer(indexPath) !== selectors[2] {
+                self?.hidePickerSelectorView()
+            }
+        }
+        self.former.onBeginDragging = { [weak self] _ in
+            self?.hidePickerSelectorView()
+        }
+    }
+    
+    private func showPickerSelectorView(valueTitles: [String], onValueChanged: ((Int, String) -> Void)?) {
+        
+        let pickerSelectorView = PickerSelectorView()
+        pickerSelectorView.valueTitles = valueTitles
+        pickerSelectorView.onValueChanged = onValueChanged
+        pickerSelectorView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(pickerSelectorView)
+        self.pickerSelectorView = pickerSelectorView
+        
+        let constraints = [
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "V:[picker(260)]",
+                options: [],
+                metrics: nil,
+                views: ["picker": pickerSelectorView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "H:|-0-[picker]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["picker": pickerSelectorView]
+            )
+        ]
+        let pickerViewBottom = NSLayoutConstraint(
+            item: pickerSelectorView,
+            attribute: .Bottom,
+            relatedBy: .Equal,
+            toItem: self.view,
+            attribute: .Bottom,
+            multiplier: 1.0,
+            constant: 260.0
+        )
+        self.view.addConstraints(constraints.flatMap { $0 } + [pickerViewBottom])
+        self.pickerViewBottom = pickerViewBottom
+        
+        pickerSelectorView.layoutIfNeeded()
+        
+        UIView.animateWithDuration(
+            0.25,
+            delay: 0,
+            options: [.BeginFromCurrentState, .CurveEaseOut],
+            animations: { _ in
+                pickerViewBottom.constant = 0
+                self.view.layoutIfNeeded()
+            }, completion: nil
+        )
+    }
+    
+    private func hidePickerSelectorView() {
+        
+        guard let pickerSelectorView = self.pickerSelectorView else { return }
+        
+        UIView.animateWithDuration(
+            0.25,
+            delay: 0,
+            options: [.BeginFromCurrentState, .CurveEaseOut],
+            animations: { () -> Void in
+                self.pickerViewBottom?.constant = 260.0
+                self.view.layoutIfNeeded()
+            }) { _ in
+                pickerSelectorView.removeConstraints(pickerSelectorView.constraints)
+                pickerSelectorView.removeFromSuperview()
+                self.pickerViewBottom = nil
+                self.pickerSelectorView = nil
         }
     }
 }

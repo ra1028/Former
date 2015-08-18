@@ -20,7 +20,7 @@ public class TextViewRowFormer: RowFormer {
         return self.enabled
     }
     
-    public var onTextChanged: (String -> Void)?
+    public var textChangedHandler: (String -> Void)?
     public var text: String?
     public var font: UIFont?
     public var textColor: UIColor?
@@ -45,10 +45,10 @@ public class TextViewRowFormer: RowFormer {
     init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        onTextChanged: (String -> Void)? = nil) {
+        textChangedHandler: (String -> Void)? = nil) {
             
             super.init(cellType: cellType, registerType: registerType)
-            self.onTextChanged = onTextChanged
+            self.textChangedHandler = textChangedHandler
     }
     
     public override func initializeRowFomer() {
@@ -86,6 +86,10 @@ public class TextViewRowFormer: RowFormer {
                 (self.isEditing ? self.titleEditingColor : self.titleColor) :
                 self.titleDisabledColor
             
+            if self.placeholderLabel?.superview !== textView {
+                self.placeholderLabel?.removeFromSuperview()
+                self.placeholderLabel = nil
+            }
             if self.placeholderLabel == nil {
                 let placeholderLabel = UILabel()
                 placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -109,6 +113,7 @@ public class TextViewRowFormer: RowFormer {
             }
             self.placeholderLabel?.text = self.placeholder
             self.placeholderLabel?.font =? self.placeholderFont
+            self.placeholderLabel?.textAlignment =? self.textAlignment
             self.updatePlaceholderColor(textView.text)
         }
     }
@@ -139,7 +144,7 @@ extension TextViewRowFormer: UITextViewDelegate {
         if self.enabled {
             let text = textView.text ?? ""
             self.text = text
-            self.onTextChanged?(text)
+            self.textChangedHandler?(text)
             self.updatePlaceholderColor(text)
         }
     }

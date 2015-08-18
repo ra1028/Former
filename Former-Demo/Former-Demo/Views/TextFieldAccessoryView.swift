@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextFieldAccessoryView: UIToolbar {
+final class TextFieldAccessoryView: UIToolbar {
     
     var backButtonHandler: (() -> Void)?
     var forwardButtonHandler: (() -> Void)?

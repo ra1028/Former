@@ -36,7 +36,9 @@ public final class Former: NSObject {
     
     public private(set) var sectionFormers = [SectionFormer]()
     
-    public var cellonSelected: ((indexPath: NSIndexPath) -> Void)?
+    public var onCellSelected: ((indexPath: NSIndexPath) -> Void)?
+    public var onScroll: ((scrollView: UIScrollView) -> Void)?
+    public var onBeginDragging: ((scrollView: UIScrollView) -> Void)?
     
     public var autoRegisterEnabled = true
     
@@ -193,7 +195,6 @@ public final class Former: NSObject {
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             for (row, oldRowFormer) in sectionFormer.rowFormers.enumerate() {
                 if rowFormer === oldRowFormer {
-                    
                     return self.select(indexPath: NSIndexPath(forRow: row, inSection: section), animated: animated, scrollPosition: scrollPosition)
                 }
             }
@@ -214,10 +215,13 @@ public final class Former: NSObject {
         return self
     }
     
-    public func reload(section section: Int, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    public func reload(sections sections: [Int], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
-        guard self.sectionFormers.count > section && section >= 0 else { return self }
-        self.tableView?.reloadSections(NSIndexSet(index: section), withRowAnimation: rowAnimation)
+        let indexSet = NSMutableIndexSet()
+        sections.forEach {
+            indexSet.addIndex($0)
+        }
+        self.tableView?.reloadSections(indexSet, withRowAnimation: rowAnimation)
         return self
     }
     
@@ -265,17 +269,12 @@ public final class Former: NSObject {
         return self
     }
     
-    public func removeAll() -> Self {
-        
-        self.sectionFormers = []
-        return self
-    }
-    
     public func remove(rowFormers rowFormers: [RowFormer]) -> [NSIndexPath] {
         
         var removeIndexPaths = [NSIndexPath]()
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+        self.sectionFormers.enumerate().forEach { section, sectionFormer in
+            sectionFormer.rowFormers.enumerate().forEach { row, rowFormer in
+                
                 if rowFormers.contains(rowFormer) {
                     removeIndexPaths += [NSIndexPath(forRow: row, inSection: section)]
                     sectionFormer.remove(rowFormers: [rowFormer])
@@ -302,6 +301,24 @@ public final class Former: NSObject {
             self.inlinePickerRowFormer = nil
         }
         self.tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
+        self.tableView?.endUpdates()
+        return self
+    }
+    
+    public func removeAll() -> Self {
+        
+        self.sectionFormers = []
+        return self
+    }
+    
+    public func removeAllAndUpdate(rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        
+        let indexSet = NSIndexSet(indexesInRange: NSMakeRange(0, self.sectionFormers.count))
+        self.sectionFormers = []
+        guard indexSet.count > 0 else { return self }
+        
+        self.tableView?.beginUpdates()
+        self.tableView?.deleteSections(indexSet, withRowAnimation: rowAnimation)
         self.tableView?.endUpdates()
         return self
     }
@@ -408,6 +425,12 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
         self.endEditing()
+        self.onBeginDragging?(scrollView: scrollView)
+    }
+    
+    public func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        self.onScroll?(scrollView: scrollView)
     }
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
@@ -424,7 +447,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         guard rowFormer.enabled else { return }
         
         rowFormer.cellSelected(indexPath)
-        self.cellonSelected?(indexPath: indexPath)
+        self.onCellSelected?(indexPath: indexPath)
         
         if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
             
