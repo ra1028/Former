@@ -71,7 +71,7 @@ public class SegmentedRowFormer: RowFormer {
         }
     }
     
-    public func valueChanged(segment: UISegmentedControl) {
+    public dynamic func valueChanged(segment: UISegmentedControl) {
         
         if self.enabled {
             let selectedIndex = segment.selectedSegmentIndex

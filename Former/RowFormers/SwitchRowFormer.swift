@@ -86,7 +86,7 @@ public class SwitchRowFormer: RowFormer {
         }
     }
     
-    public func switchChanged(switchButton: UISwitch) {
+    public dynamic func switchChanged(switchButton: UISwitch) {
         
         if self.enabled {
             let switched = switchButton.on

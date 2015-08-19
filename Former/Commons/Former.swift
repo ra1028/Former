@@ -52,6 +52,8 @@ public final class Former: NSObject {
     }
     
     deinit {
+        self.tableView?.delegate = nil
+        self.tableView?.dataSource = nil
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     

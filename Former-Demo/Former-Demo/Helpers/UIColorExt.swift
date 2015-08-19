@@ -19,4 +19,9 @@ extension UIColor {
         
         return UIColor(red: 230.0 / 255.0, green: 140.0 / 255.0, blue: 20.0 / 255.0, alpha: 1.0)
     }
+    
+    class func formerHighlightedSubColor() -> UIColor {
+        
+        return UIColor(red: 255.0 / 255.0, green: 180.0 / 255.0, blue: 30.0 / 255.0, alpha: 1.0)
+    }
 }

@@ -25,6 +25,18 @@ class DefaultExampleViewController: FormerViewController {
         }
         }()
     
+    private lazy var subSectionFormer: SectionFormer = {
+        let rowFormer = CheckRowFormer(
+            cellType: FormerCheckCell.self,
+            registerType: .Class
+        )
+        rowFormer.title = "Check3"
+        rowFormer.titleColor = .formerColor()
+        rowFormer.titleFont = .boldSystemFontOfSize(16.0)
+        rowFormer.tintColor = .formerSubColor()
+        return SectionFormer().add(rowFormers: [rowFormer])
+        }()
+    
     private lazy var textFieldAccessoryView: TextFieldAccessoryView = {
         
         let accessory = TextFieldAccessoryView()
@@ -146,9 +158,42 @@ class DefaultExampleViewController: FormerViewController {
         picker.title = "Inline Picker"
         picker.titleColor = .formerColor()
         picker.titleFont = .boldSystemFontOfSize(16.0)
-        picker.displayTextEditingColor = .formerSubColor()
+        picker.displayTextColor = .formerSubColor()
+        picker.displayTextEditingColor = .formerHighlightedSubColor()
         picker.displayTextFont = .boldSystemFontOfSize(14.0)
         picker.valueTitles = (1...20).map { "Option\($0)" }
+        
+        let insertCells = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) { [weak self] in
+                if let sSelf = self {
+                    if $0 {
+                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 2), rowAnimation: .Left)
+                    } else {
+                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
+                    }
+                }
+        }
+        insertCells.title = "Insert Rows"
+        insertCells.titleColor = .formerColor()
+        insertCells.switchOnTintColor = .formerSubColor()
+        insertCells.titleFont = .boldSystemFontOfSize(16.0)
+        
+        let insertSection = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) { [weak self] in
+                if let sSelf = self {
+                    if $0 {
+                        sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 4, rowAnimation: .Fade)
+                    } else {
+                        sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
+                    }
+                }
+        }
+        insertSection.title = "Insert Sections"
+        insertSection.titleColor = .formerColor()
+        insertSection.switchOnTintColor = .formerSubColor()
+        insertSection.titleFont = .boldSystemFontOfSize(16.0)
         
         let date = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
@@ -159,25 +204,9 @@ class DefaultExampleViewController: FormerViewController {
         date.titleFont = .boldSystemFontOfSize(16.0)
         date.datePickerMode = .DateAndTime
         date.displayTextFromDate = String.mediumDateShortTime
-        date.displayTextEditingColor = .formerSubColor()
+        date.displayTextColor = .formerSubColor()
+        date.displayTextEditingColor = .formerHighlightedSubColor()
         date.displayTextFont = .boldSystemFontOfSize(14.0)
-        
-        let insertCells = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 2), rowAnimation: .Middle)
-                    } else {
-                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Middle)
-                    }
-                }
-        }
-        insertCells.title = "Insert"
-        insertCells.titleColor = .formerColor()
-        insertCells.switchOnTintColor = .formerSubColor()
-        insertCells.titleFont = .boldSystemFontOfSize(16.0)
-        insertCells.switched = false
         
         let switchDateStyle = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
@@ -220,15 +249,19 @@ class DefaultExampleViewController: FormerViewController {
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
         let section3 = SectionFormer()
             .add(rowFormers: [insertCells])
-            .set(headerViewFormer: createHeader("Insert Cells Example"))
+            .set(headerViewFormer: createHeader("Insert Rows Example"))
         let section4 = SectionFormer()
+            .add(rowFormers: [insertSection])
+            .set(headerViewFormer: createHeader("Insert Section Example"))
+        let section5 = SectionFormer()
             .add(rowFormers: [switchDateStyle, date])
             .set(headerViewFormer: createHeader("Date Setting Example"))
             .set(footerViewFormer: footer)
         
         self.former.add(sectionFormers: [
-            section1, section2, section3, section4
-            ])
+            section1, section2, section3, section4, section5
+            ]
+        )
         self.former.onCellSelected = { [weak self] indexPath in
             self?.textFieldAccessoryView.update()
             if self?.former.rowFormer(indexPath) !== selectors[2] {

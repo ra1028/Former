@@ -86,7 +86,7 @@ public class SliderRowFormer: RowFormer {
         }
     }
     
-    public func valueChanged(slider: UISlider) {
+    public dynamic func valueChanged(slider: UISlider) {
         
         if let cell = self.cell as? SliderFormableRow where self.enabled {
             let displayLabel = cell.formerDisplayLabel()

@@ -18,7 +18,7 @@ public protocol DatePickerFormableRow: FormableRow {
 public class DatePickerRowFormer: RowFormer {
     
     public var onDateChanged: (NSDate -> Void)?
-    @NSCopying public var calendar: NSCalendar!
+    @NSCopying public var calendar: NSCalendar?
     public var date: NSDate = NSDate()
     public var minuteInterval: Int?
     public var minimumDate: NSDate?
@@ -70,7 +70,7 @@ public class DatePickerRowFormer: RowFormer {
         }
     }
     
-    public func dateChanged(datePicker: UIDatePicker) {
+    public dynamic func dateChanged(datePicker: UIDatePicker) {
         
         if self.enabled {
             let date = datePicker.date

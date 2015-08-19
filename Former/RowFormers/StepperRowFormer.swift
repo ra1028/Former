@@ -89,7 +89,7 @@ public class StepperRowFormer: RowFormer {
         }
     }
     
-    public func valueChanged(stepper: UIStepper) {
+    public dynamic func valueChanged(stepper: UIStepper) {
         
         if let row = self.cell as? StepperFormableRow where self.enabled {
             let value = stepper.value
