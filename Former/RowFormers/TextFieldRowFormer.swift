@@ -42,7 +42,7 @@ public class TextFieldRowFormer: RowFormer {
     public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
     
-    init<T: UITableViewCell where T: TextFieldFormableRow>(
+    public init<T: UITableViewCell where T: TextFieldFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onTextChanged: (String -> Void)? = nil

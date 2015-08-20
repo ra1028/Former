@@ -36,8 +36,8 @@ extension InlinePickableRow {
 
 public class RowFormer: NSObject {
     
-    public private(set) final weak var cell: UITableViewCell?
     final weak var former: Former?
+    public private(set) final weak var cell: UITableViewCell?
     public internal(set) final var isTop = false
     public internal(set) final var isBottom = false
     public internal(set) final var registered = false
@@ -48,7 +48,7 @@ public class RowFormer: NSObject {
     
     public private(set) var cellType: UITableViewCell.Type
     public private(set) var registerType: Former.RegisterType
-    public var onSelected: ((indexPath: NSIndexPath) -> ())?
+    public var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     public var cellHeight: CGFloat = 44.0
     public var enabled = true
     public var backgroundColor: UIColor?
@@ -61,12 +61,11 @@ public class RowFormer: NSObject {
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        onSelected: (NSIndexPath -> Void)? = nil) {
+        onSelected: ((NSIndexPath, RowFormer) -> Void)? = nil) {
             
             self.cellType = cellType
             self.registerType = registerType
             super.init()
-            
             self.onSelected = onSelected
             self.initializeRowFomer()
     }
@@ -104,7 +103,7 @@ public class RowFormer: NSObject {
     public func cellSelected(indexPath: NSIndexPath) {
         
         if self.enabled {
-            self.onSelected?(indexPath: indexPath)
+            self.onSelected?(indexPath: indexPath, rowFormer: self)
         }
     }
 }

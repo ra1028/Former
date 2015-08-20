@@ -36,7 +36,7 @@ public class SliderRowFormer: RowFormer {
     public var displayColor: UIColor?
     public var displayDisabledColor: UIColor?
     
-    init<T : UITableViewCell where T : SliderFormableRow>(
+    public init<T : UITableViewCell where T : SliderFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onValueChanged: (Float -> Void)? = nil) {

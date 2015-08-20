@@ -31,7 +31,7 @@ final class PickerSelectorView: UIView {
     private weak var lineView: UIView!
     
     init() {
-        super.init(frame: CGRect(origin: CGPointZero, size: CGSize(width: 0, height: 260.0)))
+        super.init(frame: CGRect(origin: CGPointZero, size: CGSize(width: 0, height: 216.0)))
         self.configure()
     }
     

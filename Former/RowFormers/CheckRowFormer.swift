@@ -22,7 +22,7 @@ public class CheckRowFormer: RowFormer {
     public var titleColor: UIColor?
     public var titleDisabledColor: UIColor?
     
-    init<T : UITableViewCell where T : CheckFormableRow>(
+    public init<T : UITableViewCell where T : CheckFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onCheckChanged: (Bool -> Void)? = nil) {

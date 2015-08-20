@@ -24,28 +24,29 @@ final class TopViewContoller: FormerViewController {
         
         // Create RowFormers
         
-        let firstComponets: [(String, (NSIndexPath -> Void)?)] = [
-            ("Edit Profile", { [weak self] _ in
+        let firstComponets: [(String, (() -> Void)?)] = [
+            ("Edit Profile", { [weak self] in
                 self?.former.deselect(true)})
         ]
         
-        let secondComponents: [(String, (NSIndexPath -> Void)?)] = [
-            ("All Defaults", { [weak self] _ in
+        let secondComponents: [(String, (() -> Void)?)] = [
+            ("All Defaults", { [weak self] in
                 self?.former.deselect(true)
                 self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)})
         ]
         
-        let thirdComponents: [(String, (NSIndexPath -> Void)?)] = [
-            ("Default Former Examples", { [weak self] _ in
+        let thirdComponents: [(String, (() -> Void)?)] = [
+            ("Default Former Examples", { [weak self] in
                 self?.former.deselect(true)
                 self?.navigationController?.pushViewController(DefaultExampleViewController(), animated: true)}),
-            ("Custom Former Examples", { [weak self] _ in
+            ("Custom Former Examples", { [weak self] in
                 self?.former.deselect(true)})
         ]
         
-        let createMenu: ((String, (NSIndexPath -> Void)?) -> TextRowFormer) = {
-            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, registerType: .Class, onSelected: $0.1)
-            rowFormer.text = $0.0
+        let createMenu: ((String, (() -> Void)?) -> TextRowFormer) = { text, onSelected in
+            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, registerType: .Class)
+            rowFormer.onSelected = { _ in onSelected?() }
+            rowFormer.text = text
             rowFormer.textColor = .formerColor()
             rowFormer.font = UIFont.boldSystemFontOfSize(16.0)
             rowFormer.accessoryType = .DisclosureIndicator

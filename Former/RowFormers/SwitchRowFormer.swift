@@ -30,7 +30,7 @@ public class SwitchRowFormer: RowFormer {
     public var titleColor: UIColor?
     public var titleDisabledColor: UIColor?
     
-    init<T : UITableViewCell where T : SwitchFormableRow>(
+    public init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onSwitchChanged: (Bool -> Void)? = nil) {

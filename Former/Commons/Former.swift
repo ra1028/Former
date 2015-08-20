@@ -12,8 +12,10 @@ public final class Former: NSObject {
     
     // MARK: Public
     
-    // RegisterType is type to register Cell or HeaderFooterView.
-    // Choose 'Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.
+    /**
+    RegisterType is type to register Cell or HeaderFooterView.
+    Choose 'Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.f
+    **/
     public enum RegisterType {
         
         case Nib(nibName: String, bundle: NSBundle?)
@@ -22,26 +24,34 @@ public final class Former: NSObject {
     
     public private(set) var sectionFormers = [SectionFormer]() // All SectionFormers. Default is empty.
     
-    // Return all RowFormers. Compute each time of called.
+    /// Return all RowFormers. Compute each time of called.
     public var rowFormers: [RowFormer] {
         
         return self.sectionFormers.flatMap { $0.rowFormers }
     }
     
+    /// Number of all sections.
     public var numberOfSections: Int {
         
         return self.sectionFormers.count
     }
     
+    /// Number of all rows.
     public var numberOfRows: Int {
         
         return self.rowFormers.count
     }
     
+    /// Call when cell has selected.
     public var onCellSelected: ((indexPath: NSIndexPath) -> Void)?
+    
+    /// Call when tableView has scrolled.
     public var onScroll: ((scrollView: UIScrollView) -> Void)?
+    
+    /// Call when tableView had begin dragging.
     public var onBeginDragging: ((scrollView: UIScrollView) -> Void)?
     
+    /// If set 'true', automatically register cell and headerFooterView.
     public var autoRegisterEnabled = true
     
     public init(tableView: UITableView) {
@@ -161,13 +171,19 @@ public final class Former: NSObject {
     public func becomeEditingPrevious() -> Self {
         
         if let tableView = self.tableView where self.canBecomeEditingPrevious() {
-            tableView.becomeFirstResponder()
-            let section = self.selectedIndexPath?.section ?? 0
-            let row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row - 1 : 0
+            
+            var section = self.selectedIndexPath?.section ?? 0
+            var row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row - 1 : 0
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             self.select(indexPath: indexPath, animated: false)
-            self.tableView(tableView, willSelectRowAtIndexPath: indexPath)
-            self.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            guard section < self.sectionFormers.count else { return self }
+            if row < 0 {
+                section--
+                guard section >= 0 else { return self }
+                row = self[section].rowFormers.count - 1
+            }
+            guard row < self[section].rowFormers.count else { return self }
+            
             let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
             tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
@@ -181,12 +197,18 @@ public final class Former: NSObject {
         
         if let tableView = self.tableView where self.canBecomeEditingNext() {
             
-            let section = self.selectedIndexPath?.section ?? 0
-            let row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row + 1 : 0
+            var section = self.selectedIndexPath?.section ?? 0
+            var row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row + 1 : 0
+            guard section < self.sectionFormers.count else { return self }
+            if row >= self[section].rowFormers.count {
+                section++
+                guard section < self.sectionFormers.count else { return self }
+                row = 0
+            }
+            guard row < self[section].rowFormers.count else { return self }
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             self.select(indexPath: indexPath, animated: false)
-            self.tableView(tableView, willSelectRowAtIndexPath: indexPath)
-            self.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            
             let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
             tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
@@ -206,7 +228,11 @@ public final class Former: NSObject {
     
     public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
-        self.tableView?.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+        if let tableView = self.tableView {
+            tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+            self.tableView(tableView, willSelectRowAtIndexPath: indexPath)
+            self.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+        }
         return self
     }
     
@@ -231,7 +257,6 @@ public final class Former: NSObject {
         if let indexPath = self.selectedIndexPath {
             self.tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
         }
-        self.selectedIndexPath = nil
         return self
     }
     
@@ -624,7 +649,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return false
     }
     
-    // MARK: Cell
+    // for Cell
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -658,7 +683,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    // MARK: HeaderFooterView
+    // for HeaderFooterView
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         

@@ -49,7 +49,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
     public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
     
-    init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
+    public init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onDateChanged: (NSDate -> Void)? = nil) {

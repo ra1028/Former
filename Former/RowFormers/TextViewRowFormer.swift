@@ -42,7 +42,7 @@ public class TextViewRowFormer: RowFormer {
     public var placeholderFont: UIFont?
     public var placeholderColor: UIColor?
     
-    init<T : UITableViewCell where T : TextViewFormableRow>(
+    public init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         textChangedHandler: (String -> Void)? = nil) {

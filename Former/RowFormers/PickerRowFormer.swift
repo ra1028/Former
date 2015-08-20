@@ -20,7 +20,7 @@ public class PickerRowFormer: RowFormer {
     public var selectedRow: Int = 0
     public var showsSelectionIndicator: Bool?
     
-    init<T : UITableViewCell where T : PickerFormableRow>(
+    public init<T : UITableViewCell where T : PickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onValueChanged: ((Int, String) -> Void)? = nil) {

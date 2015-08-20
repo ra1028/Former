@@ -42,7 +42,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
     public var titleDisabledColor: UIColor?
     public var titleEditingColor: UIColor?
     
-    init<T : UITableViewCell where T : InlinePickerFormableRow>(
+    public init<T : UITableViewCell where T : InlinePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onValueChanged: ((Int, String) -> Void)? = nil) {

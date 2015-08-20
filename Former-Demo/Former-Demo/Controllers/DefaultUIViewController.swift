@@ -32,15 +32,15 @@ class DefaultUIViewController: FormerViewController {
         let disableRowText: (Bool -> String) = {
             return ($0 ? "Enable" : "Disable") + " All Cells"
         }
-        disableRow.onSelected = { [weak self, weak disableRow] _ in
-            if let sSelf = self {
+        disableRow.onSelected = { [weak self] in
+            if case let (sSelf?, disableRow?) = (self, $1 as? TextRowFormer) {
                 sSelf.former.deselect(true)
                 sSelf.former[1...2].flatMap { $0.rowFormers }.forEach {
                     $0.enabled = !sSelf.enabled
                     $0.update()
                 }
-                disableRow?.text = disableRowText(sSelf.enabled)
-                disableRow?.update()
+                disableRow.text = disableRowText(sSelf.enabled)
+                disableRow.update()
                 sSelf.enabled = !sSelf.enabled
             }
         }
@@ -48,11 +48,11 @@ class DefaultUIViewController: FormerViewController {
         
         let textRow = TextRowFormer(
             cellType: FormerTextCell.self,
-            registerType: .Class,
-            onSelected: { [weak self] indexPath in
-                self?.former.deselect(true)
-            }
+            registerType: .Class
         )
+        textRow.onSelected = { [weak self] _ in
+            self?.former.deselect(true)
+        }
         textRow.text = "Text"
         textRow.subText = "SubText"
         

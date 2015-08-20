@@ -28,16 +28,16 @@ public class TextRowFormer: RowFormer {
     public var subTextColor: UIColor?
     public var subTextDisabledColor: UIColor?
     
-    override init<T: UITableViewCell where T: TextFormableRow>(
+    public init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
-        onSelected: (NSIndexPath -> Void)? = nil) {
-        
-            super.init(cellType: cellType, registerType: registerType, onSelected: onSelected)
+        text: String? = nil) {
+            super.init(cellType: cellType, registerType: registerType)
+            self.text = text
     }
     
     public override func initializeRowFomer() {
-        
+
         super.initializeRowFomer()
         self.textDisabledColor = .lightGrayColor()
         self.subTextColor = .lightGrayColor()

@@ -28,7 +28,7 @@ public class DatePickerRowFormer: RowFormer {
     public var locale: NSLocale?
     public var timeZone: NSTimeZone?
     
-    init<T : UITableViewCell where T : DatePickerFormableRow>(
+    public init<T : UITableViewCell where T : DatePickerFormableRow>(
         cellType: T.Type,
         registerType: Former.RegisterType,
         onDateChanged: (NSDate -> Void)? = nil) {

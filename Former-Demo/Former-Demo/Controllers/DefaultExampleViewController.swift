@@ -57,6 +57,30 @@ class DefaultExampleViewController: FormerViewController {
         }
         return accessory
         }()
+    private lazy var pickerAccessoryView: TextFieldAccessoryView = {
+        
+        let accessory = TextFieldAccessoryView()
+        accessory.translatesAutoresizingMaskIntoConstraints = false
+        accessory.doneButtonHandler = { [weak self] in
+            self?.former.endEditing()
+            self?.hidePickerSelectorView()
+        }
+        accessory.backButtonHandler = { [weak self] in
+            self?.former.becomeEditingPrevious()
+            self?.hidePickerSelectorView()
+        }
+        accessory.forwardButtonHandler = { [weak self] in
+            self?.former.becomeEditingNext()
+            self?.hidePickerSelectorView()
+        }
+        accessory.getBackButtonEnabled = { [weak self] in
+            self?.former.canBecomeEditingPrevious() ?? true
+        }
+        accessory.getForwardButtonEnabled = { [weak self] in
+            self?.former.canBecomeEditingNext() ?? true
+        }
+        return accessory
+        }()
     
     private var pickerSelectorView: PickerSelectorView?
     private var pickerViewBottom: NSLayoutConstraint?
@@ -79,6 +103,8 @@ class DefaultExampleViewController: FormerViewController {
         
         // Create RowFormers
         
+        // Selector Example
+        
         let selectors = (0...2).map { index -> TextRowFormer in
             
             let selector = TextRowFormer(
@@ -87,35 +113,39 @@ class DefaultExampleViewController: FormerViewController {
             )
             let texts = ["Option1", "Option2", "Option3"]
             selector.onSelected = [
-                { [weak self, weak selector] _ in
+                { [weak self] in
+                    let selector = $1 as! TextRowFormer
                     let controller = TextSelectorViewContoller()
                     controller.texts = texts
-                    controller.selectedText = selector?.subText
+                    controller.selectedText = selector.subText
                     controller.onSelected = {
-                        selector?.subText = $0
-                        selector?.update()
+                        selector.subText = $0
+                        selector.update()
                     }
                     self?.navigationController?.pushViewController(controller, animated: true)
                 },
-                { [weak self] _ in
+                { [weak self] in
                     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    let selector = $1 as! TextRowFormer
                     texts.map { title in
                         sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak selector] _ in
                             selector?.subText = title
                             selector?.update()
-                            }))
+                            })
+                        )
                     }
                     sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     self?.presentViewController(sheet, animated: true, completion: nil)
                     self?.former.deselect(true)
                 },
-                { [weak self, weak selector] _ in
+                { [weak self] in
+                    let selector = $1 as! TextRowFormer
                     if self?.pickerSelectorView == nil {
                         self?.showPickerSelectorView(
                             texts,
-                            selectedTitle: selector?.subText ?? texts[0],
-                            onValueChanged: { (_, text) -> Void in
-                                selector?.subText = text
+                            selectedTitle: selector.subText ?? texts[0],
+                            onValueChanged: { [weak selector] in
+                                selector?.subText = $1
                                 selector?.update()
                         })
                     } else {
@@ -133,6 +163,8 @@ class DefaultExampleViewController: FormerViewController {
             selector.accessoryType = .DisclosureIndicator
             return selector
         }
+        
+        // Custom Input Accessory View Example
 
         let textFields = (1...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
@@ -163,37 +195,7 @@ class DefaultExampleViewController: FormerViewController {
         picker.displayTextFont = .boldSystemFontOfSize(14.0)
         picker.valueTitles = (1...20).map { "Option\($0)" }
         
-        let insertCells = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 2), rowAnimation: .Left)
-                    } else {
-                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
-                    }
-                }
-        }
-        insertCells.title = "Insert Rows"
-        insertCells.titleColor = .formerColor()
-        insertCells.switchOnTintColor = .formerSubColor()
-        insertCells.titleFont = .boldSystemFontOfSize(16.0)
-        
-        let insertSection = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 4, rowAnimation: .Fade)
-                    } else {
-                        sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
-                    }
-                }
-        }
-        insertSection.title = "Insert Sections"
-        insertSection.titleColor = .formerColor()
-        insertSection.switchOnTintColor = .formerSubColor()
-        insertSection.titleFont = .boldSystemFontOfSize(16.0)
+        // Date Setting Example
         
         let date = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
@@ -221,6 +223,42 @@ class DefaultExampleViewController: FormerViewController {
         switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
         switchDateStyle.switched = false
         
+        // Insert Section Example
+        
+        let insertSection = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) { [weak self] in
+                if let sSelf = self {
+                    if $0 {
+                        sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
+                    } else {
+                        sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
+                    }
+                }
+        }
+        insertSection.title = "Insert Section"
+        insertSection.titleColor = .formerColor()
+        insertSection.switchOnTintColor = .formerSubColor()
+        insertSection.titleFont = .boldSystemFontOfSize(16.0)
+        
+        // Incert Rows Example
+        
+        let insertRows = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) { [weak self] in
+                if let sSelf = self {
+                    if $0 {
+                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
+                    } else {
+                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
+                    }
+                }
+        }
+        insertRows.title = "Insert Rows"
+        insertRows.titleColor = .formerColor()
+        insertRows.switchOnTintColor = .formerSubColor()
+        insertRows.titleFont = .boldSystemFontOfSize(16.0)
+        
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = {
@@ -242,20 +280,20 @@ class DefaultExampleViewController: FormerViewController {
         // Create SectionFormers
         
         let section1 = SectionFormer()
-            .add(rowFormers: selectors)
-            .set(headerViewFormer: createHeader("Selector Example"))
-        let section2 = SectionFormer()
-            .add(rowFormers: textFields + [picker])
-            .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
-        let section3 = SectionFormer()
-            .add(rowFormers: [insertCells])
-            .set(headerViewFormer: createHeader("Insert Rows Example"))
-        let section4 = SectionFormer()
-            .add(rowFormers: [insertSection])
-            .set(headerViewFormer: createHeader("Insert Section Example"))
-        let section5 = SectionFormer()
             .add(rowFormers: [switchDateStyle, date])
             .set(headerViewFormer: createHeader("Date Setting Example"))
+        let section2 = SectionFormer()
+            .add(rowFormers: [insertRows])
+            .set(headerViewFormer: createHeader("Insert Rows Example"))
+        let section3 = SectionFormer()
+            .add(rowFormers: [insertSection])
+            .set(headerViewFormer: createHeader("Insert Section Example"))
+        let section4 = SectionFormer()
+            .add(rowFormers: selectors)
+            .set(headerViewFormer: createHeader("Selector Example"))
+        let section5 = SectionFormer()
+            .add(rowFormers: textFields + [picker])
+            .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
             .set(footerViewFormer: footer)
         
         self.former.add(sectionFormers: [
@@ -283,12 +321,21 @@ class DefaultExampleViewController: FormerViewController {
         self.view.addSubview(pickerSelectorView)
         self.pickerSelectorView = pickerSelectorView
         
+        self.pickerAccessoryView.update()
+        self.view.addSubview(self.pickerAccessoryView)
+        
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:[picker(260)]",
+                "V:[accessoryView]-0-[picker(216)]",
                 options: [],
                 metrics: nil,
-                views: ["picker": pickerSelectorView]
+                views: ["picker": pickerSelectorView, "accessoryView": self.pickerAccessoryView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "H:|-0-[accessoryView]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["accessoryView": self.pickerAccessoryView]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "H:|-0-[picker]-0-|",
@@ -310,6 +357,7 @@ class DefaultExampleViewController: FormerViewController {
         self.pickerViewBottom = pickerViewBottom
         
         pickerSelectorView.layoutIfNeeded()
+        self.pickerAccessoryView.layoutIfNeeded()
         
         UIView.animateWithDuration(
             0.25,
@@ -330,11 +378,10 @@ class DefaultExampleViewController: FormerViewController {
             0.25,
             delay: 0,
             options: [.BeginFromCurrentState, .CurveEaseOut],
-            animations: { () -> Void in
+            animations: { _ in
                 self.pickerViewBottom?.constant = 260.0
                 self.view.layoutIfNeeded()
             }) { _ in
-                pickerSelectorView.removeConstraints(pickerSelectorView.constraints)
                 pickerSelectorView.removeFromSuperview()
                 self.pickerViewBottom = nil
                 self.pickerSelectorView = nil
