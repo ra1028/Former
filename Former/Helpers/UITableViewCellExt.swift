@@ -19,4 +19,35 @@ extension UITableViewCell {
         
         return self.className
     }
+    
+    // For SelectorRow
+    
+    override public var inputView: UIView? {
+        
+        // TODO: SelectorDatePickerRow
+        if let pickerRow = self as? SelectorPickerFormableRow {
+            return pickerRow.selectorPickerView
+        }
+        
+        return super.inputView
+    }
+    
+    override public var inputAccessoryView: UIView? {
+        
+        // TODO: SelectorDatePickerRow
+        if let pickerRow = self as? SelectorPickerFormableRow {
+            return pickerRow.selectorAccessoryView
+        }
+        
+        return super.inputAccessoryView
+    }
+    
+    override public func canBecomeFirstResponder() -> Bool {
+        
+        if self is SelectorPickerFormableRow ||
+            self is SelectorDatePickerFormableRow {
+            return true
+        }
+        return super.canBecomeFirstResponder()
+    }
 }

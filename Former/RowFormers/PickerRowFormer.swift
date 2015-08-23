@@ -39,9 +39,9 @@ public class PickerRowFormer: RowFormer {
     deinit {
         
         if let row = self.cell as? PickerFormableRow {
-            let datePicker = row.formerPickerView()
-            datePicker.delegate = nil
-            datePicker.dataSource = nil
+            let picker = row.formerPickerView()
+            picker.delegate = nil
+            picker.dataSource = nil
         }
     }
     

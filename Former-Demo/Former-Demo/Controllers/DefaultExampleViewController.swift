@@ -296,13 +296,12 @@ class DefaultExampleViewController: FormerViewController {
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
             .set(footerViewFormer: footer)
         
-        self.former.add(sectionFormers: [
-            section1, section2, section3, section4, section5
-            ]
+        self.former.add(sectionFormers:
+            [section1, section2, section3, section4, section5]
         )
-        self.former.onCellSelected = { [weak self] indexPath in
+        self.former.onCellSelected = { [weak self] in
             self?.textFieldAccessoryView.update()
-            if self?.former.rowFormer(indexPath) !== selectors[2] {
+            if self?.former.rowFormer($0) !== selectors[2] {
                 self?.hidePickerSelectorView()
             }
         }

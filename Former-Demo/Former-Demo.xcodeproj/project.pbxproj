@@ -13,6 +13,9 @@
 		2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */; };
 		2A262B0E1B73B96100AAB3F1 /* DefaultExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A262B0D1B73B96100AAB3F1 /* DefaultExampleViewController.swift */; };
 		2A29B0121B83295C004CE399 /* PickerSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A29B0111B83295C004CE399 /* PickerSelectorView.swift */; };
+		2A2DDCB61B8A575900CA630F /* SelectorPickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2DDCB51B8A575900CA630F /* SelectorPickerRowFormer.swift */; };
+		2A2DDCB81B8A579900CA630F /* SelectorDatePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2DDCB71B8A579900CA630F /* SelectorDatePickerRowFormer.swift */; };
+		2A2DDCBA1B8A5EB200CA630F /* FormerSelectorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2DDCB91B8A5EB200CA630F /* FormerSelectorPickerCell.swift */; };
 		2A5EEBDC1B6558220049FB45 /* SwitchRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */; };
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
 		2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7471B6A866B00985361 /* SliderRowFormer.swift */; };
@@ -67,6 +70,9 @@
 		2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A262B0D1B73B96100AAB3F1 /* DefaultExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultExampleViewController.swift; sourceTree = "<group>"; };
 		2A29B0111B83295C004CE399 /* PickerSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerSelectorView.swift; sourceTree = "<group>"; };
+		2A2DDCB51B8A575900CA630F /* SelectorPickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorPickerRowFormer.swift; sourceTree = "<group>"; };
+		2A2DDCB71B8A579900CA630F /* SelectorDatePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorDatePickerRowFormer.swift; sourceTree = "<group>"; };
+		2A2DDCB91B8A5EB200CA630F /* FormerSelectorPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSelectorPickerCell.swift; sourceTree = "<group>"; };
 		2A5EEBDB1B6558220049FB45 /* SwitchRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchRowFormer.swift; sourceTree = "<group>"; };
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
 		2A63E7471B6A866B00985361 /* SliderRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderRowFormer.swift; sourceTree = "<group>"; };
@@ -201,6 +207,7 @@
 				2AA46CCD1B69304F00909F61 /* FormerStepperCell.swift */,
 				2AA46CD11B69412700909F61 /* FormerSegmentedCell.swift */,
 				2A63E7491B6A89D500985361 /* FormerSliderCell.swift */,
+				2A2DDCB91B8A5EB200CA630F /* FormerSelectorPickerCell.swift */,
 				2A8B737E1B6D8B0A009252F7 /* FormerPickerCell.swift */,
 				2A8B73841B6D922A009252F7 /* FormerInlinePickerCell.swift */,
 				2A8F62741B6BDBDE00860BE6 /* FormerDatePickerCell.swift */,
@@ -258,6 +265,8 @@
 				2AA46CCB1B692B7800909F61 /* StepperRowFormer.swift */,
 				2AA46CCF1B693A6C00909F61 /* SegmentedRowFormer.swift */,
 				2A63E7471B6A866B00985361 /* SliderRowFormer.swift */,
+				2A2DDCB51B8A575900CA630F /* SelectorPickerRowFormer.swift */,
+				2A2DDCB71B8A579900CA630F /* SelectorDatePickerRowFormer.swift */,
 				2A8B737C1B6D7D78009252F7 /* PickerRowFormer.swift */,
 				2A8B73821B6D8E5B009252F7 /* InlinePickerRowFormer.swift */,
 				2A8F62721B6BD70F00860BE6 /* DatePickerRowFormer.swift */,
@@ -356,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AD841931B64A0F4003A10FF /* CheckRowFormer.swift in Sources */,
+				2A2DDCBA1B8A5EB200CA630F /* FormerSelectorPickerCell.swift in Sources */,
 				2AD841881B64A0F4003A10FF /* FormerTextCell.swift in Sources */,
 				2A8B73831B6D8E5B009252F7 /* InlinePickerRowFormer.swift in Sources */,
 				2A8F627B1B6C13B700860BE6 /* FormerInlineDatePickerCell.swift in Sources */,
@@ -365,6 +375,7 @@
 				2AE75CD51B7B9EA7006C53F2 /* TextFieldAccessoryView.swift in Sources */,
 				2AA46CD21B69412700909F61 /* FormerSegmentedCell.swift in Sources */,
 				2A8F62751B6BDBDE00860BE6 /* FormerDatePickerCell.swift in Sources */,
+				2A2DDCB61B8A575900CA630F /* SelectorPickerRowFormer.swift in Sources */,
 				2AB7BF531B789F8A00AF0B9E /* FormerObserver.swift in Sources */,
 				2AD841921B64A0F4003A10FF /* UITableViewHeaderFooterViewExt.swift in Sources */,
 				2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */,
@@ -377,6 +388,7 @@
 				2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */,
 				2AD841901B64A0F4003A10FF /* Operators.swift in Sources */,
 				2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */,
+				2A2DDCB81B8A579900CA630F /* SelectorDatePickerRowFormer.swift in Sources */,
 				2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */,
 				2A262B0E1B73B96100AAB3F1 /* DefaultExampleViewController.swift in Sources */,
 				2A8F62731B6BD70F00860BE6 /* DatePickerRowFormer.swift in Sources */,

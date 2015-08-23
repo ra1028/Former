@@ -103,6 +103,13 @@ class DefaultUIViewController: FormerViewController {
         sliderRow.title = "Slider"
         sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
         
+        let selectorPickerRow = SelectorPickerRowFormer(
+            cellType: FormerSelectorPickerCell.self,
+            registerType: .Class
+        )
+        selectorPickerRow.title = "SelectorPicker"
+        selectorPickerRow.valueTitles = (1...20).map { "Option\($0)" }
+        
         let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
             registerType: .Class
@@ -138,8 +145,8 @@ class DefaultUIViewController: FormerViewController {
             .add(rowFormers: [
                 textRow, textFieldRow, textViewRow,
                 checkRow, switchRow, stepperRow,
-                segmentRow, sliderRow, inlinePickerRow,
-                inlineDateRow])
+                segmentRow, sliderRow, selectorPickerRow,
+                inlinePickerRow, inlineDateRow])
             
         let sectionFormer3 = SectionFormer()
             .add(rowFormers: [pickerRow, datePickerRow])

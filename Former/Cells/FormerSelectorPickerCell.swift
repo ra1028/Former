@@ -1,33 +1,35 @@
 //
-//  FormerTextCell.swift
+//  FormerSelectorPickerCell.swift
 //  Former-Demo
 //
-//  Created by Ryo Aoyama on 7/24/15.
+//  Created by Ryo Aoyama on 8/24/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
 
-public class FormerTextCell: FormerCell, TextFormableRow {
+public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
     
+    public var selectorPickerView: UIPickerView?
+    public var selectorAccessoryView: UIView?
     private var titleLabel: UILabel!
-    private var subTextLabel: UILabel!
-    private var subTextLabelRightConst: NSLayoutConstraint!
+    private var displayLabel: UILabel!
+    private var displayLabelRightConst: NSLayoutConstraint!
     
-    public func formerTextLabel() -> UILabel? {
+    public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
     }
     
-    public func formerSubTextLabel() -> UILabel? {
+    public func formerDisplayLabel() -> UILabel? {
         
-        return self.subTextLabel
+        return self.displayLabel
     }
     
     public override func configureWithRowFormer(rowFormer: RowFormer) {
         
         super.configureWithRowFormer(rowFormer)
-        self.subTextLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
+        self.displayLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
     }
     
     public override func configureViews() {
@@ -40,12 +42,12 @@ public class FormerTextCell: FormerCell, TextFormableRow {
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
-        let subTextLabel = UILabel()
-        subTextLabel.textColor = .lightGrayColor()
-        subTextLabel.textAlignment = .Right
-        subTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(subTextLabel, atIndex: 0)
-        self.subTextLabel = subTextLabel
+        let displayLabel = UILabel()
+        displayLabel.textColor = .lightGrayColor()
+        displayLabel.textAlignment = .Right
+        displayLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.insertSubview(displayLabel, atIndex: 0)
+        self.displayLabel = displayLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
@@ -55,20 +57,20 @@ public class FormerTextCell: FormerCell, TextFormableRow {
                 views: ["title": titleLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[sub]-0-|",
+                "V:|-0-[display]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["sub": subTextLabel]
+                views: ["display": displayLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]-10-[sub]",
+                "H:|-15-[title(>=0)]-10-[display]",
                 options: [],
                 metrics: nil,
-                views: ["title": titleLabel, "sub": subTextLabel]
+                views: ["title": titleLabel, "display": displayLabel]
             )
         ]
-        let subTextLabelRightConst = NSLayoutConstraint(
-            item: subTextLabel,
+        let displayLabelRightConst = NSLayoutConstraint(
+            item: displayLabel,
             attribute: .Trailing,
             relatedBy: .Equal,
             toItem: self.contentView,
@@ -77,7 +79,7 @@ public class FormerTextCell: FormerCell, TextFormableRow {
             constant: 0
         )
         
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [subTextLabelRightConst])
-        self.subTextLabelRightConst = subTextLabelRightConst
+        self.contentView.addConstraints(constraints.flatMap { $0 } + [displayLabelRightConst])
+        self.displayLabelRightConst = displayLabelRightConst
     }
 }

@@ -37,7 +37,7 @@ public class TextRowFormer: RowFormer {
     }
     
     public override func initializeRowFomer() {
-
+        
         super.initializeRowFomer()
         self.textDisabledColor = .lightGrayColor()
         self.subTextColor = .lightGrayColor()
