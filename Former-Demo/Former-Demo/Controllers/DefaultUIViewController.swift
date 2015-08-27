@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DefaultUIViewController: FormerViewController {
+final class DefaultUIViewController: FormerViewController {
     
     private var enabled = true
 
@@ -92,7 +92,7 @@ class DefaultUIViewController: FormerViewController {
         let segmentRow = SegmentedRowFormer(
             cellType: FormerSegmentedCell.self,
             registerType: .Class,
-            segmentTitles: ["Apple", "Banana", "Cherry"]
+            segmentTitles: ["Opt1", "Opt2", "Opt3"]
         )
         segmentRow.title = "Segmented"
         
@@ -110,6 +110,13 @@ class DefaultUIViewController: FormerViewController {
         selectorPickerRow.title = "SelectorPicker"
         selectorPickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
+        let selectorDatePickerRow = SelectorDatePickerRowFormer(
+            cellType: FormerSelectorDatePickerCell.self,
+            registerType: .Class
+        )
+        selectorDatePickerRow.title = "SelectorDatePicker"
+        selectorDatePickerRow.displayTextFromDate = String.mediumDateShortTime
+        
         let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
             registerType: .Class
@@ -123,7 +130,7 @@ class DefaultUIViewController: FormerViewController {
         )
         inlineDateRow.title = "InlineDatePicker"
         inlineDateRow.datePickerMode = .Date
-        inlineDateRow.displayTextFromDate = String.fullDate
+        inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(
             cellType: FormerPickerCell.self,
@@ -146,7 +153,7 @@ class DefaultUIViewController: FormerViewController {
                 textRow, textFieldRow, textViewRow,
                 checkRow, switchRow, stepperRow,
                 segmentRow, sliderRow, selectorPickerRow,
-                inlinePickerRow, inlineDateRow])
+                selectorDatePickerRow, inlinePickerRow, inlineDateRow])
             
         let sectionFormer3 = SectionFormer()
             .add(rowFormers: [pickerRow, datePickerRow])

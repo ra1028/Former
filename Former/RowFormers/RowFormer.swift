@@ -36,7 +36,7 @@ extension InlinePickableRow {
 
 public class RowFormer: NSObject {
     
-    final weak var former: Former?
+    final internal weak var former: Former?
     public private(set) final weak var cell: UITableViewCell?
     public internal(set) final var isTop = false
     public internal(set) final var isBottom = false

@@ -174,8 +174,6 @@ public final class Former: NSObject {
             
             var section = self.selectedIndexPath?.section ?? 0
             var row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row - 1 : 0
-            let indexPath = NSIndexPath(forRow: row, inSection: section)
-            self.select(indexPath: indexPath, animated: false)
             guard section < self.sectionFormers.count else { return self }
             if row < 0 {
                 section--
@@ -183,6 +181,8 @@ public final class Former: NSObject {
                 row = self[section].rowFormers.count - 1
             }
             guard row < self[section].rowFormers.count else { return self }
+            let indexPath = NSIndexPath(forRow: row, inSection: section)
+            self.select(indexPath: indexPath, animated: false)
             
             let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
@@ -494,7 +494,6 @@ public final class Former: NSObject {
     private weak var inlinePickerRowFormer: RowFormer?
     private var selectedIndexPath: NSIndexPath?
     private var oldBottomContentInset: CGFloat?
-    private var contentInsetAdjusted = false
     
     private func setupTableView() {
         
@@ -534,14 +533,14 @@ public final class Former: NSObject {
         
         guard let keyboardInfo = notification.userInfo else { return }
         
-        if case let (tableView?, cell?) = (self.tableView, self.findCellWithSubView(self.findFirstResponder(self.tableView))) where !self.contentInsetAdjusted {
+        if case let (tableView?, cell?) = (self.tableView, self.findCellWithSubView(self.findFirstResponder(self.tableView))) {
             
             let frame = keyboardInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue
             let keyboardFrame = tableView.window!.convertRect(frame, toView: tableView.superview!)
             let bottomInset = CGRectGetMinY(tableView.frame) + CGRectGetHeight(tableView.frame) - CGRectGetMinY(keyboardFrame)
             guard bottomInset > 0 else { return }
             
-            self.oldBottomContentInset = tableView.contentInset.bottom
+            self.oldBottomContentInset ?= tableView.contentInset.bottom
             let duration = keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue!
             let curve = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
             guard let indexPath = tableView.indexPathForCell(cell) else { return }
@@ -553,7 +552,6 @@ public final class Former: NSObject {
             tableView.scrollIndicatorInsets.bottom = bottomInset
             tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: false)
             UIView.commitAnimations()
-            self.contentInsetAdjusted = true
         }
     }
     
@@ -572,7 +570,7 @@ public final class Former: NSObject {
             tableView.contentInset.bottom = inset
             tableView.scrollIndicatorInsets.bottom = inset
             UIView.commitAnimations()
-            self.contentInsetAdjusted = false
+            self.oldBottomContentInset = nil
         }
     }
 }
@@ -678,7 +676,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         if let formableRow = cell as? FormableRow {
             formableRow.configureWithRowFormer(rowFormer)
         }
-        if rowFormer.former == nil { rowFormer.former = self }
+        rowFormer.former ?= self
         rowFormer.cellConfigure(cell)
         return cell
     }

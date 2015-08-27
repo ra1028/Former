@@ -1,5 +1,5 @@
 //
-//  TextFieldAccessoryView.swift
+//  FormerInputAccessoryView.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/13/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class TextFieldAccessoryView: UIToolbar {
+final class FormerInputAccessoryView: UIToolbar {
     
     var backButtonHandler: (() -> Void)?
     var forwardButtonHandler: (() -> Void)?
@@ -41,6 +41,7 @@ final class TextFieldAccessoryView: UIToolbar {
         
         self.barTintColor = .whiteColor()
         self.tintColor = .formerSubColor()
+        self.clipsToBounds = true
         self.userInteractionEnabled = true
         
         let flexible = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
@@ -54,6 +55,16 @@ final class TextFieldAccessoryView: UIToolbar {
         self.leftArrow = leftArrow
         self.rightArrow = rightArrow
         
+        let topLineView = UIView()
+        topLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
+        topLineView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(topLineView)
+        
+        let bottomLineView = UIView()
+        bottomLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
+        bottomLineView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(bottomLineView)
+        
         let leftLineView = UIView()
         leftLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +77,18 @@ final class TextFieldAccessoryView: UIToolbar {
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
+                "V:|-0-[topLine(0.5)]",
+                options: [],
+                metrics: nil,
+                views: ["topLine": topLineView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "V:[bottomLine(0.5)]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["bottomLine": bottomLineView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
                 "V:|-10-[leftLine]-10-|",
                 options: [],
                 metrics: nil,
@@ -76,6 +99,18 @@ final class TextFieldAccessoryView: UIToolbar {
                 options: [],
                 metrics: nil,
                 views: ["rightLine": rightLineView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "H:|-0-[topLine]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["topLine": topLineView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "H:|-0-[bottomLine]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["bottomLine": bottomLineView]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "H:|-84-[leftLine(0.5)]",

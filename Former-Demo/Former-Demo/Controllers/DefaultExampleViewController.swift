@@ -37,9 +37,9 @@ class DefaultExampleViewController: FormerViewController {
         return SectionFormer().add(rowFormers: [rowFormer])
         }()
     
-    private lazy var textFieldAccessoryView: TextFieldAccessoryView = {
+    private lazy var formerInputAccessoryView: FormerInputAccessoryView = {
         
-        let accessory = TextFieldAccessoryView()
+        let accessory = FormerInputAccessoryView()
         accessory.doneButtonHandler = { [weak self] in
             self?.former.endEditing()
         }
@@ -48,30 +48,6 @@ class DefaultExampleViewController: FormerViewController {
         }
         accessory.forwardButtonHandler = { [weak self] in
             self?.former.becomeEditingNext()
-        }
-        accessory.getBackButtonEnabled = { [weak self] in
-            self?.former.canBecomeEditingPrevious() ?? true
-        }
-        accessory.getForwardButtonEnabled = { [weak self] in
-            self?.former.canBecomeEditingNext() ?? true
-        }
-        return accessory
-        }()
-    private lazy var pickerAccessoryView: TextFieldAccessoryView = {
-        
-        let accessory = TextFieldAccessoryView()
-        accessory.translatesAutoresizingMaskIntoConstraints = false
-        accessory.doneButtonHandler = { [weak self] in
-            self?.former.endEditing()
-            self?.hidePickerSelectorView()
-        }
-        accessory.backButtonHandler = { [weak self] in
-            self?.former.becomeEditingPrevious()
-            self?.hidePickerSelectorView()
-        }
-        accessory.forwardButtonHandler = { [weak self] in
-            self?.former.becomeEditingNext()
-            self?.hidePickerSelectorView()
         }
         accessory.getBackButtonEnabled = { [weak self] in
             self?.former.canBecomeEditingPrevious() ?? true
@@ -105,18 +81,18 @@ class DefaultExampleViewController: FormerViewController {
         
         // Selector Example
         
-        let selectors = (0...2).map { index -> TextRowFormer in
+        let options = ["Option1", "Option2", "Option3"]
+        let selectors = (0...1).map { index -> TextRowFormer in
             
             let selector = TextRowFormer(
                 cellType: FormerTextCell.self,
                 registerType: .Class
             )
-            let texts = ["Option1", "Option2", "Option3"]
             selector.onSelected = [
                 { [weak self] in
                     let selector = $1 as! TextRowFormer
                     let controller = TextSelectorViewContoller()
-                    controller.texts = texts
+                    controller.texts = options
                     controller.selectedText = selector.subText
                     controller.onSelected = {
                         selector.subText = $0
@@ -127,7 +103,7 @@ class DefaultExampleViewController: FormerViewController {
                 { [weak self] in
                     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                     let selector = $1 as! TextRowFormer
-                    texts.map { title in
+                    options.map { title in
                         sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak selector] _ in
                             selector?.subText = title
                             selector?.update()
@@ -137,32 +113,30 @@ class DefaultExampleViewController: FormerViewController {
                     sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     self?.presentViewController(sheet, animated: true, completion: nil)
                     self?.former.deselect(true)
-                },
-                { [weak self] in
-                    let selector = $1 as! TextRowFormer
-                    if self?.pickerSelectorView == nil {
-                        self?.showPickerSelectorView(
-                            texts,
-                            selectedTitle: selector.subText ?? texts[0],
-                            onValueChanged: { [weak selector] in
-                                selector?.subText = $1
-                                selector?.update()
-                        })
-                    } else {
-                        self?.hidePickerSelectorView()
-                    }
-                    self?.former.deselect(true)
                 }
                 ][index]
             selector.text = ["Push", "Sheet", "Picker"][index]
             selector.textColor = .formerColor()
             selector.font = .boldSystemFontOfSize(16.0)
-            selector.subText = texts.first
+            selector.subText = options.first
             selector.subTextColor = .formerSubColor()
             selector.subTextFont = .boldSystemFontOfSize(14.0)
             selector.accessoryType = .DisclosureIndicator
             return selector
         }
+        let pickerSelector = SelectorPickerRowFormer(
+            cellType: FormerSelectorPickerCell.self,
+            registerType: .Class
+        )
+        pickerSelector.title = "Picker"
+        pickerSelector.titleColor = .formerColor()
+        pickerSelector.titleFont = .boldSystemFontOfSize(16.0)
+        pickerSelector.displayTextColor = .formerSubColor()
+        pickerSelector.displayTextFont = .boldSystemFontOfSize(14.0)
+        pickerSelector.valueTitles = options
+        pickerSelector.pickerBackgroundColor = .whiteColor()
+        pickerSelector.accessoryType = .DisclosureIndicator
+        pickerSelector.inputAccessoryView = self.formerInputAccessoryView
         
         // Custom Input Accessory View Example
 
@@ -178,7 +152,7 @@ class DefaultExampleViewController: FormerViewController {
             input.tintColor = .formerColor()
             input.font = .boldSystemFontOfSize(16.0)
             input.textAlignment = .Right
-            input.inputAccessoryView = self.textFieldAccessoryView
+            input.inputAccessoryView = self.formerInputAccessoryView
             input.returnKeyType = .Next
             return input
         }
@@ -289,7 +263,7 @@ class DefaultExampleViewController: FormerViewController {
             .add(rowFormers: [insertSection])
             .set(headerViewFormer: createHeader("Insert Section Example"))
         let section4 = SectionFormer()
-            .add(rowFormers: selectors)
+            .add(rowFormers: selectors + [pickerSelector])
             .set(headerViewFormer: createHeader("Selector Example"))
         let section5 = SectionFormer()
             .add(rowFormers: textFields + [picker])
@@ -299,91 +273,8 @@ class DefaultExampleViewController: FormerViewController {
         self.former.add(sectionFormers:
             [section1, section2, section3, section4, section5]
         )
-        self.former.onCellSelected = { [weak self] in
-            self?.textFieldAccessoryView.update()
-            if self?.former.rowFormer($0) !== selectors[2] {
-                self?.hidePickerSelectorView()
-            }
-        }
-        self.former.onBeginDragging = { [weak self] _ in
-            self?.hidePickerSelectorView()
-        }
-    }
-    
-    private func showPickerSelectorView(valueTitles: [String], selectedTitle: String, onValueChanged: ((Int, String) -> Void)?) {
-        
-        let pickerSelectorView = PickerSelectorView()
-        pickerSelectorView.valueTitles = valueTitles
-        pickerSelectorView.selectedRow = valueTitles.indexOf(selectedTitle) ?? 0
-        pickerSelectorView.onValueChanged = onValueChanged
-        pickerSelectorView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(pickerSelectorView)
-        self.pickerSelectorView = pickerSelectorView
-        
-        self.pickerAccessoryView.update()
-        self.view.addSubview(self.pickerAccessoryView)
-        
-        let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:[accessoryView]-0-[picker(216)]",
-                options: [],
-                metrics: nil,
-                views: ["picker": pickerSelectorView, "accessoryView": self.pickerAccessoryView]
-            ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-0-[accessoryView]-0-|",
-                options: [],
-                metrics: nil,
-                views: ["accessoryView": self.pickerAccessoryView]
-            ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-0-[picker]-0-|",
-                options: [],
-                metrics: nil,
-                views: ["picker": pickerSelectorView]
-            )
-        ]
-        let pickerViewBottom = NSLayoutConstraint(
-            item: pickerSelectorView,
-            attribute: .Bottom,
-            relatedBy: .Equal,
-            toItem: self.view,
-            attribute: .Bottom,
-            multiplier: 1.0,
-            constant: 260.0
-        )
-        self.view.addConstraints(constraints.flatMap { $0 } + [pickerViewBottom])
-        self.pickerViewBottom = pickerViewBottom
-        
-        pickerSelectorView.layoutIfNeeded()
-        self.pickerAccessoryView.layoutIfNeeded()
-        
-        UIView.animateWithDuration(
-            0.25,
-            delay: 0,
-            options: [.BeginFromCurrentState, .CurveEaseOut],
-            animations: { _ in
-                pickerViewBottom.constant = 0
-                self.view.layoutIfNeeded()
-            }, completion: nil
-        )
-    }
-    
-    private func hidePickerSelectorView() {
-        
-        guard let pickerSelectorView = self.pickerSelectorView else { return }
-        
-        UIView.animateWithDuration(
-            0.25,
-            delay: 0,
-            options: [.BeginFromCurrentState, .CurveEaseOut],
-            animations: { _ in
-                self.pickerViewBottom?.constant = 260.0
-                self.view.layoutIfNeeded()
-            }) { _ in
-                pickerSelectorView.removeFromSuperview()
-                self.pickerViewBottom = nil
-                self.pickerSelectorView = nil
+        self.former.onCellSelected = { [weak self] _ in
+            self?.formerInputAccessoryView.update()
         }
     }
 }

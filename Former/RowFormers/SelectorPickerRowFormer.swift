@@ -10,14 +10,18 @@ import UIKit
 
 public protocol SelectorPickerFormableRow: FormableRow {
     
-    var selectorPickerView: UIPickerView? { get set }
-    var selectorAccessoryView: UIView? { get set }
+    var selectorPickerView: UIPickerView? { get set } // Not need to set UIPickerView instance.
+    var selectorAccessoryView: UIView? { get set } // Not need to set UIView instance.
     
     func formerTitleLabel() -> UILabel?
     func formerDisplayLabel() -> UILabel?
 }
 
 public class SelectorPickerRowFormer: RowFormer {
+    
+    override public var canBecomeEditing: Bool {
+        return self.enabled
+    }
     
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []

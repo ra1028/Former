@@ -10,6 +10,7 @@
 		2A0E63571B600AD30083BC65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0E63561B600AD30083BC65 /* AppDelegate.swift */; };
 		2A0E635E1B600AD30083BC65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635D1B600AD30083BC65 /* Assets.xcassets */; };
 		2A0E63611B600AD30083BC65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A0E635F1B600AD30083BC65 /* LaunchScreen.storyboard */; };
+		2A1F92A21B8B937B00B9AB4C /* FormerSelectorDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1F92A11B8B937B00B9AB4C /* FormerSelectorDatePickerCell.swift */; };
 		2A258CCA1B67506F00ED30AA /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */; };
 		2A262B0E1B73B96100AAB3F1 /* DefaultExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A262B0D1B73B96100AAB3F1 /* DefaultExampleViewController.swift */; };
 		2A29B0121B83295C004CE399 /* PickerSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A29B0111B83295C004CE399 /* PickerSelectorView.swift */; };
@@ -58,7 +59,7 @@
 		2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */; };
 		2AD841991B64A0F4003A10FF /* FormerTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */; };
 		2AE25D6F1B6748D8001B5302 /* TextViewRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */; };
-		2AE75CD51B7B9EA7006C53F2 /* TextFieldAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE75CD41B7B9EA7006C53F2 /* TextFieldAccessoryView.swift */; };
+		2AE75CD51B7B9EA7006C53F2 /* FormerInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AE75CD41B7B9EA7006C53F2 /* FormerInputAccessoryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		2A0E635D1B600AD30083BC65 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A0E63601B600AD30083BC65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2A0E63621B600AD30083BC65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A1F92A11B8B937B00B9AB4C /* FormerSelectorDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSelectorDatePickerCell.swift; sourceTree = "<group>"; };
 		2A258CC91B67506F00ED30AA /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A262B0D1B73B96100AAB3F1 /* DefaultExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultExampleViewController.swift; sourceTree = "<group>"; };
 		2A29B0111B83295C004CE399 /* PickerSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerSelectorView.swift; sourceTree = "<group>"; };
@@ -115,7 +117,7 @@
 		2AD841841B64A0F4003A10FF /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
 		2AD841851B64A0F4003A10FF /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
 		2AE25D6E1B6748D8001B5302 /* TextViewRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewRowFormer.swift; sourceTree = "<group>"; };
-		2AE75CD41B7B9EA7006C53F2 /* TextFieldAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldAccessoryView.swift; sourceTree = "<group>"; };
+		2AE75CD41B7B9EA7006C53F2 /* FormerInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInputAccessoryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,9 +210,10 @@
 				2AA46CD11B69412700909F61 /* FormerSegmentedCell.swift */,
 				2A63E7491B6A89D500985361 /* FormerSliderCell.swift */,
 				2A2DDCB91B8A5EB200CA630F /* FormerSelectorPickerCell.swift */,
+				2A1F92A11B8B937B00B9AB4C /* FormerSelectorDatePickerCell.swift */,
 				2A8B737E1B6D8B0A009252F7 /* FormerPickerCell.swift */,
-				2A8B73841B6D922A009252F7 /* FormerInlinePickerCell.swift */,
 				2A8F62741B6BDBDE00860BE6 /* FormerDatePickerCell.swift */,
+				2A8B73841B6D922A009252F7 /* FormerInlinePickerCell.swift */,
 				2A8F627A1B6C13B700860BE6 /* FormerInlineDatePickerCell.swift */,
 			);
 			path = Cells;
@@ -268,8 +271,8 @@
 				2A2DDCB51B8A575900CA630F /* SelectorPickerRowFormer.swift */,
 				2A2DDCB71B8A579900CA630F /* SelectorDatePickerRowFormer.swift */,
 				2A8B737C1B6D7D78009252F7 /* PickerRowFormer.swift */,
-				2A8B73821B6D8E5B009252F7 /* InlinePickerRowFormer.swift */,
 				2A8F62721B6BD70F00860BE6 /* DatePickerRowFormer.swift */,
+				2A8B73821B6D8E5B009252F7 /* InlinePickerRowFormer.swift */,
 				2A8F62761B6C06AA00860BE6 /* InlineDatePickerRowFormer.swift */,
 			);
 			path = RowFormers;
@@ -289,7 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				2A29B0111B83295C004CE399 /* PickerSelectorView.swift */,
-				2AE75CD41B7B9EA7006C53F2 /* TextFieldAccessoryView.swift */,
+				2AE75CD41B7B9EA7006C53F2 /* FormerInputAccessoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -372,7 +375,7 @@
 				2AD8418E1B64A0F4003A10FF /* TextViewFormer.swift in Sources */,
 				2AD841861B64A0F4003A10FF /* FormerCell.swift in Sources */,
 				2AA46CD01B693A6C00909F61 /* SegmentedRowFormer.swift in Sources */,
-				2AE75CD51B7B9EA7006C53F2 /* TextFieldAccessoryView.swift in Sources */,
+				2AE75CD51B7B9EA7006C53F2 /* FormerInputAccessoryView.swift in Sources */,
 				2AA46CD21B69412700909F61 /* FormerSegmentedCell.swift in Sources */,
 				2A8F62751B6BDBDE00860BE6 /* FormerDatePickerCell.swift in Sources */,
 				2A2DDCB61B8A575900CA630F /* SelectorPickerRowFormer.swift in Sources */,
@@ -406,6 +409,7 @@
 				2AD841961B64A0F4003A10FF /* TextRowFormer.swift in Sources */,
 				2AB7BF571B78F13500AF0B9E /* TextSelectorViewContorller.swift in Sources */,
 				2AA46CCC1B692B7800909F61 /* StepperRowFormer.swift in Sources */,
+				2A1F92A21B8B937B00B9AB4C /* FormerSelectorDatePickerCell.swift in Sources */,
 				2A8B737D1B6D7D78009252F7 /* PickerRowFormer.swift in Sources */,
 				2AD841971B64A0F4003A10FF /* FormerHeaderFooterView.swift in Sources */,
 				2AD8418C1B64A0F4003A10FF /* SectionFormer.swift in Sources */,

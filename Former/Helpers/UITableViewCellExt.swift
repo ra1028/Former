@@ -27,6 +27,8 @@ extension UITableViewCell {
         // TODO: SelectorDatePickerRow
         if let pickerRow = self as? SelectorPickerFormableRow {
             return pickerRow.selectorPickerView
+        } else if let datePickerRow = self as? SelectorDatePickerFormableRow {
+            return datePickerRow.selectorDatePicker
         }
         
         return super.inputView
@@ -34,9 +36,10 @@ extension UITableViewCell {
     
     override public var inputAccessoryView: UIView? {
         
-        // TODO: SelectorDatePickerRow
         if let pickerRow = self as? SelectorPickerFormableRow {
             return pickerRow.selectorAccessoryView
+        } else if let datePickerRow = self as? SelectorDatePickerFormableRow {
+            return datePickerRow.selectorAccessoryView
         }
         
         return super.inputAccessoryView
@@ -48,6 +51,7 @@ extension UITableViewCell {
             self is SelectorDatePickerFormableRow {
             return true
         }
+        
         return super.canBecomeFirstResponder()
     }
 }
