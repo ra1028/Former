@@ -40,6 +40,7 @@ public class SelectorPickerRowFormer: RowFormer {
     public var displayTextFont: UIFont?
     public var displayTextColor: UIColor?
     public var displayTextDisabledColor: UIColor?
+    public var displayTextAlignment: NSTextAlignment?
     
     private lazy var inputView: UIPickerView = {
         let picker = UIPickerView()
@@ -87,6 +88,7 @@ public class SelectorPickerRowFormer: RowFormer {
             let displayTextLabel = row.formerDisplayLabel()
             displayTextLabel?.text = self.valueTitles[self.selectedRow]
             displayTextLabel?.font =? self.displayTextFont
+            displayTextLabel?.textAlignment =? self.displayTextAlignment
             displayTextLabel?.textColor = self.enabled ? self.displayTextColor : self.displayTextDisabledColor
         }
     }

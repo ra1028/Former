@@ -157,8 +157,7 @@ public final class Former: NSObject {
         
         guard section < self.sectionFormers.count else { return false }
         if row >= self[section].rowFormers.count {
-            section++
-            guard section < self.sectionFormers.count else { return false }
+            guard ++section < self.sectionFormers.count else { return false }
             row = 0
         }
         guard row < self[section].rowFormers.count else { return false }
@@ -201,8 +200,7 @@ public final class Former: NSObject {
             var row = (self.selectedIndexPath != nil) ? self.selectedIndexPath!.row + 1 : 0
             guard section < self.sectionFormers.count else { return self }
             if row >= self[section].rowFormers.count {
-                section++
-                guard section < self.sectionFormers.count else { return self }
+                guard ++section < self.sectionFormers.count else { return self }
                 row = 0
             }
             guard row < self[section].rowFormers.count else { return self }
@@ -241,10 +239,8 @@ public final class Former: NSObject {
     public func select(rowFormer rowFormer: RowFormer, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            for (row, oldRowFormer) in sectionFormer.rowFormers.enumerate() {
-                if rowFormer === oldRowFormer {
-                    return self.select(indexPath: NSIndexPath(forRow: row, inSection: section), animated: animated, scrollPosition: scrollPosition)
-                }
+            if let row = sectionFormer.rowFormers.indexOf(rowFormer) {
+                return self.select(indexPath: NSIndexPath(forRow: row, inSection: section), animated: animated, scrollPosition: scrollPosition)
             }
         }
         return self
@@ -287,12 +283,8 @@ public final class Former: NSObject {
     
     public func reload(sectionFormer sectionFormer: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
-        for (section, oldSectionFormer) in self.sectionFormers.enumerate() {
-            if sectionFormer === oldSectionFormer {
-                return self.reload(sections: NSIndexSet(index: section), rowAnimation: rowAnimation)
-            }
-        }
-        return self
+        guard let section = self.sectionFormers.indexOf(sectionFormer) else { return self }
+        return self.reload(sections: NSIndexSet(index: section), rowAnimation: rowAnimation)
     }
     
     /// Reload rows from indesPaths.
@@ -308,10 +300,8 @@ public final class Former: NSObject {
     public func reload(rowFormer rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            for (row, oldRowFormer) in sectionFormer.rowFormers.enumerate() {
-                if rowFormer === oldRowFormer {
-                    return self.reload(indexPaths: [NSIndexPath(forRow: row, inSection: section)], rowAnimation: rowAnimation)
-                }
+            if let row = sectionFormer.rowFormers.indexOf(rowFormer) {
+                return self.reload(indexPaths: [NSIndexPath(forRow: row, inSection: section)], rowAnimation: rowAnimation)
             }
         }
         return self
@@ -425,11 +415,16 @@ public final class Former: NSObject {
     
     public func remove(sectionFormers sectionFormers: [SectionFormer]) -> NSIndexSet {
         
+        var removedCount = 0
         let indexSet = NSMutableIndexSet()
-        self.sectionFormers.enumerate().forEach {
-            if sectionFormers.contains($1) {
-                indexSet.addIndex($0)
-                self.remove(section: $0)
+        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+            if sectionFormers.contains(sectionFormer) {
+                indexSet.addIndex(section)
+                self.remove(section: section)
+                
+                if ++removedCount >= sectionFormers.count {
+                    return indexSet
+                }
             }
         }
         return indexSet
@@ -452,9 +447,10 @@ public final class Former: NSObject {
     
     public func remove(rowFormers rowFormers: [RowFormer]) -> [NSIndexPath] {
         
+        var removedCount = 0
         var removeIndexPaths = [NSIndexPath]()
-        self.sectionFormers.enumerate().forEach { section, sectionFormer in
-            sectionFormer.rowFormers.enumerate().forEach { row, rowFormer in
+        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
                 
                 if rowFormers.contains(rowFormer) {
                     removeIndexPaths += [NSIndexPath(forRow: row, inSection: section)]
@@ -465,6 +461,10 @@ public final class Former: NSObject {
                         self.remove(rowFormers: [oldPickerRowFormer])
                         (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
                         self.inlinePickerRowFormer = nil
+                    }
+                    
+                    if ++removedCount >= rowFormers.count {
+                        return removeIndexPaths
                     }
                 }
             }

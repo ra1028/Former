@@ -11,7 +11,7 @@ import UIKit
 public protocol InlineDatePickerFormableRow: FormableRow {
     
     func formerTitleLabel() -> UILabel?
-    func formerDisplayFieldView() -> UITextField?
+    func formerDisplayLabel() -> UILabel?
 }
 
 public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
@@ -36,7 +36,6 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
     public var locale: NSLocale?
     public var timeZone: NSTimeZone?
     
-    public var placeholder: String?
     public var displayTextFont: UIFont?
     public var displayTextColor: UIColor?
     public var displayDisabledTextColor: UIColor?
@@ -79,13 +78,11 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
                 (self.isEditing ? self.titleEditingColor : self.titleColor) :
                 self.titleDisabledColor
             
-            let displayField = row.formerDisplayFieldView()
-            displayField?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
-            displayField?.placeholder = self.placeholder
-            displayField?.font =? self.displayTextFont
-            displayField?.textAlignment =? self.displayTextAlignment
-            displayField?.userInteractionEnabled = false
-            displayField?.textColor = self.enabled ?
+            let displayLabel = row.formerDisplayLabel()
+            displayLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
+            displayLabel?.font =? self.displayTextFont
+            displayLabel?.textAlignment =? self.displayTextAlignment
+            displayLabel?.textColor = self.enabled ?
                 (self.isEditing ? self.displayTextEditingColor : self.displayTextColor) :
                 self.displayDisabledTextColor
         }
@@ -117,7 +114,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         
         if let row = self.cell as? InlineDatePickerFormableRow where self.enabled {
             self.date = date
-            row.formerDisplayFieldView()?.text = self.displayTextFromDate?(date) ?? "\(date)"
+            row.formerDisplayLabel()?.text = self.displayTextFromDate?(date) ?? "\(date)"
             self.onDateChanged?(date)
         }
     }
@@ -127,7 +124,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         if let row = self.cell as? InlineDatePickerFormableRow where self.enabled {
             self.isEditing = true
             row.formerTitleLabel()?.textColor =? self.titleEditingColor
-            row.formerDisplayFieldView()?.textColor =? self.displayTextEditingColor
+            row.formerDisplayLabel()?.textColor =? self.displayTextEditingColor
         }
     }
     
@@ -136,7 +133,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
         if let row = self.cell as? InlineDatePickerFormableRow {
             self.isEditing = false
             row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
-            row.formerDisplayFieldView()?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
+            row.formerDisplayLabel()?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
         }
     }
 }

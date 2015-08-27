@@ -47,6 +47,7 @@ public class SelectorDatePickerRowFormer: RowFormer {
     public var displayTextFont: UIFont?
     public var displayTextColor: UIColor?
     public var displayTextDisabledColor: UIColor?
+    public var displayTextAlignment: NSTextAlignment?
     
     deinit {
         self.inputView.removeTarget(self, action: nil, forControlEvents: .AllEvents)
@@ -104,6 +105,7 @@ public class SelectorDatePickerRowFormer: RowFormer {
             let displayTextLabel = row.formerDisplayLabel()
             displayTextLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
             displayTextLabel?.font =? self.displayTextFont
+            displayTextLabel?.textAlignment =? self.displayTextAlignment
             displayTextLabel?.textColor = self.enabled ? self.displayTextColor : self.displayTextDisabledColor
         }
     }
@@ -113,7 +115,6 @@ public class SelectorDatePickerRowFormer: RowFormer {
         if let row = self.cell as? SelectorDatePickerFormableRow where self.enabled {
             let date = datePicker.date
             self.date = date
-            print(self.displayTextFromDate?(date) ?? "\(date)")
             row.formerDisplayLabel()?.text = self.displayTextFromDate?(date) ?? "\(date)"
             self.onDateChanged?(date)
         }

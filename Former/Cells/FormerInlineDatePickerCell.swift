@@ -11,24 +11,24 @@ import UIKit
 public class FormerInlineDatePickerCell: FormerCell, InlineDatePickerFormableRow {
     
     private var titleLabel: UILabel!
-    private var displayField: UITextField!
-    private var displayFieldRightConst: NSLayoutConstraint!
+    private var displayLabel: UILabel!
+    private var displayLabelRightConst: NSLayoutConstraint!
     
     public func formerTitleLabel() -> UILabel? {
         
         return self.titleLabel
     }
     
-    public func formerDisplayFieldView() -> UITextField? {
-     
-        return self.displayField
+    public func formerDisplayLabel() -> UILabel? {
+        
+        return self.displayLabel
     }
     
     public override func configureWithRowFormer(rowFormer: RowFormer) {
         
         super.configureWithRowFormer(rowFormer)
         
-        self.displayFieldRightConst.constant =
+        self.displayLabelRightConst.constant =
             (self.accessoryType == .None && self.accessoryView == nil) ? -15.0 : 0
     }
     
@@ -37,17 +37,15 @@ public class FormerInlineDatePickerCell: FormerCell, InlineDatePickerFormableRow
         super.configureViews()
         
         let titleLabel = UILabel()
-        titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
-        let displayField = UITextField()
-        displayField.textColor = .lightGrayColor()
-        displayField.textAlignment = .Right
-        displayField.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(displayField, atIndex: 0)
-        self.displayField = displayField
+        let displayLabel = UILabel()
+        displayLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.insertSubview(displayLabel, atIndex: 0)
+        self.displayLabel = displayLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
@@ -60,17 +58,17 @@ public class FormerInlineDatePickerCell: FormerCell, InlineDatePickerFormableRow
                 "V:|-0-[display]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["display": displayField]
+                views: ["display": displayLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]-10-[display(>=0)]",
+                "H:|-15-[title]-10-[display(>=0)]",
                 options: [],
                 metrics: nil,
-                views: ["title": titleLabel, "display": displayField]
+                views: ["title": titleLabel, "display": displayLabel]
             )
         ]
-        let displayFieldRightConst = NSLayoutConstraint(
-            item: displayField,
+        let displayLabelRightConst = NSLayoutConstraint(
+            item: displayLabel,
             attribute: .Trailing,
             relatedBy: .Equal,
             toItem: self.contentView,
@@ -79,7 +77,7 @@ public class FormerInlineDatePickerCell: FormerCell, InlineDatePickerFormableRow
             constant: 0
         )
         
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [displayFieldRightConst])
-        self.displayFieldRightConst = displayFieldRightConst
+        self.contentView.addConstraints(constraints.flatMap { $0 } + [displayLabelRightConst])
+        self.displayLabelRightConst = displayLabelRightConst
     }
 }

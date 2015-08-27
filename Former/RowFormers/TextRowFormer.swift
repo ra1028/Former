@@ -26,6 +26,7 @@ public class TextRowFormer: RowFormer {
     public var subText: String?
     public var subTextFont: UIFont?
     public var subTextColor: UIColor?
+    public var subTextAlignment: NSTextAlignment?
     public var subTextDisabledColor: UIColor?
     
     public init<T: UITableViewCell where T: TextFormableRow>(
@@ -60,6 +61,7 @@ public class TextRowFormer: RowFormer {
             let subTextLabel = row.formerSubTextLabel()
             subTextLabel?.text = self.subText
             subTextLabel?.font =? self.subTextFont
+            subTextLabel?.textAlignment =? self.subTextAlignment
             subTextLabel?.textColor = self.enabled ? self.subTextColor : self.subTextDisabledColor
         }
     }

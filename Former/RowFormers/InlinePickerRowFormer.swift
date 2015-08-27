@@ -11,7 +11,7 @@ import UIKit
 public protocol InlinePickerFormableRow: FormableRow {
     
     func formerTitleLabel() -> UILabel?
-    func formerDisplayFieldView() -> UITextField?
+    func formerDisplayLabel() -> UILabel?
 }
 
 public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
@@ -29,7 +29,6 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
     public var selectedRow: Int = 0
     public var showsSelectionIndicator: Bool?
     
-    public var placeholder: String?
     public var displayTextFont: UIFont?
     public var displayTextColor: UIColor?
     public var displayDisabledTextColor: UIColor?
@@ -72,13 +71,11 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
                 (self.isEditing ? self.titleEditingColor : self.titleColor) :
                 self.titleDisabledColor
             
-            let displayField = row.formerDisplayFieldView()
-            displayField?.text = self.valueTitles[self.selectedRow]
-            displayField?.placeholder = self.placeholder
-            displayField?.font =? self.displayTextFont
-            displayField?.textAlignment =? self.displayTextAlignment
-            displayField?.userInteractionEnabled = false
-            displayField?.textColor = self.enabled ?
+            let displayLabel = row.formerDisplayLabel()
+            displayLabel?.text = self.valueTitles[self.selectedRow]
+            displayLabel?.font =? self.displayTextFont
+            displayLabel?.textAlignment =? self.displayTextAlignment
+            displayLabel?.textColor = self.enabled ?
                 (self.isEditing ? self.displayTextEditingColor :self.displayTextColor) :
                 self.displayDisabledTextColor
         }
@@ -104,7 +101,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         
         if let pickerRow = self.cell as? InlinePickerFormableRow where self.enabled {
             self.selectedRow = row
-            pickerRow.formerDisplayFieldView()?.text = title
+            pickerRow.formerDisplayLabel()?.text = title
             self.onValueChanged?((row, title))
         }
     }
@@ -114,7 +111,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         if let row = self.cell as? InlinePickerFormableRow where self.enabled {
             self.isEditing = true
             row.formerTitleLabel()?.textColor = self.titleEditingColor
-            row.formerDisplayFieldView()?.textColor =? self.displayTextEditingColor
+            row.formerDisplayLabel()?.textColor =? self.displayTextEditingColor
         }
     }
     
@@ -123,7 +120,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
         if let row = self.cell as? InlinePickerFormableRow {
             self.isEditing = false
             row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
-            row.formerDisplayFieldView()?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
+            row.formerDisplayLabel()?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledTextColor
         }
     }
 }

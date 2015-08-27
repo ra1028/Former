@@ -79,6 +79,71 @@ class DefaultExampleViewController: FormerViewController {
         
         // Create RowFormers
         
+        // Date Setting Example
+        
+        let date = InlineDatePickerRowFormer(
+            cellType: FormerInlineDatePickerCell.self,
+            registerType: .Class
+        )
+        date.title = "Date"
+        date.titleColor = .formerColor()
+        date.titleFont = .boldSystemFontOfSize(16.0)
+        date.datePickerMode = .DateAndTime
+        date.displayTextFromDate = String.mediumDateShortTime
+        date.displayTextColor = .formerSubColor()
+        date.displayTextEditingColor = .formerHighlightedSubColor()
+        date.displayTextFont = .boldSystemFontOfSize(14.0)
+        date.displayTextAlignment = .Right
+        
+        let switchDateStyle = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) {
+                date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
+                date.datePickerMode = $0 ? .Date : .DateAndTime
+                date.update()
+        }
+        switchDateStyle.title = "Switch Date Style"
+        switchDateStyle.titleColor = .formerColor()
+        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
+        switchDateStyle.switchOnTintColor = .formerSubColor()
+        switchDateStyle.switched = false
+        
+        // Incert Rows Example
+        
+        let insertRows = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) { [weak self] in
+                if let sSelf = self {
+                    if $0 {
+                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
+                    } else {
+                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
+                    }
+                }
+        }
+        insertRows.title = "Insert Rows"
+        insertRows.titleColor = .formerColor()
+        insertRows.switchOnTintColor = .formerSubColor()
+        insertRows.titleFont = .boldSystemFontOfSize(16.0)
+        
+        // Insert Section Example
+        
+        let insertSection = SwitchRowFormer(
+            cellType: FormerSwitchCell.self,
+            registerType: .Class) { [weak self] in
+                if let sSelf = self {
+                    if $0 {
+                        sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
+                    } else {
+                        sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
+                    }
+                }
+        }
+        insertSection.title = "Insert Section"
+        insertSection.titleColor = .formerColor()
+        insertSection.switchOnTintColor = .formerSubColor()
+        insertSection.titleFont = .boldSystemFontOfSize(16.0)
+        
         // Selector Example
         
         let options = ["Option1", "Option2", "Option3"]
@@ -121,6 +186,7 @@ class DefaultExampleViewController: FormerViewController {
             selector.subText = options.first
             selector.subTextColor = .formerSubColor()
             selector.subTextFont = .boldSystemFontOfSize(14.0)
+            selector.subTextAlignment = .Right
             selector.accessoryType = .DisclosureIndicator
             return selector
         }
@@ -133,6 +199,7 @@ class DefaultExampleViewController: FormerViewController {
         pickerSelector.titleFont = .boldSystemFontOfSize(16.0)
         pickerSelector.displayTextColor = .formerSubColor()
         pickerSelector.displayTextFont = .boldSystemFontOfSize(14.0)
+        pickerSelector.displayTextAlignment = .Right
         pickerSelector.valueTitles = options
         pickerSelector.pickerBackgroundColor = .whiteColor()
         pickerSelector.accessoryType = .DisclosureIndicator
@@ -167,71 +234,8 @@ class DefaultExampleViewController: FormerViewController {
         picker.displayTextColor = .formerSubColor()
         picker.displayTextEditingColor = .formerHighlightedSubColor()
         picker.displayTextFont = .boldSystemFontOfSize(14.0)
+        picker.displayTextAlignment = .Right
         picker.valueTitles = (1...20).map { "Option\($0)" }
-        
-        // Date Setting Example
-        
-        let date = InlineDatePickerRowFormer(
-            cellType: FormerInlineDatePickerCell.self,
-            registerType: .Class
-        )
-        date.title = "Date"
-        date.titleColor = .formerColor()
-        date.titleFont = .boldSystemFontOfSize(16.0)
-        date.datePickerMode = .DateAndTime
-        date.displayTextFromDate = String.mediumDateShortTime
-        date.displayTextColor = .formerSubColor()
-        date.displayTextEditingColor = .formerHighlightedSubColor()
-        date.displayTextFont = .boldSystemFontOfSize(14.0)
-        
-        let switchDateStyle = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) {
-                date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
-                date.datePickerMode = $0 ? .Date : .DateAndTime
-                date.update()
-        }
-        switchDateStyle.title = "Switch Date Style"
-        switchDateStyle.titleColor = .formerColor()
-        switchDateStyle.switchOnTintColor = .formerSubColor()
-        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
-        switchDateStyle.switched = false
-        
-        // Insert Section Example
-        
-        let insertSection = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
-                    } else {
-                        sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
-                    }
-                }
-        }
-        insertSection.title = "Insert Section"
-        insertSection.titleColor = .formerColor()
-        insertSection.switchOnTintColor = .formerSubColor()
-        insertSection.titleFont = .boldSystemFontOfSize(16.0)
-        
-        // Incert Rows Example
-        
-        let insertRows = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
-                    } else {
-                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
-                    }
-                }
-        }
-        insertRows.title = "Insert Rows"
-        insertRows.titleColor = .formerColor()
-        insertRows.switchOnTintColor = .formerSubColor()
-        insertRows.titleFont = .boldSystemFontOfSize(16.0)
         
         // Create Headers and Footers
         

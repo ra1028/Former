@@ -35,14 +35,12 @@ public class FormerTextCell: FormerCell, TextFormableRow {
         super.configureViews()
         
         let titleLabel = UILabel()
-        titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let subTextLabel = UILabel()
-        subTextLabel.textColor = .lightGrayColor()
-        subTextLabel.textAlignment = .Right
         subTextLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(subTextLabel, atIndex: 0)
         self.subTextLabel = subTextLabel
@@ -61,7 +59,7 @@ public class FormerTextCell: FormerCell, TextFormableRow {
                 views: ["sub": subTextLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]-10-[sub]",
+                "H:|-15-[title]-10-[sub(>=0)]",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "sub": subTextLabel]

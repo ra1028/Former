@@ -37,14 +37,12 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
         super.configureViews()
         
         let titleLabel = UILabel()
-        titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
-        displayLabel.textColor = .lightGrayColor()
-        displayLabel.textAlignment = .Right
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel
@@ -63,7 +61,7 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
                 views: ["display": displayLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]-10-[display]",
+                "H:|-15-[title]-10-[display(>=0)]",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
