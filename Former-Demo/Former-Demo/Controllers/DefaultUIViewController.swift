@@ -129,7 +129,7 @@ final class DefaultUIViewController: FormerViewController {
             registerType: .Class
         )
         inlineDateRow.title = "InlineDatePicker"
-        inlineDateRow.datePickerMode = .Date
+        inlineDateRow.datePickerMode = .DateAndTime
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(

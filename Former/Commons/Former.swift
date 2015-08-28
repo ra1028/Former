@@ -13,16 +13,18 @@ public final class Former: NSObject {
     // MARK: Public
     
     /**
-    RegisterType is type to register Cell or HeaderFooterView.
-    Choose 'Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.f
+    RegisterType is type of registering Cell or HeaderFooterView.
+    Choose 'RegisterType.Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.
+    Or if without xib, choose 'RegisterType.Class'.
     **/
     public enum RegisterType {
         
-        case Nib(nibName: String, bundle: NSBundle?)
         case Class
+        case Nib(nibName: String, bundle: NSBundle?)
     }
     
-    public private(set) var sectionFormers = [SectionFormer]() // All SectionFormers. Default is empty.
+    /// All SectionFormers. Default is empty.
+    public private(set) var sectionFormers = [SectionFormer]()
     
     /// Return all RowFormers. Compute each time of called.
     public var rowFormers: [RowFormer] {
@@ -78,7 +80,6 @@ public final class Former: NSObject {
     }
     
     /// To register Cell from class. Use if you set 'false' to autoRegisterEnabled.
-    
     public func register(cellType type: UITableViewCell.Type, registerType: RegisterType) -> Self {
         
         switch registerType {
@@ -92,7 +93,6 @@ public final class Former: NSObject {
     }
     
     /// To register HeaderFooterView from class. Use if you set 'false' to autoRegisterEnabled.
-    
     public func register(viewType type: UITableViewHeaderFooterView.Type, registerType: RegisterType) -> Self {
         
         switch registerType {
@@ -106,7 +106,6 @@ public final class Former: NSObject {
     }
     
     /// To register Cell from RowFormer. Use if you set 'false' to autoRegisterEnabled.
-    
     public func register(rowFormer rowFormer: RowFormer) -> Self {
         
         if rowFormer.registered { return self }
@@ -115,7 +114,6 @@ public final class Former: NSObject {
     }
     
     /// To register HeaderFooterView from ViewFormer. Use if you set 'false' to autoRegisterEnabled.
-    
     public func register(viewFormer viewFormer: ViewFormer) -> Self {
         
         if viewFormer.registered { return self }
@@ -124,14 +122,12 @@ public final class Former: NSObject {
     }
     
     /// To find RowFormer from indexPath.
-    
     public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
         
         return self[indexPath.section][indexPath.row]
     }
     
     /// 'true' iff can edit previous row.
-    
     public func canBecomeEditingPrevious() -> Bool {
         
         var section = self.selectedIndexPath?.section ?? 0
@@ -149,7 +145,6 @@ public final class Former: NSObject {
     }
     
     /// 'true' iff can edit next row.
-    
     public func canBecomeEditingNext() -> Bool {
         
         var section = self.selectedIndexPath?.section ?? 0
@@ -166,7 +161,6 @@ public final class Former: NSObject {
     }
     
     /// Edit previous row iff it can.
-    
     public func becomeEditingPrevious() -> Self {
         
         if let tableView = self.tableView where self.canBecomeEditingPrevious() {
@@ -191,7 +185,6 @@ public final class Former: NSObject {
     }
     
     /// Edit next row iff it can.
-    
     public func becomeEditingNext() -> Self {
         
         if let tableView = self.tableView where self.canBecomeEditingNext() {
@@ -215,7 +208,6 @@ public final class Former: NSObject {
     }
     
     /// To end editing of tableView.
-    
     public func endEditing() -> Self {
         
         self.tableView?.endEditing(true)
@@ -223,7 +215,6 @@ public final class Former: NSObject {
     }
     
     /// To select row from indexPath.
-    
     public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
         if let tableView = self.tableView {
@@ -234,8 +225,7 @@ public final class Former: NSObject {
         return self
     }
     
-    /// To select row from rowFormer.
-    
+    /// To select row from instance of RowFormer.
     public func select(rowFormer rowFormer: RowFormer, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
@@ -247,7 +237,6 @@ public final class Former: NSObject {
     }
     
     /// To deselect current selecting cell.
-    
     public func deselect(animated: Bool) -> Self {
         
         if let indexPath = self.selectedIndexPath {
@@ -257,7 +246,6 @@ public final class Former: NSObject {
     }
     
     /// Reload All cells.
-    
     public func reloadFormer() -> Self {
         
         self.tableView?.reloadData()
@@ -272,15 +260,13 @@ public final class Former: NSObject {
     }
     
     /// Reload sections from section indexSet.
-    
     public func reload(sections sections: NSIndexSet, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         self.tableView?.reloadSections(sections, withRowAnimation: rowAnimation)
         return self
     }
     
-    /// Reload sections from SectionFormer.
-    
+    /// Reload sections from instance of SectionFormer.
     public func reload(sectionFormer sectionFormer: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         guard let section = self.sectionFormers.indexOf(sectionFormer) else { return self }
@@ -288,15 +274,13 @@ public final class Former: NSObject {
     }
     
     /// Reload rows from indesPaths.
-    
     public func reload(indexPaths indexPaths: [NSIndexPath], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         self.tableView?.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
         return self
     }
     
-    /// Reload rows from rowFormer.
-    
+    /// Reload rows from instance of RowFormer.
     public func reload(rowFormer rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
@@ -308,7 +292,6 @@ public final class Former: NSObject {
     }
     
     /// Add SectionFormers to last index.
-    
     public func add(sectionFormers sectionFormers: [SectionFormer]) -> Self {
         
         self.sectionFormers += sectionFormers
@@ -316,7 +299,6 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormer with NO updates.
-    
     public func insert(sectionFormers sectionFormers: [SectionFormer], toSection: Int) -> Self {
         
         let count = self.sectionFormers.count
@@ -333,7 +315,6 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormers with animated updates.
-    
     public func insertAndUpdate(sectionFormers sectionFormers: [SectionFormer], toSection: Int, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         self.tableView?.beginUpdates()
@@ -352,7 +333,6 @@ public final class Former: NSObject {
     }
     
     /// Insert RowFormers with NO updates.
-    
     public func insert(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath) -> Self {
         
         self[toIndexPath.section].insert(rowFormers: rowFormers, toIndex: toIndexPath.row)
@@ -360,7 +340,6 @@ public final class Former: NSObject {
     }
     
     /// Insert RowFormers with animated updates.
-    
     public func insertAndUpdate(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         self.tableView?.beginUpdates()
@@ -382,7 +361,6 @@ public final class Former: NSObject {
     }
     
     /// Remove All SectionFormers with NO updates.
-    
     public func removeAll() -> Self {
         
         self.sectionFormers = []
@@ -390,7 +368,6 @@ public final class Former: NSObject {
     }
     
     /// Remove All SectionFormers with animated updates.
-    
     public func removeAllAndUpdate(rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         let indexSet = NSIndexSet(indexesInRange: NSMakeRange(0, self.sectionFormers.count))
@@ -404,15 +381,13 @@ public final class Former: NSObject {
     }
     
     /// Remove SectionFormers from section index with NO updates.
-    
     public func remove(section section: Int) -> Self {
         
         self.sectionFormers.removeAtIndex(section)
         return self
     }
     
-    /// Remove SectionFormers from sectionFormers with NO updates.
-    
+    /// Remove SectionFormers from instances of SectionFormer with NO updates.
     public func remove(sectionFormers sectionFormers: [SectionFormer]) -> NSIndexSet {
         
         var removedCount = 0
@@ -430,8 +405,7 @@ public final class Former: NSObject {
         return indexSet
     }
     
-    /// Remove SectionFormers from sectionFormers with animated updates.
-    
+    /// Remove SectionFormers from instances of SectionFormer with animated updates.
     public func removeAndUpdate(sectionFormers sectionFormers: [SectionFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         let indexSet = self.remove(sectionFormers: sectionFormers)
@@ -444,7 +418,6 @@ public final class Former: NSObject {
     }
     
     /// Remove RowFormers with NO updates.
-    
     public func remove(rowFormers rowFormers: [RowFormer]) -> [NSIndexPath] {
         
         var removedCount = 0
@@ -473,7 +446,6 @@ public final class Former: NSObject {
     }
     
     /// Remove RowFormers with animated updates.
-    
     public func removeAndUpdate(rowFormers rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
         self.tableView?.beginUpdates()

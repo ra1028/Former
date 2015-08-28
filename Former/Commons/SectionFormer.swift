@@ -12,10 +12,16 @@ public final class SectionFormer: NSObject {
     
     // MARK: Public
     
+    /// All RowFormers. Default is empty.
     public private(set) var rowFormers = [RowFormer]()
+    
+    /// ViewFormer of applying section header. Default is applying simply 10px spacing section header.
     public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class)
+    
+    /// ViewFormer of applying section footer. Default is nil.
     public private(set) var footerViewFormer: ViewFormer?
     
+    /// Return all row count.
     public var numberOfRows: Int {
         
         return self.rowFormers.count
@@ -31,6 +37,7 @@ public final class SectionFormer: NSObject {
         return Array<RowFormer>(self.rowFormers[range])
     }
     
+    /// Add RowFormers to last index.
     public func add(rowFormers rowFormers: [RowFormer]) -> Self {
         
         self.rowFormers.last?.isBottom = false
@@ -41,6 +48,7 @@ public final class SectionFormer: NSObject {
         return self
     }
     
+    /// Insert RowFormers to any index.
     public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> Self {
         
         self.rowFormers.first?.isTop = false
@@ -62,17 +70,24 @@ public final class SectionFormer: NSObject {
         return self
     }
     
+    /// Remove RowFormers from instances of RowFormer.
     public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
         
+        var removedCount = 0
         for (index, rowFormer) in self.rowFormers.enumerate() {
             if rowFormers.contains(rowFormer) {
-                self.removeRowFormer(index)
+                self.remove(index)
+                
+                if ++removedCount >= rowFormers.count {
+                    return self
+                }
             }
         }
         return self
     }
     
-    public func removeRowFormer(atIndex: Int) -> Self {
+    /// Remove RowFormer from index.
+    public func remove(atIndex: Int) -> Self {
         
         self.rowFormers.first?.isTop = false
         self.rowFormers.last?.isBottom = false
@@ -82,7 +97,8 @@ public final class SectionFormer: NSObject {
         return self
     }
     
-    public func removeRowFormer(range: Range<Int>) -> Self{
+    /// Remove RowFormers from range.
+    public func remove(range: Range<Int>) -> Self{
         
         self.rowFormers.first?.isTop = false
         self.rowFormers.last?.isBottom = false
@@ -92,12 +108,14 @@ public final class SectionFormer: NSObject {
         return self
     }
     
+    /// Set ViewFormer to apply section header.
     public func set(headerViewFormer viewFormer: ViewFormer?) -> Self {
         
         self.headerViewFormer = viewFormer
         return self
     }
     
+    /// Set ViewFormer to apply section footer.
     public func set(footerViewFormer viewFormer: ViewFormer?) -> Self {
         
         self.footerViewFormer = viewFormer
