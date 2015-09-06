@@ -214,6 +214,41 @@ public final class Former: NSObject {
         return self
     }
     
+    /// Validate RowFormer
+    public func validate(rowFormer rowFormer: RowFormer) -> Bool {
+        
+        if let validatable = rowFormer as? FormerValidatable {
+            
+            return validatable.validate()
+        }
+        return true
+    }
+    
+    /// Validate RowFormer from indexPath
+    public func validate(indexPath indexPath: NSIndexPath) -> Bool {
+        
+        guard indexPath.section < self.numberOfSections else { return true }
+        guard indexPath.row < self.sectionFormers[indexPath.section].numberOfRows else { return true }
+        
+        if let validatable = self[indexPath.section][indexPath.row] as? FormerValidatable {
+            
+            return validatable.validate()
+        }
+        return true
+    }
+    
+    /// Validate all RowFormers. Return 'false' RowFormers. So, return empty array iff all 'true'.
+    public func validateAll() -> [RowFormer] {
+        
+        var invalidRowFormers = [RowFormer]()
+        self.rowFormers.forEach {
+            if let validatable = $0 as? FormerValidatable where !validatable.validate() {
+                invalidRowFormers.append($0)
+            }
+        }
+        return invalidRowFormers
+    }
+    
     /// To select row from indexPath.
     public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         
@@ -409,11 +444,11 @@ public final class Former: NSObject {
             for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
                 
                 if rowFormers.contains(rowFormer) {
-                    removeIndexPaths += [NSIndexPath(forRow: row, inSection: section)]
+                    removeIndexPaths.append(NSIndexPath(forRow: row, inSection: section))
                     sectionFormer.remove(rowFormers: [rowFormer])
                     
                     if let oldInlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer {
-                        removeIndexPaths += [NSIndexPath(forRow: row + 1, inSection: section)]
+                        removeIndexPaths.append(NSIndexPath(forRow: row + 1, inSection: section))
                         self.remove(rowFormers: [oldInlineRowFormer])
                         (self.inlineRowFormer as? InlineRow)?.editingDidEnd()
                         self.inlineRowFormer = nil

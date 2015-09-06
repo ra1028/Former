@@ -15,7 +15,9 @@ public protocol DatePickerFormableRow: FormableRow {
     func formerDatePicker() -> UIDatePicker
 }
 
-public class DatePickerRowFormer: RowFormer {
+public class DatePickerRowFormer: RowFormer, FormerValidatable {
+    
+    public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     @NSCopying public var calendar: NSCalendar?
@@ -68,6 +70,11 @@ public class DatePickerRowFormer: RowFormer {
                 actionEvents: [("dateChanged:", .ValueChanged)]
             )
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.date) ?? true
     }
     
     public dynamic func dateChanged(datePicker: UIDatePicker) {

@@ -14,11 +14,13 @@ public protocol TextViewFormableRow: FormableRow {
     func formerTextView() -> UITextView
 }
 
-public class TextViewRowFormer: RowFormer {
+public class TextViewRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
+    
+    public var onValidate: (String? -> Bool)?
     
     public var textChangedHandler: (String -> Void)?
     public var text: String?
@@ -127,6 +129,11 @@ public class TextViewRowFormer: RowFormer {
             textView.becomeFirstResponder()
             textView.userInteractionEnabled = self.enabled
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.text) ?? true
     }
     
     private func updatePlaceholderColor(text: String?) {

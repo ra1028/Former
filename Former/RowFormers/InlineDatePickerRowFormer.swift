@@ -14,7 +14,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class InlineDatePickerRowFormer: RowFormer, InlineRow {
+public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
     public private(set) var inlineRowFormer: RowFormer = DatePickerRowFormer(
         cellType: FormerDatePickerCell.self,
@@ -23,6 +23,8 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow {
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
+    
+    public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
@@ -108,6 +110,11 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow {
         
         super.cellSelected(indexPath)
         self.former?.deselect(true)
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.date) ?? true
     }
     
     private func dateChanged(date: NSDate) {

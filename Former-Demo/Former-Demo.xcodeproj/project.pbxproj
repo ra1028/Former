@@ -20,6 +20,7 @@
 		2A61586C1B6561A10065AFD3 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */; };
 		2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7471B6A866B00985361 /* SliderRowFormer.swift */; };
 		2A63E74A1B6A89D500985361 /* FormerSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A63E7491B6A89D500985361 /* FormerSliderCell.swift */; };
+		2A8309C51B9CB1F6008819DF /* FormerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8309C41B9CB1F6008819DF /* FormerValidator.swift */; };
 		2A89009F1B71BD1700101657 /* DefaultUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A89009E1B71BD1700101657 /* DefaultUIViewController.swift */; };
 		2A8900A11B71BD2D00101657 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8900A01B71BD2D00101657 /* TopViewController.swift */; };
 		2A8900A41B71CCDB00101657 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8900A31B71CCDB00101657 /* UIColorExt.swift */; };
@@ -80,6 +81,7 @@
 		2A61586B1B6561A10065AFD3 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
 		2A63E7471B6A866B00985361 /* SliderRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderRowFormer.swift; sourceTree = "<group>"; };
 		2A63E7491B6A89D500985361 /* FormerSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSliderCell.swift; sourceTree = "<group>"; };
+		2A8309C41B9CB1F6008819DF /* FormerValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerValidator.swift; sourceTree = "<group>"; };
 		2A89009E1B71BD1700101657 /* DefaultUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUIViewController.swift; sourceTree = "<group>"; };
 		2A8900A01B71BD2D00101657 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		2A8900A31B71CCDB00101657 /* UIColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				2AD8417F1B64A0F4003A10FF /* RowFormer.swift */,
 				2AB7BF581B7905D900AF0B9E /* ViewFormer.swift */,
 				2AB7BF521B789F8A00AF0B9E /* FormerObserver.swift */,
+				2A8309C41B9CB1F6008819DF /* FormerValidator.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				2AD841981B64A0F4003A10FF /* FormerTextFooterView.swift in Sources */,
 				2AD841901B64A0F4003A10FF /* Operators.swift in Sources */,
 				2A63E7481B6A866B00985361 /* SliderRowFormer.swift in Sources */,
+				2A8309C51B9CB1F6008819DF /* FormerValidator.swift in Sources */,
 				2A2DDCB81B8A579900CA630F /* SelectorDatePickerRowFormer.swift in Sources */,
 				2AA757851B9B70EF006B9A2B /* DemoInlineSliderRowFomer.swift in Sources */,
 				2AA46CCE1B69304F00909F61 /* FormerStepperCell.swift in Sources */,

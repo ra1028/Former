@@ -14,7 +14,7 @@ public protocol InlinePickerFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class InlinePickerRowFormer: RowFormer, InlineRow {
+public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
     public private(set) var inlineRowFormer: RowFormer = PickerRowFormer(
         cellType: FormerPickerCell.self,
@@ -24,6 +24,8 @@ public class InlinePickerRowFormer: RowFormer, InlineRow {
         return self.enabled
     }
     
+    public var onValidate: ((Int, String) -> Bool)?
+
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
@@ -97,12 +99,19 @@ public class InlinePickerRowFormer: RowFormer, InlineRow {
         self.former?.deselect(true)
     }
     
+    public func validate() -> Bool {
+        
+        let row = self.selectedRow
+        let title = self.valueTitles[row]
+        return self.onValidate?(row, title) ?? true
+    }
+    
     private func valueChanged(row: Int, title: String) {
         
         if let pickerRow = self.cell as? InlinePickerFormableRow where self.enabled {
             self.selectedRow = row
             pickerRow.formerDisplayLabel()?.text = title
-            self.onValueChanged?((row, title))
+            self.onValueChanged?(row, title)
         }
     }
     

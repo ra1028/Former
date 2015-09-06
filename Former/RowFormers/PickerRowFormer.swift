@@ -13,7 +13,9 @@ public protocol PickerFormableRow: FormableRow {
     func formerPickerView() -> UIPickerView
 }
 
-public class PickerRowFormer: RowFormer {
+public class PickerRowFormer: RowFormer, FormerValidatable {
+    
+    public var onValidate: ((Int, String) -> Bool)?
     
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
@@ -59,6 +61,12 @@ public class PickerRowFormer: RowFormer {
             picker.userInteractionEnabled = self.enabled
             picker.alpha = self.enabled ? 1.0 : 0.5
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        let row = self.selectedRow
+        return self.onValidate?(row, self.valueTitles[row]) ?? true
     }
 }
 

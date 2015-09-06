@@ -17,11 +17,13 @@ public protocol SelectorPickerFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class SelectorPickerRowFormer: RowFormer {
+public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
+    
+    public var onValidate: ((Int, String) -> Bool)?
     
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
@@ -101,6 +103,13 @@ public class SelectorPickerRowFormer: RowFormer {
         if self.enabled {
             self.cell?.becomeFirstResponder()
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        let row = self.selectedRow
+        let selectedTitle = self.valueTitles[row]
+        return self.onValidate?(row, selectedTitle) ?? true
     }
 }
 

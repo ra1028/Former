@@ -20,6 +20,11 @@ public protocol InlineRow {
     func editingDidEnd()
 }
 
+public protocol FormerValidatable {
+    
+    func validate() -> Bool
+}
+
 public class RowFormer: NSObject {
     
     final internal weak var former: Former?

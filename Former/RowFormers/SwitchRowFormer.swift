@@ -16,7 +16,9 @@ public protocol SwitchFormableRow: FormableRow {
     func formerTitleLabel() -> UILabel?
 }
 
-public class SwitchRowFormer: RowFormer {
+public class SwitchRowFormer: RowFormer, FormerValidatable {
+    
+    public var onValidate: (Bool -> Bool)?
     
     public var onSwitchChanged: (Bool -> Void)?
     public var switched: Bool = false
@@ -84,6 +86,11 @@ public class SwitchRowFormer: RowFormer {
             switchButton.setOn(!switchButton.on, animated: true)
             self.switchChanged(switchButton)
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.switched) ?? true
     }
     
     public dynamic func switchChanged(switchButton: UISwitch) {

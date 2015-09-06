@@ -17,7 +17,9 @@ public protocol StepperFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class StepperRowFormer: RowFormer {
+public class StepperRowFormer: RowFormer, FormerValidatable {
+    
+    public var onValidate: (Double -> Bool)?
     
     public var onValueChanged: (Double -> Void)?
     public var displayTextFromValue: (Double -> String?)?
@@ -87,6 +89,11 @@ public class StepperRowFormer: RowFormer {
                 actionEvents: [("valueChanged:", .ValueChanged)]
             )
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.value) ?? true
     }
     
     public dynamic func valueChanged(stepper: UIStepper) {

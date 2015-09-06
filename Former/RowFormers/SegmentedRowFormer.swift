@@ -16,7 +16,9 @@ public protocol SegmentedFormableRow: FormableRow {
     func formerTitleLabel() -> UILabel?
 }
 
-public class SegmentedRowFormer: RowFormer {
+public class SegmentedRowFormer: RowFormer, FormerValidatable {
+    
+    public var onValidate: ((Int, String) -> Bool)?
     
     public var onSegmentSelected: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
@@ -69,6 +71,13 @@ public class SegmentedRowFormer: RowFormer {
                 actionEvents: [("valueChanged:", .ValueChanged)]
             )
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        let selectedIndex = self.selectedIndex
+        let selectedTitle = self.segmentTitles[selectedIndex]
+        return self.onValidate?(selectedIndex, selectedTitle) ?? true
     }
     
     public dynamic func valueChanged(segment: UISegmentedControl) {

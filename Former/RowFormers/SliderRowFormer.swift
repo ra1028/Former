@@ -17,7 +17,9 @@ public protocol SliderFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class SliderRowFormer: RowFormer {
+public class SliderRowFormer: RowFormer, FormerValidatable {
+    
+    public var onValidate: (Float -> Bool)?
     
     public var onValueChanged: (Float -> Void)?
     public var displayTextFromValue: (Float -> String)?
@@ -68,6 +70,12 @@ public class SliderRowFormer: RowFormer {
             slider.maximumValue =? self.maximumValue
             slider.tintColor =? self.tintColor
             slider.enabled = self.enabled
+            slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
+            slider.continuous =? self.continuous
+            slider.minimumValue =? self.minimumValue
+            slider.maximumValue =? self.maximumValue
+            slider.tintColor =? self.tintColor
+            slider.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
@@ -84,6 +92,13 @@ public class SliderRowFormer: RowFormer {
                 actionEvents: [("valueChanged:", .ValueChanged)]
             )
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        let value = self.value
+        let adjustedValue = self.adjustedValueFromValue?(value) ?? value
+        return self.onValidate?(adjustedValue) ?? true
     }
     
     private dynamic func valueChanged(slider: UISlider) {

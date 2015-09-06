@@ -16,11 +16,13 @@ public protocol TextFieldFormableRow: FormableRow {
     func formerTitleLabel() -> UILabel?
 }
 
-public class TextFieldRowFormer: RowFormer {
+public class TextFieldRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
+    
+    public var onValidate: (String? -> Bool)?
     
     public var onTextChanged: (String -> Void)?
     public var text: String?
@@ -108,6 +110,11 @@ public class TextFieldRowFormer: RowFormer {
                 textField.becomeFirstResponder()
             }
         }
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.text) ?? true
     }
     
     public func textChanged(textField: UITextField) {

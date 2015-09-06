@@ -17,11 +17,13 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class SelectorDatePickerRowFormer: RowFormer {
+public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
+    
+    public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
@@ -110,16 +112,6 @@ public class SelectorDatePickerRowFormer: RowFormer {
         }
     }
     
-    public dynamic func dateChanged(datePicker: UIDatePicker) {
-        
-        if let row = self.cell as? SelectorDatePickerFormableRow where self.enabled {
-            let date = datePicker.date
-            self.date = date
-            row.formerDisplayLabel()?.text = self.displayTextFromDate?(date) ?? "\(date)"
-            self.onDateChanged?(date)
-        }
-    }
-    
     public override func cellSelected(indexPath: NSIndexPath) {
         
         super.cellSelected(indexPath)
@@ -127,6 +119,21 @@ public class SelectorDatePickerRowFormer: RowFormer {
         
         if self.enabled {
             self.cell?.becomeFirstResponder()
+        }
+    }
+    
+    public func validate() -> Bool {
+        
+        return self.onValidate?(self.date) ?? true
+    }
+    
+    public dynamic func dateChanged(datePicker: UIDatePicker) {
+        
+        if let row = self.cell as? SelectorDatePickerFormableRow where self.enabled {
+            let date = datePicker.date
+            self.date = date
+            row.formerDisplayLabel()?.text = self.displayTextFromDate?(date) ?? "\(date)"
+            self.onDateChanged?(date)
         }
     }
 }
