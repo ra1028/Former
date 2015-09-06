@@ -175,6 +175,7 @@ class DefaultExampleViewController: FormerViewController {
                     sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     self?.presentViewController(sheet, animated: true, completion: nil)
                     self?.former.deselect(true)
+                    return
                 }
                 ][index]
             selector.text = ["Push", "Sheet", "Picker"][index]

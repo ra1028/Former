@@ -60,7 +60,7 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
         self.titleDisabledColor = .lightGrayColor()
         self.placeholderColor = UIColor(white: 0.8, alpha: 1.0)
         self.selectionStyle = UITableViewCellSelectionStyle.None
-        self.cellHeight = 100.0
+        self.cellHeight = 110.0
     }
     
     public override func update() {
@@ -149,6 +149,9 @@ extension TextViewRowFormer: UITextViewDelegate {
     public func textViewDidChange(textView: UITextView) {
         
         if self.enabled {
+            if #available(iOS 8, *) {} else {
+                textView.scrollRangeToVisible(textView.selectedRange)
+            }
             let text = textView.text ?? ""
             self.text = text
             self.textChangedHandler?(text)

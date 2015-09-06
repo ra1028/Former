@@ -45,7 +45,8 @@ public class FormerTextViewCell: FormerCell, TextViewFormableRow {
         
         let textView = UITextView()
         textView.backgroundColor = .clearColor()
-        textView.font = UIFont.systemFontOfSize(17.0)
+        textView.font = .systemFontOfSize(17.0)
+        textView.contentSize.height = 0
         textView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(textView, atIndex: 0)
         self.textView = textView

@@ -63,7 +63,7 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
                 views: ["display": displayLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]-[display(>=0)]-5-|",
+                "H:|-15-[title]-(>=0)-[display]-5-|",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
