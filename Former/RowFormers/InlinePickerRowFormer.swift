@@ -14,9 +14,9 @@ public protocol InlinePickerFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
+public class InlinePickerRowFormer: RowFormer, InlineRow {
     
-    public private(set) var pickerRowFormer: RowFormer = PickerRowFormer(
+    public private(set) var inlineRowFormer: RowFormer = PickerRowFormer(
         cellType: FormerPickerCell.self,
         registerType: .Class
     )
@@ -80,7 +80,7 @@ public class InlinePickerRowFormer: RowFormer, InlinePickableRow {
                 self.displayDisabledTextColor
         }
         
-        if let pickerRowFormer = self.pickerRowFormer as? PickerRowFormer {
+        if let pickerRowFormer = self.inlineRowFormer as? PickerRowFormer {
             
             pickerRowFormer.onValueChanged = self.valueChanged
             pickerRowFormer.valueTitles = self.valueTitles

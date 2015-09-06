@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerStepperCell: FormerCell, StepperFormableRow {
+public class FormerStepperCell: UITableViewCell, StepperFormableRow {
     
     public let observer = FormerObserver()
     
@@ -31,9 +31,24 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
         return self.stepper
     }
     
-    override public func configureViews() {
+    public func configureWithRowFormer(rowFormer: RowFormer) {}
+    
+    required public init?(coder aDecoder: NSCoder) {
         
-        super.configureViews()
+        super.init(coder: aDecoder)
+        self.configureViews()
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.configureViews()
+    }
+    
+    private func configureViews() {
+        
+        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.textLabel?.backgroundColor = .clearColor()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

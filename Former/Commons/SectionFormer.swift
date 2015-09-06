@@ -40,19 +40,12 @@ public final class SectionFormer: NSObject {
     /// Add RowFormers to last index.
     public func add(rowFormers rowFormers: [RowFormer]) -> Self {
         
-        self.rowFormers.last?.isBottom = false
         self.rowFormers += rowFormers
-        
-        self.rowFormers.first?.isTop = true
-        self.rowFormers.last?.isBottom = true
         return self
     }
     
     /// Insert RowFormers to any index.
     public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> Self {
-        
-        self.rowFormers.first?.isTop = false
-        self.rowFormers.last?.isBottom = false
         
         let count = self.rowFormers.count
         
@@ -65,8 +58,6 @@ public final class SectionFormer: NSObject {
             self.rowFormers = self.rowFormers[0...(toIndex - 1)] + rowFormers + self.rowFormers[toIndex...last]
         }
         
-        self.rowFormers.first?.isTop = true
-        self.rowFormers.last?.isBottom = true
         return self
     }
     
@@ -89,22 +80,14 @@ public final class SectionFormer: NSObject {
     /// Remove RowFormer from index.
     public func remove(atIndex: Int) -> Self {
         
-        self.rowFormers.first?.isTop = false
-        self.rowFormers.last?.isBottom = false
         self.rowFormers.removeAtIndex(atIndex)
-        self.rowFormers.first?.isTop = true
-        self.rowFormers.last?.isBottom = true
         return self
     }
     
     /// Remove RowFormers from range.
     public func remove(range: Range<Int>) -> Self{
         
-        self.rowFormers.first?.isTop = false
-        self.rowFormers.last?.isBottom = false
         self.rowFormers.removeRange(range)
-        self.rowFormers.first?.isTop = true
-        self.rowFormers.last?.isBottom = true
         return self
     }
     

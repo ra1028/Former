@@ -50,9 +50,7 @@ final class DefaultUIViewController: FormerViewController {
             cellType: FormerTextCell.self,
             registerType: .Class
         )
-        textRow.onSelected = { [weak self] _ in
-            self?.former.deselect(true)
-        }
+        textRow.onSelected = { [weak self] _ in self?.former.deselect(true) }
         textRow.text = "Text"
         textRow.subText = "SubText"
         
@@ -129,7 +127,6 @@ final class DefaultUIViewController: FormerViewController {
             registerType: .Class
         )
         inlineDateRow.title = "InlineDatePicker"
-        inlineDateRow.datePickerMode = .DateAndTime
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(
@@ -153,13 +150,12 @@ final class DefaultUIViewController: FormerViewController {
                 textRow, textFieldRow, textViewRow,
                 checkRow, switchRow, stepperRow,
                 segmentRow, sliderRow, selectorPickerRow,
-                selectorDatePickerRow, inlinePickerRow, inlineDateRow])
+                selectorDatePickerRow, inlinePickerRow, inlineDateRow
+                ])
             
         let sectionFormer3 = SectionFormer()
             .add(rowFormers: [pickerRow, datePickerRow])
-            .set(footerViewFormer: ViewFormer(
-                viewType: FormerHeaderFooterView.self,
-                registerType: .Class))
+            .set(footerViewFormer: ViewFormer(viewType: FormerHeaderFooterView.self, registerType: .Class))
         
         self.former.add(sectionFormers: [sectionFormer1, sectionFormer2, sectionFormer3])
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
+public class FormerTextFieldCell: UITableViewCell, TextFieldFormableRow {
     
     public let observer = FormerObserver()
     
@@ -28,9 +28,7 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         return self.titleLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
-        
-        super.configureWithRowFormer(rowFormer)
+    public func configureWithRowFormer(rowFormer: RowFormer) {
         
         if let rowFormer = rowFormer as? TextFieldRowFormer {
             self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
@@ -38,9 +36,22 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         }
     }
     
-    override public func configureViews() {
+    required public init?(coder aDecoder: NSCoder) {
         
-        super.configureViews()
+        super.init(coder: aDecoder)
+        self.configureViews()
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.configureViews()
+    }
+    
+    private func configureViews() {
+        
+        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.textLabel?.backgroundColor = .clearColor()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: UILayoutConstraintAxis.Horizontal)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
+public class FormerSelectorPickerCell: UITableViewCell, SelectorPickerFormableRow {
     
     public var selectorPickerView: UIPickerView?
     public var selectorAccessoryView: UIView?
@@ -26,15 +26,27 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
         return self.displayLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
+    public func configureWithRowFormer(rowFormer: RowFormer) {
         
-        super.configureWithRowFormer(rowFormer)
         self.displayLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
     }
     
-    public override func configureViews() {
+    required public init?(coder aDecoder: NSCoder) {
         
-        super.configureViews()
+        super.init(coder: aDecoder)
+        self.configureViews()
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.configureViews()
+    }
+    
+    private func configureViews() {
+        
+        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.textLabel?.backgroundColor = .clearColor()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)

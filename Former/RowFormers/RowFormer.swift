@@ -10,25 +10,19 @@ import UIKit
 
 public protocol FormableRow {
     
-    // Optional
     func configureWithRowFormer(rowFormer: RowFormer)
 }
 
-extension FormableRow {
+public protocol InlineRow {
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
-}
-
-public protocol InlinePickableRow {
-    
-    var pickerRowFormer: RowFormer { get }
+    var inlineRowFormer: RowFormer { get }
     
     // Optional
     func editingDidBegin()
     func editingDidEnd()
 }
 
-extension InlinePickableRow {
+public extension InlineRow {
     
     func editingDidBegin() {}
     func editingDidEnd() {}
@@ -38,8 +32,6 @@ public class RowFormer: NSObject {
     
     final internal weak var former: Former?
     public private(set) final weak var cell: UITableViewCell?
-    public internal(set) final var isTop = false
-    public internal(set) final var isBottom = false
     public internal(set) final var registered = false
     public internal(set) final var isEditing = false
     public var canBecomeEditing: Bool {
@@ -54,7 +46,6 @@ public class RowFormer: NSObject {
     public var backgroundColor: UIColor?
     public var accessoryType: UITableViewCellAccessoryType?
     public var selectionStyle: UITableViewCellSelectionStyle?
-    public var separatorColor: UIColor?
     public var separatorInsets: UIEdgeInsets?
     public var tintColor: UIColor?
     
@@ -73,7 +64,6 @@ public class RowFormer: NSObject {
     public func initializeRowFomer() {
         
         self.backgroundColor = .whiteColor()
-        self.separatorColor = UIColor(red: 209.0 / 255.0, green: 209.0 / 255.0, blue: 212.0 / 255.0, alpha: 1.0)
         self.separatorInsets = UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 0)
     }
     
@@ -88,6 +78,7 @@ public class RowFormer: NSObject {
         if let cell = self.cell {
             
             cell.backgroundColor = self.backgroundColor
+            cell.separatorInset =? self.separatorInsets
             cell.selectionStyle = self.enabled ?
                 (self.selectionStyle ?? .Default) :
                 UITableViewCellSelectionStyle.None

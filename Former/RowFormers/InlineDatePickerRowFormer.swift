@@ -14,9 +14,9 @@ public protocol InlineDatePickerFormableRow: FormableRow {
     func formerDisplayLabel() -> UILabel?
 }
 
-public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
+public class InlineDatePickerRowFormer: RowFormer, InlineRow {
     
-    public private(set) var pickerRowFormer: RowFormer = DatePickerRowFormer(
+    public private(set) var inlineRowFormer: RowFormer = DatePickerRowFormer(
         cellType: FormerDatePickerCell.self,
         registerType: .Class
     )
@@ -87,7 +87,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlinePickableRow {
                 self.displayDisabledTextColor
         }
         
-        if let pickerRowFormer = self.pickerRowFormer as? DatePickerRowFormer {
+        if let pickerRowFormer = self.inlineRowFormer as? DatePickerRowFormer {
             
             pickerRowFormer.onDateChanged = self.dateChanged
             pickerRowFormer.calendar = self.calendar

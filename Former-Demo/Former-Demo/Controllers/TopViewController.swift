@@ -16,6 +16,12 @@ final class TopViewContoller: FormerViewController {
         self.configure()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.former.deselect(true)
+    }
+    
     private func configure() {
         
         let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -26,21 +32,19 @@ final class TopViewContoller: FormerViewController {
         
         let firstComponets: [(String, (() -> Void)?)] = [
             ("Edit Profile", { [weak self] in
-                self?.former.deselect(true)})
+                self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)})
         ]
         
         let secondComponents: [(String, (() -> Void)?)] = [
             ("All Defaults", { [weak self] in
-                self?.former.deselect(true)
                 self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)})
         ]
         
         let thirdComponents: [(String, (() -> Void)?)] = [
             ("Default Former Examples", { [weak self] in
-                self?.former.deselect(true)
                 self?.navigationController?.pushViewController(DefaultExampleViewController(), animated: true)}),
             ("Custom Former Examples", { [weak self] in
-                self?.former.deselect(true)})
+                self?.navigationController?.pushViewController(CustomExampleViewController(), animated: true)})
         ]
         
         let createMenu: ((String, (() -> Void)?) -> TextRowFormer) = { text, onSelected in

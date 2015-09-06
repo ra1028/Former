@@ -177,7 +177,7 @@ public final class Former: NSObject {
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             self.select(indexPath: indexPath, animated: false)
             
-            let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
+            let scrollIndexPath = (self.rowFormer(indexPath) is InlineRow) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
             tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
         }
@@ -200,7 +200,7 @@ public final class Former: NSObject {
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             self.select(indexPath: indexPath, animated: false)
             
-            let scrollIndexPath = (self.rowFormer(indexPath) is InlinePickableRow) ?
+            let scrollIndexPath = (self.rowFormer(indexPath) is InlineRow) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
             tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
         }
@@ -249,13 +249,7 @@ public final class Former: NSObject {
     public func reloadFormer() -> Self {
         
         self.tableView?.reloadData()
-        
-        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
-            
-            self.removeAndUpdate(rowFormers: [oldPickerRowFormer], rowAnimation: .Middle)
-            (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-            self.inlinePickerRowFormer = nil
-        }
+        self.removeCurrentInlineRowAndUpdate()
         return self
     }
     
@@ -317,15 +311,9 @@ public final class Former: NSObject {
     /// Insert SectionFormers with animated updates.
     public func insertAndUpdate(sectionFormers sectionFormers: [SectionFormer], toSection: Int, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
+        self.removeCurrentInlineRowAndUpdate()
+        
         self.tableView?.beginUpdates()
-        
-        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
-            let removedIndexPaths = self.remove(rowFormers: [oldPickerRowFormer])
-            self.tableView?.deleteRowsAtIndexPaths(removedIndexPaths, withRowAnimation: .Middle)
-            (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-            self.inlinePickerRowFormer = nil
-        }
-        
         self.insert(sectionFormers: sectionFormers, toSection: toSection)
         self.tableView?.insertSections(NSIndexSet(index: toSection), withRowAnimation: rowAnimation)
         self.tableView?.endUpdates()
@@ -342,14 +330,9 @@ public final class Former: NSObject {
     /// Insert RowFormers with animated updates.
     public func insertAndUpdate(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
-        self.tableView?.beginUpdates()
+        self.removeCurrentInlineRowAndUpdate()
         
-        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
-            let removedIndexPaths = self.remove(rowFormers: [oldPickerRowFormer])
-            self.tableView?.deleteRowsAtIndexPaths(removedIndexPaths, withRowAnimation: .Middle)
-            (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-            self.inlinePickerRowFormer = nil
-        }
+        self.tableView?.beginUpdates()
         
         self.insert(rowFormers: rowFormers, toIndexPath: toIndexPath)
         let insertIndexPaths = (0..<rowFormers.count).map {
@@ -429,11 +412,11 @@ public final class Former: NSObject {
                     removeIndexPaths += [NSIndexPath(forRow: row, inSection: section)]
                     sectionFormer.remove(rowFormers: [rowFormer])
                     
-                    if let oldPickerRowFormer = (rowFormer as? InlinePickableRow)?.pickerRowFormer {
+                    if let oldInlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer {
                         removeIndexPaths += [NSIndexPath(forRow: row + 1, inSection: section)]
-                        self.remove(rowFormers: [oldPickerRowFormer])
-                        (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-                        self.inlinePickerRowFormer = nil
+                        self.remove(rowFormers: [oldInlineRowFormer])
+                        (self.inlineRowFormer as? InlineRow)?.editingDidEnd()
+                        self.inlineRowFormer = nil
                     }
                     
                     if ++removedCount >= rowFormers.count {
@@ -448,13 +431,10 @@ public final class Former: NSObject {
     /// Remove RowFormers with animated updates.
     public func removeAndUpdate(rowFormers rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         
+        self.removeCurrentInlineRowAndUpdate()
+        
         self.tableView?.beginUpdates()
-        var oldIndexPaths = self.remove(rowFormers: rowFormers)
-        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
-            oldIndexPaths += self.remove(rowFormers: [oldPickerRowFormer])
-            (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-            self.inlinePickerRowFormer = nil
-        }
+        let oldIndexPaths = self.remove(rowFormers: rowFormers)
         self.tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
         self.tableView?.endUpdates()
         return self
@@ -463,7 +443,7 @@ public final class Former: NSObject {
     // MARK: Private
     
     private weak var tableView: UITableView?
-    private weak var inlinePickerRowFormer: RowFormer?
+    private weak var inlineRowFormer: RowFormer?
     private var selectedIndexPath: NSIndexPath?
     private var oldBottomContentInset: CGFloat?
     
@@ -471,10 +451,32 @@ public final class Former: NSObject {
         
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
-        self.tableView?.separatorStyle = .None
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    private func removeCurrentInlineRow() -> NSIndexPath? {
+        
+        var indexPath: NSIndexPath? = nil
+        if let oldInlineRowFormer = (self.inlineRowFormer as? InlineRow)?.inlineRowFormer,
+            let removedIndexPath = self.remove(rowFormers: [oldInlineRowFormer]).first {
+            
+                indexPath = removedIndexPath
+                (self.inlineRowFormer as? InlineRow)?.editingDidEnd()
+                self.inlineRowFormer = nil
+        }
+        return indexPath
+    }
+    
+    private func removeCurrentInlineRowAndUpdate() {
+        
+        if let removedIndexPath = self.removeCurrentInlineRow() {
+            
+            self.tableView?.beginUpdates()
+            self.tableView?.deleteRowsAtIndexPaths([removedIndexPath], withRowAnimation: .Middle)
+            self.tableView?.endUpdates()
+        }
     }
     
     private func findFirstResponder(view: UIView?) -> UIView? {
@@ -576,36 +578,34 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         rowFormer.cellSelected(indexPath)
         self.onCellSelected?(indexPath: indexPath)
         
-        if let oldPickerRowFormer = (self.inlinePickerRowFormer as? InlinePickableRow)?.pickerRowFormer {
+        if let oldInlineRowFormer = (self.inlineRowFormer as? InlineRow)?.inlineRowFormer {
             
-            if let currentPickerRowFormer = (rowFormer as? InlinePickableRow)?.pickerRowFormer
-                where rowFormer !== self.inlinePickerRowFormer {
+            if let currentInlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer
+                where rowFormer !== self.inlineRowFormer {
                     
                     self.tableView?.beginUpdates()
-                    if let removedIndexPath = self.remove(rowFormers: [oldPickerRowFormer]).first {
+                    if let removedIndexPath = self.remove(rowFormers: [oldInlineRowFormer]).first {
                         let insertIndexPath =
                         (removedIndexPath.section == indexPath.section && removedIndexPath.row < indexPath.row)
                             ? indexPath : NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
-                        self.insert(rowFormers: [currentPickerRowFormer], toIndexPath: insertIndexPath)
+                        self.insert(rowFormers: [currentInlineRowFormer], toIndexPath: insertIndexPath)
                         self.tableView?.deleteRowsAtIndexPaths([removedIndexPath], withRowAnimation: .Middle)
                         self.tableView?.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Middle)
                     }
                     self.tableView?.endUpdates()
-                    (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-                    (rowFormer as? InlinePickableRow)?.editingDidBegin()
-                    self.inlinePickerRowFormer = rowFormer
+                    (self.inlineRowFormer as? InlineRow)?.editingDidEnd()
+                    (rowFormer as? InlineRow)?.editingDidBegin()
+                    self.inlineRowFormer = rowFormer
             } else {
-                self.removeAndUpdate(rowFormers: [oldPickerRowFormer], rowAnimation: .Middle)
-                (self.inlinePickerRowFormer as? InlinePickableRow)?.editingDidEnd()
-                self.inlinePickerRowFormer = nil
+                
+                self.removeCurrentInlineRowAndUpdate()
             }
-        } else if let inlinePickerRowFormer = rowFormer as? InlinePickableRow {
+        } else if let inlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer {
             
-            let pickerRowFormer = inlinePickerRowFormer.pickerRowFormer
-            let pickerIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
-            self.insertAndUpdate(rowFormers: [pickerRowFormer], toIndexPath: pickerIndexPath, rowAnimation: .Middle)
-            (rowFormer as? InlinePickableRow)?.editingDidBegin()
-            self.inlinePickerRowFormer = rowFormer
+            let inlineIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
+            self.insertAndUpdate(rowFormers: [inlineRowFormer], toIndexPath: inlineIndexPath, rowAnimation: .Middle)
+            (rowFormer as? InlineRow)?.editingDidBegin()
+            self.inlineRowFormer = rowFormer
         }
     }
     

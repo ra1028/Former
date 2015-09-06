@@ -58,9 +58,6 @@ class DefaultExampleViewController: FormerViewController {
         return accessory
         }()
     
-    private var pickerSelectorView: PickerSelectorView?
-    private var pickerViewBottom: NSLayoutConstraint?
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
