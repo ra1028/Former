@@ -99,4 +99,8 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
         self.value = value
         self.onValueChanged?(value)
     }
+    
+    public func editingDidBegin() {}
+    
+    public func editingDidEnd() {}
 }

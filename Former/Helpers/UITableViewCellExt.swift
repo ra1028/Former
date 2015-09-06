@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UITableViewCell {
+internal extension UITableViewCell {
     
     private static var className: String {
         
@@ -19,6 +19,9 @@ extension UITableViewCell {
         
         return self.className
     }
+}
+
+extension UITableViewCell {
     
     // For SelectorRow
     
@@ -49,7 +52,7 @@ extension UITableViewCell {
         
         if self is SelectorPickerFormableRow ||
             self is SelectorDatePickerFormableRow {
-            return true
+                return true
         }
         
         return super.canBecomeFirstResponder()

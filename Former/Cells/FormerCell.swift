@@ -24,7 +24,7 @@ public class FormerCell: UITableViewCell, FormableRow {
     
     public func configureWithRowFormer(rowFormer: RowFormer) {}
     
-    private func configureViews() {
+    public func configureViews() {
         
         self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.textLabel?.backgroundColor = .clearColor()

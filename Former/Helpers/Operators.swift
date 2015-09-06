@@ -20,29 +20,29 @@ precedence 90
 assignment
 }
 
-func =?<T> (inout lhs: T, rhs: T?) {
+internal func =?<T> (inout lhs: T, rhs: T?) {
     
     rhs.map { lhs = $0 }
 }
 
-func =?<T> (inout lhs: T?, rhs: T?) {
+internal func =?<T> (inout lhs: T?, rhs: T?) {
     
     rhs.map { lhs = $0 }
 }
 
-func =?<T> (inout lhs: T!, rhs: T?) {
+internal func =?<T> (inout lhs: T!, rhs: T?) {
     
     rhs.map { lhs = $0 }
 }
 
-func ?=<T> (inout lhs: T?, rhs: T) {
+internal func ?=<T> (inout lhs: T?, rhs: T) {
     
     if lhs == nil {
         lhs = rhs
     }
 }
 
-func ?=<T> (inout lhs: T?, rhs: T?) {
+internal func ?=<T> (inout lhs: T?, rhs: T?) {
     
     if lhs == nil {
         lhs = rhs

@@ -156,8 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				2A89009D1B71BD1700101657 /* Controllers */,
-				2AA757831B9B70D2006B9A2B /* CustoRowFormer */,
-				2AA757861B9B75DE006B9A2B /* CustomCell */,
+				2AA757831B9B70D2006B9A2B /* RowFormers */,
+				2AA757861B9B75DE006B9A2B /* Cells */,
 				2AE75CD31B7B9E89006C53F2 /* Views */,
 				2A8900A21B71CCC800101657 /* Helpers */,
 				2A0E63561B600AD30083BC65 /* AppDelegate.swift */,
@@ -189,19 +189,21 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		2AA757831B9B70D2006B9A2B /* CustoRowFormer */ = {
+		2AA757831B9B70D2006B9A2B /* RowFormers */ = {
 			isa = PBXGroup;
 			children = (
 				2AA757841B9B70EF006B9A2B /* DemoInlineSliderRowFomer.swift */,
 			);
+			name = RowFormers;
 			path = CustoRowFormer;
 			sourceTree = "<group>";
 		};
-		2AA757861B9B75DE006B9A2B /* CustomCell */ = {
+		2AA757861B9B75DE006B9A2B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
 				2AA757871B9B75F5006B9A2B /* DemoInlineSliderCell.swift */,
 			);
+			name = Cells;
 			path = CustomCell;
 			sourceTree = "<group>";
 		};

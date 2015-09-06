@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerPickerCell: UITableViewCell, PickerFormableRow {
+public class FormerPickerCell: FormerCell, PickerFormableRow {
     
     private weak var pickerView: UIPickerView!
     
@@ -17,24 +17,9 @@ public class FormerPickerCell: UITableViewCell, PickerFormableRow {
         return self.pickerView
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
-    
-    required public init?(coder aDecoder: NSCoder) {
+    public override func configureViews() {
         
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let pickerView = UIPickerView()
         pickerView.translatesAutoresizingMaskIntoConstraints = false

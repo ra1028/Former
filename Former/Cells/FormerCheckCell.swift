@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerCheckCell: UITableViewCell, CheckFormableRow {
+public class FormerCheckCell: FormerCell, CheckFormableRow {
     
     private weak var titleLabel: UILabel!
     
@@ -17,24 +17,9 @@ public class FormerCheckCell: UITableViewCell, CheckFormableRow {
         return self.titleLabel
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
-    
-    required public init?(coder aDecoder: NSCoder) {
+    public override func configureViews() {
         
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -16,16 +16,8 @@ public protocol FormableRow {
 public protocol InlineRow {
     
     var inlineRowFormer: RowFormer { get }
-    
-    // Optional
     func editingDidBegin()
     func editingDidEnd()
-}
-
-public extension InlineRow {
-    
-    func editingDidBegin() {}
-    func editingDidEnd() {}
 }
 
 public class RowFormer: NSObject {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerSegmentedCell: UITableViewCell, SegmentedFormableRow {
+public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
     
     public let observer = FormerObserver()
     
@@ -25,24 +25,9 @@ public class FormerSegmentedCell: UITableViewCell, SegmentedFormableRow {
         return self.segmentedControl
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
-    
-    required public init?(coder aDecoder: NSCoder) {
+    public override func configureViews() {
         
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

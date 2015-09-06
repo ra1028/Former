@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerInlineDatePickerCell: UITableViewCell, InlineDatePickerFormableRow {
+public class FormerInlineDatePickerCell: FormerCell, InlineDatePickerFormableRow {
     
     private var titleLabel: UILabel!
     private var displayLabel: UILabel!
@@ -24,28 +24,17 @@ public class FormerInlineDatePickerCell: UITableViewCell, InlineDatePickerFormab
         return self.displayLabel
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func configureWithRowFormer(rowFormer: RowFormer) {
+        
+        super.configureWithRowFormer(rowFormer)
         
         self.displayLabelRightConst.constant =
             (self.accessoryType == .None && self.accessoryView == nil) ? -15.0 : 0
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public override func configureViews() {
         
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)

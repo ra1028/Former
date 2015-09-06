@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerSliderCell: UITableViewCell, SliderFormableRow {
+public class FormerSliderCell: FormerCell, SliderFormableRow {
     
     public let observer = FormerObserver()
     
@@ -31,24 +31,9 @@ public class FormerSliderCell: UITableViewCell, SliderFormableRow {
         return self.slider
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
-    
-    required public init?(coder aDecoder: NSCoder) {
-        
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
+    public override func configureViews() {
 
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

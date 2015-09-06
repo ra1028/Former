@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UITableViewHeaderFooterView {
+internal extension UITableViewHeaderFooterView {
     
     private static var className: String {
         

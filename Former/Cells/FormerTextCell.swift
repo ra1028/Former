@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerTextCell: UITableViewCell, TextFormableRow {
+public class FormerTextCell: FormerCell, TextFormableRow {
     
     private var titleLabel: UILabel!
     private var subTextLabel: UILabel!
@@ -24,27 +24,15 @@ public class FormerTextCell: UITableViewCell, TextFormableRow {
         return self.subTextLabel
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func configureWithRowFormer(rowFormer: RowFormer) {
         
+        super.configureWithRowFormer(rowFormer)
         self.subTextLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    public override func configureViews() {
         
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)

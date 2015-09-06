@@ -10,13 +10,7 @@ import UIKit
 
 public protocol FormableView {
     
-    // Optional
     func configureWithViewFormer(viewFormer: ViewFormer)
-}
-
-extension FormableView {
-    
-    public func configureWithViewFormer(viewFormer: ViewFormer) {}
 }
 
 public class ViewFormer {

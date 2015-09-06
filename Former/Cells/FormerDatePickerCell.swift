@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerDatePickerCell: UITableViewCell, DatePickerFormableRow {
+public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
     
     public let observer = FormerObserver()
     
@@ -19,24 +19,9 @@ public class FormerDatePickerCell: UITableViewCell, DatePickerFormableRow {
         return self.datePicker
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
-    
-    required public init?(coder aDecoder: NSCoder) {
+    public override func configureViews() {
         
-        super.init(coder: aDecoder)
-        self.configureViews()
-    }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
-    }
-    
-    private func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        super.configureViews()
         
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false
