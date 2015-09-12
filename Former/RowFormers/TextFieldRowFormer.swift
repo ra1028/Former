@@ -72,20 +72,26 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
             textField.text = self.text
             textField.placeholder = self.placeholder
             textField.font =? self.font
-            textField.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textField.textAlignment =? self.textAlignment
             textField.clearButtonMode =? self.clearButtonMode
             textField.keyboardType =? self.keyboardType
             textField.returnKeyType =? self.returnKeyType
-            textField.inputView = self.inputView
-            textField.inputAccessoryView = self.inputAccessoryView
+            textField.inputView =? self.inputView
+            textField.inputAccessoryView =? self.inputAccessoryView
             textField.userInteractionEnabled = false
             textField.delegate = self
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            titleLabel?.text =? self.title
             titleLabel?.font =? self.font
+            
+            if self.enabled {
+                textField.textColor =? self.textColor
+                titleLabel?.textColor =? self.titleColor
+            } else {
+                textField.textColor =? self.textDisabledColor
+                titleLabel?.textColor =? self.titleDisabledColor
+            }
             
             row.observer.setTargetRowFormer(self,
                 control: textField,

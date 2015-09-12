@@ -52,17 +52,23 @@ public class TextRowFormer: RowFormer {
         if let row = self.cell as? TextFormableRow {
             
             let textLabel = row.formerTextLabel()
-            textLabel?.text = self.text
+            textLabel?.text =? self.text
             textLabel?.font =? self.font
-            textLabel?.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textLabel?.textAlignment =? self.textAlignment
             textLabel?.numberOfLines =? self.numberOfLines
             
             let subTextLabel = row.formerSubTextLabel()
-            subTextLabel?.text = self.subText
+            subTextLabel?.text =? self.subText
             subTextLabel?.font =? self.subTextFont
             subTextLabel?.textAlignment =? self.subTextAlignment
-            subTextLabel?.textColor = self.enabled ? self.subTextColor : self.subTextDisabledColor
+            
+            if self.enabled {
+                textLabel?.textColor =? self.textColor
+                subTextLabel?.textColor =? self.subTextColor
+            } else {
+                textLabel?.textColor =? self.textDisabledColor
+                subTextLabel?.textColor =? self.subTextDisabledColor
+            }
         }
     }
 }

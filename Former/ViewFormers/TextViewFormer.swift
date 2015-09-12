@@ -38,7 +38,7 @@ public class TextViewFormer: ViewFormer {
         
         if let view = self.view as? TextFormableView {
             let textLabel = view.formerTextLabel()
-            textLabel?.text = self.text
+            textLabel?.text =? self.text
             textLabel?.font =? self.font
             textLabel?.textColor =? self.textColor
             textLabel?.textAlignment =? self.textAlignment

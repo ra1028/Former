@@ -54,11 +54,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2AC381121BA44381009C7EFF /* PBXContainerItemProxy */ = {
+		2A7D956E1BA4528900F0B005 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2AC381081BA44380009C7EFF /* Former-Demo.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2AC380E91BA44366009C7EFF;
+			remoteGlobalIDString = 2A7D956B1BA4528700F0B005;
 			remoteInfo = "Former-Demo";
 		};
 /* End PBXContainerItemProxy section */
@@ -109,7 +109,7 @@
 		2A65661D1BA4427D00C78E81 /* FormerHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerHeaderFooterView.swift; sourceTree = "<group>"; };
 		2A65661E1BA4427D00C78E81 /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
 		2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
-		2AC380DE1BA4430D009C7EFF /* Former.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Former.framework; path = "/Users/Ryo/Programming/iOS/Projects/Former/build/Debug-iphoneos/Former.framework"; sourceTree = "<absolute>"; };
+		2A7D956C1BA4528700F0B005 /* Former.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Former.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AC381081BA44380009C7EFF /* Former-Demo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Former-Demo.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +129,7 @@
 			children = (
 				2A65655D1BA43E9100C78E81 /* Former */,
 				2AC380FE1BA44380009C7EFF /* Former-Demo */,
+				2A7D956C1BA4528700F0B005 /* Former.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -203,12 +204,12 @@
 		2A65660A1BA4427D00C78E81 /* RowFormers */ = {
 			isa = PBXGroup;
 			children = (
+				2A6566101BA4427D00C78E81 /* RowFormer.swift */,
 				2A65660B1BA4427D00C78E81 /* CheckRowFormer.swift */,
 				2A65660C1BA4427D00C78E81 /* DatePickerRowFormer.swift */,
 				2A65660D1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift */,
 				2A65660E1BA4427D00C78E81 /* InlinePickerRowFormer.swift */,
 				2A65660F1BA4427D00C78E81 /* PickerRowFormer.swift */,
-				2A6566101BA4427D00C78E81 /* RowFormer.swift */,
 				2A6566111BA4427D00C78E81 /* SegmentedRowFormer.swift */,
 				2A6566121BA4427D00C78E81 /* SelectorDatePickerRowFormer.swift */,
 				2A6566131BA4427D00C78E81 /* SelectorPickerRowFormer.swift */,
@@ -251,7 +252,7 @@
 		2AC381091BA44380009C7EFF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2AC381131BA44381009C7EFF /* Former-Demo.app */,
+				2A7D956F1BA4528900F0B005 /* Former-Demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,7 +286,7 @@
 			);
 			name = Former;
 			productName = Former;
-			productReference = 2AC380DE1BA4430D009C7EFF /* Former.framework */;
+			productReference = 2A7D956C1BA4528700F0B005 /* Former.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -327,11 +328,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2AC381131BA44381009C7EFF /* Former-Demo.app */ = {
+		2A7D956F1BA4528900F0B005 /* Former-Demo.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = "Former-Demo.app";
-			remoteRef = 2AC381121BA44381009C7EFF /* PBXContainerItemProxy */;
+			remoteRef = 2A7D956E1BA4528900F0B005 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

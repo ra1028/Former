@@ -74,13 +74,16 @@ public class RowFormer: NSObject {
         
         if let cell = self.cell {
             
-            cell.backgroundColor = self.backgroundColor
+            cell.backgroundColor =? self.backgroundColor
             cell.separatorInset =? self.separatorInsets
-            cell.selectionStyle = self.enabled ?
-                (self.selectionStyle ?? .Default) :
-                UITableViewCellSelectionStyle.None
             cell.accessoryType =? self.accessoryType
             cell.tintColor =? self.tintColor
+            
+            if self.enabled {
+                cell.selectionStyle =? self.selectionStyle
+            } else {
+                cell.selectionStyle =? UITableViewCellSelectionStyle.None
+            }
             
             if let row = cell as? FormableRow {
                 row.configureWithRowFormer(self)

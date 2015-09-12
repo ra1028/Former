@@ -41,7 +41,7 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     
     public var displayTextFont: UIFont?
     public var displayTextColor: UIColor?
-    public var displayTextDisabledColor: UIColor?
+    public var displayDisabledColor: UIColor?
     public var displayTextAlignment: NSTextAlignment?
     
     private lazy var inputView: UIPickerView = {
@@ -64,7 +64,7 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
         super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
-        self.displayTextDisabledColor = .lightGrayColor()
+        self.displayDisabledColor = .lightGrayColor()
     }
     
     public override func update() {
@@ -87,11 +87,19 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
             titleLabel?.textAlignment =? self.titleAlignment
             titleLabel?.numberOfLines =? self.titleNumberOfLines
             
-            let displayTextLabel = row.formerDisplayLabel()
-            displayTextLabel?.text = self.valueTitles[self.selectedRow]
-            displayTextLabel?.font =? self.displayTextFont
-            displayTextLabel?.textAlignment =? self.displayTextAlignment
-            displayTextLabel?.textColor = self.enabled ? self.displayTextColor : self.displayTextDisabledColor
+            let displayLabel = row.formerDisplayLabel()
+            displayLabel?.text = self.valueTitles[self.selectedRow]
+            displayLabel?.font =? self.displayTextFont
+            displayLabel?.textAlignment =? self.displayTextAlignment
+            displayLabel?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledColor
+            
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+                displayLabel?.textColor =? self.displayTextColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+                displayLabel?.textColor =? self.displayDisabledColor
+            }
         }
     }
     

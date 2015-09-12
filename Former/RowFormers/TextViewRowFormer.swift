@@ -71,22 +71,18 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
             
             let textView = row.formerTextView()
             textView.delegate = self
-            textView.text = self.text
+            textView.text =? self.text
             textView.font =? self.font
-            textView.textColor = self.enabled ? self.textColor : self.textDisabledColor
             textView.textAlignment =? self.textAlignment
             textView.keyboardType =? self.keyboardType
             textView.returnKeyType =? self.returnKeyType
-            textView.inputView = self.inputView
-            textView.inputAccessoryView = self.inputAccessoryView
+            textView.inputView =? self.inputView
+            textView.inputAccessoryView =? self.inputAccessoryView
             textView.userInteractionEnabled = false
             
             let titleLabel = row.formerTitleLabel()
             titleLabel?.text = self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ?
-                (self.isEditing ? self.titleEditingColor : self.titleColor) :
-                self.titleDisabledColor
             
             if self.placeholderLabel?.superview !== textView {
                 self.placeholderLabel?.removeFromSuperview()
@@ -113,10 +109,22 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
                 ]
                 textView.addConstraints(constraints.flatMap { $0 })
             }
-            self.placeholderLabel?.text = self.placeholder
+            self.placeholderLabel?.text =? self.placeholder
             self.placeholderLabel?.font =? self.placeholderFont
             self.placeholderLabel?.textAlignment =? self.textAlignment
             self.updatePlaceholderColor(textView.text)
+            
+            if self.enabled {
+                if self.isEditing {
+                    titleLabel?.textColor =? self.titleEditingColor
+                } else {
+                    titleLabel?.textColor =? self.titleColor
+                }
+                textView.textColor =? self.textColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+                textView.textColor =? self.textDisabledColor
+            }
         }
     }
     
@@ -171,8 +179,14 @@ extension TextViewRowFormer: UITextViewDelegate {
         
         if let row = self.cell as? TextViewFormableRow {
             self.isEditing = false
-            row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            let titleLabel = row.formerTitleLabel()
             row.formerTextView().userInteractionEnabled = false
+            
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+            }
         }
     }
 }

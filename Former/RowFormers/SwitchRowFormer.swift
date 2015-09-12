@@ -65,9 +65,14 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
             switchButton.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
+            titleLabel?.text =? self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+            }
             
             row.observer.setTargetRowFormer(self,
                 control: switchButton,

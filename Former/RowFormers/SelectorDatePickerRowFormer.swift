@@ -48,7 +48,7 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
     
     public var displayTextFont: UIFont?
     public var displayTextColor: UIColor?
-    public var displayTextDisabledColor: UIColor?
+    public var displayDisabledColor: UIColor?
     public var displayTextAlignment: NSTextAlignment?
     
     deinit {
@@ -74,7 +74,7 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
         super.initializeRowFomer()
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
-        self.displayTextDisabledColor = .lightGrayColor()
+        self.displayDisabledColor = .lightGrayColor()
     }
     
     public override func update() {
@@ -98,17 +98,23 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
             row.selectorAccessoryView = self.inputAccessoryView
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
+            titleLabel?.text =? self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             titleLabel?.textAlignment =? self.titleAlignment
             titleLabel?.numberOfLines =? self.titleNumberOfLines
             
-            let displayTextLabel = row.formerDisplayLabel()
+            let displayLabel = row.formerDisplayLabel()
             displayTextLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
-            displayTextLabel?.font =? self.displayTextFont
-            displayTextLabel?.textAlignment =? self.displayTextAlignment
-            displayTextLabel?.textColor = self.enabled ? self.displayTextColor : self.displayTextDisabledColor
+            displayLabel?.font =? self.displayTextFont
+            displayLabel?.textAlignment =? self.displayTextAlignment
+            
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+                displayLabel?.textColor =? self.displayTextColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+                displayLabel?.textColor =? self.displayDisabledColor
+            }
         }
     }
     

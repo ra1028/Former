@@ -78,14 +78,20 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
             slider.enabled = self.enabled
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
+            titleLabel?.text =? self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
             
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
             displayLabel?.font =? self.displayFont
-            displayLabel?.textColor = self.enabled ? self.displayColor : self.displayDisabledColor
+            
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+                displayLabel?.textColor =? self.displayColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+                displayLabel?.textColor =? self.displayDisabledColor
+            }
             
             row.observer.setTargetRowFormer(self,
                 control: slider,

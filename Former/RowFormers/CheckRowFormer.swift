@@ -47,9 +47,14 @@ public class CheckRowFormer: RowFormer, FormerValidatable {
         
         if let row = self.cell as? CheckFormableRow {
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
+            titleLabel?.text =? self.title
             titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+            } else {
+                titleLabel?.textColor =? self.titleDisabledColor
+            }
         }
     }
     
