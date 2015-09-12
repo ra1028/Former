@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Former
 
 final class CustomExampleViewController: FormerViewController {
     

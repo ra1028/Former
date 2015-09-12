@@ -27,7 +27,7 @@ public protocol FormerValidatable {
 
 public class RowFormer: NSObject {
     
-    final internal weak var former: Former?
+    public internal(set) final weak var former: Former?
     public private(set) final weak var cell: UITableViewCell?
     public internal(set) final var registered = false
     public internal(set) final var isEditing = false

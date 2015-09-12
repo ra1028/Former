@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Former
 
 class DefaultExampleViewController: FormerViewController {
     

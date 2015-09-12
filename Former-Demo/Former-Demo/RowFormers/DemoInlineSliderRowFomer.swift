@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Former
 
 public protocol DemoInlineSliderFormableRow: FormableRow {
     
@@ -61,11 +62,13 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
             
             if let titleLabel = row.formerTitleLabel() {
                 
-                titleLabel.text = self.title
-                titleLabel.font =? self.titleFont
-                titleLabel.textColor = self.enabled ?
-                    self.titleColor :
-                    self.titleDisabledColor
+                self.title.map { titleLabel.text = $0 }
+                self.titleFont.map { titleLabel.font = $0 }
+                if self.enabled {
+                    self.titleColor.map { titleLabel.textColor = $0 }
+                } else {
+                    self.titleDisabledColor.map { titleLabel.textColor = $0 }
+                }
             }
             if let colorDisplayView = row.formerColorDisplayView() {
                 
