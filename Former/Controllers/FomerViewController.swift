@@ -10,7 +10,7 @@ import UIKit
 
 public class FormerViewController: UIViewController {
     
-    public private(set) var tableView: UITableView = UITableView(frame: CGRect.zeroRect, style: .Grouped)
+    public private(set) var tableView: UITableView = UITableView(frame: CGRect.zero, style: .Grouped)
     public lazy var former: Former = {
         
         return Former(tableView: self.tableView)

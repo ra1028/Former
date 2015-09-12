@@ -166,7 +166,7 @@ class DefaultExampleViewController: FormerViewController {
                 { [weak self] in
                     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                     let selector = $1 as! TextRowFormer
-                    options.map { title in
+                    options.forEach { title in
                         sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak selector] _ in
                             selector?.subText = title
                             selector?.update()

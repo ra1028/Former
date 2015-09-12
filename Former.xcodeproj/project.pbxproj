@@ -25,9 +25,7 @@
 		2A65662E1BA4427D00C78E81 /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FD1BA4427D00C78E81 /* FormerTextViewCell.swift */; };
 		2A65662F1BA4427D00C78E81 /* Former.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FF1BA4427D00C78E81 /* Former.swift */; };
 		2A6566301BA4427D00C78E81 /* FormerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566001BA4427D00C78E81 /* FormerObserver.swift */; };
-		2A6566311BA4427D00C78E81 /* FormerValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566011BA4427D00C78E81 /* FormerValidator.swift */; };
 		2A6566321BA4427D00C78E81 /* SectionFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566021BA4427D00C78E81 /* SectionFormer.swift */; };
-		2A6566331BA4427D00C78E81 /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566031BA4427D00C78E81 /* ViewFormer.swift */; };
 		2A6566341BA4427D00C78E81 /* FomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566051BA4427D00C78E81 /* FomerViewController.swift */; };
 		2A6566351BA4427D00C78E81 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566071BA4427D00C78E81 /* Operators.swift */; };
 		2A6566361BA4427D00C78E81 /* UITableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */; };
@@ -51,17 +49,8 @@
 		2A6566481BA4427D00C78E81 /* FormerHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661D1BA4427D00C78E81 /* FormerHeaderFooterView.swift */; };
 		2A6566491BA4427D00C78E81 /* FormerTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661E1BA4427D00C78E81 /* FormerTextFooterView.swift */; };
 		2A65664A1BA4427D00C78E81 /* FormerTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */; };
+		2A7D95711BA466E600F0B005 /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D95701BA466E600F0B005 /* ViewFormer.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		2A7D956E1BA4528900F0B005 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2AC381081BA44380009C7EFF /* Former-Demo.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2A7D956B1BA4528700F0B005;
-			remoteInfo = "Former-Demo";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2A65655E1BA43E9100C78E81 /* Former.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Former.h; sourceTree = "<group>"; };
@@ -83,9 +72,7 @@
 		2A6565FD1BA4427D00C78E81 /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
 		2A6565FF1BA4427D00C78E81 /* Former.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Former.swift; sourceTree = "<group>"; };
 		2A6566001BA4427D00C78E81 /* FormerObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerObserver.swift; sourceTree = "<group>"; };
-		2A6566011BA4427D00C78E81 /* FormerValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerValidator.swift; sourceTree = "<group>"; };
 		2A6566021BA4427D00C78E81 /* SectionFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFormer.swift; sourceTree = "<group>"; };
-		2A6566031BA4427D00C78E81 /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormer.swift; sourceTree = "<group>"; };
 		2A6566051BA4427D00C78E81 /* FomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FomerViewController.swift; sourceTree = "<group>"; };
 		2A6566071BA4427D00C78E81 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
@@ -110,7 +97,7 @@
 		2A65661E1BA4427D00C78E81 /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
 		2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
 		2A7D956C1BA4528700F0B005 /* Former.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Former.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2AC381081BA44380009C7EFF /* Former-Demo.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "Former-Demo.xcodeproj"; sourceTree = "<group>"; };
+		2A7D95701BA466E600F0B005 /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				2A65655D1BA43E9100C78E81 /* Former */,
-				2AC380FE1BA44380009C7EFF /* Former-Demo */,
 				2A7D956C1BA4528700F0B005 /* Former.framework */,
 			);
 			sourceTree = "<group>";
@@ -176,9 +162,7 @@
 			children = (
 				2A6565FF1BA4427D00C78E81 /* Former.swift */,
 				2A6566001BA4427D00C78E81 /* FormerObserver.swift */,
-				2A6566011BA4427D00C78E81 /* FormerValidator.swift */,
 				2A6566021BA4427D00C78E81 /* SectionFormer.swift */,
-				2A6566031BA4427D00C78E81 /* ViewFormer.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -226,6 +210,7 @@
 		2A65661A1BA4427D00C78E81 /* ViewFormers */ = {
 			isa = PBXGroup;
 			children = (
+				2A7D95701BA466E600F0B005 /* ViewFormer.swift */,
 				2A65661B1BA4427D00C78E81 /* TextViewFormer.swift */,
 			);
 			path = ViewFormers;
@@ -239,22 +224,6 @@
 				2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		2AC380FE1BA44380009C7EFF /* Former-Demo */ = {
-			isa = PBXGroup;
-			children = (
-				2AC381081BA44380009C7EFF /* Former-Demo.xcodeproj */,
-			);
-			path = "Former-Demo";
-			sourceTree = "<group>";
-		};
-		2AC381091BA44380009C7EFF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2A7D956F1BA4528900F0B005 /* Former-Demo.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,28 +283,12 @@
 			mainGroup = 2A6565511BA43E9100C78E81;
 			productRefGroup = 2A6565511BA43E9100C78E81;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 2AC381091BA44380009C7EFF /* Products */;
-					ProjectRef = 2AC381081BA44380009C7EFF /* Former-Demo.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				2A65655A1BA43E9100C78E81 /* Former */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		2A7D956F1BA4528900F0B005 /* Former-Demo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Former-Demo.app";
-			remoteRef = 2A7D956E1BA4528900F0B005 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2A6565591BA43E9100C78E81 /* Resources */ = {
@@ -370,7 +323,6 @@
 				2A6566361BA4427D00C78E81 /* UITableViewCellExt.swift in Sources */,
 				2A6566261BA4427D00C78E81 /* FormerSegmentedCell.swift in Sources */,
 				2A6566431BA4427D00C78E81 /* SwitchRowFormer.swift in Sources */,
-				2A6566311BA4427D00C78E81 /* FormerValidator.swift in Sources */,
 				2A6566271BA4427D00C78E81 /* FormerSelectorDatePickerCell.swift in Sources */,
 				2A6566451BA4427D00C78E81 /* TextRowFormer.swift in Sources */,
 				2A6566251BA4427D00C78E81 /* FormerPickerCell.swift in Sources */,
@@ -390,10 +342,10 @@
 				2A6566211BA4427D00C78E81 /* FormerCheckCell.swift in Sources */,
 				2A65663A1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift in Sources */,
 				2A65663E1BA4427D00C78E81 /* SegmentedRowFormer.swift in Sources */,
-				2A6566331BA4427D00C78E81 /* ViewFormer.swift in Sources */,
 				2A6566231BA4427D00C78E81 /* FormerInlineDatePickerCell.swift in Sources */,
 				2A65663D1BA4427D00C78E81 /* RowFormer.swift in Sources */,
 				2A65663B1BA4427D00C78E81 /* InlinePickerRowFormer.swift in Sources */,
+				2A7D95711BA466E600F0B005 /* ViewFormer.swift in Sources */,
 				2A6566221BA4427D00C78E81 /* FormerDatePickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

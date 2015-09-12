@@ -8,19 +8,19 @@
 
 import UIKit
 
-public protocol FormableRow {
+public protocol FormableRow: class {
     
     func configureWithRowFormer(rowFormer: RowFormer)
 }
 
-public protocol InlineRow {
+public protocol InlineRow: class {
     
     var inlineRowFormer: RowFormer { get }
     func editingDidBegin()
     func editingDidEnd()
 }
 
-public protocol FormerValidatable {
+internal protocol FormerValidatable: class {
     
     func validate() -> Bool
 }

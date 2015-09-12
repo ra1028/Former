@@ -62,12 +62,12 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
             
             if let titleLabel = row.formerTitleLabel() {
                 
-                self.title.map { titleLabel.text = $0 }
-                self.titleFont.map { titleLabel.font = $0 }
+                _ = self.title.map { titleLabel.text = $0 }
+                _ = self.titleFont.map { titleLabel.font = $0 }
                 if self.enabled {
-                    self.titleColor.map { titleLabel.textColor = $0 }
+                    _ = self.titleColor.map { titleLabel.textColor = $0 }
                 } else {
-                    self.titleDisabledColor.map { titleLabel.textColor = $0 }
+                    _ = self.titleDisabledColor.map { titleLabel.textColor = $0 }
                 }
             }
             if let colorDisplayView = row.formerColorDisplayView() {

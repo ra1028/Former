@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol FormableView {
+public protocol FormableView: class {
     
     func configureWithViewFormer(viewFormer: ViewFormer)
 }

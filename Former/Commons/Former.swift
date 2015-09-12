@@ -237,7 +237,7 @@ public final class Former: NSObject {
         return true
     }
     
-    /// Validate all RowFormers. Return 'false' RowFormers. So, return empty array iff all 'true'.
+    /// Validate all RowFormers. Return RowFormers that are validate failed. So, return empty array iff all 'true'.
     public func validateAll() -> [RowFormer] {
         
         var invalidRowFormers = [RowFormer]()

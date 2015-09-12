@@ -92,7 +92,7 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
         self.inputView.date = self.date
         self.inputView.backgroundColor = self.pickerBackgroundColor
         
-        if var row = self.cell as? SelectorDatePickerFormableRow {
+        if let row = self.cell as? SelectorDatePickerFormableRow {
             
             row.selectorDatePicker = self.inputView
             row.selectorAccessoryView = self.inputAccessoryView
@@ -104,7 +104,7 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
             titleLabel?.numberOfLines =? self.titleNumberOfLines
             
             let displayLabel = row.formerDisplayLabel()
-            displayTextLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
+            displayLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
             displayLabel?.font =? self.displayTextFont
             displayLabel?.textAlignment =? self.displayTextAlignment
             

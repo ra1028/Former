@@ -22,17 +22,17 @@ assignment
 
 internal func =?<T> (inout lhs: T, rhs: T?) {
     
-    rhs.map { lhs = $0 }
+    _ = rhs.map { lhs = $0 }
 }
 
 internal func =?<T> (inout lhs: T?, rhs: T?) {
     
-    rhs.map { lhs = $0 }
+    _ = rhs.map { lhs = $0 }
 }
 
 internal func =?<T> (inout lhs: T!, rhs: T?) {
     
-    rhs.map { lhs = $0 }
+    _ = rhs.map { lhs = $0 }
 }
 
 internal func ?=<T> (inout lhs: T?, rhs: T) {

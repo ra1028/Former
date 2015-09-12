@@ -75,7 +75,7 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
         self.inputView.showsSelectionIndicator =? self.showsSelectionIndicator
         self.inputView.backgroundColor = self.pickerBackgroundColor
         
-        if var row = self.cell as? SelectorPickerFormableRow {
+        if let row = self.cell as? SelectorPickerFormableRow {
             
             row.selectorPickerView = self.inputView
             row.selectorAccessoryView = self.inputAccessoryView
