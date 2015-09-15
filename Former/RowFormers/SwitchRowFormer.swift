@@ -41,9 +41,9 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
             self.onSwitchChanged = onSwitchChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.titleDisabledColor = .lightGrayColor()
     }
     

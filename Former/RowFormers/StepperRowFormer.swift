@@ -49,9 +49,9 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.titleDisabledColor = .lightGrayColor()
         self.displayColor = .lightGrayColor()

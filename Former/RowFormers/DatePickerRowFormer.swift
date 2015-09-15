@@ -39,9 +39,9 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
             self.onDateChanged = onDateChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.cellHeight = 216.0
         self.selectionStyle = UITableViewCellSelectionStyle.None
     }

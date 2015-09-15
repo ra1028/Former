@@ -52,9 +52,9 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
         self.displayDisabledColor = .lightGrayColor()
@@ -128,7 +128,7 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         
         if let row = self.cell as? InlinePickerFormableRow where self.enabled {
             self.isEditing = true
-            row.formerTitleLabel()?.textColor = self.titleEditingColor
+            row.formerTitleLabel()?.textColor =? self.titleEditingColor
             row.formerDisplayLabel()?.textColor =? self.displayTextEditingColor
         }
     }

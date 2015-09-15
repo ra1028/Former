@@ -27,10 +27,10 @@ public class ViewFormer {
         self.viewType = viewType
         self.registerType = registerType
         
-        self.configureViewFormer()
+        self.initialize()
     }
     
-    public func configureViewFormer() {
+    public func initialize() {
         
         self.backgroundColor = .groupTableViewBackgroundColor()
     }
@@ -39,6 +39,11 @@ public class ViewFormer {
         
         self.view = view
         self.update()
+    }
+    
+    final func purgeView() {
+        
+        self.view = nil
     }
     
     public func update() {

@@ -31,9 +31,9 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.cellHeight = 216.0
         self.selectionStyle = UITableViewCellSelectionStyle.None
     }

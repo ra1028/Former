@@ -59,9 +59,9 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.titleDisabledColor = .lightGrayColor()
         self.displayTextColor = .lightGrayColor()
         self.displayDisabledColor = .lightGrayColor()

@@ -54,9 +54,9 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
             self.onTextChanged = onTextChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.textDisabledColor = .lightGrayColor()
         self.titleDisabledColor = .lightGrayColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None

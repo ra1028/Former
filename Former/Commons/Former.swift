@@ -688,6 +688,12 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let rowFormer = self.rowFormer(indexPath)
+        rowFormer.purgeCell()
+    }
+    
     // for HeaderFooterView
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -728,5 +734,17 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
             viewFormer.viewConfigure(footerView)
         }
         return footerView
+    }
+    
+    public func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        
+        guard let viewFormer = self[section].headerViewFormer else { return }
+        viewFormer.purgeView()
+    }
+    
+    public func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
+        
+        guard let viewFormer = self[section].footerViewFormer else { return }
+        viewFormer.purgeView()
     }
 }

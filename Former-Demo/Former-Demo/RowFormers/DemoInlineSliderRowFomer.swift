@@ -48,9 +48,9 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.titleDisabledColor = .lightGrayColor()
     }
     

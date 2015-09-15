@@ -55,10 +55,10 @@ public class RowFormer: NSObject {
             self.registerType = registerType
             super.init()
             self.onSelected = onSelected
-            self.initializeRowFomer()
+            self.initialize()
     }
     
-    public func initializeRowFomer() {
+    public func initialize() {
         
         self.backgroundColor = .whiteColor()
         self.separatorInsets = UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 0)
@@ -68,6 +68,11 @@ public class RowFormer: NSObject {
         
         self.cell = cell
         self.update()
+    }
+    
+    final func purgeCell() {
+        
+        self.cell = nil
     }
     
     public func update() {

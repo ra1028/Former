@@ -53,9 +53,9 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
             self.textChangedHandler = textChangedHandler
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.textDisabledColor = .lightGrayColor()
         self.titleDisabledColor = .lightGrayColor()
         self.placeholderColor = UIColor(white: 0.8, alpha: 1.0)

@@ -33,9 +33,9 @@ public class CheckRowFormer: RowFormer, FormerValidatable {
             self.onCheckChanged = onCheckChanged
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.titleDisabledColor = .lightGrayColor()
     }
     

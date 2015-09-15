@@ -40,9 +40,9 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
             self.segmentTitles = segmentTitles
     }
     
-    public override func initializeRowFomer() {
+    public override func initialize() {
         
-        super.initializeRowFomer()
+        super.initialize()
         self.titleDisabledColor = .lightGrayColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
     }

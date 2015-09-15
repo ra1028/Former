@@ -26,9 +26,9 @@ public class TextViewFormer: ViewFormer {
         self.text = text
     }
     
-    public override func configureViewFormer() {
+    public override func initialize() {
         
-        super.configureViewFormer()
+        super.initialize()
         self.viewHeight = 30.0
     }
     
