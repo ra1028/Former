@@ -8,19 +8,6 @@
 
 import UIKit
 
-internal extension UITableViewCell {
-    
-    private static var className: String {
-        
-        return NSStringFromClass(self).componentsSeparatedByString(".").last!
-    }
-    
-    static var reuseIdentifier: String {
-        
-        return self.className
-    }
-}
-
 extension UITableViewCell {
     
     // For SelectorRow

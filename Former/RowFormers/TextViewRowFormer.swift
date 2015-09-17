@@ -157,7 +157,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     public func textViewDidChange(textView: UITextView) {
         
         if self.enabled {
-            if #available(iOS 8, *) {} else {
+            if UIDevice.currentDevice().systemVersion.compare("8.0.0", options: .NumericSearch) == .OrderedAscending {
                 textView.scrollRangeToVisible(textView.selectedRange)
             }
             let text = textView.text ?? ""

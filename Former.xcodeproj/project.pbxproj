@@ -29,7 +29,6 @@
 		2A6566341BA4427D00C78E81 /* FomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566051BA4427D00C78E81 /* FomerViewController.swift */; };
 		2A6566351BA4427D00C78E81 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566071BA4427D00C78E81 /* Operators.swift */; };
 		2A6566361BA4427D00C78E81 /* UITableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */; };
-		2A6566371BA4427D00C78E81 /* UITableViewHeaderFooterViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566091BA4427D00C78E81 /* UITableViewHeaderFooterViewExt.swift */; };
 		2A6566381BA4427D00C78E81 /* CheckRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65660B1BA4427D00C78E81 /* CheckRowFormer.swift */; };
 		2A6566391BA4427D00C78E81 /* DatePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65660C1BA4427D00C78E81 /* DatePickerRowFormer.swift */; };
 		2A65663A1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65660D1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift */; };
@@ -76,7 +75,6 @@
 		2A6566051BA4427D00C78E81 /* FomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FomerViewController.swift; sourceTree = "<group>"; };
 		2A6566071BA4427D00C78E81 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
-		2A6566091BA4427D00C78E81 /* UITableViewHeaderFooterViewExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewHeaderFooterViewExt.swift; sourceTree = "<group>"; };
 		2A65660B1BA4427D00C78E81 /* CheckRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckRowFormer.swift; sourceTree = "<group>"; };
 		2A65660C1BA4427D00C78E81 /* DatePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRowFormer.swift; sourceTree = "<group>"; };
 		2A65660D1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineDatePickerRowFormer.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 			children = (
 				2A6566071BA4427D00C78E81 /* Operators.swift */,
 				2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */,
-				2A6566091BA4427D00C78E81 /* UITableViewHeaderFooterViewExt.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -312,7 +309,6 @@
 				2A6566321BA4427D00C78E81 /* SectionFormer.swift in Sources */,
 				2A6566411BA4427D00C78E81 /* SliderRowFormer.swift in Sources */,
 				2A6566291BA4427D00C78E81 /* FormerSliderCell.swift in Sources */,
-				2A6566371BA4427D00C78E81 /* UITableViewHeaderFooterViewExt.swift in Sources */,
 				2A65662F1BA4427D00C78E81 /* Former.swift in Sources */,
 				2A65662D1BA4427D00C78E81 /* FormerTextFieldCell.swift in Sources */,
 				2A65664A1BA4427D00C78E81 /* FormerTextHeaderView.swift in Sources */,
