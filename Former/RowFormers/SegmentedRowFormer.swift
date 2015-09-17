@@ -31,11 +31,11 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
     
     public init<T : UITableViewCell where T : SegmentedFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         segmentTitles: [String],
         onSegmentSelected: ((Int, String) -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onSegmentSelected = onSegmentSelected
             self.segmentTitles = segmentTitles
     }

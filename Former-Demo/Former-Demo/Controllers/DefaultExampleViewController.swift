@@ -16,7 +16,7 @@ class DefaultExampleViewController: FormerViewController {
         return (1...2).map { index -> RowFormer in
             let row = CheckRowFormer(
                 cellType: FormerCheckCell.self,
-                registerType: .Class) { check in
+                instantiateType: .Class) { check in
             }
             row.title = "Check\(index)"
             row.titleColor = .formerColor()
@@ -29,7 +29,7 @@ class DefaultExampleViewController: FormerViewController {
     private lazy var subSectionFormer: SectionFormer = {
         let rowFormer = CheckRowFormer(
             cellType: FormerCheckCell.self,
-            registerType: .Class
+            instantiateType: .Class
         )
         rowFormer.title = "Check3"
         rowFormer.titleColor = .formerColor()
@@ -81,7 +81,7 @@ class DefaultExampleViewController: FormerViewController {
         
         let date = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
-            registerType: .Class
+            instantiateType: .Class
         )
         date.title = "Date"
         date.titleColor = .formerColor()
@@ -95,7 +95,7 @@ class DefaultExampleViewController: FormerViewController {
         
         let switchDateStyle = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
-            registerType: .Class) {
+            instantiateType: .Class) {
                 date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
                 date.datePickerMode = $0 ? .Date : .DateAndTime
                 date.update()
@@ -110,7 +110,7 @@ class DefaultExampleViewController: FormerViewController {
         
         let insertRows = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
+            instantiateType: .Class) { [weak self] in
                 if let sSelf = self {
                     if $0 {
                         sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
@@ -128,7 +128,7 @@ class DefaultExampleViewController: FormerViewController {
         
         let insertSection = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
-            registerType: .Class) { [weak self] in
+            instantiateType: .Class) { [weak self] in
                 if let sSelf = self {
                     if $0 {
                         sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
@@ -149,7 +149,7 @@ class DefaultExampleViewController: FormerViewController {
             
             let selector = TextRowFormer(
                 cellType: FormerTextCell.self,
-                registerType: .Class
+                instantiateType: .Class
             )
             selector.onSelected = [
                 { [weak self] in
@@ -191,7 +191,7 @@ class DefaultExampleViewController: FormerViewController {
         }
         let pickerSelector = SelectorPickerRowFormer(
             cellType: FormerSelectorPickerCell.self,
-            registerType: .Class
+            instantiateType: .Class
         )
         pickerSelector.title = "Picker"
         pickerSelector.titleColor = .formerColor()
@@ -209,7 +209,7 @@ class DefaultExampleViewController: FormerViewController {
         let textFields = (1...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
                 cellType: FormerTextFieldCell.self,
-                registerType: .Class
+                instantiateType: .Class
             )
             input.title = "Field\(index)"
             input.placeholder = "Example"
@@ -225,7 +225,7 @@ class DefaultExampleViewController: FormerViewController {
         
         let picker = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
-            registerType: .Class
+            instantiateType: .Class
         )
         picker.title = "Inline Picker"
         picker.titleColor = .formerColor()
@@ -241,7 +241,7 @@ class DefaultExampleViewController: FormerViewController {
         let createHeader: (String -> ViewFormer) = {
             let header = TextViewFormer(
                 viewType: FormerTextHeaderView.self,
-                registerType: .Class,
+                instantiateType: .Class,
                 text: $0)
             header.textColor = .grayColor()
             header.font = .systemFontOfSize(14.0)
@@ -251,7 +251,7 @@ class DefaultExampleViewController: FormerViewController {
         
         let footer = ViewFormer(
             viewType: FormerHeaderFooterView.self,
-            registerType: .Class
+            instantiateType: .Class
         )
         
         // Create SectionFormers

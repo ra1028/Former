@@ -32,10 +32,10 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
     
     public init<T : UITableViewCell where T : DatePickerFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onDateChanged: (NSDate -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onDateChanged = onDateChanged
     }
     

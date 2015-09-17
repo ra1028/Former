@@ -18,7 +18,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     
     public private(set) var inlineRowFormer: RowFormer = DatePickerRowFormer(
         cellType: FormerDatePickerCell.self,
-        registerType: .Class
+        instantiateType: .Class
     )
     override public var canBecomeEditing: Bool {
         return self.enabled
@@ -52,10 +52,10 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     
     public init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onDateChanged: (NSDate -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onDateChanged = onDateChanged
     }
     

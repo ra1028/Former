@@ -37,7 +37,7 @@ final class TextSelectorViewContoller: FormerViewController {
         let rowFormers = texts.map { text -> TextRowFormer in
             let rowFormer = TextRowFormer(
                 cellType: FormerTextCell.self,
-                registerType: .Class)
+                instantiateType: .Class)
             rowFormer.onSelected = { [weak self] _ in
                 self?.onSelected?(text)
                 self?.navigationController?.popViewControllerAnimated(true)

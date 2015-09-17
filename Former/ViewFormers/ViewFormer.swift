@@ -15,17 +15,16 @@ public protocol FormableView: class {
 
 public class ViewFormer {
     
-    public private(set) final weak var view: UITableViewHeaderFooterView?
-    public internal(set) final var registered: Bool = false
+    public private(set) final var view: UITableViewHeaderFooterView?
     public private(set) var viewType: UITableViewHeaderFooterView.Type
-    public private(set) var registerType: Former.RegisterType
+    public private(set) var instantiateType: Former.InstantiateType
     public var viewHeight: CGFloat = 10.0
     public var backgroundColor: UIColor?
     
-    public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type, registerType: Former.RegisterType) {
+    public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type, instantiateType: Former.InstantiateType) {
         
         self.viewType = viewType
-        self.registerType = registerType
+        self.instantiateType = instantiateType
         
         self.initialize()
     }
@@ -35,15 +34,22 @@ public class ViewFormer {
         self.backgroundColor = .groupTableViewBackgroundColor()
     }
     
-    final func viewConfigure(view: UITableViewHeaderFooterView) {
+    final func viewConfigure() {
         
-        self.view = view
+        if self.view == nil {
+            switch self.instantiateType {
+            case .Class:
+                self.view = self.viewType.init(reuseIdentifier: nil)
+            case .Nib(nibName: let nibName, bundle: let bundle):
+                let bundle = bundle ?? NSBundle.mainBundle()
+                self.view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+                assert(self.view != nil, "Failed to load header footer view \(nibName) from nib.")
+            }
+        }
+        if let formableView = self.view as? FormableView {
+            formableView.configureWithViewFormer(self)
+        }
         self.update()
-    }
-    
-    final func purgeView() {
-        
-        self.view = nil
     }
     
     public func update() {

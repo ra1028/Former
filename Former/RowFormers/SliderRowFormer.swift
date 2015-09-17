@@ -40,10 +40,10 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     
     public init<T : UITableViewCell where T : SliderFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onValueChanged: (Float -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onValueChanged = onValueChanged
     }
     

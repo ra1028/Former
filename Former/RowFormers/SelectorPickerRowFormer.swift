@@ -53,9 +53,9 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     
     public init<T: UITableViewCell where T: SelectorPickerFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onValueChanged: ((Int, String) -> Void)? = nil) {
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onValueChanged = onValueChanged
     }
     

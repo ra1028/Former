@@ -31,9 +31,9 @@ public class TextRowFormer: RowFormer {
     
     public init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         text: String? = nil) {
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.text = text
     }
     

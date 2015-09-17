@@ -49,7 +49,7 @@ final class TopViewContoller: FormerViewController {
         ]
         
         let createMenu: ((String, (() -> Void)?) -> TextRowFormer) = { text, onSelected in
-            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, registerType: .Class)
+            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, instantiateType: .Class)
             rowFormer.onSelected = { _ in onSelected?() }
             rowFormer.text = text
             rowFormer.textColor = .formerColor()
@@ -61,7 +61,7 @@ final class TopViewContoller: FormerViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> TextViewFormer) = {
-            let header = TextViewFormer(viewType: FormerTextHeaderView.self, registerType: .Class, text: $0)
+            let header = TextViewFormer(viewType: FormerTextHeaderView.self, instantiateType: .Class, text: $0)
             header.textColor = .grayColor()
             header.font = .systemFontOfSize(14.0)
             header.viewHeight = 40.0
@@ -69,7 +69,7 @@ final class TopViewContoller: FormerViewController {
         }
         
         let createFooter: (String -> TextViewFormer) = {
-            let footer = TextViewFormer(viewType: FormerTextFooterView.self, registerType: .Class, text: $0)
+            let footer = TextViewFormer(viewType: FormerTextFooterView.self, instantiateType: .Class, text: $0)
             footer.textColor = .grayColor()
             footer.font = .systemFontOfSize(14.0)
             footer.viewHeight = 100.0

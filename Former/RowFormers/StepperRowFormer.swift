@@ -42,10 +42,10 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
     
     public init<T : UITableViewCell where T : StepperFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onValueChanged: (Double -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onValueChanged = onValueChanged
     }
     

@@ -34,10 +34,10 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
     
     public init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onSwitchChanged: (Bool -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onSwitchChanged = onSwitchChanged
     }
     

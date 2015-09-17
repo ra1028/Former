@@ -19,7 +19,7 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
     
     public private(set) var inlineRowFormer: RowFormer = SliderRowFormer(
         cellType: FormerSliderCell.self,
-        registerType: .Class
+        instantiateType: .Class
     )
     override public var canBecomeEditing: Bool {
         return self.enabled
@@ -41,10 +41,10 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
     
     public init<T : UITableViewCell where T : DemoInlineSliderFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onValueChanged: (Float -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onValueChanged = onValueChanged
     }
     

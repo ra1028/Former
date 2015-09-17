@@ -18,7 +18,7 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
     public private(set) var inlineRowFormer: RowFormer = PickerRowFormer(
         cellType: FormerPickerCell.self,
-        registerType: .Class
+        instantiateType: .Class
     )
     override public var canBecomeEditing: Bool {
         return self.enabled
@@ -45,10 +45,10 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
     public init<T : UITableViewCell where T : InlinePickerFormableRow>(
         cellType: T.Type,
-        registerType: Former.RegisterType,
+        instantiateType: Former.InstantiateType,
         onValueChanged: ((Int, String) -> Void)? = nil) {
             
-            super.init(cellType: cellType, registerType: registerType)
+            super.init(cellType: cellType, instantiateType: instantiateType)
             self.onValueChanged = onValueChanged
     }
     

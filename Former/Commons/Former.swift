@@ -13,11 +13,11 @@ public final class Former: NSObject {
     // MARK: Public
     
     /**
-    RegisterType is type of registering Cell or HeaderFooterView.
-    Choose 'RegisterType.Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.
-    Or if without xib, choose 'RegisterType.Class'.
+    InstantiateType is type of instantiate of Cell or HeaderFooterView.
+    Choose 'InstantiateType.Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.
+    Or if without xib, choose 'InstantiateType.Class'.
     **/
-    public enum RegisterType {
+    public enum InstantiateType {
         
         case Class
         case Nib(nibName: String, bundle: NSBundle?)
@@ -53,9 +53,6 @@ public final class Former: NSObject {
     /// Call when tableView had begin dragging.
     public var onBeginDragging: ((scrollView: UIScrollView) -> Void)?
     
-    /// If set 'true', automatically register cell and headerFooterView.
-    public var autoRegisterEnabled = true
-    
     public init(tableView: UITableView) {
         
         super.init()
@@ -77,48 +74,6 @@ public final class Former: NSObject {
     public subscript(range: Range<Int>) -> [SectionFormer] {
         
         return Array<SectionFormer>(self.sectionFormers[range])
-    }
-    
-    /// To register Cell from class. Use if you set 'false' to autoRegisterEnabled.
-    public func register(cellType type: UITableViewCell.Type, registerType: RegisterType) -> Self {
-        
-        switch registerType {
-            
-        case .Nib(let nibName, let bundle):
-            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forCellReuseIdentifier: type.reuseIdentifier)
-        case .Class:
-            self.tableView?.registerClass(type, forCellReuseIdentifier: type.reuseIdentifier)
-        }
-        return self
-    }
-    
-    /// To register HeaderFooterView from class. Use if you set 'false' to autoRegisterEnabled.
-    public func register(viewType type: UITableViewHeaderFooterView.Type, registerType: RegisterType) -> Self {
-        
-        switch registerType {
-            
-        case .Nib(let nibName, let bundle):
-            self.tableView?.registerNib(UINib(nibName: nibName, bundle: bundle), forHeaderFooterViewReuseIdentifier: type.reuseIdentifier)
-        case .Class:
-            self.tableView?.registerClass(type, forHeaderFooterViewReuseIdentifier: type.reuseIdentifier)
-        }
-        return self
-    }
-    
-    /// To register Cell from RowFormer. Use if you set 'false' to autoRegisterEnabled.
-    public func register(rowFormer rowFormer: RowFormer) -> Self {
-        
-        if rowFormer.registered { return self }
-        rowFormer.registered = true
-        return self.register(cellType: rowFormer.cellType, registerType: rowFormer.registerType)
-    }
-    
-    /// To register HeaderFooterView from ViewFormer. Use if you set 'false' to autoRegisterEnabled.
-    public func register(viewFormer viewFormer: ViewFormer) -> Self {
-        
-        if viewFormer.registered { return self }
-        viewFormer.registered = true
-        return self.register(viewType: viewFormer.viewType, registerType: viewFormer.registerType)
     }
     
     /// To find RowFormer from indexPath.
@@ -674,24 +629,9 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         let rowFormer = self.rowFormer(indexPath)
-        if self.autoRegisterEnabled { self.register(rowFormer: rowFormer) }
-        let cellType = rowFormer.cellType
-        let cell = tableView.dequeueReusableCellWithIdentifier(
-            cellType.reuseIdentifier,
-            forIndexPath: indexPath
-        )
-        if let formableRow = cell as? FormableRow {
-            formableRow.configureWithRowFormer(rowFormer)
-        }
         rowFormer.former ?= self
-        rowFormer.cellConfigure(cell)
-        return cell
-    }
-    
-    public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let rowFormer = self.rowFormer(indexPath)
-        rowFormer.purgeCell()
+        rowFormer.cellConfigure()
+        return rowFormer.cell!
     }
     
     // for HeaderFooterView
@@ -709,42 +649,14 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         guard let viewFormer = self[section].headerViewFormer else { return nil }
-        if self.autoRegisterEnabled { self.register(viewFormer: viewFormer) }
-        let viewType = viewFormer.viewType
-        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(viewType.reuseIdentifier)
-        if let formableHeaderView = headerView as? FormableView {
-            formableHeaderView.configureWithViewFormer(viewFormer)
-        }
-        if let headerView = headerView {
-            viewFormer.viewConfigure(headerView)
-        }
-        return headerView
+        viewFormer.viewConfigure()
+        return viewFormer.view
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         guard let viewFormer = self[section].footerViewFormer else { return nil }
-        if self.autoRegisterEnabled { self.register(viewFormer: viewFormer) }
-        let viewType = viewFormer.viewType
-        let footerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier(viewType.reuseIdentifier)
-        if let formableFooterView = footerView as? FormableView {
-            formableFooterView.configureWithViewFormer(viewFormer)
-        }
-        if let footerView = footerView {
-            viewFormer.viewConfigure(footerView)
-        }
-        return footerView
-    }
-    
-    public func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-        
-        guard let viewFormer = self[section].headerViewFormer else { return }
-        viewFormer.purgeView()
-    }
-    
-    public func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
-        
-        guard let viewFormer = self[section].footerViewFormer else { return }
-        viewFormer.purgeView()
+        viewFormer.viewConfigure()
+        return viewFormer.view
     }
 }

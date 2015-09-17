@@ -25,7 +25,7 @@ final class CustomExampleViewController: FormerViewController {
         
         let sliderRow = DemoInlineSliderRowFormer(
             cellType: DemoDemoInlineSliderCell.self,
-            registerType: .Class
+            instantiateType: .Class
         )
         sliderRow.title = "Inline Slider"
         sliderRow.titleColor = .formerColor()
@@ -42,7 +42,7 @@ final class CustomExampleViewController: FormerViewController {
         let createHeader: (String -> ViewFormer) = {
             let header = TextViewFormer(
                 viewType: FormerTextHeaderView.self,
-                registerType: .Class,
+                instantiateType: .Class,
                 text: $0)
             header.textColor = .grayColor()
             header.font = .systemFontOfSize(14.0)

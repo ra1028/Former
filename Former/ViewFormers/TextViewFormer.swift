@@ -20,9 +20,9 @@ public class TextViewFormer: ViewFormer {
     public var textColor: UIColor?
     public var textAlignment: NSTextAlignment?
     
-    public init<T: UITableViewHeaderFooterView where T: TextFormableView>(viewType: T.Type, registerType: Former.RegisterType, text: String? = nil) {
+    public init<T: UITableViewHeaderFooterView where T: TextFormableView>(viewType: T.Type, instantiateType: Former.InstantiateType, text: String? = nil) {
         
-        super.init(viewType: viewType, registerType: registerType)
+        super.init(viewType: viewType, instantiateType: instantiateType)
         self.text = text
     }
     
