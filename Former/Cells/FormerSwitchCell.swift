@@ -12,8 +12,8 @@ public class FormerSwitchCell: FormerCell, SwitchFormableRow {
     
     public let observer = FormerObserver()
     
-    private weak var titleLabel: UILabel!
-    private weak var switchButton: UISwitch!
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var switchButton: UISwitch!
     
     public func formerTitleLabel() -> UILabel? {
         

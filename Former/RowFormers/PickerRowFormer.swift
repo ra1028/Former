@@ -20,7 +20,6 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
-    public var showsSelectionIndicator: Bool?
     
     public init<T : UITableViewCell where T : PickerFormableRow>(
         cellType: T.Type,
@@ -35,7 +34,6 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
         
         super.initialize()
         self.cellHeight = 216.0
-        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     deinit {
@@ -51,13 +49,14 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? PickerFormableRow {
             
             let picker = row.formerPickerView()
             picker.delegate = self
             picker.dataSource = self
             picker.selectRow(self.selectedRow, inComponent: 0, animated: false)
-            picker.showsSelectionIndicator =? self.showsSelectionIndicator
             picker.userInteractionEnabled = self.enabled
             picker.alpha = self.enabled ? 1.0 : 0.5
         }

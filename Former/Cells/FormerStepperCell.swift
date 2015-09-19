@@ -12,9 +12,9 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
     
     public let observer = FormerObserver()
     
-    private weak var titleLabel: UILabel!
-    private weak var displayLabel: UILabel!
-    private weak var stepper: UIStepper!
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var displayLabel: UILabel!
+    public private(set) weak var stepper: UIStepper!
     
     public func formerTitleLabel() -> UILabel? {
         

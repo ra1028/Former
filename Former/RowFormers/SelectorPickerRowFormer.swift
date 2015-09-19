@@ -26,23 +26,15 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     public var onValidate: ((Int, String) -> Bool)?
     
     public var onValueChanged: ((Int, String) -> Void)?
+    public var inputViewUpdate: (UIPickerView -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
-    public var showsSelectionIndicator: Bool?
-    public var pickerBackgroundColor: UIColor?
     public var inputAccessoryView: UIView?
-    
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
-    public var titleAlignment: NSTextAlignment?
-    public var titleNumberOfLines: Int?
-    
-    public var displayTextFont: UIFont?
-    public var displayTextColor: UIColor?
-    public var displayDisabledColor: UIColor?
-    public var displayTextAlignment: NSTextAlignment?
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var displayDisabledColor: UIColor? = .lightGrayColor()
+
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
     
     private lazy var inputView: UIPickerView = {
         let picker = UIPickerView()
@@ -59,21 +51,12 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-        self.displayTextColor = .lightGrayColor()
-        self.displayDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
         
+        self.inputViewUpdate?(self.inputView)
         self.inputView.selectRow(self.selectedRow, inComponent: 0, animated: false)
-        self.inputView.showsSelectionIndicator =? self.showsSelectionIndicator
-        self.inputView.backgroundColor = self.pickerBackgroundColor
         
         if let row = self.cell as? SelectorPickerFormableRow {
             
@@ -81,24 +64,19 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
             row.selectorAccessoryView = self.inputAccessoryView
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
-            titleLabel?.font =? self.titleFont
-            titleLabel?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
-            titleLabel?.textAlignment =? self.titleAlignment
-            titleLabel?.numberOfLines =? self.titleNumberOfLines
-            
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.valueTitles[self.selectedRow]
-            displayLabel?.font =? self.displayTextFont
-            displayLabel?.textAlignment =? self.displayTextAlignment
-            displayLabel?.textColor = self.enabled ? self.displayTextColor : self.displayDisabledColor
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
                 displayLabel?.textColor =? self.displayTextColor
+                self.titleColor = nil
+                self.displayTextColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
         }
     }

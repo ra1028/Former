@@ -17,17 +17,11 @@ public protocol TextFormableRow: FormableRow {
 public class TextRowFormer: RowFormer {
     
     public var text: String?
-    public var font: UIFont?
-    public var textColor: UIColor?
-    public var textDisabledColor: UIColor?
-    public var textAlignment: NSTextAlignment?
-    public var numberOfLines: Int?
+    public var textDisabledColor: UIColor? = .lightGrayColor()
+    public var subTextDisabledColor: UIColor? = .lightGrayColor()
     
-    public var subText: String?
-    public var subTextFont: UIFont?
-    public var subTextColor: UIColor?
-    public var subTextAlignment: NSTextAlignment?
-    public var subTextDisabledColor: UIColor?
+    private var textColor: UIColor?
+    private var subTextColor: UIColor?
     
     public init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
@@ -37,14 +31,6 @@ public class TextRowFormer: RowFormer {
             self.text = text
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.textDisabledColor = .lightGrayColor()
-        self.subTextColor = .lightGrayColor()
-        self.subTextDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
@@ -52,22 +38,20 @@ public class TextRowFormer: RowFormer {
         if let row = self.cell as? TextFormableRow {
             
             let textLabel = row.formerTextLabel()
-            textLabel?.text =? self.text
-            textLabel?.font =? self.font
-            textLabel?.textAlignment =? self.textAlignment
-            textLabel?.numberOfLines =? self.numberOfLines
-            
             let subTextLabel = row.formerSubTextLabel()
-            subTextLabel?.text =? self.subText
-            subTextLabel?.font =? self.subTextFont
-            subTextLabel?.textAlignment =? self.subTextAlignment
+            
+            textLabel?.text = self.text
             
             if self.enabled {
                 textLabel?.textColor =? self.textColor
                 subTextLabel?.textColor =? self.subTextColor
+                self.textColor = nil
+                self.subTextColor = nil
             } else {
-                textLabel?.textColor =? self.textDisabledColor
-                subTextLabel?.textColor =? self.subTextDisabledColor
+                self.textColor ?= textLabel?.textColor
+                self.subTextColor ?= textLabel?.textColor
+                textLabel?.textColor = self.textDisabledColor
+                subTextLabel?.textColor = self.subTextDisabledColor
             }
         }
     }

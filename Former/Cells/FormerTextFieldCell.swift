@@ -12,11 +12,11 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     
     public let observer = FormerObserver()
     
-    private weak var textField: UITextField!
-    private weak var titleLabel: UILabel!
+    public private(set) weak var textField: UITextField!
+    public private(set) weak var titleLabel: UILabel!
+    
     private weak var leftConst: NSLayoutConstraint!
     private weak var rightConst: NSLayoutConstraint!
-    private var datepicker = UIDatePicker()
 
     public func formerTextField() -> UITextField {
         
@@ -32,10 +32,8 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         
         super.configureWithRowFormer(rowFormer)
         
-        if let rowFormer = rowFormer as? TextFieldRowFormer {
-            self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
-            self.rightConst.constant = (rowFormer.textAlignment == .Right) ? -15.0 : 0
-        }
+        self.leftConst.constant = self.titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
+        self.rightConst.constant = (self.titleLabel.textAlignment == .Right) ? -15.0 : 0
     }
     
     public override func configureViews() {

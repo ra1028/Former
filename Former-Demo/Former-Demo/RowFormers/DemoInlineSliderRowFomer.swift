@@ -82,10 +82,11 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
             inlineRowFormer.onValueChanged = self.valueChanged
             inlineRowFormer.adjustedValueFromValue = self.adjustedValueFromValue
             inlineRowFormer.value = self.adjustedValueFromValue?(self.value) ?? self.value
-            inlineRowFormer.continuous = self.continuous
-            inlineRowFormer.minimumValue = self.minimumValue
-            inlineRowFormer.maximumValue = self.maximumValue
-            inlineRowFormer.tintColor = self.tintColor
+            // TODO:
+//            inlineRowFormer.continuous = self.continuous
+//            inlineRowFormer.minimumValue = self.minimumValue
+//            inlineRowFormer.maximumValue = self.maximumValue
+//            inlineRowFormer.tintColor = self.tintColor
             inlineRowFormer.enabled = self.enabled
             inlineRowFormer.update()
         }

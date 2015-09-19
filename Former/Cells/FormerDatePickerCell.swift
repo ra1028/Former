@@ -12,7 +12,7 @@ public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
     
     public let observer = FormerObserver()
     
-    private weak var datePicker: UIDatePicker!
+    public private(set) weak var datePicker: UIDatePicker!
     
     public func formerDatePicker() -> UIDatePicker {
         

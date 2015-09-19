@@ -22,15 +22,10 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
     
     public var onSwitchChanged: (Bool -> Void)?
     public var switched: Bool = false
-    public var switchOnTintColor: UIColor?
-    public var switchThumbTintColor: UIColor?
-    public var switchTintColor: UIColor?
     public var switchWhenSelected = false
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
+    private var titleColor: UIColor?
     
     public init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
@@ -41,37 +36,28 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
             self.onSwitchChanged = onSwitchChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
         
-        self.cell?.selectionStyle = self.switchWhenSelected ?
-            self.selectionStyle ?? .Default :
-            .None
+        if self.switchWhenSelected {
+            self.cell?.selectionStyle = .None
+        }
         
         if let row = self.cell as? SwitchFormableRow {
             
-            let switchButton = row.formerSwitch()
-            switchButton.on = self.switched
-            switchButton.onTintColor =? self.switchOnTintColor
-            switchButton.thumbTintColor =? self.switchThumbTintColor
-            switchButton.tintColor =? self.switchTintColor
-            switchButton.enabled = self.enabled
-            
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.titleFont
+            let switchButton = row.formerSwitch()
+            
+            switchButton.on = self.switched
+            switchButton.enabled = self.enabled
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
+                self.titleColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,

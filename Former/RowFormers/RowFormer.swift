@@ -38,12 +38,11 @@ public class RowFormer: NSObject {
     public private(set) var instantiateType: Former.InstantiateType
     public var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     public var cellHeight: CGFloat = 44.0
-    public var enabled = true
-    public var backgroundColor: UIColor?
-    public var accessoryType: UITableViewCellAccessoryType?
-    public var selectionStyle: UITableViewCellSelectionStyle?
-    public var separatorInsets: UIEdgeInsets?
-    public var tintColor: UIColor?
+    public var enabled = true {
+        didSet {
+            self.update()
+        }
+    }
     
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,
@@ -57,11 +56,7 @@ public class RowFormer: NSObject {
             self.initialize()
     }
     
-    public func initialize() {
-        
-        self.backgroundColor = .whiteColor()
-        self.separatorInsets = UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 0)
-    }
+    public func initialize() {}
     
     final func cellConfigure() {
         
@@ -72,13 +67,15 @@ public class RowFormer: NSObject {
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
                 self.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-                assert(self.cell != nil, "Failed to load cell \(nibName) from nib.")
+//                assert(self.cell != nil, "Failed to load cell \(nibName) from nib.")
             }
         }
+        
+        self.update()
+        
         if let formableRow = self.cell as? FormableRow {
             formableRow.configureWithRowFormer(self)
         }
-        self.update()
     }
     
     final func purgeCell() {
@@ -90,16 +87,7 @@ public class RowFormer: NSObject {
         
         if let cell = self.cell {
             
-            cell.backgroundColor =? self.backgroundColor
-            cell.separatorInset =? self.separatorInsets
-            cell.accessoryType =? self.accessoryType
-            cell.tintColor =? self.tintColor
-            
-            if self.enabled {
-                cell.selectionStyle =? self.selectionStyle
-            } else {
-                cell.selectionStyle =? UITableViewCellSelectionStyle.None
-            }
+            cell.userInteractionEnabled = self.enabled
             
             if let row = cell as? FormableRow {
                 row.configureWithRowFormer(self)

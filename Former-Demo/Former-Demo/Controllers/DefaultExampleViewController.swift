@@ -18,10 +18,11 @@ class DefaultExampleViewController: FormerViewController {
                 cellType: FormerCheckCell.self,
                 instantiateType: .Class) { check in
             }
-            row.title = "Check\(index)"
-            row.titleColor = .formerColor()
-            row.tintColor = .formerSubColor()
-            row.titleFont = .boldSystemFontOfSize(16.0)
+            // TODO:
+//            row.title = "Check\(index)"
+//            row.titleColor = .formerColor()
+//            row.tintColor = .formerSubColor()
+//            row.titleFont = .boldSystemFontOfSize(16.0)
             return row
         }
         }()
@@ -31,10 +32,11 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerCheckCell.self,
             instantiateType: .Class
         )
-        rowFormer.title = "Check3"
-        rowFormer.titleColor = .formerColor()
-        rowFormer.titleFont = .boldSystemFontOfSize(16.0)
-        rowFormer.tintColor = .formerSubColor()
+        // TODO:
+//        rowFormer.title = "Check3"
+//        rowFormer.titleColor = .formerColor()
+//        rowFormer.titleFont = .boldSystemFontOfSize(16.0)
+//        rowFormer.tintColor = .formerSubColor()
         return SectionFormer().add(rowFormers: [rowFormer])
         }()
     
@@ -75,6 +77,8 @@ class DefaultExampleViewController: FormerViewController {
         
         self.title = "Default Example"
         
+        // TODO:
+        
         // Create RowFormers
         
         // Date Setting Example
@@ -83,28 +87,28 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerInlineDatePickerCell.self,
             instantiateType: .Class
         )
-        date.title = "Date"
-        date.titleColor = .formerColor()
-        date.titleFont = .boldSystemFontOfSize(16.0)
-        date.datePickerMode = .DateAndTime
         date.displayTextFromDate = String.mediumDateShortTime
-        date.displayTextColor = .formerSubColor()
-        date.displayTextEditingColor = .formerHighlightedSubColor()
-        date.displayTextFont = .boldSystemFontOfSize(14.0)
-        date.displayTextAlignment = .Right
+//        date.title = "Date"
+//        date.titleColor = .formerColor()
+//        date.titleFont = .boldSystemFontOfSize(16.0)
+//        date.datePickerMode = .DateAndTime
+//        date.displayTextColor = .formerSubColor()
+//        date.displayTextEditingColor = .formerHighlightedSubColor()
+//        date.displayTextFont = .boldSystemFontOfSize(14.0)
+//        date.displayTextAlignment = .Right
         
         let switchDateStyle = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             instantiateType: .Class) {
                 date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
-                date.datePickerMode = $0 ? .Date : .DateAndTime
+//                date.datePickerMode = $0 ? .Date : .DateAndTime
                 date.update()
         }
-        switchDateStyle.title = "Switch Date Style"
-        switchDateStyle.titleColor = .formerColor()
-        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
-        switchDateStyle.switchOnTintColor = .formerSubColor()
         switchDateStyle.switched = false
+//        switchDateStyle.title = "Switch Date Style"
+//        switchDateStyle.titleColor = .formerColor()
+//        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
+//        switchDateStyle.switchOnTintColor = .formerSubColor()
         
         // Incert Rows Example
         
@@ -119,10 +123,10 @@ class DefaultExampleViewController: FormerViewController {
                     }
                 }
         }
-        insertRows.title = "Insert Rows"
-        insertRows.titleColor = .formerColor()
-        insertRows.switchOnTintColor = .formerSubColor()
-        insertRows.titleFont = .boldSystemFontOfSize(16.0)
+//        insertRows.title = "Insert Rows"
+//        insertRows.titleColor = .formerColor()
+//        insertRows.switchOnTintColor = .formerSubColor()
+//        insertRows.titleFont = .boldSystemFontOfSize(16.0)
         
         // Insert Section Example
         
@@ -137,10 +141,10 @@ class DefaultExampleViewController: FormerViewController {
                     }
                 }
         }
-        insertSection.title = "Insert Section"
-        insertSection.titleColor = .formerColor()
-        insertSection.switchOnTintColor = .formerSubColor()
-        insertSection.titleFont = .boldSystemFontOfSize(16.0)
+//        insertSection.title = "Insert Section"
+//        insertSection.titleColor = .formerColor()
+//        insertSection.switchOnTintColor = .formerSubColor()
+//        insertSection.titleFont = .boldSystemFontOfSize(16.0)
         
         // Selector Example
         
@@ -156,9 +160,9 @@ class DefaultExampleViewController: FormerViewController {
                     let selector = $1 as! TextRowFormer
                     let controller = TextSelectorViewContoller()
                     controller.texts = options
-                    controller.selectedText = selector.subText
-                    controller.onSelected = {
-                        selector.subText = $0
+//                    controller.selectedText = selector.subText
+                    controller.onSelected = { _ in
+//                        selector.subText = $0
                         selector.update()
                     }
                     self?.navigationController?.pushViewController(controller, animated: true)
@@ -168,7 +172,7 @@ class DefaultExampleViewController: FormerViewController {
                     let selector = $1 as! TextRowFormer
                     options.forEach { title in
                         sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak selector] _ in
-                            selector?.subText = title
+//                            selector?.subText = title
                             selector?.update()
                             })
                         )
@@ -180,29 +184,29 @@ class DefaultExampleViewController: FormerViewController {
                 }
                 ][index]
             selector.text = ["Push", "Sheet", "Picker"][index]
-            selector.textColor = .formerColor()
-            selector.font = .boldSystemFontOfSize(16.0)
-            selector.subText = options.first
-            selector.subTextColor = .formerSubColor()
-            selector.subTextFont = .boldSystemFontOfSize(14.0)
-            selector.subTextAlignment = .Right
-            selector.accessoryType = .DisclosureIndicator
+//            selector.textColor = .formerColor()
+//            selector.font = .boldSystemFontOfSize(16.0)
+//            selector.subText = options.first
+//            selector.subTextColor = .formerSubColor()
+//            selector.subTextFont = .boldSystemFontOfSize(14.0)
+//            selector.subTextAlignment = .Right
+//            selector.accessoryType = .DisclosureIndicator
             return selector
         }
         let pickerSelector = SelectorPickerRowFormer(
             cellType: FormerSelectorPickerCell.self,
             instantiateType: .Class
         )
-        pickerSelector.title = "Picker"
-        pickerSelector.titleColor = .formerColor()
-        pickerSelector.titleFont = .boldSystemFontOfSize(16.0)
-        pickerSelector.displayTextColor = .formerSubColor()
-        pickerSelector.displayTextFont = .boldSystemFontOfSize(14.0)
-        pickerSelector.displayTextAlignment = .Right
         pickerSelector.valueTitles = options
-        pickerSelector.pickerBackgroundColor = .whiteColor()
-        pickerSelector.accessoryType = .DisclosureIndicator
         pickerSelector.inputAccessoryView = self.formerInputAccessoryView
+//        pickerSelector.title = "Picker"
+//        pickerSelector.titleColor = .formerColor()
+//        pickerSelector.titleFont = .boldSystemFontOfSize(16.0)
+//        pickerSelector.displayTextColor = .formerSubColor()
+//        pickerSelector.displayTextFont = .boldSystemFontOfSize(14.0)
+//        pickerSelector.displayTextAlignment = .Right
+//        pickerSelector.pickerBackgroundColor = .whiteColor()
+//        pickerSelector.accessoryType = .DisclosureIndicator
         
         // Custom Input Accessory View Example
 
@@ -211,15 +215,15 @@ class DefaultExampleViewController: FormerViewController {
                 cellType: FormerTextFieldCell.self,
                 instantiateType: .Class
             )
-            input.title = "Field\(index)"
             input.placeholder = "Example"
-            input.titleColor = .formerColor()
-            input.textColor = .formerSubColor()
-            input.tintColor = .formerColor()
-            input.font = .boldSystemFontOfSize(16.0)
-            input.textAlignment = .Right
-            input.inputAccessoryView = self.formerInputAccessoryView
-            input.returnKeyType = .Next
+//            input.title = "Field\(index)"
+//            input.titleColor = .formerColor()
+//            input.textColor = .formerSubColor()
+//            input.tintColor = .formerColor()
+//            input.font = .boldSystemFontOfSize(16.0)
+//            input.textAlignment = .Right
+//            input.inputAccessoryView = self.formerInputAccessoryView
+//            input.returnKeyType = .Next
             return input
         }
         
@@ -227,14 +231,14 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerInlinePickerCell.self,
             instantiateType: .Class
         )
-        picker.title = "Inline Picker"
-        picker.titleColor = .formerColor()
-        picker.titleFont = .boldSystemFontOfSize(16.0)
-        picker.displayTextColor = .formerSubColor()
-        picker.displayTextEditingColor = .formerHighlightedSubColor()
-        picker.displayTextFont = .boldSystemFontOfSize(14.0)
-        picker.displayTextAlignment = .Right
         picker.valueTitles = (1...20).map { "Option\($0)" }
+//        picker.title = "Inline Picker"
+//        picker.titleColor = .formerColor()
+//        picker.titleFont = .boldSystemFontOfSize(16.0)
+//        picker.displayTextColor = .formerSubColor()
+//        picker.displayTextEditingColor = .formerHighlightedSubColor()
+//        picker.displayTextFont = .boldSystemFontOfSize(14.0)
+//        picker.displayTextAlignment = .Right
         
         // Create Headers and Footers
         

@@ -26,34 +26,15 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
     public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
+    public var inputViewUpdate: (UIDatePicker -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
-    @NSCopying public var calendar: NSCalendar?
     public var date: NSDate = NSDate()
-    public var minuteInterval: Int?
-    public var minimumDate: NSDate?
-    public var maximumDate: NSDate?
-    public var countDownDuration: NSTimeInterval?
-    public var datePickerMode: UIDatePickerMode?
-    public var locale: NSLocale?
-    public var timeZone: NSTimeZone?
-    public var pickerBackgroundColor: UIColor?
     public var inputAccessoryView: UIView?
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
-    public var titleAlignment: NSTextAlignment?
-    public var titleNumberOfLines: Int?
-    
-    public var displayTextFont: UIFont?
-    public var displayTextColor: UIColor?
-    public var displayDisabledColor: UIColor?
-    public var displayTextAlignment: NSTextAlignment?
-    
-    deinit {
-        self.inputView.removeTarget(self, action: nil, forControlEvents: .AllEvents)
-    }
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
     
     private lazy var inputView: UIDatePicker = {
         let datePicker = UIDatePicker()
@@ -69,28 +50,11 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
             self.onDateChanged = onDateChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-        self.displayTextColor = .lightGrayColor()
-        self.displayDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
         
-        self.inputView.calendar = self.calendar
-        self.inputView.minuteInterval =? self.minuteInterval
-        self.inputView.minimumDate = self.minimumDate
-        self.inputView.maximumDate = self.maximumDate
-        self.inputView.countDownDuration =? self.countDownDuration
-        self.inputView.datePickerMode =? self.datePickerMode
-        self.inputView.locale = self.locale
-        self.inputView.timeZone = self.timeZone
-        self.inputView.date = self.date
-        self.inputView.backgroundColor = self.pickerBackgroundColor
+        self.inputViewUpdate?(self.inputView)
         
         if let row = self.cell as? SelectorDatePickerFormableRow {
             
@@ -98,22 +62,19 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
             row.selectorAccessoryView = self.inputAccessoryView
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.titleFont
-            titleLabel?.textAlignment =? self.titleAlignment
-            titleLabel?.numberOfLines =? self.titleNumberOfLines
-            
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
-            displayLabel?.font =? self.displayTextFont
-            displayLabel?.textAlignment =? self.displayTextAlignment
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
                 displayLabel?.textColor =? self.displayTextColor
+                self.titleColor = nil
+                self.displayTextColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
         }
     }

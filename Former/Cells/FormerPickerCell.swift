@@ -10,7 +10,7 @@ import UIKit
 
 public class FormerPickerCell: FormerCell, PickerFormableRow {
     
-    private weak var pickerView: UIPickerView!
+    public private(set) weak var pickerView: UIPickerView!
     
     public func formerPickerView() -> UIPickerView {
         

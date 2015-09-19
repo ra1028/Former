@@ -22,7 +22,8 @@ final class TextSelectorViewContoller: FormerViewController {
             self.former.rowFormers.forEach {
                 if let textRowFormer = $0 as? TextRowFormer
                  where textRowFormer.text == self.selectedText {
-                    textRowFormer.accessoryType = .Checkmark
+                    // TODO:
+//                    textRowFormer.accessoryType = .Checkmark
                 }
             }
         }
@@ -43,12 +44,13 @@ final class TextSelectorViewContoller: FormerViewController {
                 self?.navigationController?.popViewControllerAnimated(true)
             }
             rowFormer.text = text
-            rowFormer.textColor = .formerColor()
-            rowFormer.font = .boldSystemFontOfSize(16.0)
-            rowFormer.tintColor = .formerSubColor()
-            if text == self.selectedText {
-                rowFormer.accessoryType = .Checkmark
-            }
+            // TODO:
+//            rowFormer.textColor = .formerColor()
+//            rowFormer.font = .boldSystemFontOfSize(16.0)
+//            rowFormer.tintColor = .formerSubColor()
+//            if text == self.selectedText {
+//                rowFormer.accessoryType = .Checkmark
+//            }
             return rowFormer
         }
         

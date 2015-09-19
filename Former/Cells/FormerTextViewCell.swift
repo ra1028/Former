@@ -10,8 +10,9 @@ import UIKit
 
 public class FormerTextViewCell: FormerCell, TextViewFormableRow {
     
-    private weak var textView: UITextView!
-    private weak var titleLabel: UILabel!
+    public private(set) weak var textView: UITextView!
+    public private(set) weak var titleLabel: UILabel!
+    
     private weak var leftConst: NSLayoutConstraint!
     
     public func formerTextView() -> UITextView {
@@ -28,9 +29,7 @@ public class FormerTextViewCell: FormerCell, TextViewFormableRow {
         
         super.configureWithRowFormer(rowFormer)
         
-        if let rowFormer = rowFormer as? TextViewRowFormer {
-            self.leftConst.constant = rowFormer.title?.isEmpty ?? true ? 5.0 : 15.0
-        }
+        self.leftConst.constant = self.titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
     }
     
     public override func configureViews() {

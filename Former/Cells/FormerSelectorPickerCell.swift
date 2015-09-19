@@ -12,9 +12,11 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
     
     public var selectorPickerView: UIPickerView?
     public var selectorAccessoryView: UIView?
-    private var titleLabel: UILabel!
-    private var displayLabel: UILabel!
-    private var displayLabelRightConst: NSLayoutConstraint!
+    
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var displayLabel: UILabel!
+    
+    private weak var displayLabelRightConst: NSLayoutConstraint!
     
     public func formerTitleLabel() -> UILabel? {
         

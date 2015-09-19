@@ -20,15 +20,7 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
     public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
-    @NSCopying public var calendar: NSCalendar?
     public var date: NSDate = NSDate()
-    public var minuteInterval: Int?
-    public var minimumDate: NSDate?
-    public var maximumDate: NSDate?
-    public var countDownDuration: NSTimeInterval?
-    public var datePickerMode: UIDatePickerMode?
-    public var locale: NSLocale?
-    public var timeZone: NSTimeZone?
     
     public init<T : UITableViewCell where T : DatePickerFormableRow>(
         cellType: T.Type,
@@ -43,24 +35,17 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
         
         super.initialize()
         self.cellHeight = 216.0
-        self.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     public override func update() {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? DatePickerFormableRow {
             
             let datePicker = row.formerDatePicker()
-            datePicker.calendar =? self.calendar
-            datePicker.minuteInterval =? self.minuteInterval
-            datePicker.minimumDate =? self.minimumDate
-            datePicker.maximumDate =? self.maximumDate
-            datePicker.countDownDuration =? self.countDownDuration
-            datePicker.datePickerMode =? self.datePickerMode
-            datePicker.locale =? self.locale
-            datePicker.timeZone =? self.timeZone
             datePicker.setDate(self.date, animated: false)
             datePicker.userInteractionEnabled = self.enabled
             datePicker.alpha = self.enabled ? 1.0 : 0.5

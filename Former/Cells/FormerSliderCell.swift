@@ -12,9 +12,9 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
     
     public let observer = FormerObserver()
     
-    private weak var titleLabel: UILabel!
-    private weak var displayLabel: UILabel!
-    private weak var slider: UISlider!
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var displayLabel: UILabel!
+    public private(set) weak var slider: UISlider!
     
     public func formerTitleLabel() -> UILabel? {
         

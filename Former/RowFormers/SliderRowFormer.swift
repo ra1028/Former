@@ -25,18 +25,11 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     public var displayTextFromValue: (Float -> String)?
     public var adjustedValueFromValue: (Float -> Float)?
     public var value: Float = 0
-    public var continuous: Bool?
-    public var minimumValue: Float?
-    public var maximumValue: Float?
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
-    
-    public var displayFont: UIFont?
-    public var displayColor: UIColor?
-    public var displayDisabledColor: UIColor?
+    private var titleColor: UIColor?
+    private var displayColor: UIColor?
     
     public init<T : UITableViewCell where T : SliderFormableRow>(
         cellType: T.Type,
@@ -50,10 +43,6 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     public override func initialize() {
         
         super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-        self.displayColor = .lightGrayColor()
-        self.displayDisabledColor = .lightGrayColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
         self.cellHeight = 88.0
     }
     
@@ -61,36 +50,28 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? SliderFormableRow {
             
-            let slider = row.formerSlider()
-            slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
-            slider.continuous =? self.continuous
-            slider.minimumValue =? self.minimumValue
-            slider.maximumValue =? self.maximumValue
-            slider.tintColor =? self.tintColor
-            slider.enabled = self.enabled
-            slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
-            slider.continuous =? self.continuous
-            slider.minimumValue =? self.minimumValue
-            slider.maximumValue =? self.maximumValue
-            slider.tintColor =? self.tintColor
-            slider.enabled = self.enabled
-            
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.titleFont
-            
             let displayLabel = row.formerDisplayLabel()
+            let slider = row.formerSlider()
+            
+            slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
+            slider.enabled = self.enabled
             displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
-            displayLabel?.font =? self.displayFont
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
                 displayLabel?.textColor =? self.displayColor
+                self.titleColor = nil
+                self.displayColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,

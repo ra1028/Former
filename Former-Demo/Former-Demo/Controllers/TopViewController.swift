@@ -52,9 +52,10 @@ final class TopViewContoller: FormerViewController {
             let rowFormer = TextRowFormer(cellType: FormerTextCell.self, instantiateType: .Class)
             rowFormer.onSelected = { _ in onSelected?() }
             rowFormer.text = text
-            rowFormer.textColor = .formerColor()
-            rowFormer.font = UIFont.boldSystemFontOfSize(16.0)
-            rowFormer.accessoryType = .DisclosureIndicator
+            // TODO:
+//            rowFormer.textColor = .formerColor()
+//            rowFormer.font = UIFont.boldSystemFontOfSize(16.0)
+//            rowFormer.accessoryType = .DisclosureIndicator
             return rowFormer
         }
         

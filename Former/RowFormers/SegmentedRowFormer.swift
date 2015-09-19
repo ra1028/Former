@@ -23,11 +23,9 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
     public var onSegmentSelected: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
     public var selectedIndex: Int = 0
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
+    private var titleColor: UIColor?
     
     public init<T : UITableViewCell where T : SegmentedFormableRow>(
         cellType: T.Type,
@@ -36,23 +34,19 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
         onSegmentSelected: ((Int, String) -> Void)? = nil) {
             
             super.init(cellType: cellType, instantiateType: instantiateType)
-            self.onSegmentSelected = onSegmentSelected
             self.segmentTitles = segmentTitles
-    }
-    
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+            self.onSegmentSelected = onSegmentSelected
     }
     
     public override func update() {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? SegmentedFormableRow {
             
+            let titleLabel = row.formerTitleLabel()
             let segment = row.formerSegmented()
             segment.removeAllSegments()
             for (index, title) in self.segmentTitles.enumerate() {
@@ -61,14 +55,12 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
             segment.selectedSegmentIndex = self.selectedIndex
             segment.enabled = self.enabled
             
-            let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.titleFont
-            
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
+                self.titleColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,

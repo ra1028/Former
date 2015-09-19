@@ -27,70 +27,60 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     public var onTextChanged: (String -> Void)?
     public var text: String?
     public var placeholder: String?
-    public var font: UIFont?
-    public var textColor: UIColor?
-    public var textDisabledColor: UIColor?
-    public var textAlignment: NSTextAlignment?
-    public var clearButtonMode: UITextFieldViewMode?
-    public var keyboardType: UIKeyboardType?
-    public var returnKeyType: UIReturnKeyType?
-    public var inputView: UIView?
-    public var inputAccessoryView: UIView?
+    public var textDisabledColor: UIColor? = .lightGrayColor()
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var titleEditingColor: UIColor?
     public var returnToNextRow = true
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
-    public var titleEditingColor: UIColor?
+    private var textColor: UIColor?
+    private var titleColor: UIColor?
     
     public init<T: UITableViewCell where T: TextFieldFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onTextChanged: (String -> Void)? = nil
-        ) {
+        onTextChanged: (String -> Void)? = nil) {
             
             super.init(cellType: cellType, instantiateType: instantiateType)
             self.onTextChanged = onTextChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.textDisabledColor = .lightGrayColor()
-        self.titleDisabledColor = .lightGrayColor()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+    deinit {
+        if let row = self.cell as? TextFieldFormableRow {
+            let textField = row.formerTextField()
+            textField.delegate = nil
+        }
     }
     
     public override func update() {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? TextFieldFormableRow {
             
+            let titleLabel = row.formerTitleLabel()
             let textField = row.formerTextField()
             textField.text = self.text
-            textField.placeholder = self.placeholder
-            textField.font =? self.font
-            textField.textAlignment =? self.textAlignment
-            textField.clearButtonMode =? self.clearButtonMode
-            textField.keyboardType =? self.keyboardType
-            textField.returnKeyType =? self.returnKeyType
-            textField.inputView =? self.inputView
-            textField.inputAccessoryView =? self.inputAccessoryView
+            textField.placeholder =? self.placeholder
             textField.userInteractionEnabled = false
             textField.delegate = self
             
-            let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.font
-            
             if self.enabled {
+                if self.isEditing {
+                    self.titleColor ?= titleLabel?.textColor
+                    titleLabel?.textColor =? self.titleEditingColor
+                } else {
+                    titleLabel?.textColor =? self.titleColor
+                    self.titleColor = nil
+                }
                 textField.textColor =? self.textColor
-                titleLabel?.textColor =? self.titleColor
+                self.textColor = nil
             } else {
-                textField.textColor =? self.textDisabledColor
-                titleLabel?.textColor =? self.titleDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.textColor ?= textField.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                textField.textColor = self.textDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
@@ -135,14 +125,25 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     public func editingDidBegin(textField: UITextField) {
         
         if let row = self.cell as? TextFieldFormableRow where self.enabled {
-            row.formerTitleLabel()?.textColor =? self.titleEditingColor
+            
+            let titleLabel = row.formerTitleLabel()
+            self.titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor =? self.titleEditingColor
         }
     }
     
     public func editingDidEnd(textField: UITextField) {
         
         if let row = self.cell as? TextFieldFormableRow {
-            row.formerTitleLabel()?.textColor = self.enabled ? self.titleColor : self.titleDisabledColor
+            
+            let titleLabel = row.formerTitleLabel()
+            if self.enabled {
+                titleLabel?.textColor =? self.titleColor
+                self.titleColor = nil
+            } else {
+                self.titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor =? self.titleEditingColor
+            }
             row.formerTextField().userInteractionEnabled = false
         }
     }

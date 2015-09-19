@@ -29,19 +29,13 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
-    public var showsSelectionIndicator: Bool?
-    
-    public var displayTextFont: UIFont?
-    public var displayTextColor: UIColor?
-    public var displayDisabledColor: UIColor?
-    public var displayTextAlignment: NSTextAlignment?
-    public var displayTextEditingColor: UIColor?
-    
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var displayDisabledColor: UIColor? = .lightGrayColor()
     public var titleEditingColor: UIColor?
+    public var displayEditingColor: UIColor?
+    
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
     
     public init<T : UITableViewCell where T : InlinePickerFormableRow>(
         cellType: T.Type,
@@ -52,14 +46,6 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-        self.displayTextColor = .lightGrayColor()
-        self.displayDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
@@ -67,27 +53,27 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         if let row = self.cell as? InlinePickerFormableRow {
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
-            titleLabel?.font =? self.titleFont
-            
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.valueTitles[self.selectedRow]
-            displayLabel?.font =? self.displayTextFont
-            displayLabel?.textAlignment =? self.displayTextAlignment
             
             if self.enabled {
                 
                 if self.isEditing {
+                    self.titleColor ?= titleLabel?.textColor
+                    self.displayTextColor ?= displayLabel?.textColor
                     titleLabel?.textColor =? self.titleEditingColor
-                    displayLabel?.textColor =? self.displayTextEditingColor
+                    displayLabel?.textColor =? self.displayEditingColor
                 } else {
                     titleLabel?.textColor =? self.titleColor
                     displayLabel?.textColor =? self.displayTextColor
+                    self.titleColor = nil
+                    self.displayTextColor = nil
                 }
             } else {
-                
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
         }
         
@@ -96,7 +82,8 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
             pickerRowFormer.onValueChanged = self.valueChanged
             pickerRowFormer.valueTitles = self.valueTitles
             pickerRowFormer.selectedRow = self.selectedRow
-            pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
+            // TODO:
+//            pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
             pickerRowFormer.enabled = self.enabled
             pickerRowFormer.update()
         }
@@ -127,9 +114,14 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     public func editingDidBegin() {
         
         if let row = self.cell as? InlinePickerFormableRow where self.enabled {
+            
+            let titleLabel = row.formerTitleLabel()
+            let displayLabel = row.formerDisplayLabel()
+            self.titleColor ?= titleLabel?.textColor
+            self.displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor =? self.titleEditingColor
+            displayLabel?.textColor =? self.displayEditingColor
             self.isEditing = true
-            row.formerTitleLabel()?.textColor =? self.titleEditingColor
-            row.formerDisplayLabel()?.textColor =? self.displayTextEditingColor
         }
     }
     
@@ -142,9 +134,13 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
                 displayLabel?.textColor =? self.displayTextColor
+                self.titleColor = nil
+                self.displayTextColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
 
         }

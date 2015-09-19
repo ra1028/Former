@@ -28,27 +28,14 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     
     public var onDateChanged: (NSDate -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
-    @NSCopying public var calendar: NSCalendar!
     public var date: NSDate = NSDate()
-    public var minuteInterval: Int?
-    public var minimumDate: NSDate?
-    public var maximumDate: NSDate?
-    public var countDownDuration: NSTimeInterval?
-    public var datePickerMode: UIDatePickerMode?
-    public var locale: NSLocale?
-    public var timeZone: NSTimeZone?
-    
-    public var displayTextFont: UIFont?
-    public var displayTextColor: UIColor?
-    public var displayDisabledColor: UIColor?
-    public var displayTextAlignment: NSTextAlignment?
-    public var displayTextEditingColor: UIColor?
-    
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
+    public var displayDisabledColor: UIColor? = .lightGrayColor()
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var displayEditingColor: UIColor?
     public var titleEditingColor: UIColor?
+    
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
     
     public init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
         cellType: T.Type,
@@ -59,14 +46,6 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
             self.onDateChanged = onDateChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-        self.displayTextColor = .lightGrayColor()
-        self.displayDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
@@ -74,25 +53,25 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         if let row = self.cell as? InlineDatePickerFormableRow {
             
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.titleFont
-            
             let displayLabel = row.formerDisplayLabel()
             displayLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
-            displayLabel?.font =? self.displayTextFont
-            displayLabel?.textAlignment =? self.displayTextAlignment
             
             if self.enabled {
                 
                 if self.isEditing {
+                    self.titleColor ?= titleLabel?.textColor
+                    self.displayTextColor ?= displayLabel?.textColor
                     titleLabel?.textColor =? self.titleEditingColor
-                    displayLabel?.textColor =? self.displayTextEditingColor
+                    displayLabel?.textColor =? self.displayEditingColor
                 } else {
                     titleLabel?.textColor =? self.titleColor
                     displayLabel?.textColor =? self.displayTextColor
+                    self.titleColor = nil
+                    self.displayTextColor = nil
                 }
             } else {
-                
+                self.titleColor ?= titleLabel?.textColor
+                self.displayTextColor ?= displayLabel?.textColor
                 titleLabel?.textColor =? self.titleDisabledColor
                 displayLabel?.textColor =? self.displayDisabledColor
             }
@@ -101,14 +80,15 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         if let pickerRowFormer = self.inlineRowFormer as? DatePickerRowFormer {
             
             pickerRowFormer.onDateChanged = self.dateChanged
-            pickerRowFormer.calendar = self.calendar
-            pickerRowFormer.minuteInterval = self.minuteInterval
-            pickerRowFormer.minimumDate = self.minimumDate
-            pickerRowFormer.maximumDate = self.maximumDate
-            pickerRowFormer.countDownDuration = self.countDownDuration
-            pickerRowFormer.datePickerMode = self.datePickerMode
-            pickerRowFormer.locale = self.locale
-            pickerRowFormer.timeZone = self.timeZone
+            // TODO:
+//            pickerRowFormer.calendar = self.calendar
+//            pickerRowFormer.minuteInterval = self.minuteInterval
+//            pickerRowFormer.minimumDate = self.minimumDate
+//            pickerRowFormer.maximumDate = self.maximumDate
+//            pickerRowFormer.countDownDuration = self.countDownDuration
+//            pickerRowFormer.datePickerMode = self.datePickerMode
+//            pickerRowFormer.locale = self.locale
+//            pickerRowFormer.timeZone = self.timeZone
             pickerRowFormer.date = self.date
             pickerRowFormer.enabled = self.enabled
             pickerRowFormer.update()
@@ -138,25 +118,36 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     public func editingDidBegin() {
         
         if let row = self.cell as? InlineDatePickerFormableRow where self.enabled {
+            
+            let titleLabel = row.formerTitleLabel()
+            let displayLabel = row.formerDisplayLabel()
+            
+            self.titleColor ?= titleLabel?.textColor
+            self.displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor =? self.titleEditingColor
+            displayLabel?.textColor =? self.displayEditingColor
             self.isEditing = true
-            row.formerTitleLabel()?.textColor =? self.titleEditingColor
-            row.formerDisplayLabel()?.textColor =? self.displayTextEditingColor
         }
     }
     
     public func editingDidEnd() {
         
         if let row = self.cell as? InlineDatePickerFormableRow {
-            self.isEditing = false
+            
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
                 displayLabel?.textColor =? self.displayTextColor
+                self.titleColor = nil
+                self.displayTextColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
+            self.isEditing = false
         }
     }
 }

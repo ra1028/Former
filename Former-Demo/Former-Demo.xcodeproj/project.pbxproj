@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2AB293051BA478D600D83445 /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB293041BA478D600D83445 /* Former.framework */; };
-		2AB293061BA478D600D83445 /* Former.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB293041BA478D600D83445 /* Former.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2A59E2391BADDB4000A48997 /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A61D84E1BA47B0B001439CC /* Former.framework */; };
+		2A59E23A1BADDB4000A48997 /* Former.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A61D84E1BA47B0B001439CC /* Former.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3813B1BA447D3009C7EFF /* AppDelegate.swift */; };
 		2AC3814F1BA447D3009C7EFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC3813C1BA447D3009C7EFF /* Assets.xcassets */; };
 		2AC381501BA447D3009C7EFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AC3813D1BA447D3009C7EFF /* LaunchScreen.storyboard */; };
@@ -25,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2A59E23B1BADDB4000A48997 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A61D8491BA47B0B001439CC /* Former.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A65655A1BA43E9100C78E81;
+			remoteInfo = Former;
+		};
 		2A61D84D1BA47B0B001439CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A61D8491BA47B0B001439CC /* Former.xcodeproj */;
@@ -41,7 +48,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2AB293061BA478D600D83445 /* Former.framework in Embed Frameworks */,
+				2A59E23A1BADDB4000A48997 /* Former.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,7 +58,6 @@
 /* Begin PBXFileReference section */
 		2A61D8491BA47B0B001439CC /* Former.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Former.xcodeproj; path = ../Former.xcodeproj; sourceTree = "<group>"; };
 		2AB293031BA469FB00D83445 /* Former-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Former-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2AB293041BA478D600D83445 /* Former.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = Former.framework; path = "/Users/Ryo/Library/Developer/Xcode/DerivedData/Former-cjnyxgbbuvlgbnajhqsduvclchod/Build/Products/Debug-iphoneos/Former.framework"; sourceTree = "<absolute>"; };
 		2AC3813B1BA447D3009C7EFF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AC3813C1BA447D3009C7EFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2AC3813E1BA447D3009C7EFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -73,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AB293051BA478D600D83445 /* Former.framework in Frameworks */,
+				2A59E2391BADDB4000A48997 /* Former.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				2A61D8491BA47B0B001439CC /* Former.xcodeproj */,
-				2AB293041BA478D600D83445 /* Former.framework */,
 				2AC3813A1BA447D3009C7EFF /* Former-Demo */,
 				2AB293031BA469FB00D83445 /* Former-Demo.app */,
 			);
@@ -174,6 +179,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2A59E23C1BADDB4000A48997 /* PBXTargetDependency */,
 			);
 			name = "Former-Demo";
 			productName = "Former-Demo";
@@ -261,6 +267,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A59E23C1BADDB4000A48997 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Former;
+			targetProxy = 2A59E23B1BADDB4000A48997 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2AC3813D1BA447D3009C7EFF /* LaunchScreen.storyboard */ = {
@@ -362,6 +376,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "Former-Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -375,6 +390,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = "Former-Demo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

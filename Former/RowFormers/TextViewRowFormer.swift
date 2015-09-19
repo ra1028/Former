@@ -24,25 +24,14 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
     
     public var textChangedHandler: (String -> Void)?
     public var text: String?
-    public var font: UIFont?
-    public var textColor: UIColor?
-    public var textDisabledColor: UIColor?
-    public var textAlignment: NSTextAlignment?
-    public var keyboardType: UIKeyboardType?
-    public var returnKeyType: UIReturnKeyType?
-    public var inputView: UIView?
-    public var inputAccessoryView: UIView?
-    
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
+    public var placeholder: String?
+    public var textDisabledColor: UIColor? = .lightGrayColor()
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var titleEditingColor: UIColor?
     
+    private var textColor: UIColor?
+    private var titleColor: UIColor?
     private weak var placeholderLabel: UILabel?
-    public var placeholder: String?
-    public var placeholderFont: UIFont?
-    public var placeholderColor: UIColor?
     
     public init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
@@ -53,13 +42,16 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
             self.textChangedHandler = textChangedHandler
     }
     
+    deinit {
+        if let row = self.cell as? TextViewFormableRow {
+            let textView = row.formerTextView()
+            textView.delegate = nil
+        }
+    }
+    
     public override func initialize() {
         
         super.initialize()
-        self.textDisabledColor = .lightGrayColor()
-        self.titleDisabledColor = .lightGrayColor()
-        self.placeholderColor = UIColor(white: 0.8, alpha: 1.0)
-        self.selectionStyle = UITableViewCellSelectionStyle.None
         self.cellHeight = 110.0
     }
     
@@ -67,22 +59,16 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? TextViewFormableRow {
             
             let textView = row.formerTextView()
-            textView.delegate = self
-            textView.text =? self.text
-            textView.font =? self.font
-            textView.textAlignment =? self.textAlignment
-            textView.keyboardType =? self.keyboardType
-            textView.returnKeyType =? self.returnKeyType
-            textView.inputView =? self.inputView
-            textView.inputAccessoryView =? self.inputAccessoryView
-            textView.userInteractionEnabled = false
-            
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text = self.title
-            titleLabel?.font =? self.titleFont
+            
+            textView.text = self.text
+            textView.userInteractionEnabled = false
+            textView.delegate = self
             
             if self.placeholderLabel?.superview !== textView {
                 self.placeholderLabel?.removeFromSuperview()
@@ -110,20 +96,23 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
                 textView.addConstraints(constraints.flatMap { $0 })
             }
             self.placeholderLabel?.text =? self.placeholder
-            self.placeholderLabel?.font =? self.placeholderFont
-            self.placeholderLabel?.textAlignment =? self.textAlignment
             self.updatePlaceholderColor(textView.text)
             
             if self.enabled {
                 if self.isEditing {
+                    self.titleColor ?= titleLabel?.textColor
                     titleLabel?.textColor =? self.titleEditingColor
                 } else {
                     titleLabel?.textColor =? self.titleColor
+                    self.titleColor = nil
                 }
                 textView.textColor =? self.textColor
+                self.textColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                textView.textColor =? self.textDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.textColor ?= textView.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                textView.textColor = self.textDisabledColor
             }
         }
     }
@@ -146,8 +135,8 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
     
     private func updatePlaceholderColor(text: String?) {
         
-        self.placeholderLabel?.textColor =? (text?.isEmpty ?? true) ?
-            self.placeholderColor :
+        self.placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
+            UIColor(white: 0.8, alpha: 1.0) :
             .clearColor()
     }
 }
@@ -170,23 +159,29 @@ extension TextViewRowFormer: UITextViewDelegate {
     public func textViewDidBeginEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow where self.enabled {
+            
+            let titleLabel = row.formerTitleLabel()
+            self.titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor =? self.titleEditingColor
             self.isEditing = true
-            row.formerTitleLabel()?.textColor =? self.titleEditingColor
         }
     }
     
     public func textViewDidEndEditing(textView: UITextView) {
         
         if let row = self.cell as? TextViewFormableRow {
-            self.isEditing = false
+            
             let titleLabel = row.formerTitleLabel()
             row.formerTextView().userInteractionEnabled = false
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
+                self.titleColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
             }
+            self.isEditing = false
         }
     }
 }

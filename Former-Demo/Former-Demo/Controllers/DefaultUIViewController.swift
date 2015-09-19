@@ -24,6 +24,8 @@ final class DefaultUIViewController: FormerViewController {
         
         self.title = "Default UI"
         
+        // TODO: all RowFormers are needs fix.
+        
         // Create RowFomers
         
         let disableRow = TextRowFormer(
@@ -53,39 +55,39 @@ final class DefaultUIViewController: FormerViewController {
         )
         textRow.onSelected = { [weak self] _ in self?.former.deselect(true) }
         textRow.text = "Text"
-        textRow.subText = "SubText"
+//        textRow.subText = "SubText"
         
         let textFieldRow = TextFieldRowFormer(
             cellType: FormerTextFieldCell.self,
             instantiateType: .Class
         )
-        textFieldRow.title = "TextField"
+//        textFieldRow.title = "TextField"
         textFieldRow.placeholder = "Placeholder"
         
         let textViewRow = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             instantiateType: .Class
         )
-        textViewRow.title = "TextView"
+//        textViewRow.title = "TextView"
         textViewRow.placeholder = "Placeholder"
         
         let checkRow = CheckRowFormer(
             cellType: FormerCheckCell.self,
             instantiateType: .Class
         )
-        checkRow.title = "Check"
+//        checkRow.title = "Check"
         
         let switchRow = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             instantiateType: .Class
         )
-        switchRow.title = "Switch"
+//        switchRow.title = "Switch"
         
         let stepperRow = StepperRowFormer(
             cellType: FormerStepperCell.self,
             instantiateType: .Class
         )
-        stepperRow.title = "Stepper"
+//        stepperRow.title = "Stepper"
         stepperRow.displayTextFromValue = { "\(Int($0))" }
         
         let segmentRow = SegmentedRowFormer(
@@ -93,41 +95,41 @@ final class DefaultUIViewController: FormerViewController {
             instantiateType: .Class,
             segmentTitles: ["Opt1", "Opt2", "Opt3"]
         )
-        segmentRow.title = "Segmented"
+//        segmentRow.title = "Segmented"
         
         let sliderRow = SliderRowFormer(
             cellType: FormerSliderCell.self,
             instantiateType: .Class
         )
-        sliderRow.title = "Slider"
+//        sliderRow.title = "Slider"
         sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
         
         let selectorPickerRow = SelectorPickerRowFormer(
             cellType: FormerSelectorPickerCell.self,
             instantiateType: .Class
         )
-        selectorPickerRow.title = "SelectorPicker"
+//        selectorPickerRow.title = "SelectorPicker"
         selectorPickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let selectorDatePickerRow = SelectorDatePickerRowFormer(
             cellType: FormerSelectorDatePickerCell.self,
             instantiateType: .Class
         )
-        selectorDatePickerRow.title = "SelectorDatePicker"
+//        selectorDatePickerRow.title = "SelectorDatePicker"
         selectorDatePickerRow.displayTextFromDate = String.mediumDateShortTime
         
         let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
             instantiateType: .Class
         )
-        inlinePickerRow.title = "InlinePicker"
+//        inlinePickerRow.title = "InlinePicker"
         inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let inlineDateRow = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
             instantiateType: .Class
         )
-        inlineDateRow.title = "InlineDatePicker"
+//        inlineDateRow.title = "InlineDatePicker"
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(

@@ -10,7 +10,7 @@ import UIKit
 
 public class FormerCheckCell: FormerCell, CheckFormableRow {
     
-    private weak var titleLabel: UILabel!
+    public private(set) weak var titleLabel: UILabel!
     
     public func formerTitleLabel() -> UILabel? {
         

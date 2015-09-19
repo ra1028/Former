@@ -12,9 +12,11 @@ public class FormerSelectorDatePickerCell: FormerCell, SelectorDatePickerFormabl
     
     public var selectorDatePicker: UIDatePicker?
     public var selectorAccessoryView: UIView?
-    private var titleLabel: UILabel!
-    private var displayLabel: UILabel!
-    private var displayLabelRightConst: NSLayoutConstraint!
+    
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var displayLabel: UILabel!
+    
+    private weak var displayLabelRightConst: NSLayoutConstraint!
     
     public func formerTitleLabel() -> UILabel? {
         

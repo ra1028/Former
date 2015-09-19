@@ -12,8 +12,8 @@ public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
     
     public let observer = FormerObserver()
     
-    private weak var titleLabel: UILabel!
-    private weak var segmentedControl: UISegmentedControl!
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var segmentedControl: UISegmentedControl!
     
     public func formerTitleLabel() -> UILabel? {
         

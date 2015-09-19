@@ -10,9 +10,10 @@ import UIKit
 
 public class FormerTextCell: FormerCell, TextFormableRow {
     
-    private var titleLabel: UILabel!
-    private var subTextLabel: UILabel!
-    private var subTextLabelRightConst: NSLayoutConstraint!
+    public private(set) weak var titleLabel: UILabel!
+    public private(set) weak var subTextLabel: UILabel!
+    
+    private weak var subTextLabelRightConst: NSLayoutConstraint!
     
     public func formerTextLabel() -> UILabel? {
         

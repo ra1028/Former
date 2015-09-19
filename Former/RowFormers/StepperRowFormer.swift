@@ -24,21 +24,11 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
     public var onValueChanged: (Double -> Void)?
     public var displayTextFromValue: (Double -> String?)?
     public var value: Double = 0
-    public var continuous: Bool?
-    public var autorepeat: Bool?
-    public var wraps: Bool?
-    public var minimumValue: Double?
-    public var maximumValue: Double?
-    public var stepValue: Double?
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
-    
-    public var displayFont: UIFont?
-    public var displayColor: UIColor?
-    public var displayDisabledColor: UIColor?
+    private var titleColor: UIColor?
+    private var displayColor: UIColor?
     
     public init<T : UITableViewCell where T : StepperFormableRow>(
         cellType: T.Type,
@@ -49,45 +39,32 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
             self.onValueChanged = onValueChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.selectionStyle = UITableViewCellSelectionStyle.None
-        self.titleDisabledColor = .lightGrayColor()
-        self.displayColor = .lightGrayColor()
-        self.displayDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
         
         super.update()
         
+        self.cell?.selectionStyle = .None
+        
         if let row = self.cell as? StepperFormableRow {
             
-            let stepper = row.formerStepper()
-            stepper.value = self.value
-            stepper.continuous =? self.continuous
-            stepper.autorepeat =? self.autorepeat
-            stepper.wraps =? self.wraps
-            stepper.minimumValue =? self.minimumValue
-            stepper.maximumValue =? self.maximumValue
-            stepper.stepValue =? self.stepValue
-            stepper.enabled = self.enabled
-            
             let titleLabel = row.formerTitleLabel()
-            titleLabel?.text =? self.title
-            titleLabel?.font =? self.titleFont
-            
             let displayLabel = row.formerDisplayLabel()
+            let stepper = row.formerStepper()
+            
+            stepper.value = self.value
+            stepper.enabled = self.enabled
             displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
-            displayLabel?.font =? self.displayFont
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
                 displayLabel?.textColor =? self.displayColor
+                self.titleColor = nil
+                self.displayColor = nil
             } else {
-                titleLabel?.textColor =? self.titleDisabledColor
-                displayLabel?.textColor =? self.displayDisabledColor
+                self.titleColor ?= titleLabel?.textColor
+                self.displayColor ?= displayLabel?.textColor
+                titleLabel?.textColor = self.titleDisabledColor
+                displayLabel?.textColor = self.displayDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
