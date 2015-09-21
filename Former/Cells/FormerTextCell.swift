@@ -25,9 +25,9 @@ public class FormerTextCell: FormerCell, TextFormableRow {
         return self.subTextLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func updateWithRowFormer(rowFormer: RowFormer) {
         
-        super.configureWithRowFormer(rowFormer)
+        super.updateWithRowFormer(rowFormer)
         self.subTextLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
     }
     

@@ -26,7 +26,6 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     public var onValidate: ((Int, String) -> Bool)?
     
     public var onValueChanged: ((Int, String) -> Void)?
-    public var inputViewUpdate: (UIPickerView -> Void)?
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
     public var inputAccessoryView: UIView?
@@ -46,8 +45,9 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     public init<T: UITableViewCell where T: SelectorPickerFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onValueChanged: ((Int, String) -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType)
+        onValueChanged: ((Int, String) -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     
@@ -55,7 +55,6 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
         
         super.update()
         
-        self.inputViewUpdate?(self.inputView)
         self.inputView.selectRow(self.selectedRow, inComponent: 0, animated: false)
         
         if let row = self.cell as? SelectorPickerFormableRow {
@@ -65,7 +64,11 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
             
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            displayLabel?.text = self.valueTitles[self.selectedRow]
+            if self.valueTitles.isEmpty {
+                displayLabel?.text = ""
+            } else {
+                displayLabel?.text = self.valueTitles[self.selectedRow]
+            }
             
             if self.enabled {
                 titleLabel?.textColor =? self.titleColor
@@ -79,6 +82,11 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
                 displayLabel?.textColor = self.displayDisabledColor
             }
         }
+    }
+    
+    public final func inputViewUpdate(@noescape update: (UIPickerView -> Void)) {
+        
+        update(self.inputView)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {

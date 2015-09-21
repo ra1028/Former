@@ -38,9 +38,10 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     public init<T: UITableViewCell where T: TextFieldFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onTextChanged: (String -> Void)? = nil) {
+        onTextChanged: (String -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onTextChanged = onTextChanged
     }
     

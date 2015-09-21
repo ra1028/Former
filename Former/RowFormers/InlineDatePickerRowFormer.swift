@@ -16,10 +16,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
 
 public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
-    public private(set) var inlineRowFormer: RowFormer = DatePickerRowFormer(
-        cellType: FormerDatePickerCell.self,
-        instantiateType: .Class
-    )
+    public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
@@ -40,9 +37,16 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     public init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onDateChanged: (NSDate -> Void)? = nil) {
+        onDateChanged: (NSDate -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil,
+        inlineCellConfiguration: (FormerDatePickerCell -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            self.inlineRowFormer = DatePickerRowFormer(
+                cellType: FormerDatePickerCell.self,
+                instantiateType: .Class,
+                cellConfiguration: inlineCellConfiguration
+            )
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onDateChanged = onDateChanged
     }
     
@@ -80,18 +84,16 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         if let pickerRowFormer = self.inlineRowFormer as? DatePickerRowFormer {
             
             pickerRowFormer.onDateChanged = self.dateChanged
-            // TODO:
-//            pickerRowFormer.calendar = self.calendar
-//            pickerRowFormer.minuteInterval = self.minuteInterval
-//            pickerRowFormer.minimumDate = self.minimumDate
-//            pickerRowFormer.maximumDate = self.maximumDate
-//            pickerRowFormer.countDownDuration = self.countDownDuration
-//            pickerRowFormer.datePickerMode = self.datePickerMode
-//            pickerRowFormer.locale = self.locale
-//            pickerRowFormer.timeZone = self.timeZone
             pickerRowFormer.date = self.date
             pickerRowFormer.enabled = self.enabled
             pickerRowFormer.update()
+        }
+    }
+    
+    public final func inlineCellUpdate(@noescape update: (FormerDatePickerCell -> Void)) {
+        
+        if let inlineCell = self.inlineRowFormer.cell as? FormerDatePickerCell {
+            update(inlineCell)
         }
     }
     

@@ -49,13 +49,12 @@ final class TopViewContoller: FormerViewController {
         ]
         
         let createMenu: ((String, (() -> Void)?) -> TextRowFormer) = { text, onSelected in
-            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, instantiateType: .Class)
+            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, instantiateType: .Class, text: text) {
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = UIFont.boldSystemFontOfSize(16.0)
+                $0.accessoryType = .DisclosureIndicator
+            }
             rowFormer.onSelected = { _ in onSelected?() }
-            rowFormer.text = text
-            // TODO:
-//            rowFormer.textColor = .formerColor()
-//            rowFormer.font = UIFont.boldSystemFontOfSize(16.0)
-//            rowFormer.accessoryType = .DisclosureIndicator
             return rowFormer
         }
         

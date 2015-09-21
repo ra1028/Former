@@ -28,9 +28,9 @@ public class FormerSelectorDatePickerCell: FormerCell, SelectorDatePickerFormabl
         return self.displayLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func updateWithRowFormer(rowFormer: RowFormer) {
         
-        super.configureWithRowFormer(rowFormer)
+        super.updateWithRowFormer(rowFormer)
         
         self.displayLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
     }

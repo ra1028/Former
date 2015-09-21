@@ -10,7 +10,7 @@ import UIKit
 
 public protocol FormableRow: class {
     
-    func configureWithRowFormer(rowFormer: RowFormer)
+    func updateWithRowFormer(rowFormer: RowFormer)
 }
 
 public protocol InlineRow: class {
@@ -30,11 +30,6 @@ public class RowFormer: NSObject {
     public internal(set) final weak var former: Former?
     public private(set) final var cell: UITableViewCell?
     public internal(set) final var isEditing = false
-    public var canBecomeEditing: Bool {
-        return false
-    }
-    
-    public private(set) var cellType: UITableViewCell.Type
     public private(set) var instantiateType: Former.InstantiateType
     public var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     public var cellHeight: CGFloat = 44.0
@@ -43,16 +38,28 @@ public class RowFormer: NSObject {
             self.update()
         }
     }
+    public var canBecomeEditing: Bool {
+        return false
+    }
+    
+    private final var cellType: UITableViewCell.Type
+    private final let cellConfiguration: (UITableViewCell -> Void)
     
     public init<T: UITableViewCell where T: FormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onSelected: ((NSIndexPath, RowFormer) -> Void)? = nil) {
+        cellConfiguration: (T -> Void)? = nil) {
             
             self.cellType = cellType
             self.instantiateType = instantiateType
+            self.cellConfiguration = {
+                if let cell = $0 as? T {
+                    cellConfiguration?(cell)
+                } else {
+                    assert(false, "Cell type is not match at creation time.")
+                }
+            }
             super.init()
-            self.onSelected = onSelected
             self.initialize()
     }
     
@@ -67,20 +74,16 @@ public class RowFormer: NSObject {
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
                 self.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-//                assert(self.cell != nil, "Failed to load cell \(nibName) from nib.")
+                assert(self.cell != nil, "Failed to load cell \(nibName) from nib.")
             }
+            _ = self.cell.map { self.cellConfiguration($0) }
         }
         
         self.update()
         
         if let formableRow = self.cell as? FormableRow {
-            formableRow.configureWithRowFormer(self)
+            formableRow.updateWithRowFormer(self)
         }
-    }
-    
-    final func purgeCell() {
-        
-        self.cell = nil
     }
     
     public func update() {
@@ -89,9 +92,18 @@ public class RowFormer: NSObject {
             
             cell.userInteractionEnabled = self.enabled
             
-            if let row = cell as? FormableRow {
-                row.configureWithRowFormer(self)
+            if let formableRow = cell as? FormableRow {
+                formableRow.updateWithRowFormer(self)
             }
+            
+            
+        }
+    }
+    
+    public final func cellUpdate<T: UITableViewCell>(@noescape update: (T -> Void)) {
+        
+        if let cell = self.cell as? T {
+            update(cell)
         }
     }
     

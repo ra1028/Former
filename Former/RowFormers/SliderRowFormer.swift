@@ -34,9 +34,10 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     public init<T : UITableViewCell where T : SliderFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onValueChanged: (Float -> Void)? = nil) {
+        onValueChanged: (Float -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     

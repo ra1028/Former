@@ -31,9 +31,10 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         segmentTitles: [String],
-        onSegmentSelected: ((Int, String) -> Void)? = nil) {
+        onSegmentSelected: ((Int, String) -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.segmentTitles = segmentTitles
             self.onSegmentSelected = onSegmentSelected
     }

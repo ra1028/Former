@@ -17,6 +17,7 @@ public protocol TextFormableRow: FormableRow {
 public class TextRowFormer: RowFormer {
     
     public var text: String?
+    public var subText: String?
     public var textDisabledColor: UIColor? = .lightGrayColor()
     public var subTextDisabledColor: UIColor? = .lightGrayColor()
     
@@ -26,8 +27,10 @@ public class TextRowFormer: RowFormer {
     public init<T: UITableViewCell where T: TextFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        text: String? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType)
+        text: String? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
+            
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.text = text
     }
     
@@ -41,6 +44,7 @@ public class TextRowFormer: RowFormer {
             let subTextLabel = row.formerSubTextLabel()
             
             textLabel?.text = self.text
+            subTextLabel?.text = self.subText
             
             if self.enabled {
                 textLabel?.textColor =? self.textColor

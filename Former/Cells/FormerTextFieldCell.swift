@@ -28,12 +28,12 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         return self.titleLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func updateWithRowFormer(rowFormer: RowFormer) {
         
-        super.configureWithRowFormer(rowFormer)
+        super.updateWithRowFormer(rowFormer)
         
         self.leftConst.constant = self.titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
-        self.rightConst.constant = (self.titleLabel.textAlignment == .Right) ? -15.0 : 0
+        self.rightConst.constant = (self.textField.textAlignment == .Right) ? -15.0 : 0
     }
     
     public override func configureViews() {

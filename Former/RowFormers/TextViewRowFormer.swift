@@ -36,9 +36,10 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
     public init<T : UITableViewCell where T : TextViewFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        textChangedHandler: (String -> Void)? = nil) {
+        textChangedHandler: (String -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.textChangedHandler = textChangedHandler
     }
     

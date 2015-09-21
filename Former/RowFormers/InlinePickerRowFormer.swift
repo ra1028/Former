@@ -16,10 +16,7 @@ public protocol InlinePickerFormableRow: FormableRow {
 
 public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
-    public private(set) var inlineRowFormer: RowFormer = PickerRowFormer(
-        cellType: FormerPickerCell.self,
-        instantiateType: .Class
-    )
+    public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
         return self.enabled
     }
@@ -40,9 +37,16 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     public init<T : UITableViewCell where T : InlinePickerFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onValueChanged: ((Int, String) -> Void)? = nil) {
+        onValueChanged: ((Int, String) -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil,
+        inlineCellConfiguration: (FormerPickerCell -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            self.inlineRowFormer = PickerRowFormer(
+                cellType: FormerPickerCell.self,
+                instantiateType: .Class,
+                cellConfiguration: inlineCellConfiguration
+            )
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     
@@ -54,7 +58,12 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
             
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            displayLabel?.text = self.valueTitles[self.selectedRow]
+            
+            if self.valueTitles.isEmpty {
+                displayLabel?.text = ""
+            } else {
+                displayLabel?.text = self.valueTitles[self.selectedRow]
+            }
             
             if self.enabled {
                 
@@ -82,10 +91,15 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
             pickerRowFormer.onValueChanged = self.valueChanged
             pickerRowFormer.valueTitles = self.valueTitles
             pickerRowFormer.selectedRow = self.selectedRow
-            // TODO:
-//            pickerRowFormer.showsSelectionIndicator = showsSelectionIndicator
             pickerRowFormer.enabled = self.enabled
             pickerRowFormer.update()
+        }
+    }
+    
+    public final func inlineCellUpdate(@noescape update: (FormerPickerCell -> Void)) {
+        
+        if let inlineCell = self.inlineRowFormer.cell as? FormerPickerCell {
+            update(inlineCell)
         }
     }
     

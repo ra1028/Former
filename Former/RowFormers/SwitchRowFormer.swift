@@ -26,13 +26,15 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
     private var titleColor: UIColor?
+    private var selectionStyle: UITableViewCellSelectionStyle?
     
     public init<T : UITableViewCell where T : SwitchFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onSwitchChanged: (Bool -> Void)? = nil) {
+        onSwitchChanged: (Bool -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onSwitchChanged = onSwitchChanged
     }
     
@@ -40,8 +42,12 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
         
         super.update()
         
-        if self.switchWhenSelected {
+        if !self.switchWhenSelected {
+            self.selectionStyle ?= self.cell?.selectionStyle
             self.cell?.selectionStyle = .None
+        } else {
+            self.cell?.selectionStyle =? self.selectionStyle
+            self.selectionStyle = nil
         }
         
         if let row = self.cell as? SwitchFormableRow {

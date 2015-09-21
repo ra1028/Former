@@ -22,7 +22,7 @@ public class FormerCell: UITableViewCell, FormableRow {
         self.configureViews()
     }
     
-    public func configureWithRowFormer(rowFormer: RowFormer) {}
+    public func updateWithRowFormer(rowFormer: RowFormer) {}
     
     public func configureViews() {
         

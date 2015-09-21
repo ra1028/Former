@@ -25,9 +25,9 @@ public class FormerTextViewCell: FormerCell, TextViewFormableRow {
         return self.titleLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func updateWithRowFormer(rowFormer: RowFormer) {
         
-        super.configureWithRowFormer(rowFormer)
+        super.updateWithRowFormer(rowFormer)
         
         self.leftConst.constant = self.titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
     }

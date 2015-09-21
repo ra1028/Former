@@ -26,9 +26,10 @@ public class CheckRowFormer: RowFormer, FormerValidatable {
     public init<T : UITableViewCell where T : CheckFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onCheckChanged: (Bool -> Void)? = nil) {
+        onCheckChanged: (Bool -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)            
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onCheckChanged = onCheckChanged
     }
     

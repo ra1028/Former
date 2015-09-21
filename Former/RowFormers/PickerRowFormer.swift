@@ -24,9 +24,10 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
     public init<T : UITableViewCell where T : PickerFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        onValueChanged: ((Int, String) -> Void)? = nil) {
+        onValueChanged: ((Int, String) -> Void)? = nil,
+        cellConfiguration: (T -> Void)? = nil) {
             
-            super.init(cellType: cellType, instantiateType: instantiateType)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     

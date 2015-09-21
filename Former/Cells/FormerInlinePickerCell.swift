@@ -25,9 +25,9 @@ public class FormerInlinePickerCell: FormerCell, InlinePickerFormableRow {
         return self.displayLabel
     }
     
-    public override func configureWithRowFormer(rowFormer: RowFormer) {
+    public override func updateWithRowFormer(rowFormer: RowFormer) {
         
-        super.configureWithRowFormer(rowFormer)
+        super.updateWithRowFormer(rowFormer)
         
         self.displayLabelRightConst.constant =
             (self.accessoryType == .None && self.accessoryView == nil) ? -15.0 : 0

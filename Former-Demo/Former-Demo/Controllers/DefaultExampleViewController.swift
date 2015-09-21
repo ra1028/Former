@@ -16,13 +16,12 @@ class DefaultExampleViewController: FormerViewController {
         return (1...2).map { index -> RowFormer in
             let row = CheckRowFormer(
                 cellType: FormerCheckCell.self,
-                instantiateType: .Class) { check in
+                instantiateType: .Class) {
+                    $0.titleLabel.text = "Check\(index)"
+                    $0.titleLabel.textColor = .formerColor()
+                    $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                    $0.tintColor = .formerSubColor()
             }
-            // TODO:
-//            row.title = "Check\(index)"
-//            row.titleColor = .formerColor()
-//            row.tintColor = .formerSubColor()
-//            row.titleFont = .boldSystemFontOfSize(16.0)
             return row
         }
         }()
@@ -30,13 +29,12 @@ class DefaultExampleViewController: FormerViewController {
     private lazy var subSectionFormer: SectionFormer = {
         let rowFormer = CheckRowFormer(
             cellType: FormerCheckCell.self,
-            instantiateType: .Class
-        )
-        // TODO:
-//        rowFormer.title = "Check3"
-//        rowFormer.titleColor = .formerColor()
-//        rowFormer.titleFont = .boldSystemFontOfSize(16.0)
-//        rowFormer.tintColor = .formerSubColor()
+            instantiateType: .Class) {
+                $0.titleLabel.text = "Check3"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.tintColor = .formerSubColor()
+        }
         return SectionFormer().add(rowFormers: [rowFormer])
         }()
     
@@ -77,44 +75,49 @@ class DefaultExampleViewController: FormerViewController {
         
         self.title = "Default Example"
         
-        // TODO:
-        
         // Create RowFormers
         
         // Date Setting Example
         
         let date = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
-            instantiateType: .Class
-        )
+            instantiateType: .Class,
+            cellConfiguration: {
+                $0.titleLabel.text = "Date"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.displayLabel.textColor = .formerSubColor()
+                $0.displayLabel.font = .boldSystemFontOfSize(14.0)
+                $0.displayLabel.textAlignment = .Right
+            }) {
+                $0.datePicker.datePickerMode = .DateAndTime
+        }
         date.displayTextFromDate = String.mediumDateShortTime
-//        date.title = "Date"
-//        date.titleColor = .formerColor()
-//        date.titleFont = .boldSystemFontOfSize(16.0)
-//        date.datePickerMode = .DateAndTime
-//        date.displayTextColor = .formerSubColor()
-//        date.displayTextEditingColor = .formerHighlightedSubColor()
-//        date.displayTextFont = .boldSystemFontOfSize(14.0)
-//        date.displayTextAlignment = .Right
+        date.displayEditingColor = .formerHighlightedSubColor()
         
         let switchDateStyle = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
-            instantiateType: .Class) {
-                date.displayTextFromDate = $0 ? String.fullDate : String.mediumDateShortTime
-//                date.datePickerMode = $0 ? .Date : .DateAndTime
+            instantiateType: .Class,
+            onSwitchChanged: { switched in
+                date.displayTextFromDate = switched ? String.fullDate : String.mediumDateShortTime
+                date.inlineCellUpdate {
+                    $0.datePicker.datePickerMode = switched ? .Date : .DateAndTime
+                }
                 date.update()
+            }) {
+                $0.titleLabel.text = "Switch Date Style"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.switchButton.onTintColor = .formerSubColor()
         }
         switchDateStyle.switched = false
-//        switchDateStyle.title = "Switch Date Style"
-//        switchDateStyle.titleColor = .formerColor()
-//        switchDateStyle.titleFont = .boldSystemFontOfSize(16.0)
-//        switchDateStyle.switchOnTintColor = .formerSubColor()
         
         // Incert Rows Example
         
         let insertRows = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
-            instantiateType: .Class) { [weak self] in
+            instantiateType: .Class,
+            onSwitchChanged: { [weak self] in
                 if let sSelf = self {
                     if $0 {
                         sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
@@ -122,17 +125,19 @@ class DefaultExampleViewController: FormerViewController {
                         sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
                     }
                 }
+            }) {
+                $0.titleLabel.text = "Insert Rows"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.switchButton.onTintColor = .formerSubColor()
         }
-//        insertRows.title = "Insert Rows"
-//        insertRows.titleColor = .formerColor()
-//        insertRows.switchOnTintColor = .formerSubColor()
-//        insertRows.titleFont = .boldSystemFontOfSize(16.0)
         
         // Insert Section Example
         
         let insertSection = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
-            instantiateType: .Class) { [weak self] in
+            instantiateType: .Class,
+            onSwitchChanged: { [weak self] in
                 if let sSelf = self {
                     if $0 {
                         sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
@@ -140,11 +145,12 @@ class DefaultExampleViewController: FormerViewController {
                         sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
                     }
                 }
+            }) {
+                $0.titleLabel.text = "Insert Section"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.switchButton.onTintColor = .formerSubColor()
         }
-//        insertSection.title = "Insert Section"
-//        insertSection.titleColor = .formerColor()
-//        insertSection.switchOnTintColor = .formerSubColor()
-//        insertSection.titleFont = .boldSystemFontOfSize(16.0)
         
         // Selector Example
         
@@ -153,16 +159,24 @@ class DefaultExampleViewController: FormerViewController {
             
             let selector = TextRowFormer(
                 cellType: FormerTextCell.self,
-                instantiateType: .Class
-            )
+                instantiateType: .Class,
+                cellConfiguration: {
+                    $0.titleLabel.textColor = .formerColor()
+                    $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                    $0.subTextLabel.textColor = .formerSubColor()
+                    $0.subTextLabel.font = .boldSystemFontOfSize(14.0)
+                    $0.subTextLabel.textAlignment = .Right
+                    $0.accessoryType = .DisclosureIndicator
+            })
+            selector.subText = options.first
             selector.onSelected = [
                 { [weak self] in
                     let selector = $1 as! TextRowFormer
                     let controller = TextSelectorViewContoller()
                     controller.texts = options
-//                    controller.selectedText = selector.subText
-                    controller.onSelected = { _ in
-//                        selector.subText = $0
+                    controller.selectedText = selector.subText
+                    controller.onSelected = {
+                        selector.subText = $0
                         selector.update()
                     }
                     self?.navigationController?.pushViewController(controller, animated: true)
@@ -172,7 +186,7 @@ class DefaultExampleViewController: FormerViewController {
                     let selector = $1 as! TextRowFormer
                     options.forEach { title in
                         sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak selector] _ in
-//                            selector?.subText = title
+                            selector?.subText = title
                             selector?.update()
                             })
                         )
@@ -184,61 +198,59 @@ class DefaultExampleViewController: FormerViewController {
                 }
                 ][index]
             selector.text = ["Push", "Sheet", "Picker"][index]
-//            selector.textColor = .formerColor()
-//            selector.font = .boldSystemFontOfSize(16.0)
-//            selector.subText = options.first
-//            selector.subTextColor = .formerSubColor()
-//            selector.subTextFont = .boldSystemFontOfSize(14.0)
-//            selector.subTextAlignment = .Right
-//            selector.accessoryType = .DisclosureIndicator
             return selector
         }
         let pickerSelector = SelectorPickerRowFormer(
             cellType: FormerSelectorPickerCell.self,
-            instantiateType: .Class
-        )
+            instantiateType: .Class) {
+                $0.titleLabel.text = "Picker"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.displayLabel.textColor = .formerSubColor()
+                $0.displayLabel.font = .boldSystemFontOfSize(14.0)
+                $0.displayLabel.textAlignment = .Right
+                $0.accessoryType = .DisclosureIndicator
+        }
+        pickerSelector.inputViewUpdate {
+            $0.backgroundColor = .whiteColor()
+        }
         pickerSelector.valueTitles = options
         pickerSelector.inputAccessoryView = self.formerInputAccessoryView
-//        pickerSelector.title = "Picker"
-//        pickerSelector.titleColor = .formerColor()
-//        pickerSelector.titleFont = .boldSystemFontOfSize(16.0)
-//        pickerSelector.displayTextColor = .formerSubColor()
-//        pickerSelector.displayTextFont = .boldSystemFontOfSize(14.0)
-//        pickerSelector.displayTextAlignment = .Right
-//        pickerSelector.pickerBackgroundColor = .whiteColor()
-//        pickerSelector.accessoryType = .DisclosureIndicator
         
         // Custom Input Accessory View Example
 
         let textFields = (1...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
                 cellType: FormerTextFieldCell.self,
-                instantiateType: .Class
-            )
+                instantiateType: .Class,
+                cellConfiguration: { [weak self] in
+                    $0.titleLabel.text = "Field\(index)"
+                    $0.titleLabel.textColor = .formerColor()
+                    $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                    $0.textField.textColor = .formerSubColor()
+                    $0.textField.font = .boldSystemFontOfSize(14.0)
+                    $0.textField.textAlignment = .Right
+                    $0.textField.inputAccessoryView = self?.formerInputAccessoryView
+                    $0.textField.returnKeyType = .Next
+                    $0.tintColor = .formerColor()
+            })
             input.placeholder = "Example"
-//            input.title = "Field\(index)"
-//            input.titleColor = .formerColor()
-//            input.textColor = .formerSubColor()
-//            input.tintColor = .formerColor()
-//            input.font = .boldSystemFontOfSize(16.0)
-//            input.textAlignment = .Right
-//            input.inputAccessoryView = self.formerInputAccessoryView
-//            input.returnKeyType = .Next
             return input
         }
         
         let picker = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
-            instantiateType: .Class
-        )
+            instantiateType: .Class,
+            cellConfiguration: {
+                $0.titleLabel.text = "Inline Picker"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.displayLabel.textColor = .formerSubColor()
+                $0.displayLabel.font = .boldSystemFontOfSize(14.0)
+                $0.displayLabel.textAlignment = .Right
+            })
         picker.valueTitles = (1...20).map { "Option\($0)" }
-//        picker.title = "Inline Picker"
-//        picker.titleColor = .formerColor()
-//        picker.titleFont = .boldSystemFontOfSize(16.0)
-//        picker.displayTextColor = .formerSubColor()
-//        picker.displayTextEditingColor = .formerHighlightedSubColor()
-//        picker.displayTextFont = .boldSystemFontOfSize(14.0)
-//        picker.displayTextAlignment = .Right
+        picker.displayEditingColor = .formerHighlightedSubColor()
         
         // Create Headers and Footers
         

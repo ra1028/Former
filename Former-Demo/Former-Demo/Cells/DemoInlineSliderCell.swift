@@ -25,7 +25,7 @@ final class DemoDemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableR
         return self.colorDisplayView
     }
     
-    func configureWithRowFormer(rowFormer: RowFormer) {}
+    func updateWithRowFormer(rowFormer: RowFormer) {}
     
     required init?(coder aDecoder: NSCoder) {
         
