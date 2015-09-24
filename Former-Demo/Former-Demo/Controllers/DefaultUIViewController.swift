@@ -40,7 +40,6 @@ final class DefaultUIViewController: FormerViewController {
                 sSelf.former.deselect(true)
                 sSelf.former[1...2].flatMap { $0.rowFormers }.forEach {
                     $0.enabled = !sSelf.enabled
-                    $0.update()
                 }
                 disableRow.text = disableRowText(sSelf.enabled)
                 disableRow.update()

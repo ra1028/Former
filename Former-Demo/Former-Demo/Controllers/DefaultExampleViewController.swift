@@ -101,7 +101,7 @@ class DefaultExampleViewController: FormerViewController {
             onSwitchChanged: { switched in
                 date.displayTextFromDate = switched ? String.fullDate : String.mediumDateShortTime
                 date.inlineCellUpdate {
-                    $0.datePicker.datePickerMode = switched ? .Date : .DateAndTime
+                    $0?.datePicker.datePickerMode = switched ? .Date : .DateAndTime
                 }
                 date.update()
             }) {

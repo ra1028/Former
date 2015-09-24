@@ -90,11 +90,9 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         }
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormerDatePickerCell -> Void)) {
+    public final func inlineCellUpdate(@noescape update: (FormerDatePickerCell? -> Void)) {
         
-        if let inlineCell = self.inlineRowFormer.cell as? FormerDatePickerCell {
-            update(inlineCell)
-        }
+        update(self.inlineRowFormer.cell as? FormerDatePickerCell)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {

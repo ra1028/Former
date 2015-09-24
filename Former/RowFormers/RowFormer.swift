@@ -67,22 +67,41 @@ public class RowFormer: NSObject {
     
     final func cellConfigure() {
         
-        if self.cell == nil {
-            switch self.instantiateType {
+        let instantiateCell: (RowFormer -> Void) = { rowFormer in
+            
+            switch rowFormer.instantiateType {
             case .Class:
-                self.cell = self.cellType.init(style: .Default, reuseIdentifier: nil)
+                rowFormer.cell = rowFormer.cellType.init(style: .Default, reuseIdentifier: nil)
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
-                self.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-                assert(self.cell != nil, "Failed to load cell \(nibName) from nib.")
+                rowFormer.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
+                assert(rowFormer.cell != nil, "Failed to load cell \(nibName) from nib.")
             }
-            _ = self.cell.map { self.cellConfiguration($0) }
+            _ = rowFormer.cell.map { rowFormer.cellConfiguration($0) }
+        }
+        
+        if self.cell == nil {
+            instantiateCell(self)
         }
         
         self.update()
         
         if let formableRow = self.cell as? FormableRow {
             formableRow.updateWithRowFormer(self)
+        }
+        
+        if let inlineRow = self as? InlineRow {
+            
+            let inlineRowFormer = inlineRow.inlineRowFormer
+            if inlineRowFormer.cell == nil {
+                instantiateCell(inlineRowFormer)
+            }
+            
+            inlineRowFormer.update()
+            
+            if let inlineFormableRow = inlineRowFormer.cell as? FormableRow {
+                inlineFormableRow.updateWithRowFormer(inlineRowFormer)
+            }
         }
     }
     
@@ -95,16 +114,12 @@ public class RowFormer: NSObject {
             if let formableRow = cell as? FormableRow {
                 formableRow.updateWithRowFormer(self)
             }
-            
-            
         }
     }
     
-    public final func cellUpdate<T: UITableViewCell>(@noescape update: (T -> Void)) {
+    public final func cellUpdate<T: UITableViewCell>(@noescape update: (T? -> Void)) {
         
-        if let cell = self.cell as? T {
-            update(cell)
-        }
+        update(self.cell as? T)
     }
     
     public func cellSelected(indexPath: NSIndexPath) {
