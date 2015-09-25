@@ -10,29 +10,37 @@ import UIKit
 
 public protocol FormableView: class {
     
-    func configureWithViewFormer(viewFormer: ViewFormer)
+    func updateWithViewFormer(viewFormer: ViewFormer)
 }
 
-public class ViewFormer {
+public class ViewFormer: NSObject {
     
     public private(set) final var view: UITableViewHeaderFooterView?
-    public private(set) var viewType: UITableViewHeaderFooterView.Type
     public private(set) var instantiateType: Former.InstantiateType
     public var viewHeight: CGFloat = 10.0
-    public var backgroundColor: UIColor?
     
-    public init<T: UITableViewHeaderFooterView where T: FormableView>(viewType: T.Type, instantiateType: Former.InstantiateType) {
+    private private(set) var viewType: UITableViewHeaderFooterView.Type
+    private final let viewConfiguration: (UITableViewHeaderFooterView -> Void)
+    
+    public init<T: UITableViewHeaderFooterView where T: FormableView>(
+        viewType: T.Type,
+        instantiateType: Former.InstantiateType,
+        viewConfiguration: (T -> Void)? = nil) {
         
-        self.viewType = viewType
-        self.instantiateType = instantiateType
-        
-        self.initialize()
+            self.viewType = viewType
+            self.instantiateType = instantiateType
+            self.viewConfiguration = {
+                if let view = $0 as? T {
+                    viewConfiguration?(view)
+                } else {
+                    assert(false, "View type is not match at creation time.")
+                }
+            }
+            super.init()
+            self.initialize()
     }
     
-    public func initialize() {
-        
-        self.backgroundColor = .groupTableViewBackgroundColor()
-    }
+    public func initialize() {}
     
     final func viewConfigure() {
         
@@ -45,15 +53,28 @@ public class ViewFormer {
                 self.view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
                 assert(self.view != nil, "Failed to load header footer view \(nibName) from nib.")
             }
+            _ = self.view.map {
+                $0.backgroundColor = .clearColor()
+                self.viewConfiguration($0)
+            }
         }
         if let formableView = self.view as? FormableView {
-            formableView.configureWithViewFormer(self)
+            formableView.updateWithViewFormer(self)
         }
         self.update()
     }
     
     public func update() {
         
-        self.view?.contentView.backgroundColor = self.backgroundColor
+        if let view = self.view,
+            let formableView = view as? FormableView {
+                
+                formableView.updateWithViewFormer(self)
+        }
+    }
+    
+    public final func viewUpdate<T: UITableViewHeaderFooterView>(@noescape update: (T? -> Void)) {
+        
+            update(self.view as? T)
     }
 }

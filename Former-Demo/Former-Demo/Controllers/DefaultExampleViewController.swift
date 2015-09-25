@@ -118,12 +118,11 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerSwitchCell.self,
             instantiateType: .Class,
             onSwitchChanged: { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
-                    } else {
-                        sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
-                    }
+                guard let sSelf = self else { return }
+                if $0 {
+                    sSelf.former.insertAndUpdate(rowFormers: sSelf.subRowFormers, toIndexPath: NSIndexPath(forRow: 1, inSection: 1), rowAnimation: .Left)
+                } else {
+                    sSelf.former.removeAndUpdate(rowFormers: sSelf.subRowFormers, rowAnimation: .Right)
                 }
             }) {
                 $0.titleLabel.text = "Insert Rows"
@@ -138,12 +137,11 @@ class DefaultExampleViewController: FormerViewController {
             cellType: FormerSwitchCell.self,
             instantiateType: .Class,
             onSwitchChanged: { [weak self] in
-                if let sSelf = self {
-                    if $0 {
-                        sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
-                    } else {
-                        sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
-                    }
+                guard let sSelf = self else { return }
+                if $0 {
+                    sSelf.former.insertAndUpdate(sectionFormers: [sSelf.subSectionFormer], toSection: 3, rowAnimation: .Fade)
+                } else {
+                    sSelf.former.removeAndUpdate(sectionFormers: [sSelf.subSectionFormer], rowAnimation: .Fade)
                 }
             }) {
                 $0.titleLabel.text = "Insert Section"
@@ -194,7 +192,6 @@ class DefaultExampleViewController: FormerViewController {
                     sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     self?.presentViewController(sheet, animated: true, completion: nil)
                     self?.former.deselect(true)
-                    return
                 }
                 ][index]
             selector.text = ["Push", "Sheet", "Picker"][index]
@@ -258,9 +255,10 @@ class DefaultExampleViewController: FormerViewController {
             let header = TextViewFormer(
                 viewType: FormerTextHeaderView.self,
                 instantiateType: .Class,
-                text: $0)
-            header.textColor = .grayColor()
-            header.font = .systemFontOfSize(14.0)
+                text: $0) {
+                    $0.titleLabel.textColor = .grayColor()
+                    $0.titleLabel.font = .systemFontOfSize(14.0)
+            }
             header.viewHeight = 40.0
             return header
         }

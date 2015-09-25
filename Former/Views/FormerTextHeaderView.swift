@@ -10,35 +10,35 @@ import UIKit
 
 public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
     
-    private weak var headerTextLabel: UILabel!
+    public private(set) weak var titleLabel: UILabel!
     
-    public func formerTextLabel() -> UILabel? {
+    public func formerTextLabel() -> UILabel {
         
-        return self.headerTextLabel
+        return self.titleLabel
     }
     
     override public func setup() {
         
         super.setup()
         
-        let headerTextLabel = UILabel()
-        headerTextLabel.font = UIFont.systemFontOfSize(14.0)
-        headerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(headerTextLabel, atIndex: 0)
-        self.headerTextLabel = headerTextLabel
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFontOfSize(14.0)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        self.titleLabel = titleLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "V:[label(>=0)]-5-|",
                 options: [],
                 metrics: nil,
-                views: ["label": headerTextLabel]
+                views: ["label": titleLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "H:|-15-[label]-15-|",
                 options: [],
                 metrics: nil,
-                views: ["label": headerTextLabel]
+                views: ["label": titleLabel]
             )
         ]
         self.contentView.addConstraints(constraints.flatMap { $0 })

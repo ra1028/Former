@@ -77,7 +77,9 @@ public class RowFormer: NSObject {
                 rowFormer.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
                 assert(rowFormer.cell != nil, "Failed to load cell \(nibName) from nib.")
             }
-            _ = rowFormer.cell.map { rowFormer.cellConfiguration($0) }
+            _ = rowFormer.cell.map {
+                rowFormer.cellConfiguration($0)
+            }
         }
         
         if self.cell == nil {

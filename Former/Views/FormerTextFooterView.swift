@@ -10,37 +10,37 @@ import UIKit
 
 public class FormerTextFooterView: FormerHeaderFooterView, TextFormableView {
     
-    private weak var footerTextLabel: UILabel!
+    public private(set) weak var titleLabel: UILabel!
     
-    public func formerTextLabel() -> UILabel? {
+    public func formerTextLabel() -> UILabel {
         
-        return self.footerTextLabel
+        return self.titleLabel
     }
     
     override public func setup() {
         
         super.setup()
         
-        let footerTextLabel = UILabel()
-        footerTextLabel.font = UIFont.systemFontOfSize(14.0)
-        footerTextLabel.textAlignment = .Center
-        footerTextLabel.numberOfLines = 0
-        footerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(footerTextLabel, atIndex: 0)
-        self.footerTextLabel = footerTextLabel
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFontOfSize(14.0)
+        titleLabel.textAlignment = .Center
+        titleLabel.numberOfLines = 0
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        self.titleLabel = titleLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "V:|-5-[label]-5-|",
                 options: [],
                 metrics: nil,
-                views: ["label": footerTextLabel]
+                views: ["label": titleLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "H:|-15-[label]-15-|",
                 options: [],
                 metrics: nil,
-                views: ["label": footerTextLabel]
+                views: ["label": titleLabel]
             )
         ]
         self.contentView.addConstraints(constraints.flatMap { $0 })

@@ -10,20 +10,21 @@ import UIKit
 
 public protocol TextFormableView: FormableView {
     
-    func formerTextLabel() -> UILabel?
+    func formerTextLabel() -> UILabel
 }
 
 public class TextViewFormer: ViewFormer {
     
     public var text: String?
-    public var font: UIFont?
-    public var textColor: UIColor?
-    public var textAlignment: NSTextAlignment?
     
-    public init<T: UITableViewHeaderFooterView where T: TextFormableView>(viewType: T.Type, instantiateType: Former.InstantiateType, text: String? = nil) {
+    public init<T: UITableViewHeaderFooterView where T: TextFormableView>(
+        viewType: T.Type,
+        instantiateType: Former.InstantiateType,
+        text: String? = nil,
+        viewConfiguration: (T -> Void)? = nil) {
         
-        super.init(viewType: viewType, instantiateType: instantiateType)
-        self.text = text
+            super.init(viewType: viewType, instantiateType: instantiateType, viewConfiguration: viewConfiguration)
+            self.text = text
     }
     
     public override func initialize() {
@@ -38,10 +39,7 @@ public class TextViewFormer: ViewFormer {
         
         if let view = self.view as? TextFormableView {
             let textLabel = view.formerTextLabel()
-            textLabel?.text =? self.text
-            textLabel?.font =? self.font
-            textLabel?.textColor =? self.textColor
-            textLabel?.textAlignment =? self.textAlignment
+            textLabel.text = self.text
         }
     }
 }

@@ -43,9 +43,10 @@ final class CustomExampleViewController: FormerViewController {
             let header = TextViewFormer(
                 viewType: FormerTextHeaderView.self,
                 instantiateType: .Class,
-                text: $0)
-            header.textColor = .grayColor()
-            header.font = .systemFontOfSize(14.0)
+                text: $0) {
+                    $0.titleLabel.textColor = .grayColor()
+                    $0.titleLabel.font = .systemFontOfSize(14.0)
+            }
             header.viewHeight = 40.0
             return header
         }
