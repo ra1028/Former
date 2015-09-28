@@ -23,36 +23,30 @@ public final class SectionFormer: NSObject {
     
     /// Return all row count.
     public var numberOfRows: Int {
-        
-        return self.rowFormers.count
+        return rowFormers.count
     }
     
     public subscript(index: Int) -> RowFormer {
-        
-        return self.rowFormers[index]
+        return rowFormers[index]
     }
     
     public subscript(range: Range<Int>) -> [RowFormer] {
-        
-        return Array<RowFormer>(self.rowFormers[range])
+        return Array<RowFormer>(rowFormers[range])
     }
     
     /// Add RowFormers to last index.
     public func add(rowFormers rowFormers: [RowFormer]) -> Self {
-        
         self.rowFormers += rowFormers
         return self
     }
     
     /// Insert RowFormers to any index.
     public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> Self {
-        
         let count = self.rowFormers.count
-        
         if count == 0 ||  toIndex >= count {
-            self.add(rowFormers: rowFormers)
+            add(rowFormers: rowFormers)
         } else if toIndex == 0 {
-            self.rowFormers = rowFormers + self.rowFormers
+            self.rowFormers.insertContentsOf(rowFormers, at: 0)
         } else {
             let last = self.rowFormers.count - 1
             self.rowFormers = self.rowFormers[0...(toIndex - 1)] + rowFormers + self.rowFormers[toIndex...last]
@@ -63,12 +57,10 @@ public final class SectionFormer: NSObject {
     
     /// Remove RowFormers from instances of RowFormer.
     public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
-        
         var removedCount = 0
         for (index, rowFormer) in self.rowFormers.enumerate() {
             if rowFormers.contains(rowFormer) {
-                self.remove(index)
-                
+                remove(index)
                 if ++removedCount >= rowFormers.count {
                     return self
                 }
@@ -79,29 +71,25 @@ public final class SectionFormer: NSObject {
     
     /// Remove RowFormer from index.
     public func remove(atIndex: Int) -> Self {
-        
-        self.rowFormers.removeAtIndex(atIndex)
+        rowFormers.removeAtIndex(atIndex)
         return self
     }
     
     /// Remove RowFormers from range.
     public func remove(range: Range<Int>) -> Self{
-        
-        self.rowFormers.removeRange(range)
+        rowFormers.removeRange(range)
         return self
     }
     
     /// Set ViewFormer to apply section header.
     public func set(headerViewFormer viewFormer: ViewFormer?) -> Self {
-        
-        self.headerViewFormer = viewFormer
+        headerViewFormer = viewFormer
         return self
     }
     
     /// Set ViewFormer to apply section footer.
     public func set(footerViewFormer viewFormer: ViewFormer?) -> Self {
-        
-        self.footerViewFormer = viewFormer
+        footerViewFormer = viewFormer
         return self
     }
 }

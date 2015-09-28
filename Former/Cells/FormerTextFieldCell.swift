@@ -19,21 +19,18 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     private weak var rightConst: NSLayoutConstraint!
 
     public func formerTextField() -> UITextField {
-        
-        return self.textField
+        return textField
     }
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
-        
         super.updateWithRowFormer(rowFormer)
         
-        self.leftConst.constant = self.titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
-        self.rightConst.constant = (self.textField.textAlignment == .Right) ? -15.0 : 0
+        leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
+        rightConst.constant = (textField.textAlignment == .Right) ? -15.0 : 0
     }
     
     public override func configureViews() {
@@ -44,14 +41,14 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
         titleLabel.setContentHuggingPriority(500, forAxis: UILayoutConstraintAxis.Horizontal)
         titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let textField = UITextField()
         textField.backgroundColor = .clearColor()
         textField.clearButtonMode = .WhileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(textField, atIndex: 0)
+        contentView.insertSubview(textField, atIndex: 0)
         self.textField = textField
         
         let constraints = [
@@ -73,12 +70,12 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
                 metrics: nil,
                 views: ["label": titleLabel, "field": textField]
             )
-        ]
+            ].flatMap { $0 }
         let leftConst = NSLayoutConstraint(
             item: titleLabel,
             attribute: .Leading,
             relatedBy: .Equal,
-            toItem: self.contentView,
+            toItem: contentView,
             attribute: .Leading,
             multiplier: 1.0,
             constant: 15.0
@@ -87,13 +84,12 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
             item: textField,
             attribute: .Trailing,
             relatedBy: .Equal,
-            toItem: self.contentView,
+            toItem: contentView,
             attribute: .Trailing,
             multiplier: 1.0,
             constant: 0
         )
-        
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [leftConst, rightConst])
+        contentView.addConstraints(constraints + [leftConst, rightConst])
         self.leftConst = leftConst
         self.rightConst = rightConst
     }

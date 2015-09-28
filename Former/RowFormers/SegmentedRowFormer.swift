@@ -33,35 +33,31 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
         segmentTitles: [String],
         onSegmentSelected: ((Int, String) -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.segmentTitles = segmentTitles
             self.onSegmentSelected = onSegmentSelected
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.selectionStyle = .None
-        
-        if let row = self.cell as? SegmentedFormableRow {
-            
+        cell?.selectionStyle = .None
+        if let row = cell as? SegmentedFormableRow {
             let titleLabel = row.formerTitleLabel()
             let segment = row.formerSegmented()
             segment.removeAllSegments()
-            for (index, title) in self.segmentTitles.enumerate() {
+            for (index, title) in segmentTitles.enumerate() {
                 segment.insertSegmentWithTitle(title, atIndex: index, animated: false)
             }
-            segment.selectedSegmentIndex = self.selectedIndex
-            segment.enabled = self.enabled
+            segment.selectedSegmentIndex = selectedIndex
+            segment.enabled = enabled
             
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                self.titleColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                titleColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
+                titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
@@ -72,19 +68,17 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
     }
     
     public func validate() -> Bool {
-        
-        let selectedIndex = self.selectedIndex
-        let selectedTitle = self.segmentTitles[selectedIndex]
-        return self.onValidate?(selectedIndex, selectedTitle) ?? true
+        let index = selectedIndex
+        let selectedTitle = segmentTitles[selectedIndex]
+        return onValidate?(index, selectedTitle) ?? true
     }
     
     public dynamic func valueChanged(segment: UISegmentedControl) {
-        
-        if self.enabled {
-            let selectedIndex = segment.selectedSegmentIndex
+        if enabled {
+            let index = segment.selectedSegmentIndex
             let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
-            self.selectedIndex = selectedIndex
-            self.onSegmentSelected?(selectedIndex, selectedTitle)
+            selectedIndex = index
+            onSegmentSelected?(selectedIndex, selectedTitle)
         }
     }
 }

@@ -52,56 +52,48 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
     }
     
     public override func update() {
-        
         super.update()
         
-        self.inputViewUpdate?(self.inputView)
-        
-        if let row = self.cell as? SelectorDatePickerFormableRow {
-            
-            row.selectorDatePicker = self.inputView
-            row.selectorAccessoryView = self.inputAccessoryView
+        inputViewUpdate?(inputView)
+        if let row = cell as? SelectorDatePickerFormableRow {
+            row.selectorDatePicker = inputView
+            row.selectorAccessoryView = inputAccessoryView
             
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            displayLabel?.text = self.displayTextFromDate?(self.date) ?? "\(self.date)"
-            
+            displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
             if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                displayLabel?.textColor =? self.displayTextColor
-                self.titleColor = nil
-                self.displayTextColor = nil
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayTextColor
+                titleColor = nil
+                displayTextColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                displayLabel?.textColor = self.displayDisabledColor
+                titleColor ?= titleLabel?.textColor
+                displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
+                displayLabel?.textColor = displayDisabledColor
             }
         }
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
-        self.former?.deselect(true)
-        
-        if self.enabled {
-            self.cell?.becomeFirstResponder()
+        former?.deselect(true)
+        if enabled {
+            cell?.becomeFirstResponder()
         }
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.date) ?? true
+        return onValidate?(date) ?? true
     }
     
     public dynamic func dateChanged(datePicker: UIDatePicker) {
-        
-        if let row = self.cell as? SelectorDatePickerFormableRow where self.enabled {
+        if let row = cell as? SelectorDatePickerFormableRow where enabled {
             let date = datePicker.date
             self.date = date
-            row.formerDisplayLabel()?.text = self.displayTextFromDate?(date) ?? "\(date)"
-            self.onDateChanged?(date)
+            row.formerDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+            onDateChanged?(date)
         }
     }
 }

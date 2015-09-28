@@ -15,17 +15,15 @@ public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
     public private(set) weak var datePicker: UIDatePicker!
     
     public func formerDatePicker() -> UIDatePicker {
-        
-        return self.datePicker
+        return datePicker
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(datePicker, atIndex: 0)
+        contentView.insertSubview(datePicker, atIndex: 0)
         self.datePicker = datePicker
         
         let constraints = [
@@ -41,7 +39,7 @@ public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
                 metrics: nil,
                 views: ["picker": datePicker]
             )
-        ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

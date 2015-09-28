@@ -21,29 +21,24 @@ assignment
 }
 
 internal func =?<T> (inout lhs: T, rhs: T?) {
-    
     _ = rhs.map { lhs = $0 }
 }
 
 internal func =?<T> (inout lhs: T?, rhs: T?) {
-    
     _ = rhs.map { lhs = $0 }
 }
 
 internal func =?<T> (inout lhs: T!, rhs: T?) {
-    
     _ = rhs.map { lhs = $0 }
 }
 
 internal func ?=<T> (inout lhs: T?, rhs: T) {
-    
     if lhs == nil {
         lhs = rhs
     }
 }
 
-internal func ?=<T> (inout lhs: T?, rhs: T?) {
-    
+internal func ?=<T> (inout lhs: T?, rhs: T?) {    
     if lhs == nil {
         lhs = rhs
     }

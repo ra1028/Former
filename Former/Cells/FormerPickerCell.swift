@@ -13,17 +13,15 @@ public class FormerPickerCell: FormerCell, PickerFormableRow {
     public private(set) weak var pickerView: UIPickerView!
     
     public func formerPickerView() -> UIPickerView {
-        
-        return self.pickerView
+        return pickerView
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let pickerView = UIPickerView()
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(pickerView, atIndex: 0)
+        contentView.insertSubview(pickerView, atIndex: 0)
         self.pickerView = pickerView
         
         let constraints = [
@@ -39,7 +37,7 @@ public class FormerPickerCell: FormerCell, PickerFormableRow {
                 metrics: nil,
                 views: ["picker": pickerView]
             )
-        ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

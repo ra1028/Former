@@ -36,43 +36,37 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onValueChanged: (Float -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     
     public override func initialize() {
-        
         super.initialize()
-        self.cellHeight = 88.0
+        cellHeight = 88.0
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.selectionStyle = .None
-        
-        if let row = self.cell as? SliderFormableRow {
-            
+        cell?.selectionStyle = .None
+        if let row = cell as? SliderFormableRow {
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
             let slider = row.formerSlider()
+            slider.value = adjustedValueFromValue?(value) ?? value
+            slider.enabled = enabled
+            displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
             
-            slider.value = self.adjustedValueFromValue?(self.value) ?? self.value
-            slider.enabled = self.enabled
-            displayLabel?.text = self.displayTextFromValue?(self.value) ?? "\(self.value)"
-            
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                displayLabel?.textColor =? self.displayColor
-                self.titleColor = nil
-                self.displayColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayColor
+                titleColor = nil
+                displayColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.displayColor ?= displayLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                displayLabel?.textColor = self.displayDisabledColor
+                titleColor ?= titleLabel?.textColor
+                displayColor ?= displayLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
+                displayLabel?.textColor = displayDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
@@ -83,23 +77,19 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     }
     
     public func validate() -> Bool {
-        
-        let value = self.value
-        let adjustedValue = self.adjustedValueFromValue?(value) ?? value
-        return self.onValidate?(adjustedValue) ?? true
+        let adjustedValue = adjustedValueFromValue?(value) ?? value
+        return onValidate?(adjustedValue) ?? true
     }
     
     private dynamic func valueChanged(slider: UISlider) {
-        
-        if let cell = self.cell as? SliderFormableRow where self.enabled {
+        if let cell = cell as? SliderFormableRow where enabled {
             let displayLabel = cell.formerDisplayLabel()
-            
             let value = slider.value
-            let adjustedValue = self.adjustedValueFromValue?(value) ?? value
+            let adjustedValue = adjustedValueFromValue?(value) ?? value
             self.value = adjustedValue
             slider.value = adjustedValue
-            displayLabel?.text = self.displayTextFromValue?(adjustedValue) ?? "\(adjustedValue)"
-            self.onValueChanged?(adjustedValue)
+            displayLabel?.text = displayTextFromValue?(adjustedValue) ?? "\(adjustedValue)"
+            onValueChanged?(adjustedValue)
         }
     }
 }

@@ -11,22 +11,19 @@ import UIKit
 public class FormerCell: UITableViewCell, FormableRow {
     
     required public init?(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)
-        self.configureViews()
+        configureViews()
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
+        configureViews()
     }
     
     public func updateWithRowFormer(rowFormer: RowFormer) {}
     
     public func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        textLabel?.backgroundColor = .clearColor()
     }
 }

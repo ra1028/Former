@@ -33,37 +33,33 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onSwitchChanged: (Bool -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onSwitchChanged = onSwitchChanged
     }
     
     public override func update() {
-        
         super.update()
         
-        if !self.switchWhenSelected {
-            self.selectionStyle ?= self.cell?.selectionStyle
-            self.cell?.selectionStyle = .None
+        if !switchWhenSelected {
+            selectionStyle ?= cell?.selectionStyle
+            cell?.selectionStyle = .None
         } else {
-            self.cell?.selectionStyle =? self.selectionStyle
-            self.selectionStyle = nil
+            cell?.selectionStyle =? selectionStyle
+            selectionStyle = nil
         }
         
-        if let row = self.cell as? SwitchFormableRow {
-            
+        if let row = cell as? SwitchFormableRow {
             let titleLabel = row.formerTitleLabel()
             let switchButton = row.formerSwitch()
+            switchButton.on = switched
+            switchButton.enabled = enabled
             
-            switchButton.on = self.switched
-            switchButton.enabled = self.enabled
-            
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                self.titleColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                titleColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
+                titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
@@ -74,28 +70,25 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
-        self.former?.deselect(true)
         
-        if let row = self.cell as? SwitchFormableRow where self.switchWhenSelected && self.enabled {
+        former?.deselect(true)
+        if let row = cell as? SwitchFormableRow where switchWhenSelected && enabled {
             let switchButton = row.formerSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
-            self.switchChanged(switchButton)
+            switchChanged(switchButton)
         }
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.switched) ?? true
+        return onValidate?(switched) ?? true
     }
     
     public dynamic func switchChanged(switchButton: UISwitch) {
-        
         if self.enabled {
             let switched = switchButton.on
             self.switched = switched
-            self.onSwitchChanged?(switched)
+            onSwitchChanged?(switched)
         }
     }
 }

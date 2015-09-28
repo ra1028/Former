@@ -6,6 +6,8 @@
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
+// TODO: Remove
+
 import UIKit
 
 final public class FormerObserver {

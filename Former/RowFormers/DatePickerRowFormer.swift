@@ -27,30 +27,24 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onDateChanged: (NSDate -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onDateChanged = onDateChanged
     }
     
     public override func initialize() {
-        
         super.initialize()
-        self.cellHeight = 216.0
+        cellHeight = 216.0
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.selectionStyle = .None
-        
-        if let row = self.cell as? DatePickerFormableRow {
-            
+        cell?.selectionStyle = .None
+        if let row = cell as? DatePickerFormableRow {
             let datePicker = row.formerDatePicker()
-            datePicker.setDate(self.date, animated: false)
+            datePicker.setDate(date, animated: false)
             datePicker.userInteractionEnabled = self.enabled
-            datePicker.alpha = self.enabled ? 1.0 : 0.5
-            
+            datePicker.alpha = enabled ? 1.0 : 0.5
             row.observer.setTargetRowFormer(self,
                 control: datePicker,
                 actionEvents: [("dateChanged:", .ValueChanged)]
@@ -59,16 +53,14 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.date) ?? true
+        return onValidate?(date) ?? true
     }
     
     public dynamic func dateChanged(datePicker: UIDatePicker) {
-        
-        if self.enabled {
+        if enabled {
             let date = datePicker.date
             self.date = date
-            self.onDateChanged?(date)
+            onDateChanged?(date)
         }
     }
 }

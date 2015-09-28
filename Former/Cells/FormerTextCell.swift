@@ -13,26 +13,22 @@ public class FormerTextCell: FormerCell, TextFormableRow {
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var subTextLabel: UILabel!
     
-    private weak var subTextLabelRightConst: NSLayoutConstraint!
+    private weak var rightConst: NSLayoutConstraint!
     
     public func formerTextLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public func formerSubTextLabel() -> UILabel? {
-        
-        return self.subTextLabel
+        return subTextLabel
     }
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
-        
         super.updateWithRowFormer(rowFormer)
-        self.subTextLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
+        rightConst.constant = (accessoryType == .None) ? -15.0 : 0
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let titleLabel = UILabel()
@@ -65,18 +61,17 @@ public class FormerTextCell: FormerCell, TextFormableRow {
                 metrics: nil,
                 views: ["title": titleLabel, "sub": subTextLabel]
             )
-        ]
-        let subTextLabelRightConst = NSLayoutConstraint(
+            ].flatMap { $0 }
+        let rightConst = NSLayoutConstraint(
             item: subTextLabel,
             attribute: .Trailing,
             relatedBy: .Equal,
-            toItem: self.contentView,
+            toItem: contentView,
             attribute: .Trailing,
             multiplier: 1.0,
             constant: 0
         )
-        
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [subTextLabelRightConst])
-        self.subTextLabelRightConst = subTextLabelRightConst
+        contentView.addConstraints(constraints + [rightConst])
+        self.rightConst = rightConst
     }
 }

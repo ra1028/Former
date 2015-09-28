@@ -17,37 +17,33 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
     public private(set) weak var slider: UISlider!
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public func formerDisplayLabel() -> UILabel? {
-        
-        return self.displayLabel
+        return displayLabel
     }
     
     public func formerSlider() -> UISlider {
-        
-        return self.slider
+        return slider
     }
     
     public override func configureViews() {
-
         super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(displayLabel, atIndex: 0)
+        contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel
         
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(slider, atIndex: 0)
+        contentView.insertSubview(slider, atIndex: 0)
         self.slider = slider
         
         let constraints = [
@@ -75,7 +71,7 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
                 metrics: nil,
                 views: ["slider": slider]
             )
-        ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

@@ -16,38 +16,34 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
     
-    private weak var displayLabelRightConst: NSLayoutConstraint!
+    private weak var rightConst: NSLayoutConstraint!
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public func formerDisplayLabel() -> UILabel? {
-        
-        return self.displayLabel
+        return displayLabel
     }
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
-        
         super.updateWithRowFormer(rowFormer)
         
-        self.displayLabelRightConst.constant = (self.accessoryType == .None) ? -15.0 : 0
+        rightConst.constant = (accessoryType == .None) ? -15.0 : 0
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(displayLabel, atIndex: 0)
+        contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel
         
         let constraints = [
@@ -69,18 +65,17 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
             )
-        ]
-        let displayLabelRightConst = NSLayoutConstraint(
+            ].flatMap { $0 }
+        let rightConst = NSLayoutConstraint(
             item: displayLabel,
             attribute: .Trailing,
             relatedBy: .Equal,
-            toItem: self.contentView,
+            toItem: contentView,
             attribute: .Trailing,
             multiplier: 1.0,
             constant: 0
-        )
-        
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [displayLabelRightConst])
-        self.displayLabelRightConst = displayLabelRightConst
+        )        
+        contentView.addConstraints(constraints + [rightConst])
+        self.rightConst = rightConst
     }
 }

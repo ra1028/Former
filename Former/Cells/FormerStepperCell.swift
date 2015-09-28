@@ -17,36 +17,32 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
     public private(set) weak var stepper: UIStepper!
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public func formerDisplayLabel() -> UILabel? {
-        
-        return self.displayLabel
+        return displayLabel
     }
     
     public func formerStepper() -> UIStepper {
-        
-        return self.stepper
+        return stepper
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(displayLabel, atIndex: 0)
+        contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel
         
         let stepper = UIStepper()
-        self.accessoryView = stepper
+        accessoryView = stepper
         self.stepper = stepper
         
         let constraints = [
@@ -68,7 +64,7 @@ public class FormerStepperCell: FormerCell, StepperFormableRow {
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
             )
-        ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

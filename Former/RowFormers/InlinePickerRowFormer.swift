@@ -18,7 +18,7 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     
     public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
-        return self.enabled
+        return enabled
     }
     
     public var onValidate: ((Int, String) -> Bool)?
@@ -40,8 +40,7 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         onValueChanged: ((Int, String) -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil,
         inlineCellConfiguration: (FormerPickerCell -> Void)? = nil) {
-            
-            self.inlineRowFormer = PickerRowFormer(
+            inlineRowFormer = PickerRowFormer(
                 cellType: FormerPickerCell.self,
                 instantiateType: .Class,
                 cellConfiguration: inlineCellConfiguration
@@ -51,108 +50,96 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     }
     
     public override func update() {
-        
         super.update()
         
-        if let row = self.cell as? InlinePickerFormableRow {
-            
+        if let row = cell as? InlinePickerFormableRow {
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            
-            if self.valueTitles.isEmpty {
+            if valueTitles.isEmpty {
                 displayLabel?.text = ""
             } else {
-                displayLabel?.text = self.valueTitles[self.selectedRow]
+                displayLabel?.text = valueTitles[selectedRow]
             }
             
-            if self.enabled {
-                
-                if self.isEditing {
-                    self.titleColor ?= titleLabel?.textColor
-                    self.displayTextColor ?= displayLabel?.textColor
-                    titleLabel?.textColor =? self.titleEditingColor
-                    displayLabel?.textColor =? self.displayEditingColor
+            if enabled {
+                if isEditing {
+                    titleColor ?= titleLabel?.textColor
+                    displayTextColor ?= displayLabel?.textColor
+                    titleLabel?.textColor =? titleEditingColor
+                    displayLabel?.textColor =? displayEditingColor
                 } else {
-                    titleLabel?.textColor =? self.titleColor
-                    displayLabel?.textColor =? self.displayTextColor
-                    self.titleColor = nil
-                    self.displayTextColor = nil
+                    titleLabel?.textColor =? titleColor
+                    displayLabel?.textColor =? displayTextColor
+                    titleColor = nil
+                    displayTextColor = nil
                 }
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                displayLabel?.textColor = self.displayDisabledColor
+                titleColor ?= titleLabel?.textColor
+                displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
+                displayLabel?.textColor = displayDisabledColor
             }
         }
         
-        if let pickerRowFormer = self.inlineRowFormer as? PickerRowFormer {
-            
-            pickerRowFormer.onValueChanged = self.valueChanged
-            pickerRowFormer.valueTitles = self.valueTitles
-            pickerRowFormer.selectedRow = self.selectedRow
-            pickerRowFormer.enabled = self.enabled
+        if let pickerRowFormer = inlineRowFormer as? PickerRowFormer {
+            pickerRowFormer.onValueChanged = valueChanged
+            pickerRowFormer.valueTitles = valueTitles
+            pickerRowFormer.selectedRow = selectedRow
+            pickerRowFormer.enabled = enabled
             pickerRowFormer.update()
         }
     }
     
     public final func inlineCellUpdate(@noescape update: (FormerPickerCell? -> Void)) {
-        
-        update(self.inlineRowFormer.cell as? FormerPickerCell)
+        update(inlineRowFormer.cell as? FormerPickerCell)
     }
 
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
-        self.former?.deselect(true)
+        former?.deselect(true)
     }
     
     public func validate() -> Bool {
-        
-        let row = self.selectedRow
-        let title = self.valueTitles[row]
-        return self.onValidate?(row, title) ?? true
+        let row = selectedRow
+        let title = valueTitles[row]
+        return onValidate?(row, title) ?? true
     }
     
     private func valueChanged(row: Int, title: String) {
-        
-        if let pickerRow = self.cell as? InlinePickerFormableRow where self.enabled {
-            self.selectedRow = row
+        if let pickerRow = cell as? InlinePickerFormableRow where enabled {
+            selectedRow = row
             pickerRow.formerDisplayLabel()?.text = title
-            self.onValueChanged?(row, title)
+            onValueChanged?(row, title)
         }
     }
     
     public func editingDidBegin() {
-        
-        if let row = self.cell as? InlinePickerFormableRow where self.enabled {
-            
+        if let row = cell as? InlinePickerFormableRow where enabled {
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            self.titleColor ?= titleLabel?.textColor
-            self.displayTextColor ?= displayLabel?.textColor
-            titleLabel?.textColor =? self.titleEditingColor
-            displayLabel?.textColor =? self.displayEditingColor
-            self.isEditing = true
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor =? titleEditingColor
+            displayLabel?.textColor =? displayEditingColor
+            isEditing = true
         }
     }
     
     public func editingDidEnd() {
-        
-        if let row = self.cell as? InlinePickerFormableRow {
-            self.isEditing = false
+        if let row = cell as? InlinePickerFormableRow {
+            isEditing = false
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                displayLabel?.textColor =? self.displayTextColor
-                self.titleColor = nil
-                self.displayTextColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayTextColor
+                titleColor = nil
+                displayTextColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                displayLabel?.textColor = self.displayDisabledColor
+                titleColor ?= titleLabel?.textColor
+                displayTextColor ?= displayLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
+                displayLabel?.textColor = displayDisabledColor
             }
 
         }

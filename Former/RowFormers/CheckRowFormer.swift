@@ -28,47 +28,37 @@ public class CheckRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onCheckChanged: (Bool -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onCheckChanged = onCheckChanged
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.accessoryType = self.checked ? .Checkmark : .None
-        
-        if let row = self.cell as? CheckFormableRow {
-            
+        cell?.accessoryType = checked ? .Checkmark : .None
+        if let row = cell as? CheckFormableRow {
             let titleLabel = row.formerTitleLabel()
-
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                self.titleColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                titleColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
+                titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
             }
         }
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
-        self.former?.deselect(true)
-        
-        if self.enabled {
-            
-            self.checked = !self.checked
-            self.onCheckChanged?(self.checked)
-            
-            self.cell?.accessoryType = self.checked ? .Checkmark : .None
+        former?.deselect(true)
+        if enabled {
+            checked = !checked
+            onCheckChanged?(checked)
+            cell?.accessoryType = checked ? .Checkmark : .None
         }
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.checked) ?? true
+        return onValidate?(checked) ?? true
     }
 }

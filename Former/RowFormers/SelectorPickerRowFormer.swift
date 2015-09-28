@@ -20,7 +20,7 @@ public protocol SelectorPickerFormableRow: FormableRow {
 public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
-        return self.enabled
+        return enabled
     }
     
     public var onValidate: ((Int, String) -> Bool)?
@@ -52,70 +52,61 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     }
     
     public override func update() {
-        
         super.update()
         
-        self.inputView.selectRow(self.selectedRow, inComponent: 0, animated: false)
-        
-        if let row = self.cell as? SelectorPickerFormableRow {
-            
-            row.selectorPickerView = self.inputView
-            row.selectorAccessoryView = self.inputAccessoryView
-            
+        inputView.selectRow(selectedRow, inComponent: 0, animated: false)
+        if let row = cell as? SelectorPickerFormableRow {
+            row.selectorPickerView = inputView
+            row.selectorAccessoryView = inputAccessoryView
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
-            if self.valueTitles.isEmpty {
+            if valueTitles.isEmpty {
                 displayLabel?.text = ""
             } else {
-                displayLabel?.text = self.valueTitles[self.selectedRow]
+                displayLabel?.text = valueTitles[selectedRow]
             }
             
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                displayLabel?.textColor =? self.displayTextColor
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayTextColor
                 self.titleColor = nil
                 self.displayTextColor = nil
             } else {
                 self.titleColor ?= titleLabel?.textColor
                 self.displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                displayLabel?.textColor = self.displayDisabledColor
+                titleLabel?.textColor = titleDisabledColor
+                displayLabel?.textColor = displayDisabledColor
             }
         }
     }
     
     public final func inputViewUpdate(@noescape update: (UIPickerView -> Void)) {
-        
-        update(self.inputView)
+        update(inputView)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
-        self.former?.deselect(true)
-        
-        if self.enabled {
-            self.cell?.becomeFirstResponder()
+        former?.deselect(true)
+        if enabled {
+            cell?.becomeFirstResponder()
         }
     }
     
     public func validate() -> Bool {
-        
-        let row = self.selectedRow
-        let selectedTitle = self.valueTitles[row]
-        return self.onValidate?(row, selectedTitle) ?? true
+        let row = selectedRow
+        let selectedTitle = valueTitles[row]
+        return onValidate?(row, selectedTitle) ?? true
     }
 }
 
 extension SelectorPickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
     
     public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        if self.enabled {
-            self.selectedRow = row
-            let selectedTitle = self.valueTitles[row]
-            self.onValueChanged?(row, selectedTitle)
-            if let row = self.cell as? SelectorPickerFormableRow {
+        if enabled {
+            selectedRow = row
+            let selectedTitle = valueTitles[row]
+            onValueChanged?(row, selectedTitle)
+            if let row = cell as? SelectorPickerFormableRow {
                 let displayTextLabel = row.formerDisplayLabel()
                 displayTextLabel?.text = selectedTitle
             }
@@ -123,17 +114,14 @@ extension SelectorPickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource 
     }
     
     public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        
         return 1
     }
     
     public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        return self.valueTitles.count
+        return valueTitles.count
     }
     
     public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        return self.valueTitles[row]
+        return valueTitles[row]
     }
 }

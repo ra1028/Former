@@ -16,27 +16,24 @@ public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
     public private(set) weak var segmentedControl: UISegmentedControl!
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public func formerSegmented() -> UISegmentedControl {
-        
-        return self.segmentedControl
+        return segmentedControl
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let segmentedControl = UISegmentedControl()
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(segmentedControl, atIndex: 0)
+        contentView.insertSubview(segmentedControl, atIndex: 0)
         self.segmentedControl = segmentedControl
         
         let constraints = [
@@ -58,16 +55,16 @@ public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
                 metrics: nil,
                 views: ["title": titleLabel, "segment": segmentedControl]
             )
-        ]
+            ].flatMap { $0 }
         let centerYConst = NSLayoutConstraint(
             item: segmentedControl,
             attribute: .CenterY,
             relatedBy: .Equal,
-            toItem: self.contentView,
+            toItem: contentView,
             attribute: .CenterY,
             multiplier: 1.0,
             constant: 0
         )
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [centerYConst])
+        contentView.addConstraints(constraints + [centerYConst])
     }
 }

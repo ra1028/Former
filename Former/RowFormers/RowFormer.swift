@@ -35,7 +35,7 @@ public class RowFormer: NSObject {
     public var cellHeight: CGFloat = 44.0
     public var enabled = true {
         didSet {
-            self.update()
+            update()
         }
     }
     public var canBecomeEditing: Bool {
@@ -49,7 +49,6 @@ public class RowFormer: NSObject {
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         cellConfiguration: (T -> Void)? = nil) {
-            
             self.cellType = cellType
             self.instantiateType = instantiateType
             self.cellConfiguration = {
@@ -60,7 +59,7 @@ public class RowFormer: NSObject {
                 }
             }
             super.init()
-            self.initialize()
+            initialize()
     }
     
     public func initialize() {}
@@ -68,7 +67,6 @@ public class RowFormer: NSObject {
     final func cellConfigure() {
         
         let instantiateCell: (RowFormer -> Void) = { rowFormer in
-            
             switch rowFormer.instantiateType {
             case .Class:
                 rowFormer.cell = rowFormer.cellType.init(style: .Default, reuseIdentifier: nil)
@@ -82,25 +80,20 @@ public class RowFormer: NSObject {
             }
         }
         
-        if self.cell == nil {
+        if cell == nil {
             instantiateCell(self)
         }
+        update()
         
-        self.update()
-        
-        if let formableRow = self.cell as? FormableRow {
+        if let formableRow = cell as? FormableRow {
             formableRow.updateWithRowFormer(self)
         }
-        
         if let inlineRow = self as? InlineRow {
-            
             let inlineRowFormer = inlineRow.inlineRowFormer
             if inlineRowFormer.cell == nil {
                 instantiateCell(inlineRowFormer)
             }
-            
             inlineRowFormer.update()
-            
             if let inlineFormableRow = inlineRowFormer.cell as? FormableRow {
                 inlineFormableRow.updateWithRowFormer(inlineRowFormer)
             }
@@ -108,11 +101,8 @@ public class RowFormer: NSObject {
     }
     
     public func update() {
-        
-        if let cell = self.cell {
-            
-            cell.userInteractionEnabled = self.enabled
-            
+        if let cell = cell {
+            cell.userInteractionEnabled = enabled
             if let formableRow = cell as? FormableRow {
                 formableRow.updateWithRowFormer(self)
             }
@@ -120,14 +110,12 @@ public class RowFormer: NSObject {
     }
     
     public final func cellUpdate<T: UITableViewCell>(@noescape update: (T? -> Void)) {
-        
-        update(self.cell as? T)
+        update(cell as? T)
     }
     
     public func cellSelected(indexPath: NSIndexPath) {
-        
-        if self.enabled {
-            self.onSelected?(indexPath: indexPath, rowFormer: self)
+        if enabled {
+           onSelected?(indexPath: indexPath, rowFormer: self)
         }
     }
 }

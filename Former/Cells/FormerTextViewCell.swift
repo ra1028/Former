@@ -16,24 +16,20 @@ public class FormerTextViewCell: FormerCell, TextViewFormableRow {
     private weak var leftConst: NSLayoutConstraint!
     
     public func formerTextView() -> UITextView {
-        
-        return self.textView
+        return textView
     }
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
-        
         super.updateWithRowFormer(rowFormer)
-        
-        self.leftConst.constant = self.titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
+
+        leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let titleLabel = UILabel()
@@ -69,17 +65,17 @@ public class FormerTextViewCell: FormerCell, TextViewFormableRow {
                 metrics: nil,
                 views: ["label": titleLabel, "text": textView]
             )
-        ]
+            ].flatMap { $0 }
         let leftConst = NSLayoutConstraint(
             item: titleLabel,
             attribute: .Leading,
             relatedBy: .Equal,
-            toItem: self.contentView,
+            toItem: contentView,
             attribute: .Leading,
             multiplier: 1.0,
             constant: 15.0
         )
-        self.contentView.addConstraints(constraints.flatMap { $0 } + [leftConst])
+        contentView.addConstraints(constraints + [leftConst])
         self.leftConst = leftConst
     }
 }

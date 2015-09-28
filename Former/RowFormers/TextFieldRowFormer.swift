@@ -19,7 +19,7 @@ public protocol TextFieldFormableRow: FormableRow {
 public class TextFieldRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
-        return self.enabled
+        return enabled
     }
     
     public var onValidate: (String? -> Bool)?
@@ -40,48 +40,44 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onTextChanged: (String -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onTextChanged = onTextChanged
     }
     
     deinit {
-        if let row = self.cell as? TextFieldFormableRow {
+        if let row = cell as? TextFieldFormableRow {
             let textField = row.formerTextField()
             textField.delegate = nil
         }
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.selectionStyle = .None
-        
-        if let row = self.cell as? TextFieldFormableRow {
-            
+        cell?.selectionStyle = .None
+        if let row = cell as? TextFieldFormableRow {
             let titleLabel = row.formerTitleLabel()
             let textField = row.formerTextField()
-            textField.text = self.text
-            textField.placeholder =? self.placeholder
+            textField.text = text
+            textField.placeholder =? placeholder
             textField.userInteractionEnabled = false
             textField.delegate = self
             
-            if self.enabled {
-                if self.isEditing {
-                    self.titleColor ?= titleLabel?.textColor
-                    titleLabel?.textColor =? self.titleEditingColor
+            if enabled {
+                if isEditing {
+                    titleColor ?= titleLabel?.textColor
+                    titleLabel?.textColor =? titleEditingColor
                 } else {
-                    titleLabel?.textColor =? self.titleColor
-                    self.titleColor = nil
+                    titleLabel?.textColor =? titleColor
+                    titleColor = nil
                 }
-                textField.textColor =? self.textColor
-                self.textColor = nil
+                textField.textColor =? textColor
+                textColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.textColor ?= textField.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                textField.textColor = self.textDisabledColor
+                titleColor ?= titleLabel?.textColor
+                textColor ?= textField.textColor
+                titleLabel?.textColor = titleDisabledColor
+                textField.textColor = textDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
@@ -96,11 +92,9 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
         
-        if let row = self.cell as? TextFieldFormableRow where self.enabled {
-            
+        if let row = cell as? TextFieldFormableRow where enabled {
             let textField = row.formerTextField()
             if !textField.editing {
                 textField.userInteractionEnabled = true
@@ -110,40 +104,34 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.text) ?? true
+        return onValidate?(text) ?? true
     }
     
     public func textChanged(textField: UITextField) {
-        
-        if self.enabled {
+        if enabled {
             let text = textField.text ?? ""
             self.text = text
-            self.onTextChanged?(text)
+            onTextChanged?(text)
         }
     }
     
     public func editingDidBegin(textField: UITextField) {
-        
-        if let row = self.cell as? TextFieldFormableRow where self.enabled {
-            
+        if let row = cell as? TextFieldFormableRow where enabled {
             let titleLabel = row.formerTitleLabel()
-            self.titleColor ?= titleLabel?.textColor
-            titleLabel?.textColor =? self.titleEditingColor
+            titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor =? titleEditingColor
         }
     }
     
     public func editingDidEnd(textField: UITextField) {
-        
-        if let row = self.cell as? TextFieldFormableRow {
-            
+        if let row = cell as? TextFieldFormableRow {
             let titleLabel = row.formerTitleLabel()
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                self.titleColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                titleColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor =? self.titleEditingColor
+                titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor =? titleEditingColor
             }
             row.formerTextField().userInteractionEnabled = false
         }
@@ -153,13 +141,12 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
 extension TextFieldRowFormer: UITextFieldDelegate {
     
     public func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
-        if self.returnToNextRow {
-            let returnToNextRow = (self.former?.canBecomeEditingNext() ?? false) ?
-                self.former?.becomeEditingNext :
-                self.former?.endEditing
+        if returnToNextRow {
+            let returnToNextRow = (former?.canBecomeEditingNext() ?? false) ?
+                former?.becomeEditingNext :
+                former?.endEditing
             returnToNextRow?()
         }
-        return !self.returnToNextRow
+        return !returnToNextRow
     }
 }

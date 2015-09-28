@@ -16,26 +16,23 @@ public class FormerSwitchCell: FormerCell, SwitchFormableRow {
     public private(set) weak var switchButton: UISwitch!
     
     public func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     public func formerSwitch() -> UISwitch {
-        
-        return self.switchButton
+        return switchButton
     }
     
     public override func configureViews() {
-        
         super.configureViews()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let switchButton = UISwitch()
-        self.accessoryView = switchButton
+        accessoryView = switchButton
         self.switchButton = switchButton
 
         let constraints = [
@@ -51,7 +48,7 @@ public class FormerSwitchCell: FormerCell, SwitchFormableRow {
                 metrics: nil,
                 views: ["label": titleLabel]
             )
-        ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

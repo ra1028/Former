@@ -35,37 +35,32 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onValueChanged: (Double -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.selectionStyle = .None
-        
-        if let row = self.cell as? StepperFormableRow {
-            
+        cell?.selectionStyle = .None
+        if let row = cell as? StepperFormableRow {
             let titleLabel = row.formerTitleLabel()
             let displayLabel = row.formerDisplayLabel()
             let stepper = row.formerStepper()
+            stepper.value = value
+            stepper.enabled = enabled
+            displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
             
-            stepper.value = self.value
-            stepper.enabled = self.enabled
-            displayLabel?.text = self.displayTextFromValue?(value) ?? "\(value)"
-            
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                displayLabel?.textColor =? self.displayColor
-                self.titleColor = nil
-                self.displayColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayColor
+                titleColor = nil
+                displayColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.displayColor ?= displayLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                displayLabel?.textColor = self.displayDisabledColor
+                titleColor ?= titleLabel?.textColor
+                displayColor ?= displayLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
+                displayLabel?.textColor = displayDisabledColor
             }
             
             row.observer.setTargetRowFormer(self,
@@ -76,17 +71,15 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.value) ?? true
+        return onValidate?(value) ?? true
     }
     
     public dynamic func valueChanged(stepper: UIStepper) {
-        
-        if let row = self.cell as? StepperFormableRow where self.enabled {
+        if let row = cell as? StepperFormableRow where enabled {
             let value = stepper.value
             self.value = value
-            row.formerDisplayLabel()?.text = self.displayTextFromValue?(value) ?? "\(value)"
-            self.onValueChanged?(value)
+            row.formerDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
+            onValueChanged?(value)
         }
     }
 }
