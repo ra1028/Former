@@ -7,42 +7,34 @@
 //
 
 import UIKit
+import Former
 
 final class FormerInputAccessoryView: UIToolbar {
     
-    var backButtonHandler: (() -> Void)?
-    var forwardButtonHandler: (() -> Void)?
-    var doneButtonHandler: (() -> Void)?
-    
-    var getBackButtonEnabled: (() -> Bool)?
-    var getForwardButtonEnabled: (() -> Bool)?
-    
+    private weak var former: Former?
     private weak var leftArrow: UIBarButtonItem!
     private weak var rightArrow: UIBarButtonItem!
     
-    init() {
-        
+    init(former: Former) {
         super.init(frame: CGRect(origin: CGPointZero, size: CGSize(width: 0, height: 44.0)))
-        self.configure()
+        self.former = former
+        configure()
     }
 
     required init?(coder aDecoder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
     }
     
     func update() {
-        
-        self.leftArrow.enabled = self.getBackButtonEnabled?() ?? true
-        self.rightArrow.enabled = self.getForwardButtonEnabled?() ?? true
+        leftArrow.enabled = former?.canBecomeEditingPrevious() ?? false
+        rightArrow.enabled = former?.canBecomeEditingNext() ?? false
     }
     
     private func configure() {
-        
-        self.barTintColor = .whiteColor()
-        self.tintColor = .formerSubColor()
-        self.clipsToBounds = true
-        self.userInteractionEnabled = true
+        barTintColor = .whiteColor()
+        tintColor = .formerSubColor()
+        clipsToBounds = true
+        userInteractionEnabled = true
         
         let flexible = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let leftArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 105)!, target: self, action: "handleBackButton")
@@ -51,29 +43,29 @@ final class FormerInputAccessoryView: UIToolbar {
         let rightArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 106)!, target: self, action: "handleForwardButton")
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "handleDoneButton")
         let rightSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-        self.setItems([leftArrow, space, rightArrow, flexible, doneButton, rightSpace], animated: false)
+        setItems([leftArrow, space, rightArrow, flexible, doneButton, rightSpace], animated: false)
         self.leftArrow = leftArrow
         self.rightArrow = rightArrow
         
         let topLineView = UIView()
         topLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         topLineView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(topLineView)
+        addSubview(topLineView)
         
         let bottomLineView = UIView()
         bottomLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         bottomLineView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(bottomLineView)
+        addSubview(bottomLineView)
         
         let leftLineView = UIView()
         leftLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         leftLineView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(leftLineView)
+        addSubview(leftLineView)
         
         let rightLineView = UIView()
         rightLineView.backgroundColor = UIColor(white: 0, alpha: 0.3)
         rightLineView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(rightLineView)
+        addSubview(rightLineView)
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
@@ -125,23 +117,20 @@ final class FormerInputAccessoryView: UIToolbar {
                 views: ["rightLine": rightLineView]
             )
         ]
-        self.addConstraints(constraints.flatMap { $0 })
+        addConstraints(constraints.flatMap { $0 })
     }
     
     private dynamic func handleBackButton() {
-        
-        self.update()
-        self.backButtonHandler?()
+        update()
+        former?.becomeEditingPrevious()
     }
     
     private dynamic func handleForwardButton() {
-        
-        self.update()
-        self.forwardButtonHandler?()
+        update()
+        former?.becomeEditingNext()
     }
     
     private dynamic func handleDoneButton() {
-        
-        self.doneButtonHandler?()
+        former?.endEditing()
     }
 }

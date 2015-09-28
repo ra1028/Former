@@ -13,18 +13,16 @@ public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
     public private(set) weak var titleLabel: UILabel!
     
     public func formerTextLabel() -> UILabel {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     override public func setup() {
-        
         super.setup()
         
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFontOfSize(14.0)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let constraints = [
@@ -40,7 +38,7 @@ public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
                 metrics: nil,
                 views: ["label": titleLabel]
             )
-        ]
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

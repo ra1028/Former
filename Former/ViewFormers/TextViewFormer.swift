@@ -22,24 +22,21 @@ public class TextViewFormer: ViewFormer {
         instantiateType: Former.InstantiateType,
         text: String? = nil,
         viewConfiguration: (T -> Void)? = nil) {
-        
             super.init(viewType: viewType, instantiateType: instantiateType, viewConfiguration: viewConfiguration)
             self.text = text
     }
     
     public override func initialize() {
-        
         super.initialize()
-        self.viewHeight = 30.0
+        viewHeight = 30.0
     }
     
     public override func update() {
-        
         super.update()
         
-        if let view = self.view as? TextFormableView {
+        if let view = view as? TextFormableView {
             let textLabel = view.formerTextLabel()
-            textLabel.text = self.text
+            textLabel.text = text
         }
     }
 }

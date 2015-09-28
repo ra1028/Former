@@ -45,13 +45,9 @@ public final class SectionFormer: NSObject {
         let count = self.rowFormers.count
         if count == 0 ||  toIndex >= count {
             add(rowFormers: rowFormers)
-        } else if toIndex == 0 {
-            self.rowFormers.insertContentsOf(rowFormers, at: 0)
-        } else {
-            let last = self.rowFormers.count - 1
-            self.rowFormers = self.rowFormers[0...(toIndex - 1)] + rowFormers + self.rowFormers[toIndex...last]
+            return self
         }
-        
+        self.rowFormers.insertContentsOf(rowFormers, at: toIndex)
         return self
     }
     

@@ -39,44 +39,23 @@ class DefaultExampleViewController: FormerViewController {
         }()
     
     private lazy var formerInputAccessoryView: FormerInputAccessoryView = {
-        
-        let accessory = FormerInputAccessoryView()
-        accessory.doneButtonHandler = { [weak self] in
-            self?.former.endEditing()
-        }
-        accessory.backButtonHandler = { [weak self] in
-            self?.former.becomeEditingPrevious()
-        }
-        accessory.forwardButtonHandler = { [weak self] in
-            self?.former.becomeEditingNext()
-        }
-        accessory.getBackButtonEnabled = { [weak self] in
-            self?.former.canBecomeEditingPrevious() ?? true
-        }
-        accessory.getForwardButtonEnabled = { [weak self] in
-            self?.former.canBecomeEditingNext() ?? true
-        }
-        return accessory
+        FormerInputAccessoryView(former: self.former)
         }()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        self.configure()
+        configure()
     }
     
     override func viewWillAppear(animated: Bool) {
-        
         super.viewWillAppear(animated)
-        self.former.deselect(true)
+        former.deselect(true)
     }
     
     private func configure() {
-        
-        self.title = "Default Example"
+        title = "Default Example"
         
         // Create RowFormers
-        
         // Date Setting Example
         
         let date = InlineDatePickerRowFormer(
@@ -154,7 +133,6 @@ class DefaultExampleViewController: FormerViewController {
         
         let options = ["Option1", "Option2", "Option3"]
         let selectors = (0...1).map { index -> TextRowFormer in
-            
             let selector = TextRowFormer(
                 cellType: FormerTextCell.self,
                 instantiateType: .Class,
@@ -287,10 +265,10 @@ class DefaultExampleViewController: FormerViewController {
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
             .set(footerViewFormer: footer)
         
-        self.former.add(sectionFormers:
+        former.add(sectionFormers:
             [section1, section2, section3, section4, section5]
         )
-        self.former.onCellSelected = { [weak self] _ in
+        former.onCellSelected = { [weak self] _ in
             self?.formerInputAccessoryView.update()
         }
     }

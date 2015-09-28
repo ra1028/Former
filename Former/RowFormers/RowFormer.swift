@@ -45,7 +45,7 @@ public class RowFormer: NSObject {
     private final var cellType: UITableViewCell.Type
     private final let cellConfiguration: (UITableViewCell -> Void)
     
-    public init<T: UITableViewCell where T: FormableRow>(
+    public init<T: UITableViewCell>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         cellConfiguration: (T -> Void)? = nil) {

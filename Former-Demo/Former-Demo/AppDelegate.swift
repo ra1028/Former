@@ -14,19 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         UIApplication.sharedApplication().statusBarStyle = .LightContent
-        
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = UINavigationController(rootViewController: TopViewContoller())
-        self.configureNavigationBar(navigationController.navigationBar)
-        self.window!.rootViewController = navigationController
-        self.window!.makeKeyAndVisible()
+        configureNavigationBar(navigationController.navigationBar)
+        window!.rootViewController = navigationController
+        window!.makeKeyAndVisible()
         return true
     }
     
-    private func configureNavigationBar(navigationBar: UINavigationBar) {
-        
+    private func configureNavigationBar(navigationBar: UINavigationBar) {        
         navigationBar.tintColor = .whiteColor()
         navigationBar.titleTextAttributes = [
             NSForegroundColorAttributeName: UIColor.whiteColor(),

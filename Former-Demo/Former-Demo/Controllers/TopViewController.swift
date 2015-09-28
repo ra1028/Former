@@ -12,22 +12,19 @@ import Former
 final class TopViewContoller: FormerViewController {
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        self.configure()
+        configure()
     }
     
     override func viewWillAppear(animated: Bool) {
-        
         super.viewWillAppear(animated)
-        self.former.deselect(true)
+        former.deselect(true)
     }
     
     private func configure() {
-        
         let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem = backBarButton
-        self.title = "Former"
+        navigationItem.backBarButtonItem = backBarButton
+        title = "Former"
         
         // Create RowFormers
         
@@ -99,6 +96,6 @@ final class TopViewContoller: FormerViewController {
             .set(headerViewFormer: createHeader("Usage Examples"))
             .set(footerViewFormer: createFooter("Former is a fully customizable Swift\"2.0\" library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
-        self.former.add(sectionFormers: [firstSection, secondSection, thirdSection])
+        former.add(sectionFormers: [firstSection, secondSection, thirdSection])
     }
 }

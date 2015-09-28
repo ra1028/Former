@@ -17,7 +17,7 @@ public protocol TextViewFormableRow: FormableRow {
 public class TextViewRowFormer: RowFormer, FormerValidatable {
     
     override public var canBecomeEditing: Bool {
-        return self.enabled
+        return enabled
     }
     
     public var onValidate: (String? -> Bool)?
@@ -38,44 +38,38 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
         instantiateType: Former.InstantiateType,
         textChangedHandler: (String -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.textChangedHandler = textChangedHandler
     }
     
     deinit {
-        if let row = self.cell as? TextViewFormableRow {
+        if let row = cell as? TextViewFormableRow {
             let textView = row.formerTextView()
             textView.delegate = nil
         }
     }
     
     public override func initialize() {
-        
         super.initialize()
-        self.cellHeight = 110.0
+        cellHeight = 110.0
     }
     
     public override func update() {
-        
         super.update()
         
-        self.cell?.selectionStyle = .None
-        
-        if let row = self.cell as? TextViewFormableRow {
-            
+        cell?.selectionStyle = .None
+        if let row = cell as? TextViewFormableRow {
             let textView = row.formerTextView()
             let titleLabel = row.formerTitleLabel()
-            
-            textView.text = self.text
+            textView.text = text
             textView.userInteractionEnabled = false
             textView.delegate = self
             
-            if self.placeholderLabel?.superview !== textView {
-                self.placeholderLabel?.removeFromSuperview()
-                self.placeholderLabel = nil
+            if placeholderLabel?.superview !== textView {
+                placeholderLabel?.removeFromSuperview()
+                placeholderLabel = nil
             }
-            if self.placeholderLabel == nil {
+            if placeholderLabel == nil {
                 let placeholderLabel = UILabel()
                 placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
                 textView.insertSubview(placeholderLabel, atIndex: 0)
@@ -93,51 +87,48 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
                         metrics: nil,
                         views: ["label": placeholderLabel]
                     )
-                ]
-                textView.addConstraints(constraints.flatMap { $0 })
+                    ].flatMap { $0 }
+                textView.addConstraints(constraints)
             }
-            self.placeholderLabel?.text =? self.placeholder
-            self.updatePlaceholderColor(textView.text)
+            placeholderLabel?.text =? placeholder
+            updatePlaceholderColor(textView.text)
             
-            if self.enabled {
-                if self.isEditing {
-                    self.titleColor ?= titleLabel?.textColor
-                    titleLabel?.textColor =? self.titleEditingColor
+            if enabled {
+                if isEditing {
+                    titleColor ?= titleLabel?.textColor
+                    titleLabel?.textColor =? titleEditingColor
                 } else {
-                    titleLabel?.textColor =? self.titleColor
-                    self.titleColor = nil
+                    titleLabel?.textColor =? titleColor
+                    titleColor = nil
                 }
-                textView.textColor =? self.textColor
-                self.textColor = nil
+                textView.textColor =? textColor
+                textColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.textColor ?= textView.textColor
-                titleLabel?.textColor = self.titleDisabledColor
-                textView.textColor = self.textDisabledColor
+                titleColor ?= titleLabel?.textColor
+                textColor ?= textView.textColor
+                titleLabel?.textColor = titleDisabledColor
+                textView.textColor = textDisabledColor
             }
         }
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
         
-        if let row = self.cell as? TextViewFormableRow {
+        if let row = cell as? TextViewFormableRow {
             let textView = row.formerTextView()
             textView.becomeFirstResponder()
-            textView.userInteractionEnabled = self.enabled
+            textView.userInteractionEnabled = enabled
         }
     }
     
     public func validate() -> Bool {
-        
-        return self.onValidate?(self.text) ?? true
+        return onValidate?(text) ?? true
     }
     
     private func updatePlaceholderColor(text: String?) {
-        
-        self.placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
-            UIColor(white: 0.8, alpha: 1.0) :
+        placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
+            UIColor(red: 0, green: 0, blue: 0.098 / 255.0, alpha: 0.22) :
             .clearColor()
     }
 }
@@ -145,44 +136,39 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
 extension TextViewRowFormer: UITextViewDelegate {
     
     public func textViewDidChange(textView: UITextView) {
-        
-        if self.enabled {
+        if enabled {
             if UIDevice.currentDevice().systemVersion.compare("8.0.0", options: .NumericSearch) == .OrderedAscending {
                 textView.scrollRangeToVisible(textView.selectedRange)
             }
             let text = textView.text ?? ""
             self.text = text
-            self.textChangedHandler?(text)
-            self.updatePlaceholderColor(text)
+            textChangedHandler?(text)
+            updatePlaceholderColor(text)
         }
     }
     
     public func textViewDidBeginEditing(textView: UITextView) {
-        
-        if let row = self.cell as? TextViewFormableRow where self.enabled {
-            
+        if let row = cell as? TextViewFormableRow where enabled {
             let titleLabel = row.formerTitleLabel()
-            self.titleColor ?= titleLabel?.textColor
-            titleLabel?.textColor =? self.titleEditingColor
-            self.isEditing = true
+            titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor =? titleEditingColor
+            isEditing = true
         }
     }
     
     public func textViewDidEndEditing(textView: UITextView) {
-        
-        if let row = self.cell as? TextViewFormableRow {
-            
+        if let row = cell as? TextViewFormableRow {
             let titleLabel = row.formerTitleLabel()
             row.formerTextView().userInteractionEnabled = false
             
-            if self.enabled {
-                titleLabel?.textColor =? self.titleColor
-                self.titleColor = nil
+            if enabled {
+                titleLabel?.textColor =? titleColor
+                titleColor = nil
             } else {
-                self.titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = self.titleDisabledColor
+                titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = titleDisabledColor
             }
-            self.isEditing = false
+            isEditing = false
         }
     }
 }

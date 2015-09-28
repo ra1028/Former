@@ -14,17 +14,13 @@ final class DefaultUIViewController: FormerViewController {
     private var enabled = true
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        self.configure()
+        configure()
         
     }
     
     private func configure() {
-        
-        self.title = "Default UI"
-        
-        // TODO: all RowFormers are needs fix.
+        title = "Default UI"
         
         // Create RowFomers
         
@@ -54,81 +50,92 @@ final class DefaultUIViewController: FormerViewController {
         )
         textRow.onSelected = { [weak self] _ in self?.former.deselect(true) }
         textRow.text = "Text"
-//        textRow.subText = "SubText"
+        textRow.subText = "SubText"
         
         let textFieldRow = TextFieldRowFormer(
             cellType: FormerTextFieldCell.self,
             instantiateType: .Class
-        )
-//        textFieldRow.title = "TextField"
+            ) {
+                $0.titleLabel.text = "TextField"
+        }
         textFieldRow.placeholder = "Placeholder"
         
         let textViewRow = TextViewRowFormer(
             cellType: FormerTextViewCell.self,
             instantiateType: .Class
-        )
-//        textViewRow.title = "TextView"
+            ) {
+                $0.titleLabel.text = "TextView"
+        }
         textViewRow.placeholder = "Placeholder"
         
         let checkRow = CheckRowFormer(
             cellType: FormerCheckCell.self,
             instantiateType: .Class
-        )
-//        checkRow.title = "Check"
+            ) {
+                $0.titleLabel.text = "Check"
+        }
         
         let switchRow = SwitchRowFormer(
             cellType: FormerSwitchCell.self,
             instantiateType: .Class
-        )
-//        switchRow.title = "Switch"
+            ) {
+                $0.titleLabel.text = "Switch"
+        }
         
         let stepperRow = StepperRowFormer(
             cellType: FormerStepperCell.self,
             instantiateType: .Class
-        )
-//        stepperRow.title = "Stepper"
+            ) {
+                $0.titleLabel.text = "Stepper"
+        }
         stepperRow.displayTextFromValue = { "\(Int($0))" }
         
         let segmentRow = SegmentedRowFormer(
             cellType: FormerSegmentedCell.self,
             instantiateType: .Class,
             segmentTitles: ["Opt1", "Opt2", "Opt3"]
-        )
-//        segmentRow.title = "Segmented"
+            ) {
+                $0.titleLabel.text = "Segmented"
+        }
         
         let sliderRow = SliderRowFormer(
             cellType: FormerSliderCell.self,
             instantiateType: .Class
-        )
-//        sliderRow.title = "Slider"
+            ) {
+                $0.titleLabel.text = "Slider"
+        }
         sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
         
         let selectorPickerRow = SelectorPickerRowFormer(
             cellType: FormerSelectorPickerCell.self,
             instantiateType: .Class
-        )
-//        selectorPickerRow.title = "SelectorPicker"
+            ) {
+                $0.titleLabel.text = "SelectorPicker"
+        }
         selectorPickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let selectorDatePickerRow = SelectorDatePickerRowFormer(
             cellType: FormerSelectorDatePickerCell.self,
             instantiateType: .Class
-        )
-//        selectorDatePickerRow.title = "SelectorDatePicker"
+            ) {
+                $0.titleLabel.text = "SelectorDatePicker"
+        }
         selectorDatePickerRow.displayTextFromDate = String.mediumDateShortTime
         
         let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
-            instantiateType: .Class
-        )
-//        inlinePickerRow.title = "InlinePicker"
+            instantiateType: .Class,
+            cellConfiguration: {
+                $0.titleLabel.text = "InlinePicker"
+        })
         inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let inlineDateRow = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
-            instantiateType: .Class
-        )
-//        inlineDateRow.title = "InlineDatePicker"
+            instantiateType: .Class,
+            cellConfiguration: {
+                $0.titleLabel.text = "InlineDatePicker"
+            })
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(
@@ -159,6 +166,6 @@ final class DefaultUIViewController: FormerViewController {
             .add(rowFormers: [pickerRow, datePickerRow])
             .set(footerViewFormer: ViewFormer(viewType: FormerHeaderFooterView.self, instantiateType: .Class))
         
-        self.former.add(sectionFormers: [sectionFormer1, sectionFormer2, sectionFormer3])
+        former.add(sectionFormers: [sectionFormer1, sectionFormer2, sectionFormer3])
     }
 }

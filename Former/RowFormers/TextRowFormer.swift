@@ -29,33 +29,29 @@ public class TextRowFormer: RowFormer {
         instantiateType: Former.InstantiateType,
         text: String? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.text = text
     }
     
     public override func update() {
-        
         super.update()
         
-        if let row = self.cell as? TextFormableRow {
-            
+        if let row = cell as? TextFormableRow {
             let textLabel = row.formerTextLabel()
             let subTextLabel = row.formerSubTextLabel()
+            textLabel?.text = text
+            subTextLabel?.text = subText
             
-            textLabel?.text = self.text
-            subTextLabel?.text = self.subText
-            
-            if self.enabled {
-                textLabel?.textColor =? self.textColor
-                subTextLabel?.textColor =? self.subTextColor
-                self.textColor = nil
-                self.subTextColor = nil
+            if enabled {
+                textLabel?.textColor =? textColor
+                subTextLabel?.textColor =? subTextColor
+                textColor = nil
+                subTextColor = nil
             } else {
-                self.textColor ?= textLabel?.textColor
-                self.subTextColor ?= textLabel?.textColor
-                textLabel?.textColor = self.textDisabledColor
-                subTextLabel?.textColor = self.subTextDisabledColor
+                textColor ?= textLabel?.textColor
+                subTextColor ?= textLabel?.textColor
+                textLabel?.textColor = textDisabledColor
+                subTextLabel?.textColor = subTextDisabledColor
             }
         }
     }

@@ -47,7 +47,7 @@ public class FormerViewController: UIViewController {
                 metrics: nil,
                 views: ["table": tableView]
             )
-        ].flatMap { $0 }
-        self.view.addConstraints(tableConstraints)
+            ].flatMap { $0 }
+        view.addConstraints(tableConstraints)
     }
 }

@@ -11,21 +11,18 @@ import UIKit
 public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     
     required public init?(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)
-        self.setup()
+        setup()
     }
     
     override init(reuseIdentifier: String?) {
-        
         super.init(reuseIdentifier: reuseIdentifier)
-        self.setup()
+        setup()
     }
     
     public func updateWithViewFormer(viewFormer: ViewFormer) {}
     
     public func setup() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
     }
 }

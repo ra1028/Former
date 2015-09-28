@@ -260,12 +260,9 @@ public final class Former: NSObject {
         let count = self.sectionFormers.count
         if count == 0 ||  toSection >= count {
             add(sectionFormers: sectionFormers)
-        } else if toSection == 0 {
-            self.sectionFormers.insertContentsOf(sectionFormers, at: 0)
-        } else {
-            let last = sectionFormers.count - 1
-            self.sectionFormers = self.sectionFormers[0...(toSection - 1)] + sectionFormers + self.sectionFormers[toSection...last]
+            return self
         }
+        self.sectionFormers.insertContentsOf(sectionFormers, at: toSection)
         return self
     }
     
@@ -325,7 +322,7 @@ public final class Former: NSObject {
     public func remove(sectionFormers sectionFormers: [SectionFormer]) -> NSIndexSet {
         var removedCount = 0
         let indexSet = NSMutableIndexSet()
-        for (section, sectionFormer) in sectionFormers.enumerate() {
+        for (section, sectionFormer) in self.sectionFormers.enumerate() {
             if sectionFormers.contains(sectionFormer) {
                 indexSet.addIndex(section)
                 remove(section: section)

@@ -13,15 +13,15 @@ final class TextSelectorViewContoller: FormerViewController {
     
     var texts = [String]() {
         didSet {
-            self.update()
+            update()
         }
     }
     
     var selectedText: String? {
         didSet {
-            self.former.rowFormers.forEach {
+            former.rowFormers.forEach {
                 if let textRowFormer = $0 as? TextRowFormer
-                 where textRowFormer.text == self.selectedText {
+                 where textRowFormer.text == selectedText {
                     textRowFormer.cellUpdate({
                         $0?.accessoryType = .Checkmark
                     })
@@ -40,15 +40,14 @@ final class TextSelectorViewContoller: FormerViewController {
             let rowFormer = TextRowFormer(
                 cellType: FormerTextCell.self,
                 instantiateType: .Class,
-                text: text,
-                cellConfiguration: {
+                text: text) {
                     $0.titleLabel.textColor = .formerColor()
                     $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                     $0.tintColor = .formerSubColor()
                     if text == self.selectedText {
                         $0.accessoryType = .Checkmark
                     }
-            })
+            }
             rowFormer.onSelected = { [weak self] _ in
                 self?.onSelected?(text)
                 self?.navigationController?.popViewControllerAnimated(true)
@@ -61,9 +60,6 @@ final class TextSelectorViewContoller: FormerViewController {
         let sectionFormer = SectionFormer()
             .add(rowFormers: rowFormers)
         
-        self.former
-            .removeAll()
-            .add(sectionFormers: [sectionFormer])
-            .reloadFormer()
+        former.removeAll().add(sectionFormers: [sectionFormer]).reloadFormer()
     }
 }

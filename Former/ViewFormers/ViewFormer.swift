@@ -26,7 +26,6 @@ public class ViewFormer: NSObject {
         viewType: T.Type,
         instantiateType: Former.InstantiateType,
         viewConfiguration: (T -> Void)? = nil) {
-        
             self.viewType = viewType
             self.instantiateType = instantiateType
             self.viewConfiguration = {
@@ -37,44 +36,41 @@ public class ViewFormer: NSObject {
                 }
             }
             super.init()
-            self.initialize()
+            initialize()
     }
     
     public func initialize() {}
     
     final func viewConfigure() {
         
-        if self.view == nil {
-            switch self.instantiateType {
+        if view == nil {
+            switch instantiateType {
             case .Class:
-                self.view = self.viewType.init(reuseIdentifier: nil)
+                view = viewType.init(reuseIdentifier: nil)
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
-                self.view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
-                assert(self.view != nil, "Failed to load header footer view \(nibName) from nib.")
+                view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+                assert(view != nil, "Failed to load header footer view \(nibName) from nib.")
             }
-            _ = self.view.map {
-                $0.backgroundColor = .clearColor()
-                self.viewConfiguration($0)
+            _ = view.map {
+                $0.contentView.backgroundColor = .clearColor()
+                viewConfiguration($0)
             }
         }
-        if let formableView = self.view as? FormableView {
+        if let formableView = view as? FormableView {
             formableView.updateWithViewFormer(self)
         }
-        self.update()
+        update()
     }
     
     public func update() {
-        
-        if let view = self.view,
+        if let view = view,
             let formableView = view as? FormableView {
-                
                 formableView.updateWithViewFormer(self)
         }
     }
     
     public final func viewUpdate<T: UITableViewHeaderFooterView>(@noescape update: (T? -> Void)) {
-        
-            update(self.view as? T)
+            update(view as? T)
     }
 }

@@ -12,28 +12,26 @@ import Former
 final class CustomExampleViewController: FormerViewController {
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        self.configure()
+        configure()
     }
     
     private func configure() {
-        
-        self.title = "Custom Example"
+        title = "Custom Example"
         
         // Create RowFormers
         
         let sliderRow = DemoInlineSliderRowFormer(
-            cellType: DemoDemoInlineSliderCell.self,
-            instantiateType: .Class
-        )
-        sliderRow.title = "Inline Slider"
-        sliderRow.titleColor = .formerColor()
-        sliderRow.titleFont = .boldSystemFontOfSize(16.0)
-        sliderRow.displayColor = UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 1.0)
+            cellType: DemoInlineSliderCell.self,
+            instantiateType: .Class) {
+                $0.titleLabel.text = "Inline Slider"
+                $0.titleLabel.textColor = .formerColor()
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+        }
+        sliderRow.color = UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 1.0)
         sliderRow.onValueChanged = { [weak sliderRow] in
             let value = 1.0 - CGFloat($0)
-            sliderRow?.displayColor = UIColor(hue: value, saturation: value, brightness: value, alpha: 1.0)
+            sliderRow?.color = UIColor(hue: value, saturation: value, brightness: value, alpha: 1.0)
             sliderRow?.update()
         }
         
@@ -57,7 +55,7 @@ final class CustomExampleViewController: FormerViewController {
             .add(rowFormers: [sliderRow])
             .set(headerViewFormer: createHeader("Custom Inline Slider Row"))
         
-        self.former.add(sectionFormers:
+        former.add(sectionFormers:
             [section1]
         )
     }

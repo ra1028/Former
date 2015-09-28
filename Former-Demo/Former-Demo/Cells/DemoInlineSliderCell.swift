@@ -9,71 +9,60 @@
 import UIKit
 import Former
 
-final class DemoDemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
+final class DemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
     
-    private var titleLabel: UILabel!
-    private var colorDisplayView: UIView!
+    private(set) var titleLabel: UILabel!
+    private(set) var colorDisplayView: UIView!
     private var displayColor: UIColor?
     
     func formerTitleLabel() -> UILabel? {
-        
-        return self.titleLabel
+        return titleLabel
     }
     
     func formerColorDisplayView() -> UIView? {
-        
-        return self.colorDisplayView
+        return colorDisplayView
     }
     
     func updateWithRowFormer(rowFormer: RowFormer) {}
     
     required init?(coder aDecoder: NSCoder) {
-        
         super.init(coder: aDecoder)
-        self.configureViews()
+        configureViews()
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureViews()
+        configureViews()
     }
     
     override func setHighlighted(highlighted: Bool, animated: Bool) {
-        
         if highlighted {
-            self.displayColor = self.colorDisplayView.backgroundColor
+            displayColor = colorDisplayView.backgroundColor
         }
-        
         super.setHighlighted(highlighted, animated: animated)
-        
         if highlighted {
-            self.colorDisplayView.backgroundColor = self.displayColor
+            colorDisplayView.backgroundColor = displayColor
         }
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
-        
         if selected {
-            self.displayColor = self.colorDisplayView.backgroundColor
+            displayColor = colorDisplayView.backgroundColor
         }
-        
         super.setSelected(selected, animated: animated)
-        
         if selected {
-            self.colorDisplayView.backgroundColor = self.displayColor
+            colorDisplayView.backgroundColor = displayColor
         }
     }
     
     func configureViews() {
-        
-        self.contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        self.textLabel?.backgroundColor = .clearColor()
+        contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        textLabel?.backgroundColor = .clearColor()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let colorDisplayView = UIView()
@@ -81,7 +70,7 @@ final class DemoDemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableR
         colorDisplayView.translatesAutoresizingMaskIntoConstraints = false
         colorDisplayView.backgroundColor = .clearColor()
         colorDisplayView.layer.cornerRadius = 10.0
-        self.contentView.insertSubview(colorDisplayView, atIndex: 0)
+        contentView.insertSubview(colorDisplayView, atIndex: 0)
         self.colorDisplayView = colorDisplayView
         
         let constraints = [
@@ -103,8 +92,7 @@ final class DemoDemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableR
                 metrics: nil,
                 views: ["colorDisplay": colorDisplayView, "title": titleLabel]
             )
-        ]
-        
-        self.contentView.addConstraints(constraints.flatMap { $0 })
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }

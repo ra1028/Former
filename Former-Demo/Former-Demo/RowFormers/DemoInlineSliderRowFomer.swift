@@ -22,87 +22,59 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
         instantiateType: .Class
     )
     override public var canBecomeEditing: Bool {
-        return self.enabled
+        return enabled
     }
     
     public var onValueChanged: (Float -> Void)?
     public var adjustedValueFromValue: (Float -> Float)?
     public var value: Float = 0
-    public var continuous: Bool?
-    public var minimumValue: Float?
-    public var maximumValue: Float?
+    public var color: UIColor?
+    public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    public var title: String?
-    public var titleFont: UIFont?
-    public var titleColor: UIColor?
-    public var titleDisabledColor: UIColor?
-    
-    public var displayColor: UIColor?
+    private var titleColor: UIColor?
     
     public init<T : UITableViewCell where T : DemoInlineSliderFormableRow>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         onValueChanged: (Float -> Void)? = nil,
         cellConfiguration: (T -> Void)? = nil) {
-            
             super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
             self.onValueChanged = onValueChanged
     }
     
-    public override func initialize() {
-        
-        super.initialize()
-        self.titleDisabledColor = .lightGrayColor()
-    }
-    
     public override func update() {
-        
         super.update()
         
-        if let row = self.cell as? DemoInlineSliderFormableRow {
-            
-            if let titleLabel = row.formerTitleLabel() {
-                
-                _ = self.title.map { titleLabel.text = $0 }
-                _ = self.titleFont.map { titleLabel.font = $0 }
-                if self.enabled {
-                    _ = self.titleColor.map { titleLabel.textColor = $0 }
-                } else {
-                    _ = self.titleDisabledColor.map { titleLabel.textColor = $0 }
-                }
+        if let row = cell as? DemoInlineSliderFormableRow {
+            let titleLabel = row.formerTitleLabel()
+            if enabled {
+                _ = titleColor.map { titleLabel?.textColor = $0 }
+                titleColor = nil
+            } else {
+                if titleColor == nil { titleColor = titleLabel?.textColor }
+                titleLabel?.textColor = titleDisabledColor
             }
-            if let colorDisplayView = row.formerColorDisplayView() {
-                
-                colorDisplayView.backgroundColor = self.displayColor
-            }
+            let colorDisplayView = row.formerColorDisplayView()
+            colorDisplayView?.backgroundColor = color
         }
-        
-        if let inlineRowFormer = self.inlineRowFormer as? SliderRowFormer {
-            
+        if let inlineRowFormer = inlineRowFormer as? SliderRowFormer {
             inlineRowFormer.cellHeight = 44.0
-            inlineRowFormer.onValueChanged = self.valueChanged
-            inlineRowFormer.adjustedValueFromValue = self.adjustedValueFromValue
-            inlineRowFormer.value = self.adjustedValueFromValue?(self.value) ?? self.value
-            // TODO:
-//            inlineRowFormer.continuous = self.continuous
-//            inlineRowFormer.minimumValue = self.minimumValue
-//            inlineRowFormer.maximumValue = self.maximumValue
-//            inlineRowFormer.tintColor = self.tintColor
-            inlineRowFormer.enabled = self.enabled
+            inlineRowFormer.onValueChanged = valueChanged
+            inlineRowFormer.adjustedValueFromValue = adjustedValueFromValue
+            inlineRowFormer.value = adjustedValueFromValue?(value) ?? value
+            inlineRowFormer.enabled = enabled
             inlineRowFormer.update()
         }
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        
         super.cellSelected(indexPath)
-        self.former?.deselect(true)
+        former?.deselect(true)
     }
     
     private func valueChanged(value: Float) {
-        
         self.value = value
-        self.onValueChanged?(value)
+        onValueChanged?(value)
     }
     
     public func editingDidBegin() {}
