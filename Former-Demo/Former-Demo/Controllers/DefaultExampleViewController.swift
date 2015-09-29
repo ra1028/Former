@@ -75,15 +75,15 @@ final class DefaultExampleViewController: FormViewController {
         let date = InlineDatePickerRowFormer(
             cellType: FormInlineDatePickerCell.self,
             instantiateType: .Class,
-            cellSetup: {
+            inlinecellSetup: {
+                $0.datePicker.datePickerMode = .DateAndTime
+            }) {
                 $0.titleLabel.text = "Date"
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.displayLabel.textColor = .formerSubColor()
                 $0.displayLabel.font = .boldSystemFontOfSize(14.0)
                 $0.displayLabel.textAlignment = .Right
-            }) {
-                $0.datePicker.datePickerMode = .DateAndTime
         }
         date.displayTextFromDate = String.mediumDateShortTime
         date.displayEditingColor = .formerHighlightedSubColor()
@@ -247,15 +247,14 @@ final class DefaultExampleViewController: FormViewController {
         
         let picker = InlinePickerRowFormer(
             cellType: FormInlinePickerCell.self,
-            instantiateType: .Class,
-            cellSetup: {
+            instantiateType: .Class) {
                 $0.titleLabel.text = "Inline Picker"
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.displayLabel.textColor = .formerSubColor()
                 $0.displayLabel.font = .boldSystemFontOfSize(14.0)
                 $0.displayLabel.textAlignment = .Right
-            })
+            }
         picker.valueTitles = (1...20).map { "Option\($0)" }
         picker.displayEditingColor = .formerHighlightedSubColor()
         

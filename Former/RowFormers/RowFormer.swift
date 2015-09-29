@@ -55,7 +55,7 @@ public class RowFormer: NSObject {
                 if let cell = $0 as? T {
                     cellSetup?(cell)
                 } else {
-                    assert(false, "Cell type is not match at creation time.")
+                    assert(false, "[Former]Cell type is not match at creation time.")
                 }
             }
             super.init()
@@ -73,7 +73,7 @@ public class RowFormer: NSObject {
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
                 rowFormer.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-                assert(rowFormer.cell != nil, "Failed to load cell \(nibName) from nib.")
+                assert(rowFormer.cell != nil, "[Former]Failed to load cell \(nibName) from nib.")
             }
             _ = rowFormer.cell.map {
                 rowFormer.cellSetup($0)
@@ -110,7 +110,11 @@ public class RowFormer: NSObject {
     }
     
     public final func cellUpdate<T: UITableViewCell>(@noescape update: (T? -> Void)) {
-        update(cell as? T)
+        if let cell = cell as? T {
+            update(cell)
+        } else {
+            assert(false, "[Former]Can't cast cell to \(T.self).")
+        }
     }
     
     public func cellSelected(indexPath: NSIndexPath) {

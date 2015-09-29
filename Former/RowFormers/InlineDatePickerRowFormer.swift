@@ -38,8 +38,8 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         onDateChanged: (NSDate -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil,
-        inlinecellSetup: (FormDatePickerCell -> Void)? = nil) {
+        inlinecellSetup: (FormDatePickerCell -> Void)? = nil,
+        cellSetup: (T -> Void)? = nil) {
             inlineRowFormer = DatePickerRowFormer(
                 cellType: FormDatePickerCell.self,
                 instantiateType: .Class,

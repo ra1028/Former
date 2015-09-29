@@ -32,7 +32,7 @@ public class ViewFormer: NSObject {
                 if let view = $0 as? T {
                     viewConfiguration?(view)
                 } else {
-                    assert(false, "View type is not match at creation time.")
+                    assert(false, "[Former]View type is not match at creation time.")
                 }
             }
             super.init()
@@ -50,7 +50,7 @@ public class ViewFormer: NSObject {
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
                 view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
-                assert(view != nil, "Failed to load header footer view \(nibName) from nib.")
+                assert(view != nil, "[Former]Failed to load header footer view \(nibName) from nib.")
             }
             _ = view.map {
                 $0.contentView.backgroundColor = .clearColor()
@@ -71,6 +71,10 @@ public class ViewFormer: NSObject {
     }
     
     public final func viewUpdate<T: UITableViewHeaderFooterView>(@noescape update: (T? -> Void)) {
-            update(view as? T)
+        if let view = view as? T {
+            update(view)
+        } else {
+            assert(false, "[Former]Can't cast view to \(T.self).")
+        }
     }
 }

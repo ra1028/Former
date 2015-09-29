@@ -124,18 +124,16 @@ final class DefaultUIViewController: FormViewController {
         
         let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormInlinePickerCell.self,
-            instantiateType: .Class,
-            cellSetup: {
+            instantiateType: .Class) {
                 $0.titleLabel.text = "InlinePicker"
-        })
+        }
         inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let inlineDateRow = InlineDatePickerRowFormer(
             cellType: FormInlineDatePickerCell.self,
-            instantiateType: .Class,
-            cellSetup: {
+            instantiateType: .Class) {
                 $0.titleLabel.text = "InlineDatePicker"
-            })
+            }
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(
