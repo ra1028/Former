@@ -15,7 +15,7 @@ final class DemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
     private(set) var colorDisplayView: UIView!
     private var displayColor: UIColor?
     
-    func formerTitleLabel() -> UILabel? {
+    func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     

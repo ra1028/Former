@@ -22,7 +22,7 @@ public class ViewFormer: NSObject {
     private private(set) var viewType: UITableViewHeaderFooterView.Type
     private final let viewConfiguration: (UITableViewHeaderFooterView -> Void)
     
-    public init<T: UITableViewHeaderFooterView where T: FormableView>(
+    public init<T: UITableViewHeaderFooterView>(
         viewType: T.Type,
         instantiateType: Former.InstantiateType,
         viewConfiguration: (T -> Void)? = nil) {

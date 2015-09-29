@@ -1,5 +1,5 @@
 //
-//  FormerSelectorPickerCell.swift
+//  FormSelectorPickerCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/24/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
+public class FormSelectorPickerCell: FormCell, SelectorPickerFormableRow {
     
     public var selectorPickerView: UIPickerView?
     public var selectorAccessoryView: UIView?
@@ -18,11 +18,11 @@ public class FormerSelectorPickerCell: FormerCell, SelectorPickerFormableRow {
     
     private weak var rightConst: NSLayoutConstraint!
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     
-    public func formerDisplayLabel() -> UILabel? {
+    public func formDisplayLabel() -> UILabel? {
         return displayLabel
     }
     

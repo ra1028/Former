@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerViewController: UIViewController {
+public class FormViewController: UIViewController {
     
     public private(set) var tableView = UITableView(frame: CGRect.zero, style: .Grouped)
     public lazy var former: Former = {

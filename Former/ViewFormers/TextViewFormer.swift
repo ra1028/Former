@@ -10,7 +10,7 @@ import UIKit
 
 public protocol TextFormableView: FormableView {
     
-    func formerTextLabel() -> UILabel
+    func formTextLabel() -> UILabel
 }
 
 public class TextViewFormer: ViewFormer {
@@ -35,7 +35,7 @@ public class TextViewFormer: ViewFormer {
         super.update()
         
         if let view = view as? TextFormableView {
-            let textLabel = view.formerTextLabel()
+            let textLabel = view.formTextLabel()
             textLabel.text = text
         }
     }

@@ -1,5 +1,5 @@
 //
-//  FormerSegmentedCell.swift
+//  FormSegmentedCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/30/15.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class FormerSegmentedCell: FormerCell, SegmentedFormableRow {
+public class FormSegmentedCell: FormCell, SegmentedFormableRow {
     
     public let observer = FormerObserver()
     
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var segmentedControl: UISegmentedControl!
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     
-    public func formerSegmented() -> UISegmentedControl {
+    public func formSegmented() -> UISegmentedControl {
         return segmentedControl
     }
     

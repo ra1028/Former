@@ -1,5 +1,5 @@
 //
-//  FormerCell.swift
+//  FormCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/25/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerCell: UITableViewCell, FormableRow {
+public class FormCell: UITableViewCell, FormableRow {
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

@@ -12,9 +12,9 @@ public protocol StepperFormableRow: FormableRow {
     
     var observer: FormerObserver { get }
     
-    func formerStepper() -> UIStepper
-    func formerTitleLabel() -> UILabel?
-    func formerDisplayLabel() -> UILabel?
+    func formStepper() -> UIStepper
+    func formTitleLabel() -> UILabel?
+    func formDisplayLabel() -> UILabel?
 }
 
 public class StepperRowFormer: RowFormer, FormerValidatable {
@@ -44,9 +44,9 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? StepperFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
-            let stepper = row.formerStepper()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
+            let stepper = row.formStepper()
             stepper.value = value
             stepper.enabled = enabled
             displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
@@ -78,7 +78,7 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
         if let row = cell as? StepperFormableRow where enabled {
             let value = stepper.value
             self.value = value
-            row.formerDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
+            row.formDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
             onValueChanged?(value)
         }
     }

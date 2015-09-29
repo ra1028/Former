@@ -1,5 +1,5 @@
 //
-//  FormerTextFieldCell.swift
+//  FormTextFieldCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/25/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
+public class FormTextFieldCell: FormCell, TextFieldFormableRow {
     
     public let observer = FormerObserver()
     
@@ -18,11 +18,11 @@ public class FormerTextFieldCell: FormerCell, TextFieldFormableRow {
     private weak var leftConst: NSLayoutConstraint!
     private weak var rightConst: NSLayoutConstraint!
 
-    public func formerTextField() -> UITextField {
+    public func formTextField() -> UITextField {
         return textField
     }
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     

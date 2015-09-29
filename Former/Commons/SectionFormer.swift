@@ -16,7 +16,7 @@ public final class SectionFormer: NSObject {
     public private(set) var rowFormers = [RowFormer]()
     
     /// ViewFormer of applying section header. Default is applying simply 10px spacing section header.
-    public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormerHeaderFooterView.self, instantiateType: .Class)
+    public private(set) var headerViewFormer: ViewFormer? = ViewFormer(viewType: FormHeaderFooterView.self, instantiateType: .Class)
     
     /// ViewFormer of applying section footer. Default is nil.
     public private(set) var footerViewFormer: ViewFormer?

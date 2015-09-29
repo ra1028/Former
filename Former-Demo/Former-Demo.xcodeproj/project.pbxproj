@@ -17,8 +17,8 @@
 		2AC381531BA447D3009C7EFF /* DefaultExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381431BA447D3009C7EFF /* DefaultExampleViewController.swift */; };
 		2AC381541BA447D3009C7EFF /* DefaultUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381441BA447D3009C7EFF /* DefaultUIViewController.swift */; };
 		2AC381551BA447D3009C7EFF /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381451BA447D3009C7EFF /* TopViewController.swift */; };
-		2AC381561BA447D3009C7EFF /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381471BA447D3009C7EFF /* StringExt.swift */; };
-		2AC381571BA447D3009C7EFF /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381481BA447D3009C7EFF /* UIColorExt.swift */; };
+		2AC381561BA447D3009C7EFF /* String+FormerDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381471BA447D3009C7EFF /* String+FormerDemo.swift */; };
+		2AC381571BA447D3009C7EFF /* UIColor+FormerDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381481BA447D3009C7EFF /* UIColor+FormerDemo.swift */; };
 		2AC381591BA447D3009C7EFF /* DemoInlineSliderRowFomer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3814B1BA447D3009C7EFF /* DemoInlineSliderRowFomer.swift */; };
 		2AC3815A1BA447D3009C7EFF /* FormerInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3814D1BA447D3009C7EFF /* FormerInputAccessoryView.swift */; };
 		2AC3815C1BA4498D009C7EFF /* TextSelectorViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3815B1BA4498D009C7EFF /* TextSelectorViewContorller.swift */; };
@@ -66,8 +66,8 @@
 		2AC381431BA447D3009C7EFF /* DefaultExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultExampleViewController.swift; sourceTree = "<group>"; };
 		2AC381441BA447D3009C7EFF /* DefaultUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultUIViewController.swift; sourceTree = "<group>"; };
 		2AC381451BA447D3009C7EFF /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
-		2AC381471BA447D3009C7EFF /* StringExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
-		2AC381481BA447D3009C7EFF /* UIColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
+		2AC381471BA447D3009C7EFF /* String+FormerDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FormerDemo.swift"; sourceTree = "<group>"; };
+		2AC381481BA447D3009C7EFF /* UIColor+FormerDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+FormerDemo.swift"; sourceTree = "<group>"; };
 		2AC381491BA447D3009C7EFF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2AC3814B1BA447D3009C7EFF /* DemoInlineSliderRowFomer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoInlineSliderRowFomer.swift; sourceTree = "<group>"; };
 		2AC3814D1BA447D3009C7EFF /* FormerInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInputAccessoryView.swift; sourceTree = "<group>"; };
@@ -142,8 +142,8 @@
 		2AC381461BA447D3009C7EFF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2AC381471BA447D3009C7EFF /* StringExt.swift */,
-				2AC381481BA447D3009C7EFF /* UIColorExt.swift */,
+				2AC381471BA447D3009C7EFF /* String+FormerDemo.swift */,
+				2AC381481BA447D3009C7EFF /* UIColor+FormerDemo.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -255,11 +255,11 @@
 				2AC3815C1BA4498D009C7EFF /* TextSelectorViewContorller.swift in Sources */,
 				2AC381551BA447D3009C7EFF /* TopViewController.swift in Sources */,
 				2AC381591BA447D3009C7EFF /* DemoInlineSliderRowFomer.swift in Sources */,
-				2AC381571BA447D3009C7EFF /* UIColorExt.swift in Sources */,
+				2AC381571BA447D3009C7EFF /* UIColor+FormerDemo.swift in Sources */,
 				2AC381541BA447D3009C7EFF /* DefaultUIViewController.swift in Sources */,
 				2AC381511BA447D3009C7EFF /* DemoInlineSliderCell.swift in Sources */,
 				2AC3815A1BA447D3009C7EFF /* FormerInputAccessoryView.swift in Sources */,
-				2AC381561BA447D3009C7EFF /* StringExt.swift in Sources */,
+				2AC381561BA447D3009C7EFF /* String+FormerDemo.swift in Sources */,
 				2AC381531BA447D3009C7EFF /* DefaultExampleViewController.swift in Sources */,
 				2AC381521BA447D3009C7EFF /* CustomExampleViewController.swift in Sources */,
 				2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */,

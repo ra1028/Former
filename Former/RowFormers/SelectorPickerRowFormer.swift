@@ -13,8 +13,8 @@ public protocol SelectorPickerFormableRow: FormableRow {
     var selectorPickerView: UIPickerView? { get set } // Not need to set UIPickerView instance.
     var selectorAccessoryView: UIView? { get set } // Not need to set UIView instance.
     
-    func formerTitleLabel() -> UILabel?
-    func formerDisplayLabel() -> UILabel?
+    func formTitleLabel() -> UILabel?
+    func formDisplayLabel() -> UILabel?
 }
 
 public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
@@ -58,8 +58,8 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
         if let row = cell as? SelectorPickerFormableRow {
             row.selectorPickerView = inputView
             row.selectorAccessoryView = inputAccessoryView
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             if valueTitles.isEmpty {
                 displayLabel?.text = ""
             } else {
@@ -107,7 +107,7 @@ extension SelectorPickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource 
             let selectedTitle = valueTitles[row]
             onValueChanged?(row, selectedTitle)
             if let row = cell as? SelectorPickerFormableRow {
-                let displayTextLabel = row.formerDisplayLabel()
+                let displayTextLabel = row.formDisplayLabel()
                 displayTextLabel?.text = selectedTitle
             }
         }

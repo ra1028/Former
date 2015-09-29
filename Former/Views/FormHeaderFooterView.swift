@@ -1,5 +1,5 @@
 //
-//  FormerHeaderFooterView.swift
+//  FormHeaderFooterView.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/26/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerHeaderFooterView: UITableViewHeaderFooterView, FormableView {
+public class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

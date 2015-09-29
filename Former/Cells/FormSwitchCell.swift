@@ -1,5 +1,5 @@
 //
-//  FormerSwitchCell.swift
+//  FormSwitchCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/27/15.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class FormerSwitchCell: FormerCell, SwitchFormableRow {
+public class FormSwitchCell: FormCell, SwitchFormableRow {
     
     public let observer = FormerObserver()
     
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var switchButton: UISwitch!
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     
-    public func formerSwitch() -> UISwitch {
+    public func formSwitch() -> UISwitch {
         return switchButton
     }
     

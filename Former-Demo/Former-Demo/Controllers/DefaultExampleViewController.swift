@@ -20,7 +20,7 @@ private extension UITableViewRowAnimation {
     }
 }
 
-final class DefaultExampleViewController: FormerViewController {
+final class DefaultExampleViewController: FormViewController {
     
     private var insertRowAnimation = UITableViewRowAnimation.Left
     private var insertSectionAnimation = UITableViewRowAnimation.Fade
@@ -29,7 +29,7 @@ final class DefaultExampleViewController: FormerViewController {
         
         return (1...2).map { index -> RowFormer in
             let row = CheckRowFormer(
-                cellType: FormerCheckCell.self,
+                cellType: FormCheckCell.self,
                 instantiateType: .Class) {
                     $0.titleLabel.text = "Check\(index)"
                     $0.titleLabel.textColor = .formerColor()
@@ -42,7 +42,7 @@ final class DefaultExampleViewController: FormerViewController {
     
     private lazy var subSectionFormer: SectionFormer = {
         let rowFormer = CheckRowFormer(
-            cellType: FormerCheckCell.self,
+            cellType: FormCheckCell.self,
             instantiateType: .Class) {
                 $0.titleLabel.text = "Check3"
                 $0.titleLabel.textColor = .formerColor()
@@ -73,7 +73,7 @@ final class DefaultExampleViewController: FormerViewController {
         // Date Setting Example
         
         let date = InlineDatePickerRowFormer(
-            cellType: FormerInlineDatePickerCell.self,
+            cellType: FormInlineDatePickerCell.self,
             instantiateType: .Class,
             cellSetup: {
                 $0.titleLabel.text = "Date"
@@ -89,7 +89,7 @@ final class DefaultExampleViewController: FormerViewController {
         date.displayEditingColor = .formerHighlightedSubColor()
         
         let switchDateStyle = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
+            cellType: FormSwitchCell.self,
             instantiateType: .Class,
             onSwitchChanged: { switched in
                 date.displayTextFromDate = switched ? String.fullDate : String.mediumDateShortTime
@@ -108,7 +108,7 @@ final class DefaultExampleViewController: FormerViewController {
         // Insert Rows Example
         
         let insertRows = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
+            cellType: FormSwitchCell.self,
             instantiateType: .Class,
             onSwitchChanged: { [weak self] in
                 guard let sSelf = self else { return }
@@ -124,7 +124,7 @@ final class DefaultExampleViewController: FormerViewController {
                 $0.switchButton.onTintColor = .formerSubColor()
         }
         let insertRowAnimationRow = SegmentedRowFormer(
-            cellType: FormerSegmentedCell.self,
+            cellType: FormSegmentedCell.self,
             instantiateType: .Class,
             segmentTitles: UITableViewRowAnimation.animationNames(),
             onSegmentSelected: { [weak self] index, _ in
@@ -137,7 +137,7 @@ final class DefaultExampleViewController: FormerViewController {
         // Insert Section Example
         
         let insertSection = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
+            cellType: FormSwitchCell.self,
             instantiateType: .Class,
             onSwitchChanged: { [weak self] in
                 guard let sSelf = self else { return }
@@ -153,7 +153,7 @@ final class DefaultExampleViewController: FormerViewController {
                 $0.switchButton.onTintColor = .formerSubColor()
         }
         let insertSectionAnimationRow = SegmentedRowFormer(
-            cellType: FormerSegmentedCell.self,
+            cellType: FormSegmentedCell.self,
             instantiateType: .Class,
             segmentTitles: UITableViewRowAnimation.animationNames(),
             onSegmentSelected: { [weak self] index, _ in
@@ -168,7 +168,7 @@ final class DefaultExampleViewController: FormerViewController {
         let options = ["Option1", "Option2", "Option3"]
         let selectors = (0...1).map { index -> TextRowFormer in
             let selector = TextRowFormer(
-                cellType: FormerTextCell.self,
+                cellType: FormTextCell.self,
                 instantiateType: .Class) {
                     $0.titleLabel.textColor = .formerColor()
                     $0.titleLabel.font = .boldSystemFontOfSize(16.0)
@@ -209,7 +209,7 @@ final class DefaultExampleViewController: FormerViewController {
             return selector
         }
         let pickerSelector = SelectorPickerRowFormer(
-            cellType: FormerSelectorPickerCell.self,
+            cellType: FormSelectorPickerCell.self,
             instantiateType: .Class) {
                 $0.titleLabel.text = "Picker"
                 $0.titleLabel.textColor = .formerColor()
@@ -229,7 +229,7 @@ final class DefaultExampleViewController: FormerViewController {
 
         let textFields = (1...2).map { index -> TextFieldRowFormer in
             let input = TextFieldRowFormer(
-                cellType: FormerTextFieldCell.self,
+                cellType: FormTextFieldCell.self,
                 instantiateType: .Class) { [weak self] in
                     $0.titleLabel.text = "Field\(index)"
                     $0.titleLabel.textColor = .formerColor()
@@ -246,7 +246,7 @@ final class DefaultExampleViewController: FormerViewController {
         }
         
         let picker = InlinePickerRowFormer(
-            cellType: FormerInlinePickerCell.self,
+            cellType: FormInlinePickerCell.self,
             instantiateType: .Class,
             cellSetup: {
                 $0.titleLabel.text = "Inline Picker"
@@ -263,7 +263,7 @@ final class DefaultExampleViewController: FormerViewController {
         
         let createHeader: (String -> ViewFormer) = {
             let header = TextViewFormer(
-                viewType: FormerTextHeaderView.self,
+                viewType: FormTextHeaderView.self,
                 instantiateType: .Class,
                 text: $0) {
                     $0.titleLabel.textColor = .grayColor()
@@ -275,7 +275,7 @@ final class DefaultExampleViewController: FormerViewController {
         }
         
         let footer = ViewFormer(
-            viewType: FormerHeaderFooterView.self,
+            viewType: FormHeaderFooterView.self,
             instantiateType: .Class
         )
         

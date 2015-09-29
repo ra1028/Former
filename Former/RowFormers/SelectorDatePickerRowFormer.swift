@@ -13,8 +13,8 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     var selectorDatePicker: UIDatePicker? { get set } // Not need to set UIDatePicker instance.
     var selectorAccessoryView: UIView? { get set } // Not need to set UIView instance.
     
-    func formerTitleLabel() -> UILabel?
-    func formerDisplayLabel() -> UILabel?
+    func formTitleLabel() -> UILabel?
+    func formDisplayLabel() -> UILabel?
 }
 
 public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
@@ -59,8 +59,8 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
             row.selectorDatePicker = inputView
             row.selectorAccessoryView = inputAccessoryView
             
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
             if self.enabled {
                 titleLabel?.textColor =? titleColor
@@ -92,7 +92,7 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
         if let row = cell as? SelectorDatePickerFormableRow where enabled {
             let date = datePicker.date
             self.date = date
-            row.formerDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+            row.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
             onDateChanged?(date)
         }
     }

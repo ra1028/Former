@@ -12,7 +12,7 @@ public protocol DatePickerFormableRow: FormableRow {
     
     var observer: FormerObserver { get }
     
-    func formerDatePicker() -> UIDatePicker
+    func formDatePicker() -> UIDatePicker
 }
 
 public class DatePickerRowFormer: RowFormer, FormerValidatable {
@@ -41,7 +41,7 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? DatePickerFormableRow {
-            let datePicker = row.formerDatePicker()
+            let datePicker = row.formDatePicker()
             datePicker.setDate(date, animated: false)
             datePicker.userInteractionEnabled = self.enabled
             datePicker.alpha = enabled ? 1.0 : 0.5

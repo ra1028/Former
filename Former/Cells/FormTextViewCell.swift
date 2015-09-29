@@ -1,5 +1,5 @@
 //
-//  FormerTextViewCell.swift
+//  FormTextViewCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/28/15.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-public class FormerTextViewCell: FormerCell, TextViewFormableRow {
+public class FormTextViewCell: FormCell, TextViewFormableRow {
     
     public private(set) weak var textView: UITextView!
     public private(set) weak var titleLabel: UILabel!
     
     private weak var leftConst: NSLayoutConstraint!
     
-    public func formerTextView() -> UITextView {
+    public func formTextView() -> UITextView {
         return textView
     }
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     

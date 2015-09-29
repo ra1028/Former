@@ -12,9 +12,9 @@ public protocol SliderFormableRow: FormableRow {
     
     var observer: FormerObserver { get }
     
-    func formerSlider() -> UISlider
-    func formerTitleLabel() -> UILabel?
-    func formerDisplayLabel() -> UILabel?
+    func formSlider() -> UISlider
+    func formTitleLabel() -> UILabel?
+    func formDisplayLabel() -> UILabel?
 }
 
 public class SliderRowFormer: RowFormer, FormerValidatable {
@@ -50,9 +50,9 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? SliderFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
-            let slider = row.formerSlider()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
+            let slider = row.formSlider()
             slider.value = adjustedValueFromValue?(value) ?? value
             slider.enabled = enabled
             displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
@@ -83,7 +83,7 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     
     private dynamic func valueChanged(slider: UISlider) {
         if let cell = cell as? SliderFormableRow where enabled {
-            let displayLabel = cell.formerDisplayLabel()
+            let displayLabel = cell.formDisplayLabel()
             let value = slider.value
             let adjustedValue = adjustedValueFromValue?(value) ?? value
             self.value = adjustedValue

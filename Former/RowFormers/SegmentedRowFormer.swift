@@ -12,8 +12,8 @@ public protocol SegmentedFormableRow: FormableRow {
     
     var observer: FormerObserver { get }
     
-    func formerSegmented() -> UISegmentedControl
-    func formerTitleLabel() -> UILabel?
+    func formSegmented() -> UISegmentedControl
+    func formTitleLabel() -> UILabel?
 }
 
 public class SegmentedRowFormer: RowFormer, FormerValidatable {
@@ -43,8 +43,8 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? SegmentedFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let segment = row.formerSegmented()
+            let titleLabel = row.formTitleLabel()
+            let segment = row.formSegmented()
             segment.removeAllSegments()
             for (index, title) in segmentTitles.enumerate() {
                 segment.insertSegmentWithTitle(title, atIndex: index, animated: false)

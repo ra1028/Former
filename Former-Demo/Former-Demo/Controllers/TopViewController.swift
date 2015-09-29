@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class TopViewContoller: FormerViewController {
+final class TopViewContoller: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +46,7 @@ final class TopViewContoller: FormerViewController {
         ]
         
         let createMenu: ((String, (() -> Void)?) -> TextRowFormer) = { text, onSelected in
-            let rowFormer = TextRowFormer(cellType: FormerTextCell.self, instantiateType: .Class, text: text) {
+            let rowFormer = TextRowFormer(cellType: FormTextCell.self, instantiateType: .Class, text: text) {
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = UIFont.boldSystemFontOfSize(16.0)
                 $0.accessoryType = .DisclosureIndicator
@@ -59,7 +59,7 @@ final class TopViewContoller: FormerViewController {
         
         let createHeader: (String -> TextViewFormer) = {
             let header = TextViewFormer(
-                viewType: FormerTextHeaderView.self,
+                viewType: FormTextHeaderView.self,
                 instantiateType: .Class,
                 text: $0) {
                     $0.titleLabel.textColor = .grayColor()
@@ -71,7 +71,7 @@ final class TopViewContoller: FormerViewController {
         
         let createFooter: (String -> TextViewFormer) = {
             let footer = TextViewFormer(
-                viewType: FormerTextFooterView.self,
+                viewType: FormTextFooterView.self,
                 instantiateType: .Class,
                 text: $0) {
                     $0.titleLabel.textColor = .grayColor()

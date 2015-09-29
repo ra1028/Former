@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class TextSelectorViewContoller: FormerViewController {
+final class TextSelectorViewContoller: FormViewController {
     
     var texts = [String]() {
         didSet {
@@ -38,7 +38,7 @@ final class TextSelectorViewContoller: FormerViewController {
         
         let rowFormers = texts.map { text -> TextRowFormer in
             let rowFormer = TextRowFormer(
-                cellType: FormerTextCell.self,
+                cellType: FormTextCell.self,
                 instantiateType: .Class,
                 text: text) {
                     $0.titleLabel.textColor = .formerColor()

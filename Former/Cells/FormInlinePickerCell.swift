@@ -1,37 +1,39 @@
 //
-//  FormerSliderCell.swift
+//  FormInlinePickerCell.swift
 //  Former-Demo
 //
-//  Created by Ryo Aoyama on 7/31/15.
+//  Created by Ryo Aoyama on 8/2/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
 
-public class FormerSliderCell: FormerCell, SliderFormableRow {
-    
-    public let observer = FormerObserver()
+public class FormInlinePickerCell: FormCell, InlinePickerFormableRow {
     
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
-    public private(set) weak var slider: UISlider!
     
-    public func formerTitleLabel() -> UILabel? {
+    private weak var rightConst: NSLayoutConstraint!
+    
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     
-    public func formerDisplayLabel() -> UILabel? {
+    public func formDisplayLabel() -> UILabel? {
         return displayLabel
     }
     
-    public func formerSlider() -> UISlider {
-        return slider
+    public override func updateWithRowFormer(rowFormer: RowFormer) {
+        super.updateWithRowFormer(rowFormer)
+        
+        rightConst.constant = (accessoryType == .None && accessoryView == nil) ? -15.0 : 0
     }
     
     public override func configureViews() {
         super.configureViews()
         
         let titleLabel = UILabel()
+        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
@@ -41,37 +43,36 @@ public class FormerSliderCell: FormerCell, SliderFormableRow {
         contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel
         
-        let slider = UISlider()
-        slider.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(slider, atIndex: 0)
-        self.slider = slider
-        
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-10-[title(>=0)]->=0-[slider(>=0)]-10-|",
+                "V:|-0-[title]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["title": titleLabel, "slider": slider]
+                views: ["title": titleLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-10-[display(>=0)]->=0-[slider(>=0)]-10-|",
+                "V:|-0-[display]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["display": displayLabel, "slider": slider]
+                views: ["display": displayLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]->=0-[display(>=0)]-15-|",
+                "H:|-15-[title]-10-[display(>=0)]",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
-            ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-20-[slider]-20-|",
-                options: [],
-                metrics: nil,
-                views: ["slider": slider]
             )
             ].flatMap { $0 }
-        contentView.addConstraints(constraints)
+        let rightConst = NSLayoutConstraint(
+            item: displayLabel,
+            attribute: .Trailing,
+            relatedBy: .Equal,
+            toItem: contentView,
+            attribute: .Trailing,
+            multiplier: 1.0,
+            constant: 0
+        )        
+        contentView.addConstraints(constraints + [rightConst])
+        self.rightConst = rightConst
     }
 }

@@ -12,8 +12,8 @@ public protocol TextFieldFormableRow: FormableRow {
     
     var observer: FormerObserver { get }
     
-    func formerTextField() -> UITextField
-    func formerTitleLabel() -> UILabel?
+    func formTextField() -> UITextField
+    func formTitleLabel() -> UILabel?
 }
 
 public class TextFieldRowFormer: RowFormer, FormerValidatable {
@@ -46,7 +46,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     
     deinit {
         if let row = cell as? TextFieldFormableRow {
-            let textField = row.formerTextField()
+            let textField = row.formTextField()
             textField.delegate = nil
         }
     }
@@ -56,8 +56,8 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? TextFieldFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let textField = row.formerTextField()
+            let titleLabel = row.formTitleLabel()
+            let textField = row.formTextField()
             textField.text = text
             textField.placeholder =? placeholder
             textField.userInteractionEnabled = false
@@ -95,7 +95,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
         super.cellSelected(indexPath)
         
         if let row = cell as? TextFieldFormableRow where enabled {
-            let textField = row.formerTextField()
+            let textField = row.formTextField()
             if !textField.editing {
                 textField.userInteractionEnabled = true
                 textField.becomeFirstResponder()
@@ -117,7 +117,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     
     public func editingDidBegin(textField: UITextField) {
         if let row = cell as? TextFieldFormableRow where enabled {
-            let titleLabel = row.formerTitleLabel()
+            let titleLabel = row.formTitleLabel()
             titleColor ?= titleLabel?.textColor
             titleLabel?.textColor =? titleEditingColor
         }
@@ -125,7 +125,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     
     public func editingDidEnd(textField: UITextField) {
         if let row = cell as? TextFieldFormableRow {
-            let titleLabel = row.formerTitleLabel()
+            let titleLabel = row.formTitleLabel()
             if enabled {
                 titleLabel?.textColor =? titleColor
                 titleColor = nil
@@ -133,7 +133,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
                 titleColor ?= titleLabel?.textColor
                 titleLabel?.textColor =? titleEditingColor
             }
-            row.formerTextField().userInteractionEnabled = false
+            row.formTextField().userInteractionEnabled = false
         }
     }
 }

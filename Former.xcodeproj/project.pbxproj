@@ -8,27 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		2A65655F1BA43E9100C78E81 /* Former.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A65655E1BA43E9100C78E81 /* Former.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A6566201BA4427D00C78E81 /* FormerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565EF1BA4427D00C78E81 /* FormerCell.swift */; };
-		2A6566211BA4427D00C78E81 /* FormerCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F01BA4427D00C78E81 /* FormerCheckCell.swift */; };
-		2A6566221BA4427D00C78E81 /* FormerDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F11BA4427D00C78E81 /* FormerDatePickerCell.swift */; };
-		2A6566231BA4427D00C78E81 /* FormerInlineDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F21BA4427D00C78E81 /* FormerInlineDatePickerCell.swift */; };
-		2A6566241BA4427D00C78E81 /* FormerInlinePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F31BA4427D00C78E81 /* FormerInlinePickerCell.swift */; };
-		2A6566251BA4427D00C78E81 /* FormerPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F41BA4427D00C78E81 /* FormerPickerCell.swift */; };
-		2A6566261BA4427D00C78E81 /* FormerSegmentedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F51BA4427D00C78E81 /* FormerSegmentedCell.swift */; };
-		2A6566271BA4427D00C78E81 /* FormerSelectorDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F61BA4427D00C78E81 /* FormerSelectorDatePickerCell.swift */; };
-		2A6566281BA4427D00C78E81 /* FormerSelectorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F71BA4427D00C78E81 /* FormerSelectorPickerCell.swift */; };
-		2A6566291BA4427D00C78E81 /* FormerSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F81BA4427D00C78E81 /* FormerSliderCell.swift */; };
-		2A65662A1BA4427D00C78E81 /* FormerStepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F91BA4427D00C78E81 /* FormerStepperCell.swift */; };
-		2A65662B1BA4427D00C78E81 /* FormerSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FA1BA4427D00C78E81 /* FormerSwitchCell.swift */; };
-		2A65662C1BA4427D00C78E81 /* FormerTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FB1BA4427D00C78E81 /* FormerTextCell.swift */; };
-		2A65662D1BA4427D00C78E81 /* FormerTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FC1BA4427D00C78E81 /* FormerTextFieldCell.swift */; };
-		2A65662E1BA4427D00C78E81 /* FormerTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FD1BA4427D00C78E81 /* FormerTextViewCell.swift */; };
+		2A6566201BA4427D00C78E81 /* FormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565EF1BA4427D00C78E81 /* FormCell.swift */; };
+		2A6566211BA4427D00C78E81 /* FormCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F01BA4427D00C78E81 /* FormCheckCell.swift */; };
+		2A6566221BA4427D00C78E81 /* FormDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F11BA4427D00C78E81 /* FormDatePickerCell.swift */; };
+		2A6566231BA4427D00C78E81 /* FormInlineDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F21BA4427D00C78E81 /* FormInlineDatePickerCell.swift */; };
+		2A6566241BA4427D00C78E81 /* FormInlinePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F31BA4427D00C78E81 /* FormInlinePickerCell.swift */; };
+		2A6566251BA4427D00C78E81 /* FormPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F41BA4427D00C78E81 /* FormPickerCell.swift */; };
+		2A6566261BA4427D00C78E81 /* FormSegmentedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F51BA4427D00C78E81 /* FormSegmentedCell.swift */; };
+		2A6566271BA4427D00C78E81 /* FormSelectorDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F61BA4427D00C78E81 /* FormSelectorDatePickerCell.swift */; };
+		2A6566281BA4427D00C78E81 /* FormSelectorPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F71BA4427D00C78E81 /* FormSelectorPickerCell.swift */; };
+		2A6566291BA4427D00C78E81 /* FormSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F81BA4427D00C78E81 /* FormSliderCell.swift */; };
+		2A65662A1BA4427D00C78E81 /* FormStepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F91BA4427D00C78E81 /* FormStepperCell.swift */; };
+		2A65662B1BA4427D00C78E81 /* FormSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FA1BA4427D00C78E81 /* FormSwitchCell.swift */; };
+		2A65662C1BA4427D00C78E81 /* FormTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FB1BA4427D00C78E81 /* FormTextCell.swift */; };
+		2A65662D1BA4427D00C78E81 /* FormTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FC1BA4427D00C78E81 /* FormTextFieldCell.swift */; };
+		2A65662E1BA4427D00C78E81 /* FormTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FD1BA4427D00C78E81 /* FormTextViewCell.swift */; };
 		2A65662F1BA4427D00C78E81 /* Former.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FF1BA4427D00C78E81 /* Former.swift */; };
 		2A6566301BA4427D00C78E81 /* FormerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566001BA4427D00C78E81 /* FormerObserver.swift */; };
 		2A6566321BA4427D00C78E81 /* SectionFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566021BA4427D00C78E81 /* SectionFormer.swift */; };
-		2A6566341BA4427D00C78E81 /* FomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566051BA4427D00C78E81 /* FomerViewController.swift */; };
-		2A6566351BA4427D00C78E81 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566071BA4427D00C78E81 /* Operators.swift */; };
-		2A6566361BA4427D00C78E81 /* UITableViewCellExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */; };
+		2A6566341BA4427D00C78E81 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566051BA4427D00C78E81 /* FormViewController.swift */; };
+		2A6566351BA4427D00C78E81 /* FormerInternalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566071BA4427D00C78E81 /* FormerInternalOperators.swift */; };
+		2A6566361BA4427D00C78E81 /* UITableViewCell+Former.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566081BA4427D00C78E81 /* UITableViewCell+Former.swift */; };
 		2A6566381BA4427D00C78E81 /* CheckRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65660B1BA4427D00C78E81 /* CheckRowFormer.swift */; };
 		2A6566391BA4427D00C78E81 /* DatePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65660C1BA4427D00C78E81 /* DatePickerRowFormer.swift */; };
 		2A65663A1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65660D1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift */; };
@@ -45,36 +45,36 @@
 		2A6566451BA4427D00C78E81 /* TextRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566181BA4427D00C78E81 /* TextRowFormer.swift */; };
 		2A6566461BA4427D00C78E81 /* TextViewRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566191BA4427D00C78E81 /* TextViewRowFormer.swift */; };
 		2A6566471BA4427D00C78E81 /* TextViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661B1BA4427D00C78E81 /* TextViewFormer.swift */; };
-		2A6566481BA4427D00C78E81 /* FormerHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661D1BA4427D00C78E81 /* FormerHeaderFooterView.swift */; };
-		2A6566491BA4427D00C78E81 /* FormerTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661E1BA4427D00C78E81 /* FormerTextFooterView.swift */; };
-		2A65664A1BA4427D00C78E81 /* FormerTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */; };
+		2A6566481BA4427D00C78E81 /* FormHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661D1BA4427D00C78E81 /* FormHeaderFooterView.swift */; };
+		2A6566491BA4427D00C78E81 /* FormTextFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661E1BA4427D00C78E81 /* FormTextFooterView.swift */; };
+		2A65664A1BA4427D00C78E81 /* FormTextHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661F1BA4427D00C78E81 /* FormTextHeaderView.swift */; };
 		2A7D95711BA466E600F0B005 /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7D95701BA466E600F0B005 /* ViewFormer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2A65655E1BA43E9100C78E81 /* Former.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Former.h; sourceTree = "<group>"; };
 		2A6565601BA43E9100C78E81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2A6565EF1BA4427D00C78E81 /* FormerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCell.swift; sourceTree = "<group>"; };
-		2A6565F01BA4427D00C78E81 /* FormerCheckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerCheckCell.swift; sourceTree = "<group>"; };
-		2A6565F11BA4427D00C78E81 /* FormerDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerDatePickerCell.swift; sourceTree = "<group>"; };
-		2A6565F21BA4427D00C78E81 /* FormerInlineDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInlineDatePickerCell.swift; sourceTree = "<group>"; };
-		2A6565F31BA4427D00C78E81 /* FormerInlinePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInlinePickerCell.swift; sourceTree = "<group>"; };
-		2A6565F41BA4427D00C78E81 /* FormerPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerPickerCell.swift; sourceTree = "<group>"; };
-		2A6565F51BA4427D00C78E81 /* FormerSegmentedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSegmentedCell.swift; sourceTree = "<group>"; };
-		2A6565F61BA4427D00C78E81 /* FormerSelectorDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSelectorDatePickerCell.swift; sourceTree = "<group>"; };
-		2A6565F71BA4427D00C78E81 /* FormerSelectorPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSelectorPickerCell.swift; sourceTree = "<group>"; };
-		2A6565F81BA4427D00C78E81 /* FormerSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSliderCell.swift; sourceTree = "<group>"; };
-		2A6565F91BA4427D00C78E81 /* FormerStepperCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerStepperCell.swift; sourceTree = "<group>"; };
-		2A6565FA1BA4427D00C78E81 /* FormerSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerSwitchCell.swift; sourceTree = "<group>"; };
-		2A6565FB1BA4427D00C78E81 /* FormerTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextCell.swift; sourceTree = "<group>"; };
-		2A6565FC1BA4427D00C78E81 /* FormerTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFieldCell.swift; sourceTree = "<group>"; };
-		2A6565FD1BA4427D00C78E81 /* FormerTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextViewCell.swift; sourceTree = "<group>"; };
+		2A6565EF1BA4427D00C78E81 /* FormCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCell.swift; sourceTree = "<group>"; };
+		2A6565F01BA4427D00C78E81 /* FormCheckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCheckCell.swift; sourceTree = "<group>"; };
+		2A6565F11BA4427D00C78E81 /* FormDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormDatePickerCell.swift; sourceTree = "<group>"; };
+		2A6565F21BA4427D00C78E81 /* FormInlineDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormInlineDatePickerCell.swift; sourceTree = "<group>"; };
+		2A6565F31BA4427D00C78E81 /* FormInlinePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormInlinePickerCell.swift; sourceTree = "<group>"; };
+		2A6565F41BA4427D00C78E81 /* FormPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormPickerCell.swift; sourceTree = "<group>"; };
+		2A6565F51BA4427D00C78E81 /* FormSegmentedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSegmentedCell.swift; sourceTree = "<group>"; };
+		2A6565F61BA4427D00C78E81 /* FormSelectorDatePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSelectorDatePickerCell.swift; sourceTree = "<group>"; };
+		2A6565F71BA4427D00C78E81 /* FormSelectorPickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSelectorPickerCell.swift; sourceTree = "<group>"; };
+		2A6565F81BA4427D00C78E81 /* FormSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSliderCell.swift; sourceTree = "<group>"; };
+		2A6565F91BA4427D00C78E81 /* FormStepperCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormStepperCell.swift; sourceTree = "<group>"; };
+		2A6565FA1BA4427D00C78E81 /* FormSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormSwitchCell.swift; sourceTree = "<group>"; };
+		2A6565FB1BA4427D00C78E81 /* FormTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextCell.swift; sourceTree = "<group>"; };
+		2A6565FC1BA4427D00C78E81 /* FormTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextFieldCell.swift; sourceTree = "<group>"; };
+		2A6565FD1BA4427D00C78E81 /* FormTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextViewCell.swift; sourceTree = "<group>"; };
 		2A6565FF1BA4427D00C78E81 /* Former.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Former.swift; sourceTree = "<group>"; };
 		2A6566001BA4427D00C78E81 /* FormerObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerObserver.swift; sourceTree = "<group>"; };
 		2A6566021BA4427D00C78E81 /* SectionFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFormer.swift; sourceTree = "<group>"; };
-		2A6566051BA4427D00C78E81 /* FomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FomerViewController.swift; sourceTree = "<group>"; };
-		2A6566071BA4427D00C78E81 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewCellExt.swift; sourceTree = "<group>"; };
+		2A6566051BA4427D00C78E81 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
+		2A6566071BA4427D00C78E81 /* FormerInternalOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInternalOperators.swift; sourceTree = "<group>"; };
+		2A6566081BA4427D00C78E81 /* UITableViewCell+Former.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Former.swift"; sourceTree = "<group>"; };
 		2A65660B1BA4427D00C78E81 /* CheckRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckRowFormer.swift; sourceTree = "<group>"; };
 		2A65660C1BA4427D00C78E81 /* DatePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRowFormer.swift; sourceTree = "<group>"; };
 		2A65660D1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineDatePickerRowFormer.swift; sourceTree = "<group>"; };
@@ -91,9 +91,9 @@
 		2A6566181BA4427D00C78E81 /* TextRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextRowFormer.swift; sourceTree = "<group>"; };
 		2A6566191BA4427D00C78E81 /* TextViewRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewRowFormer.swift; sourceTree = "<group>"; };
 		2A65661B1BA4427D00C78E81 /* TextViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextViewFormer.swift; sourceTree = "<group>"; };
-		2A65661D1BA4427D00C78E81 /* FormerHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerHeaderFooterView.swift; sourceTree = "<group>"; };
-		2A65661E1BA4427D00C78E81 /* FormerTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextFooterView.swift; sourceTree = "<group>"; };
-		2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerTextHeaderView.swift; sourceTree = "<group>"; };
+		2A65661D1BA4427D00C78E81 /* FormHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormHeaderFooterView.swift; sourceTree = "<group>"; };
+		2A65661E1BA4427D00C78E81 /* FormTextFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextFooterView.swift; sourceTree = "<group>"; };
+		2A65661F1BA4427D00C78E81 /* FormTextHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextHeaderView.swift; sourceTree = "<group>"; };
 		2A7D956C1BA4528700F0B005 /* Former.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Former.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A7D95701BA466E600F0B005 /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -136,21 +136,21 @@
 		2A6565EE1BA4427D00C78E81 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2A6565EF1BA4427D00C78E81 /* FormerCell.swift */,
-				2A6565F01BA4427D00C78E81 /* FormerCheckCell.swift */,
-				2A6565F11BA4427D00C78E81 /* FormerDatePickerCell.swift */,
-				2A6565F21BA4427D00C78E81 /* FormerInlineDatePickerCell.swift */,
-				2A6565F31BA4427D00C78E81 /* FormerInlinePickerCell.swift */,
-				2A6565F41BA4427D00C78E81 /* FormerPickerCell.swift */,
-				2A6565F51BA4427D00C78E81 /* FormerSegmentedCell.swift */,
-				2A6565F61BA4427D00C78E81 /* FormerSelectorDatePickerCell.swift */,
-				2A6565F71BA4427D00C78E81 /* FormerSelectorPickerCell.swift */,
-				2A6565F81BA4427D00C78E81 /* FormerSliderCell.swift */,
-				2A6565F91BA4427D00C78E81 /* FormerStepperCell.swift */,
-				2A6565FA1BA4427D00C78E81 /* FormerSwitchCell.swift */,
-				2A6565FB1BA4427D00C78E81 /* FormerTextCell.swift */,
-				2A6565FC1BA4427D00C78E81 /* FormerTextFieldCell.swift */,
-				2A6565FD1BA4427D00C78E81 /* FormerTextViewCell.swift */,
+				2A6565EF1BA4427D00C78E81 /* FormCell.swift */,
+				2A6565F01BA4427D00C78E81 /* FormCheckCell.swift */,
+				2A6565F11BA4427D00C78E81 /* FormDatePickerCell.swift */,
+				2A6565F21BA4427D00C78E81 /* FormInlineDatePickerCell.swift */,
+				2A6565F31BA4427D00C78E81 /* FormInlinePickerCell.swift */,
+				2A6565F41BA4427D00C78E81 /* FormPickerCell.swift */,
+				2A6565F51BA4427D00C78E81 /* FormSegmentedCell.swift */,
+				2A6565F61BA4427D00C78E81 /* FormSelectorDatePickerCell.swift */,
+				2A6565F71BA4427D00C78E81 /* FormSelectorPickerCell.swift */,
+				2A6565F81BA4427D00C78E81 /* FormSliderCell.swift */,
+				2A6565F91BA4427D00C78E81 /* FormStepperCell.swift */,
+				2A6565FA1BA4427D00C78E81 /* FormSwitchCell.swift */,
+				2A6565FB1BA4427D00C78E81 /* FormTextCell.swift */,
+				2A6565FC1BA4427D00C78E81 /* FormTextFieldCell.swift */,
+				2A6565FD1BA4427D00C78E81 /* FormTextViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -168,7 +168,7 @@
 		2A6566041BA4427D00C78E81 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2A6566051BA4427D00C78E81 /* FomerViewController.swift */,
+				2A6566051BA4427D00C78E81 /* FormViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -176,8 +176,8 @@
 		2A6566061BA4427D00C78E81 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				2A6566071BA4427D00C78E81 /* Operators.swift */,
-				2A6566081BA4427D00C78E81 /* UITableViewCellExt.swift */,
+				2A6566071BA4427D00C78E81 /* FormerInternalOperators.swift */,
+				2A6566081BA4427D00C78E81 /* UITableViewCell+Former.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -216,9 +216,9 @@
 		2A65661C1BA4427D00C78E81 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2A65661D1BA4427D00C78E81 /* FormerHeaderFooterView.swift */,
-				2A65661E1BA4427D00C78E81 /* FormerTextFooterView.swift */,
-				2A65661F1BA4427D00C78E81 /* FormerTextHeaderView.swift */,
+				2A65661D1BA4427D00C78E81 /* FormHeaderFooterView.swift */,
+				2A65661E1BA4427D00C78E81 /* FormTextFooterView.swift */,
+				2A65661F1BA4427D00C78E81 /* FormTextHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,45 +304,45 @@
 			files = (
 				2A65663C1BA4427D00C78E81 /* PickerRowFormer.swift in Sources */,
 				2A6566461BA4427D00C78E81 /* TextViewRowFormer.swift in Sources */,
-				2A6566341BA4427D00C78E81 /* FomerViewController.swift in Sources */,
-				2A6566281BA4427D00C78E81 /* FormerSelectorPickerCell.swift in Sources */,
+				2A6566341BA4427D00C78E81 /* FormViewController.swift in Sources */,
+				2A6566281BA4427D00C78E81 /* FormSelectorPickerCell.swift in Sources */,
 				2A6566321BA4427D00C78E81 /* SectionFormer.swift in Sources */,
 				2A6566411BA4427D00C78E81 /* SliderRowFormer.swift in Sources */,
-				2A6566291BA4427D00C78E81 /* FormerSliderCell.swift in Sources */,
+				2A6566291BA4427D00C78E81 /* FormSliderCell.swift in Sources */,
 				2A65662F1BA4427D00C78E81 /* Former.swift in Sources */,
-				2A65662D1BA4427D00C78E81 /* FormerTextFieldCell.swift in Sources */,
-				2A65664A1BA4427D00C78E81 /* FormerTextHeaderView.swift in Sources */,
+				2A65662D1BA4427D00C78E81 /* FormTextFieldCell.swift in Sources */,
+				2A65664A1BA4427D00C78E81 /* FormTextHeaderView.swift in Sources */,
 				2A6566471BA4427D00C78E81 /* TextViewFormer.swift in Sources */,
-				2A6566491BA4427D00C78E81 /* FormerTextFooterView.swift in Sources */,
+				2A6566491BA4427D00C78E81 /* FormTextFooterView.swift in Sources */,
 				2A6566391BA4427D00C78E81 /* DatePickerRowFormer.swift in Sources */,
 				2A6566381BA4427D00C78E81 /* CheckRowFormer.swift in Sources */,
-				2A6566361BA4427D00C78E81 /* UITableViewCellExt.swift in Sources */,
-				2A6566261BA4427D00C78E81 /* FormerSegmentedCell.swift in Sources */,
+				2A6566361BA4427D00C78E81 /* UITableViewCell+Former.swift in Sources */,
+				2A6566261BA4427D00C78E81 /* FormSegmentedCell.swift in Sources */,
 				2A6566431BA4427D00C78E81 /* SwitchRowFormer.swift in Sources */,
-				2A6566271BA4427D00C78E81 /* FormerSelectorDatePickerCell.swift in Sources */,
+				2A6566271BA4427D00C78E81 /* FormSelectorDatePickerCell.swift in Sources */,
 				2A6566451BA4427D00C78E81 /* TextRowFormer.swift in Sources */,
-				2A6566251BA4427D00C78E81 /* FormerPickerCell.swift in Sources */,
-				2A65662A1BA4427D00C78E81 /* FormerStepperCell.swift in Sources */,
-				2A65662B1BA4427D00C78E81 /* FormerSwitchCell.swift in Sources */,
+				2A6566251BA4427D00C78E81 /* FormPickerCell.swift in Sources */,
+				2A65662A1BA4427D00C78E81 /* FormStepperCell.swift in Sources */,
+				2A65662B1BA4427D00C78E81 /* FormSwitchCell.swift in Sources */,
 				2A6566441BA4427D00C78E81 /* TextFieldRowFormer.swift in Sources */,
-				2A65662C1BA4427D00C78E81 /* FormerTextCell.swift in Sources */,
-				2A6566481BA4427D00C78E81 /* FormerHeaderFooterView.swift in Sources */,
-				2A6566201BA4427D00C78E81 /* FormerCell.swift in Sources */,
+				2A65662C1BA4427D00C78E81 /* FormTextCell.swift in Sources */,
+				2A6566481BA4427D00C78E81 /* FormHeaderFooterView.swift in Sources */,
+				2A6566201BA4427D00C78E81 /* FormCell.swift in Sources */,
 				2A6566401BA4427D00C78E81 /* SelectorPickerRowFormer.swift in Sources */,
 				2A6566301BA4427D00C78E81 /* FormerObserver.swift in Sources */,
 				2A65663F1BA4427D00C78E81 /* SelectorDatePickerRowFormer.swift in Sources */,
-				2A6566241BA4427D00C78E81 /* FormerInlinePickerCell.swift in Sources */,
-				2A65662E1BA4427D00C78E81 /* FormerTextViewCell.swift in Sources */,
+				2A6566241BA4427D00C78E81 /* FormInlinePickerCell.swift in Sources */,
+				2A65662E1BA4427D00C78E81 /* FormTextViewCell.swift in Sources */,
 				2A6566421BA4427D00C78E81 /* StepperRowFormer.swift in Sources */,
-				2A6566351BA4427D00C78E81 /* Operators.swift in Sources */,
-				2A6566211BA4427D00C78E81 /* FormerCheckCell.swift in Sources */,
+				2A6566351BA4427D00C78E81 /* FormerInternalOperators.swift in Sources */,
+				2A6566211BA4427D00C78E81 /* FormCheckCell.swift in Sources */,
 				2A65663A1BA4427D00C78E81 /* InlineDatePickerRowFormer.swift in Sources */,
 				2A65663E1BA4427D00C78E81 /* SegmentedRowFormer.swift in Sources */,
-				2A6566231BA4427D00C78E81 /* FormerInlineDatePickerCell.swift in Sources */,
+				2A6566231BA4427D00C78E81 /* FormInlineDatePickerCell.swift in Sources */,
 				2A65663D1BA4427D00C78E81 /* RowFormer.swift in Sources */,
 				2A65663B1BA4427D00C78E81 /* InlinePickerRowFormer.swift in Sources */,
 				2A7D95711BA466E600F0B005 /* ViewFormer.swift in Sources */,
-				2A6566221BA4427D00C78E81 /* FormerDatePickerCell.swift in Sources */,
+				2A6566221BA4427D00C78E81 /* FormDatePickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

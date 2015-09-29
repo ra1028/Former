@@ -10,8 +10,8 @@ import UIKit
 
 public protocol TextViewFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel?
-    func formerTextView() -> UITextView
+    func formTitleLabel() -> UILabel?
+    func formTextView() -> UITextView
 }
 
 public class TextViewRowFormer: RowFormer, FormerValidatable {
@@ -44,7 +44,7 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
     
     deinit {
         if let row = cell as? TextViewFormableRow {
-            let textView = row.formerTextView()
+            let textView = row.formTextView()
             textView.delegate = nil
         }
     }
@@ -59,8 +59,8 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? TextViewFormableRow {
-            let textView = row.formerTextView()
-            let titleLabel = row.formerTitleLabel()
+            let textView = row.formTextView()
+            let titleLabel = row.formTitleLabel()
             textView.text = text
             textView.userInteractionEnabled = false
             textView.delegate = self
@@ -116,7 +116,7 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
         super.cellSelected(indexPath)
         
         if let row = cell as? TextViewFormableRow {
-            let textView = row.formerTextView()
+            let textView = row.formTextView()
             textView.becomeFirstResponder()
             textView.userInteractionEnabled = enabled
         }
@@ -149,7 +149,7 @@ extension TextViewRowFormer: UITextViewDelegate {
     
     public func textViewDidBeginEditing(textView: UITextView) {
         if let row = cell as? TextViewFormableRow where enabled {
-            let titleLabel = row.formerTitleLabel()
+            let titleLabel = row.formTitleLabel()
             titleColor ?= titleLabel?.textColor
             titleLabel?.textColor =? titleEditingColor
             isEditing = true
@@ -158,8 +158,8 @@ extension TextViewRowFormer: UITextViewDelegate {
     
     public func textViewDidEndEditing(textView: UITextView) {
         if let row = cell as? TextViewFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            row.formerTextView().userInteractionEnabled = false
+            let titleLabel = row.formTitleLabel()
+            row.formTextView().userInteractionEnabled = false
             
             if enabled {
                 titleLabel?.textColor =? titleColor

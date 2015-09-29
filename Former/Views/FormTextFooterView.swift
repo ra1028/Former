@@ -1,5 +1,5 @@
 //
-//  FormerTextHeaderView.swift
+//  FormTextFooterView.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/26/15.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
+public class FormTextFooterView: FormHeaderFooterView, TextFormableView {
     
     public private(set) weak var titleLabel: UILabel!
     
-    public func formerTextLabel() -> UILabel {
+    public func formTextLabel() -> UILabel {
         return titleLabel
     }
     
@@ -21,13 +21,15 @@ public class FormerTextHeaderView: FormerHeaderFooterView, TextFormableView {
         
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFontOfSize(14.0)
+        titleLabel.textAlignment = .Center
+        titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:[label(>=0)]-5-|",
+                "V:|-5-[label]-5-|",
                 options: [],
                 metrics: nil,
                 views: ["label": titleLabel]

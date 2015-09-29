@@ -10,7 +10,7 @@ import UIKit
 
 public protocol PickerFormableRow: FormableRow {
     
-    func formerPickerView() -> UIPickerView
+    func formPickerView() -> UIPickerView
 }
 
 public class PickerRowFormer: RowFormer, FormerValidatable {
@@ -37,7 +37,7 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
     
     deinit {
         if let row = cell as? PickerFormableRow {
-            let picker = row.formerPickerView()
+            let picker = row.formPickerView()
             picker.delegate = nil
             picker.dataSource = nil
         }
@@ -49,7 +49,7 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
         
         cell?.selectionStyle = .None
         if let row = cell as? PickerFormableRow {
-            let picker = row.formerPickerView()
+            let picker = row.formPickerView()
             picker.delegate = self
             picker.dataSource = self
             picker.selectRow(selectedRow, inComponent: 0, animated: false)

@@ -11,14 +11,14 @@ import Former
 
 public protocol DemoInlineSliderFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel?
+    func formTitleLabel() -> UILabel?
     func formerColorDisplayView() -> UIView?
 }
 
 public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
     
     public private(set) var inlineRowFormer: RowFormer = SliderRowFormer(
-        cellType: FormerSliderCell.self,
+        cellType: FormSliderCell.self,
         instantiateType: .Class
     )
     override public var canBecomeEditing: Bool {
@@ -46,7 +46,7 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
         super.update()
         
         if let row = cell as? DemoInlineSliderFormableRow {
-            let titleLabel = row.formerTitleLabel()
+            let titleLabel = row.formTitleLabel()
             if enabled {
                 _ = titleColor.map { titleLabel?.textColor = $0 }
                 titleColor = nil

@@ -1,5 +1,5 @@
 //
-//  FormerSelectorDatePickerCell.swift
+//  FormSelectorDatePickerCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/25/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormerSelectorDatePickerCell: FormerCell, SelectorDatePickerFormableRow {
+public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
     
     public var selectorDatePicker: UIDatePicker?
     public var selectorAccessoryView: UIView?
@@ -18,11 +18,11 @@ public class FormerSelectorDatePickerCell: FormerCell, SelectorDatePickerFormabl
     
     private weak var rightConst: NSLayoutConstraint!
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     
-    public func formerDisplayLabel() -> UILabel? {
+    public func formDisplayLabel() -> UILabel? {
         return displayLabel
     }
     

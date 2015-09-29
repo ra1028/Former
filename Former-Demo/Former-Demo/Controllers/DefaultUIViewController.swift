@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class DefaultUIViewController: FormerViewController {
+final class DefaultUIViewController: FormViewController {
     
     private var enabled = true
 
@@ -25,7 +25,7 @@ final class DefaultUIViewController: FormerViewController {
         // Create RowFomers
         
         let disableRow = TextRowFormer(
-            cellType: FormerTextCell.self,
+            cellType: FormTextCell.self,
             instantiateType: .Class
         )
         let disableRowText: (Bool -> String) = {
@@ -45,7 +45,7 @@ final class DefaultUIViewController: FormerViewController {
         disableRow.text = disableRowText(false)
         
         let textRow = TextRowFormer(
-            cellType: FormerTextCell.self,
+            cellType: FormTextCell.self,
             instantiateType: .Class
         )
         textRow.onSelected = { [weak self] _ in self?.former.deselect(true) }
@@ -53,7 +53,7 @@ final class DefaultUIViewController: FormerViewController {
         textRow.subText = "SubText"
         
         let textFieldRow = TextFieldRowFormer(
-            cellType: FormerTextFieldCell.self,
+            cellType: FormTextFieldCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "TextField"
@@ -61,7 +61,7 @@ final class DefaultUIViewController: FormerViewController {
         textFieldRow.placeholder = "Placeholder"
         
         let textViewRow = TextViewRowFormer(
-            cellType: FormerTextViewCell.self,
+            cellType: FormTextViewCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "TextView"
@@ -69,21 +69,21 @@ final class DefaultUIViewController: FormerViewController {
         textViewRow.placeholder = "Placeholder"
         
         let checkRow = CheckRowFormer(
-            cellType: FormerCheckCell.self,
+            cellType: FormCheckCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "Check"
         }
         
         let switchRow = SwitchRowFormer(
-            cellType: FormerSwitchCell.self,
+            cellType: FormSwitchCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "Switch"
         }
         
         let stepperRow = StepperRowFormer(
-            cellType: FormerStepperCell.self,
+            cellType: FormStepperCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "Stepper"
@@ -91,7 +91,7 @@ final class DefaultUIViewController: FormerViewController {
         stepperRow.displayTextFromValue = { "\(Int($0))" }
         
         let segmentRow = SegmentedRowFormer(
-            cellType: FormerSegmentedCell.self,
+            cellType: FormSegmentedCell.self,
             instantiateType: .Class,
             segmentTitles: ["Opt1", "Opt2", "Opt3"]
             ) {
@@ -99,7 +99,7 @@ final class DefaultUIViewController: FormerViewController {
         }
         
         let sliderRow = SliderRowFormer(
-            cellType: FormerSliderCell.self,
+            cellType: FormSliderCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "Slider"
@@ -107,7 +107,7 @@ final class DefaultUIViewController: FormerViewController {
         sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
         
         let selectorPickerRow = SelectorPickerRowFormer(
-            cellType: FormerSelectorPickerCell.self,
+            cellType: FormSelectorPickerCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "SelectorPicker"
@@ -115,7 +115,7 @@ final class DefaultUIViewController: FormerViewController {
         selectorPickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let selectorDatePickerRow = SelectorDatePickerRowFormer(
-            cellType: FormerSelectorDatePickerCell.self,
+            cellType: FormSelectorDatePickerCell.self,
             instantiateType: .Class
             ) {
                 $0.titleLabel.text = "SelectorDatePicker"
@@ -123,7 +123,7 @@ final class DefaultUIViewController: FormerViewController {
         selectorDatePickerRow.displayTextFromDate = String.mediumDateShortTime
         
         let inlinePickerRow = InlinePickerRowFormer(
-            cellType: FormerInlinePickerCell.self,
+            cellType: FormInlinePickerCell.self,
             instantiateType: .Class,
             cellSetup: {
                 $0.titleLabel.text = "InlinePicker"
@@ -131,7 +131,7 @@ final class DefaultUIViewController: FormerViewController {
         inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let inlineDateRow = InlineDatePickerRowFormer(
-            cellType: FormerInlineDatePickerCell.self,
+            cellType: FormInlineDatePickerCell.self,
             instantiateType: .Class,
             cellSetup: {
                 $0.titleLabel.text = "InlineDatePicker"
@@ -139,13 +139,13 @@ final class DefaultUIViewController: FormerViewController {
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
         let pickerRow = PickerRowFormer(
-            cellType: FormerPickerCell.self,
+            cellType: FormPickerCell.self,
             instantiateType: .Class
         )
         pickerRow.valueTitles = (1...20).map { "Option\($0)" }
         
         let datePickerRow = DatePickerRowFormer(
-            cellType: FormerDatePickerCell.self,
+            cellType: FormDatePickerCell.self,
             instantiateType: .Class
         )
         
@@ -164,7 +164,7 @@ final class DefaultUIViewController: FormerViewController {
             
         let sectionFormer3 = SectionFormer()
             .add(rowFormers: [pickerRow, datePickerRow])
-            .set(footerViewFormer: ViewFormer(viewType: FormerHeaderFooterView.self, instantiateType: .Class))
+            .set(footerViewFormer: ViewFormer(viewType: FormHeaderFooterView.self, instantiateType: .Class))
         
         former.add(sectionFormers: [sectionFormer1, sectionFormer2, sectionFormer3])
     }

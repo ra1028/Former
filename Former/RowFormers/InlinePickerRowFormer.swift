@@ -10,8 +10,8 @@ import UIKit
 
 public protocol InlinePickerFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel?
-    func formerDisplayLabel() -> UILabel?
+    func formTitleLabel() -> UILabel?
+    func formDisplayLabel() -> UILabel?
 }
 
 public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
@@ -39,9 +39,9 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         instantiateType: Former.InstantiateType,
         onValueChanged: ((Int, String) -> Void)? = nil,
         cellSetup: (T -> Void)? = nil,
-        inlinecellSetup: (FormerPickerCell -> Void)? = nil) {
+        inlinecellSetup: (FormPickerCell -> Void)? = nil) {
             inlineRowFormer = PickerRowFormer(
-                cellType: FormerPickerCell.self,
+                cellType: FormPickerCell.self,
                 instantiateType: .Class,
                 cellSetup: inlinecellSetup
             )
@@ -53,8 +53,8 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         super.update()
         
         if let row = cell as? InlinePickerFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             if valueTitles.isEmpty {
                 displayLabel?.text = ""
             } else {
@@ -90,8 +90,8 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         }
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormerPickerCell? -> Void)) {
-        update(inlineRowFormer.cell as? FormerPickerCell)
+    public final func inlineCellUpdate(@noescape update: (FormPickerCell? -> Void)) {
+        update(inlineRowFormer.cell as? FormPickerCell)
     }
 
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -108,15 +108,15 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     private func valueChanged(row: Int, title: String) {
         if let pickerRow = cell as? InlinePickerFormableRow where enabled {
             selectedRow = row
-            pickerRow.formerDisplayLabel()?.text = title
+            pickerRow.formDisplayLabel()?.text = title
             onValueChanged?(row, title)
         }
     }
     
     public func editingDidBegin() {
         if let row = cell as? InlinePickerFormableRow where enabled {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             titleColor ?= titleLabel?.textColor
             displayTextColor ?= displayLabel?.textColor
             titleLabel?.textColor =? titleEditingColor
@@ -128,8 +128,8 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
     public func editingDidEnd() {
         if let row = cell as? InlinePickerFormableRow {
             isEditing = false
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             if enabled {
                 titleLabel?.textColor =? titleColor
                 displayLabel?.textColor =? displayTextColor

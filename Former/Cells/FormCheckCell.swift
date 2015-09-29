@@ -1,5 +1,5 @@
 //
-//  FormerCheckCell.swift
+//  FormCheckCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/26/15.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-public class FormerCheckCell: FormerCell, CheckFormableRow {
+public class FormCheckCell: FormCell, CheckFormableRow {
     
     public private(set) weak var titleLabel: UILabel!
     
-    public func formerTitleLabel() -> UILabel? {
+    public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class CustomExampleViewController: FormerViewController {
+final class CustomExampleViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ final class CustomExampleViewController: FormerViewController {
         
         let createHeader: (String -> ViewFormer) = {
             let header = TextViewFormer(
-                viewType: FormerTextHeaderView.self,
+                viewType: FormTextHeaderView.self,
                 instantiateType: .Class,
                 text: $0) {
                     $0.titleLabel.textColor = .grayColor()

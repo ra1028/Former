@@ -12,8 +12,8 @@ public protocol SwitchFormableRow: FormableRow {
     
     var observer: FormerObserver { get }
     
-    func formerSwitch() -> UISwitch
-    func formerTitleLabel() -> UILabel?
+    func formSwitch() -> UISwitch
+    func formTitleLabel() -> UILabel?
 }
 
 public class SwitchRowFormer: RowFormer, FormerValidatable {
@@ -49,8 +49,8 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
         }
         
         if let row = cell as? SwitchFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let switchButton = row.formerSwitch()
+            let titleLabel = row.formTitleLabel()
+            let switchButton = row.formSwitch()
             switchButton.on = switched
             switchButton.enabled = enabled
             
@@ -74,7 +74,7 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
         
         former?.deselect(true)
         if let row = cell as? SwitchFormableRow where switchWhenSelected && enabled {
-            let switchButton = row.formerSwitch()
+            let switchButton = row.formSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
             switchChanged(switchButton)
         }

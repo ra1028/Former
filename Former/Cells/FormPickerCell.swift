@@ -1,43 +1,41 @@
 //
-//  FormerDatePickerCell.swift
+//  FormPickerCell.swift
 //  Former-Demo
 //
-//  Created by Ryo Aoyama on 8/1/15.
+//  Created by Ryo Aoyama on 8/2/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
 
-public class FormerDatePickerCell: FormerCell, DatePickerFormableRow {
+public class FormPickerCell: FormCell, PickerFormableRow {
     
-    public let observer = FormerObserver()
+    public private(set) weak var pickerView: UIPickerView!
     
-    public private(set) weak var datePicker: UIDatePicker!
-    
-    public func formerDatePicker() -> UIDatePicker {
-        return datePicker
+    public func formPickerView() -> UIPickerView {
+        return pickerView
     }
     
     public override func configureViews() {
         super.configureViews()
         
-        let datePicker = UIDatePicker()
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(datePicker, atIndex: 0)
-        self.datePicker = datePicker
+        let pickerView = UIPickerView()
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.insertSubview(pickerView, atIndex: 0)
+        self.pickerView = pickerView
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "V:|-15-[picker]-15-|",
                 options: [],
                 metrics: nil,
-                views: ["picker": datePicker]
+                views: ["picker": pickerView]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
                 "H:|-0-[picker]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["picker": datePicker]
+                views: ["picker": pickerView]
             )
             ].flatMap { $0 }
         contentView.addConstraints(constraints)

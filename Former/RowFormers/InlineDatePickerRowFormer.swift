@@ -10,8 +10,8 @@ import UIKit
 
 public protocol InlineDatePickerFormableRow: FormableRow {
     
-    func formerTitleLabel() -> UILabel?
-    func formerDisplayLabel() -> UILabel?
+    func formTitleLabel() -> UILabel?
+    func formDisplayLabel() -> UILabel?
 }
 
 public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
@@ -39,9 +39,9 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         instantiateType: Former.InstantiateType,
         onDateChanged: (NSDate -> Void)? = nil,
         cellSetup: (T -> Void)? = nil,
-        inlinecellSetup: (FormerDatePickerCell -> Void)? = nil) {
+        inlinecellSetup: (FormDatePickerCell -> Void)? = nil) {
             inlineRowFormer = DatePickerRowFormer(
-                cellType: FormerDatePickerCell.self,
+                cellType: FormDatePickerCell.self,
                 instantiateType: .Class,
                 cellSetup: inlinecellSetup
             )
@@ -53,8 +53,8 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         super.update()
         
         if let row = cell as? InlineDatePickerFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
             
             if enabled {
@@ -85,8 +85,8 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
         }
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormerDatePickerCell? -> Void)) {
-        update(inlineRowFormer.cell as? FormerDatePickerCell)
+    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell? -> Void)) {
+        update(inlineRowFormer.cell as? FormDatePickerCell)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -101,15 +101,15 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     private func dateChanged(date: NSDate) {
         if let row = cell as? InlineDatePickerFormableRow where enabled {
             self.date = date
-            row.formerDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+            row.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
             onDateChanged?(date)
         }
     }
     
     public func editingDidBegin() {
         if let row = cell as? InlineDatePickerFormableRow where enabled {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             titleColor ?= titleLabel?.textColor
             displayTextColor ?= displayLabel?.textColor
             titleLabel?.textColor =? titleEditingColor
@@ -120,8 +120,8 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     
     public func editingDidEnd() {
         if let row = cell as? InlineDatePickerFormableRow {
-            let titleLabel = row.formerTitleLabel()
-            let displayLabel = row.formerDisplayLabel()
+            let titleLabel = row.formTitleLabel()
+            let displayLabel = row.formDisplayLabel()
             if enabled {
                 titleLabel?.textColor =? titleColor
                 displayLabel?.textColor =? displayTextColor

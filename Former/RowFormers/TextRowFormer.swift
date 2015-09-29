@@ -10,7 +10,7 @@ import UIKit
 
 public protocol TextFormableRow: FormableRow {
     
-    func formerTextLabel() -> UILabel?
+    func formTextLabel() -> UILabel?
     func formerSubTextLabel() -> UILabel?
 }
 
@@ -37,7 +37,7 @@ public class TextRowFormer: RowFormer {
         super.update()
         
         if let row = cell as? TextFormableRow {
-            let textLabel = row.formerTextLabel()
+            let textLabel = row.formTextLabel()
             let subTextLabel = row.formerSubTextLabel()
             textLabel?.text = text
             subTextLabel?.text = subText
