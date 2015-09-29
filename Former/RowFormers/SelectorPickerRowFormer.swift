@@ -46,8 +46,8 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         onValueChanged: ((Int, String) -> Void)? = nil,
-        cellConfiguration: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
+        cellSetup: (T -> Void)? = nil) {
+            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
             self.onValueChanged = onValueChanged
     }
     

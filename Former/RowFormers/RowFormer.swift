@@ -43,17 +43,17 @@ public class RowFormer: NSObject {
     }
     
     private final var cellType: UITableViewCell.Type
-    private final let cellConfiguration: (UITableViewCell -> Void)
+    private final let cellSetup: (UITableViewCell -> Void)
     
     public init<T: UITableViewCell>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        cellConfiguration: (T -> Void)? = nil) {
+        cellSetup: (T -> Void)? = nil) {
             self.cellType = cellType
             self.instantiateType = instantiateType
-            self.cellConfiguration = {
+            self.cellSetup = {
                 if let cell = $0 as? T {
-                    cellConfiguration?(cell)
+                    cellSetup?(cell)
                 } else {
                     assert(false, "Cell type is not match at creation time.")
                 }
@@ -76,7 +76,7 @@ public class RowFormer: NSObject {
                 assert(rowFormer.cell != nil, "Failed to load cell \(nibName) from nib.")
             }
             _ = rowFormer.cell.map {
-                rowFormer.cellConfiguration($0)
+                rowFormer.cellSetup($0)
             }
         }
         

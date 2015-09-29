@@ -28,8 +28,8 @@ public class TextRowFormer: RowFormer {
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         text: String? = nil,
-        cellConfiguration: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
+        cellSetup: (T -> Void)? = nil) {
+            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
             self.text = text
     }
     

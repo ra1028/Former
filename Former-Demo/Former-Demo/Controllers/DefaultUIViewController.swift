@@ -125,7 +125,7 @@ final class DefaultUIViewController: FormerViewController {
         let inlinePickerRow = InlinePickerRowFormer(
             cellType: FormerInlinePickerCell.self,
             instantiateType: .Class,
-            cellConfiguration: {
+            cellSetup: {
                 $0.titleLabel.text = "InlinePicker"
         })
         inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
@@ -133,7 +133,7 @@ final class DefaultUIViewController: FormerViewController {
         let inlineDateRow = InlineDatePickerRowFormer(
             cellType: FormerInlineDatePickerCell.self,
             instantiateType: .Class,
-            cellConfiguration: {
+            cellSetup: {
                 $0.titleLabel.text = "InlineDatePicker"
             })
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime

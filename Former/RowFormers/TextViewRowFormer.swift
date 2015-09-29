@@ -37,8 +37,8 @@ public class TextViewRowFormer: RowFormer, FormerValidatable {
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         textChangedHandler: (String -> Void)? = nil,
-        cellConfiguration: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
+        cellSetup: (T -> Void)? = nil) {
+            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
             self.textChangedHandler = textChangedHandler
     }
     

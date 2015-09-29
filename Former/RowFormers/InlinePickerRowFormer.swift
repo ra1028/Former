@@ -38,14 +38,14 @@ public class InlinePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
         onValueChanged: ((Int, String) -> Void)? = nil,
-        cellConfiguration: (T -> Void)? = nil,
-        inlineCellConfiguration: (FormerPickerCell -> Void)? = nil) {
+        cellSetup: (T -> Void)? = nil,
+        inlinecellSetup: (FormerPickerCell -> Void)? = nil) {
             inlineRowFormer = PickerRowFormer(
                 cellType: FormerPickerCell.self,
                 instantiateType: .Class,
-                cellConfiguration: inlineCellConfiguration
+                cellSetup: inlinecellSetup
             )
-            super.init(cellType: cellType, instantiateType: instantiateType, cellConfiguration: cellConfiguration)
+            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
             self.onValueChanged = onValueChanged
     }
     
