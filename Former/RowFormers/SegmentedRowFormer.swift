@@ -16,7 +16,10 @@ public protocol SegmentedFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SegmentedRowFormer: RowFormer, FormerValidatable {
+public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: ((Int, String) -> Bool)?
     
@@ -25,17 +28,8 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
     public var selectedIndex: Int = 0
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    
-    public init<T : UITableViewCell where T : SegmentedFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        segmentTitles: [String],
-        onSegmentSelected: ((Int, String) -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.segmentTitles = segmentTitles
-            self.onSegmentSelected = onSegmentSelected
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -73,7 +67,11 @@ public class SegmentedRowFormer: RowFormer, FormerValidatable {
         return onValidate?(index, selectedTitle) ?? true
     }
     
-    public dynamic func valueChanged(segment: UISegmentedControl) {
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    
+    private dynamic func valueChanged(segment: UISegmentedControl) {
         if enabled {
             let index = segment.selectedSegmentIndex
             let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!

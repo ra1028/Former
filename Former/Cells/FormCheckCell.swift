@@ -10,14 +10,16 @@ import UIKit
 
 public class FormCheckCell: FormCell, CheckFormableRow {
     
+    // MARK: Public
+    
     public private(set) weak var titleLabel: UILabel!
     
     public func formTitleLabel() -> UILabel? {
         return titleLabel
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

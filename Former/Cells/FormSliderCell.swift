@@ -10,6 +10,8 @@ import UIKit
 
 public class FormSliderCell: FormCell, SliderFormableRow {
     
+    // MARK: Public
+    
     public let observer = FormerObserver()
     
     public private(set) weak var titleLabel: UILabel!
@@ -28,8 +30,8 @@ public class FormSliderCell: FormCell, SliderFormableRow {
         return slider
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

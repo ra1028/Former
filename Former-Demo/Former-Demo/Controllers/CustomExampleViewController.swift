@@ -21,12 +21,10 @@ final class CustomExampleViewController: FormViewController {
         
         // Create RowFormers
         
-        let sliderRow = DemoInlineSliderRowFormer(
-            cellType: DemoInlineSliderCell.self,
-            instantiateType: .Class) {
-                $0.titleLabel.text = "Inline Slider"
-                $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+        let sliderRow = DemoInlineSliderRowFormer<DemoInlineSliderCell>() {
+            $0.titleLabel.text = "Inline Slider"
+            $0.titleLabel.textColor = .formerColor()
+            $0.titleLabel.font = .boldSystemFontOfSize(16.0)
         }
         sliderRow.color = UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 1.0)
         sliderRow.onValueChanged = { [weak sliderRow] in
@@ -38,25 +36,20 @@ final class CustomExampleViewController: FormViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = {
-            let header = TextViewFormer(
-                viewType: FormTextHeaderView.self,
-                instantiateType: .Class,
-                text: $0) {
-                    $0.titleLabel.textColor = .grayColor()
-                    $0.titleLabel.font = .systemFontOfSize(14.0)
+            let header = TextViewFormer<FormTextHeaderView>() {
+                $0.titleLabel.textColor = .grayColor()
+                $0.titleLabel.font = .systemFontOfSize(14.0)
             }
+            header.text = $0
             header.viewHeight = 40.0
             return header
         }
         
         // Create SectionFormers
         
-        let section1 = SectionFormer()
-            .add(rowFormers: [sliderRow])
+        let section1 = SectionFormer(rowFormers: [sliderRow])
             .set(headerViewFormer: createHeader("Custom Inline Slider Row"))
         
-        former.add(sectionFormers:
-            [section1]
-        )
+        former.add(sectionFormers: [section1])
     }
 }

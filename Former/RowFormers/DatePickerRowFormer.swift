@@ -15,24 +15,22 @@ public protocol DatePickerFormableRow: FormableRow {
     func formDatePicker() -> UIDatePicker
 }
 
-public class DatePickerRowFormer: RowFormer, FormerValidatable {
+public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     public var date: NSDate = NSDate()
     
-    public init<T : UITableViewCell where T : DatePickerFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onDateChanged: (NSDate -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onDateChanged = onDateChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public override func initialize() {
-        super.initialize()
+    public override func initialized() {
+        super.initialized()
         cellHeight = 216.0
     }
     
@@ -56,7 +54,9 @@ public class DatePickerRowFormer: RowFormer, FormerValidatable {
         return onValidate?(date) ?? true
     }
     
-    public dynamic func dateChanged(datePicker: UIDatePicker) {
+    // MARK: Private
+    
+    private dynamic func dateChanged(datePicker: UIDatePicker) {
         if enabled {
             let date = datePicker.date
             self.date = date

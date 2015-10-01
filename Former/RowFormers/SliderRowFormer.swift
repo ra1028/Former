@@ -17,7 +17,10 @@ public protocol SliderFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SliderRowFormer: RowFormer, FormerValidatable {
+public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: (Float -> Bool)?
     
@@ -28,20 +31,12 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    private var displayColor: UIColor?
-    
-    public init<T : UITableViewCell where T : SliderFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onValueChanged: (Float -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onValueChanged = onValueChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public override func initialize() {
-        super.initialize()
+    public override func initialized() {
+        super.initialized()
         cellHeight = 88.0
     }
     
@@ -80,6 +75,11 @@ public class SliderRowFormer: RowFormer, FormerValidatable {
         let adjustedValue = adjustedValueFromValue?(value) ?? value
         return onValidate?(adjustedValue) ?? true
     }
+    
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    private var displayColor: UIColor?
     
     private dynamic func valueChanged(slider: UISlider) {
         if let cell = cell as? SliderFormableRow where enabled {

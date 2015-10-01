@@ -10,6 +10,8 @@ import UIKit
 
 public class FormStepperCell: FormCell, StepperFormableRow {
     
+    // MARK: Public
+    
     public let observer = FormerObserver()
     
     public private(set) weak var titleLabel: UILabel!
@@ -28,8 +30,8 @@ public class FormStepperCell: FormCell, StepperFormableRow {
         return stepper
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

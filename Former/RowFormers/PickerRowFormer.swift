@@ -13,7 +13,10 @@ public protocol PickerFormableRow: FormableRow {
     func formPickerView() -> UIPickerView
 }
 
-public class PickerRowFormer: RowFormer, FormerValidatable {
+public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: ((Int, String) -> Bool)?
     
@@ -21,17 +24,12 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
     public var valueTitles: [String] = []
     public var selectedRow: Int = 0
     
-    public init<T : UITableViewCell where T : PickerFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onValueChanged: ((Int, String) -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onValueChanged = onValueChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public override func initialize() {
-        super.initialize()
+    public override func initialized() {
+        super.initialized()
         cellHeight = 216.0
     }
     
@@ -50,8 +48,8 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
         cell?.selectionStyle = .None
         if let row = cell as? PickerFormableRow {
             let picker = row.formPickerView()
-            picker.delegate = self
-            picker.dataSource = self
+//            picker.delegate = self
+//            picker.dataSource = self
             picker.selectRow(selectedRow, inComponent: 0, animated: false)
             picker.userInteractionEnabled = enabled
             picker.alpha = self.enabled ? 1.0 : 0.5
@@ -64,24 +62,24 @@ public class PickerRowFormer: RowFormer, FormerValidatable {
     }
 }
 
-extension PickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if enabled {
-            selectedRow = row
-            onValueChanged?(row, valueTitles[row])
-        }
-    }
-    
-    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return valueTitles.count
-    }
-    
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return valueTitles[row]
-    }
-}
+//extension PickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
+//    
+//    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        if enabled {
+//            selectedRow = row
+//            onValueChanged?(row, valueTitles[row])
+//        }
+//    }
+//    
+//    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//    
+//    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return valueTitles.count
+//    }
+//    
+//    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return valueTitles[row]
+//    }
+//}

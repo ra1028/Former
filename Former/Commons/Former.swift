@@ -40,6 +40,18 @@ public final class Former: NSObject {
         return rowFormers.count
     }
     
+    /// Returns the first element of all SectionFormers, or `nil` if `self.sectionFormers` is empty.
+    public var firstSectionFormer: SectionFormer? {
+        return sectionFormers.first
+    }
+    
+    /// Returns the first element of all RowFormers, or `nil` if `self.rowFormers` is empty.
+    public var firstRowFormer: RowFormer? {
+        return rowFormers.first
+    }
+    
+    /// Returns the first element of all SectionFormers, or `nil` if `self` is empty.
+    
     /// Call when cell has selected.
     public var onCellSelected: ((indexPath: NSIndexPath) -> Void)?
     
@@ -199,7 +211,7 @@ public final class Former: NSObject {
     /// To select row from instance of RowFormer.
     public func select(rowFormer rowFormer: RowFormer, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         for (section, sectionFormer) in sectionFormers.enumerate() {
-            if let row = sectionFormer.rowFormers.indexOf(rowFormer) {
+            if let row = sectionFormer.rowFormers.indexOf({ $0 === rowFormer }) {
                 return select(indexPath: NSIndexPath(forRow: row, inSection: section), animated: animated, scrollPosition: scrollPosition)
             }
         }
@@ -215,7 +227,7 @@ public final class Former: NSObject {
     }
     
     /// Reload All cells.
-    public func reloadFormer() -> Self {
+    public func reload() -> Self {
         tableView?.reloadData()
         removeCurrentInlineRowAndUpdate()
         return self
@@ -229,7 +241,7 @@ public final class Former: NSObject {
     
     /// Reload sections from instance of SectionFormer.
     public func reload(sectionFormer sectionFormer: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
-        guard let section = sectionFormers.indexOf(sectionFormer) else { return self }
+        guard let section = sectionFormers.indexOf({ $0 === sectionFormer }) else { return self }
         return reload(sections: NSIndexSet(index: section), rowAnimation: rowAnimation)
     }
     
@@ -242,7 +254,7 @@ public final class Former: NSObject {
     /// Reload rows from instance of RowFormer.
     public func reload(rowFormer rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         for (section, sectionFormer) in sectionFormers.enumerate() {
-            if let row = sectionFormer.rowFormers.indexOf(rowFormer) {
+            if let row = sectionFormer.rowFormers.indexOf({ $0 === rowFormer}) {
                 return reload(indexPaths: [NSIndexPath(forRow: row, inSection: section)], rowAnimation: rowAnimation)
             }
         }
@@ -323,7 +335,7 @@ public final class Former: NSObject {
         var removedCount = 0
         let indexSet = NSMutableIndexSet()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            if sectionFormers.contains(sectionFormer) {
+            if sectionFormers.contains({ $0 === sectionFormer}) {
                 indexSet.addIndex(section)
                 remove(section: section)
                 if ++removedCount >= sectionFormers.count {
@@ -350,7 +362,7 @@ public final class Former: NSObject {
         var removeIndexPaths = [NSIndexPath]()
         for (section, sectionFormer) in sectionFormers.enumerate() {
             for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
-                if rowFormers.contains(rowFormer) {
+                if rowFormers.contains({ $0 === rowFormer }) {
                     removeIndexPaths.append(NSIndexPath(forRow: row, inSection: section))
                     sectionFormer.remove(rowFormers: [rowFormer])
                     if let oldInlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer {

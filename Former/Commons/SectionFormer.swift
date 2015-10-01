@@ -8,9 +8,13 @@
 
 import UIKit
 
-public final class SectionFormer: NSObject {
+public final class SectionFormer {
     
     // MARK: Public
+    
+    public init(rowFormers: [RowFormer] = []) {
+        self.rowFormers = rowFormers
+    }
     
     /// All RowFormers. Default is empty.
     public private(set) var rowFormers = [RowFormer]()
@@ -24,6 +28,11 @@ public final class SectionFormer: NSObject {
     /// Return all row count.
     public var numberOfRows: Int {
         return rowFormers.count
+    }
+    
+    /// Returns the first element of RowFormers, or `nil` if `self.rowFormers` is empty.
+    public var firstRowFormer: RowFormer? {
+        return rowFormers.first
     }
     
     public subscript(index: Int) -> RowFormer {
@@ -55,7 +64,7 @@ public final class SectionFormer: NSObject {
     public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
         var removedCount = 0
         for (index, rowFormer) in self.rowFormers.enumerate() {
-            if rowFormers.contains(rowFormer) {
+            if rowFormers.contains({ $0 === rowFormer }) {
                 remove(index)
                 if ++removedCount >= rowFormers.count {
                     return self

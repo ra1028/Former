@@ -11,6 +11,8 @@ import Former
 
 final class TopViewContoller: FormViewController {
     
+    // MARK: Public
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -20,6 +22,8 @@ final class TopViewContoller: FormViewController {
         super.viewWillAppear(animated)
         former.deselect(true)
     }
+    
+    // MARK: Private
     
     private func configure() {
         let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -45,56 +49,50 @@ final class TopViewContoller: FormViewController {
                 self?.navigationController?.pushViewController(CustomExampleViewController(), animated: true)})
         ]
         
-        let createMenu: ((String, (() -> Void)?) -> TextRowFormer) = { text, onSelected in
-            let rowFormer = TextRowFormer(cellType: FormTextCell.self, instantiateType: .Class, text: text) {
+        let createMenu: ((String, (() -> Void)?) -> RowFormer) = { text, onSelected in
+            let rowFormer = TextRowFormer<FormTextCell>() {
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = UIFont.boldSystemFontOfSize(16.0)
+                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.accessoryType = .DisclosureIndicator
             }
+            rowFormer.text = text
             rowFormer.onSelected = { _ in onSelected?() }
             return rowFormer
         }
         
         // Create Headers and Footers
         
-        let createHeader: (String -> TextViewFormer) = {
-            let header = TextViewFormer(
-                viewType: FormTextHeaderView.self,
-                instantiateType: .Class,
-                text: $0) {
-                    $0.titleLabel.textColor = .grayColor()
-                    $0.titleLabel.font = .systemFontOfSize(14.0)
+        let createHeader: (String -> ViewFormer) = {
+            let header = TextViewFormer<FormTextHeaderView>() {
+                $0.titleLabel.textColor = .grayColor()
+                $0.titleLabel.font = .systemFontOfSize(14.0)
             }
+            header.text = $0
             header.viewHeight = 40.0
             return header
         }
         
-        let createFooter: (String -> TextViewFormer) = {
-            let footer = TextViewFormer(
-                viewType: FormTextFooterView.self,
-                instantiateType: .Class,
-                text: $0) {
-                    $0.titleLabel.textColor = .grayColor()
-                    $0.titleLabel.font = .systemFontOfSize(14.0)
+        let createFooter: (String -> ViewFormer) = {
+            let footer = TextViewFormer<FormTextFooterView>() {
+                $0.titleLabel.textColor = .grayColor()
+                $0.titleLabel.font = .systemFontOfSize(14.0)
             }
+            footer.text = $0
             footer.viewHeight = 100.0
             return footer
         }
         
         // Create SectionFormers
         
-        let firstSection = SectionFormer()
-            .add(rowFormers: firstComponets.map(createMenu))
+        let firstSection = SectionFormer(rowFormers: firstComponets.map(createMenu))
             .set(headerViewFormer: createHeader("Real Example"))
         
-        let secondSection = SectionFormer()
-            .add(rowFormers: secondComponents.map(createMenu))
+        let secondSection = SectionFormer(rowFormers: secondComponents.map(createMenu))
             .set(headerViewFormer: createHeader("Default UI"))
         
-        let thirdSection = SectionFormer()
-            .add(rowFormers: thirdComponents.map(createMenu))
+        let thirdSection = SectionFormer(rowFormers: thirdComponents.map(createMenu))
             .set(headerViewFormer: createHeader("Usage Examples"))
-            .set(footerViewFormer: createFooter("Former is a fully customizable Swift\"2.0\" library for easy creating UITableView based form.\n\nMIT License (MIT)"))
+            .set(footerViewFormer: createFooter("Former is a fully customizable Swift2 library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
         former.add(sectionFormers: [firstSection, secondSection, thirdSection])
     }

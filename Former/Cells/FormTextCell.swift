@@ -10,10 +10,10 @@ import UIKit
 
 public class FormTextCell: FormCell, TextFormableRow {
     
+    // MARK: Public
+    
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var subTextLabel: UILabel!
-    
-    private weak var rightConst: NSLayoutConstraint!
     
     public func formTextLabel() -> UILabel? {
         return titleLabel
@@ -28,8 +28,8 @@ public class FormTextCell: FormCell, TextFormableRow {
         rightConst.constant = (accessoryType == .None) ? -15.0 : 0
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
@@ -74,4 +74,8 @@ public class FormTextCell: FormCell, TextFormableRow {
         contentView.addConstraints(constraints + [rightConst])
         self.rightConst = rightConst
     }
+    
+    // MARK: Private
+    
+    private weak var rightConst: NSLayoutConstraint!
 }

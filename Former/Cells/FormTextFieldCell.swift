@@ -10,13 +10,12 @@ import UIKit
 
 public class FormTextFieldCell: FormCell, TextFieldFormableRow {
     
+    // MARK: Public
+    
     public let observer = FormerObserver()
     
     public private(set) weak var textField: UITextField!
     public private(set) weak var titleLabel: UILabel!
-    
-    private weak var leftConst: NSLayoutConstraint!
-    private weak var rightConst: NSLayoutConstraint!
 
     public func formTextField() -> UITextField {
         return textField
@@ -28,14 +27,13 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
-        
         leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
         rightConst.constant = (textField.textAlignment == .Right) ? -15.0 : 0
     }
     
-    public override func configureViews() {
+    public override func setup() {
         
-        super.configureViews()
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: UILayoutConstraintAxis.Horizontal)
@@ -93,4 +91,9 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
         self.leftConst = leftConst
         self.rightConst = rightConst
     }
+    
+    // MARK: Private
+    
+    private weak var leftConst: NSLayoutConstraint!
+    private weak var rightConst: NSLayoutConstraint!
 }

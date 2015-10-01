@@ -25,25 +25,21 @@ internal protocol FormerValidatable: class {
     func validate() -> Bool
 }
 
-public class RowFormer: NSObject {
+public class RowFormer {
+    
+    // MARK: Public
     
     public internal(set) final weak var former: Former?
     public private(set) final var cell: UITableViewCell?
-    public internal(set) final var isEditing = false
-    public private(set) var instantiateType: Former.InstantiateType
-    public var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     public var cellHeight: CGFloat = 44.0
+    public internal(set) final var isEditing = false
     public var enabled = true {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     public var canBecomeEditing: Bool {
         return false
     }
-    
-    private final var cellType: UITableViewCell.Type
-    private final let cellSetup: (UITableViewCell -> Void)
+    public var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     
     public init<T: UITableViewCell>(
         cellType: T.Type,
@@ -51,21 +47,32 @@ public class RowFormer: NSObject {
         cellSetup: (T -> Void)? = nil) {
             self.cellType = cellType
             self.instantiateType = instantiateType
-            self.cellSetup = {
-                if let cell = $0 as? T {
-                    cellSetup?(cell)
-                } else {
-                    assert(false, "[Former]Cell type is not match at creation time.")
-                }
-            }
-            super.init()
-            initialize()
+            self.cellSetup = { cellSetup?(($0 as! T)) }
+            initialized()
     }
     
-    public func initialize() {}
+    public func initialized() {}
+    
+    public func update() {
+        if let cell = cell {
+            cell.userInteractionEnabled = enabled
+            if let formableRow = cell as? FormableRow {
+                formableRow.updateWithRowFormer(self)
+            }
+        }
+    }
+    
+    public func cellSelected(indexPath: NSIndexPath) {
+        if enabled {
+           onSelected?(indexPath: indexPath, rowFormer: self)
+        }
+    }
+    
+    public func cellInitialized(cell: UITableViewCell) {}
+    
+    // MARK: Internal
     
     final func cellConfigure() {
-        
         let instantiateCell: (RowFormer -> Void) = { rowFormer in
             switch rowFormer.instantiateType {
             case .Class:
@@ -73,10 +80,11 @@ public class RowFormer: NSObject {
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
                 rowFormer.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-                assert(rowFormer.cell != nil, "[Former]Failed to load cell \(nibName) from nib.")
+                assert(rowFormer.cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
             }
             _ = rowFormer.cell.map {
                 rowFormer.cellSetup($0)
+                self.cellInitialized($0)
             }
         }
         
@@ -100,26 +108,9 @@ public class RowFormer: NSObject {
         }
     }
     
-    public func update() {
-        if let cell = cell {
-            cell.userInteractionEnabled = enabled
-            if let formableRow = cell as? FormableRow {
-                formableRow.updateWithRowFormer(self)
-            }
-        }
-    }
+    // MARK: Private
     
-    public final func cellUpdate<T: UITableViewCell>(@noescape update: (T? -> Void)) {
-        if let cell = cell as? T {
-            update(cell)
-        } else {
-            assert(false, "[Former]Can't cast cell to \(T.self).")
-        }
-    }
-    
-    public func cellSelected(indexPath: NSIndexPath) {
-        if enabled {
-           onSelected?(indexPath: indexPath, rowFormer: self)
-        }
-    }
+    private final let cellType: UITableViewCell.Type
+    private final let instantiateType: Former.InstantiateType
+    private final let cellSetup: (UITableViewCell -> Void)
 }

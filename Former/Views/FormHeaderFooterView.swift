@@ -10,6 +10,8 @@ import UIKit
 
 public class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     
+    // MARK: Public
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()

@@ -14,23 +14,26 @@ public protocol TextFormableRow: FormableRow {
     func formerSubTextLabel() -> UILabel?
 }
 
-public class TextRowFormer: RowFormer {
+public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
+: CustomRowFormer<T> {
+    
+    // MARK: Public
     
     public var text: String?
     public var subText: String?
     public var textDisabledColor: UIColor? = .lightGrayColor()
     public var subTextDisabledColor: UIColor? = .lightGrayColor()
     
-    private var textColor: UIColor?
-    private var subTextColor: UIColor?
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
     
-    public init<T: UITableViewCell where T: TextFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        text: String? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.text = text
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? TextFormableRow {
+            text = row.formTextLabel()?.text
+            subText = row.formerSubTextLabel()?.text
+        }
     }
     
     public override func update() {
@@ -55,4 +58,9 @@ public class TextRowFormer: RowFormer {
             }
         }
     }
+    
+    // MARK: Private
+    
+    private var textColor: UIColor?
+    private var subTextColor: UIColor?
 }

@@ -10,6 +10,8 @@ import UIKit
 
 public class FormInlineDatePickerCell: FormCell, InlineDatePickerFormableRow {
     
+    // MARK: Public
+    
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
     
@@ -29,8 +31,8 @@ public class FormInlineDatePickerCell: FormCell, InlineDatePickerFormableRow {
         rightConst.constant = (accessoryType == .None && accessoryView == nil) ? -15.0 : 0
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
@@ -39,6 +41,7 @@ public class FormInlineDatePickerCell: FormCell, InlineDatePickerFormableRow {
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
+        displayLabel.textAlignment = .Right
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel

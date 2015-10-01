@@ -16,7 +16,10 @@ public protocol SwitchFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SwitchRowFormer: RowFormer, FormerValidatable {
+public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: (Bool -> Bool)?
     
@@ -25,16 +28,8 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
     public var switchWhenSelected = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    private var selectionStyle: UITableViewCellSelectionStyle?
-    
-    public init<T : UITableViewCell where T : SwitchFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onSwitchChanged: (Bool -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onSwitchChanged = onSwitchChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -84,7 +79,12 @@ public class SwitchRowFormer: RowFormer, FormerValidatable {
         return onValidate?(switched) ?? true
     }
     
-    public dynamic func switchChanged(switchButton: UISwitch) {
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    private var selectionStyle: UITableViewCellSelectionStyle?
+    
+    private dynamic func switchChanged(switchButton: UISwitch) {
         if self.enabled {
             let switched = switchButton.on
             self.switched = switched

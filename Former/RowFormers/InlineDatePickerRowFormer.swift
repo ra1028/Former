@@ -14,7 +14,10 @@ public protocol InlineDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable {
+public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
+: CustomRowFormer<T>, InlineRow, FormerValidatable {
+    
+    // MARK: Public
     
     public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
@@ -31,22 +34,12 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
     public var displayEditingColor: UIColor?
     public var titleEditingColor: UIColor?
     
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
-    
-    public init<T : UITableViewCell where T : InlineDatePickerFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onDateChanged: (NSDate -> Void)? = nil,
-        inlinecellSetup: (FormDatePickerCell -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            inlineRowFormer = DatePickerRowFormer(
-                cellType: FormDatePickerCell.self,
-                instantiateType: .Class,
-                cellSetup: inlinecellSetup
-            )
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onDateChanged = onDateChanged
+    public init(
+        instantiateType: Former.InstantiateType = .Class,
+        inlineCellSetup: (FormDatePickerCell -> Void)? = nil,
+        cellSetup: (T -> Void)?) {
+            inlineRowFormer = DatePickerRowFormer<FormDatePickerCell>(instantiateType: .Class, cellSetup: inlineCellSetup)
+            super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -77,7 +70,7 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
             }
         }
         
-        if let pickerRowFormer = inlineRowFormer as? DatePickerRowFormer {
+        if let pickerRowFormer = inlineRowFormer as? DatePickerRowFormer<FormDatePickerCell> {
             pickerRowFormer.onDateChanged = dateChanged
             pickerRowFormer.date = date
             pickerRowFormer.enabled = enabled
@@ -136,4 +129,9 @@ public class InlineDatePickerRowFormer: RowFormer, InlineRow, FormerValidatable 
             isEditing = false
         }
     }
+    
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
 }

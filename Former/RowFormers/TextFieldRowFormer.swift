@@ -16,7 +16,10 @@ public protocol TextFieldFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class TextFieldRowFormer: RowFormer, FormerValidatable {
+public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     override public var canBecomeEditing: Bool {
         return enabled
@@ -27,27 +30,30 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     public var onTextChanged: (String -> Void)?
     public var text: String?
     public var placeholder: String?
+    public var attributedPlaceholder: NSAttributedString?
     public var textDisabledColor: UIColor? = .lightGrayColor()
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var titleEditingColor: UIColor?
     public var returnToNextRow = true
     
-    private var textColor: UIColor?
-    private var titleColor: UIColor?
-    
-    public init<T: UITableViewCell where T: TextFieldFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onTextChanged: (String -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onTextChanged = onTextChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     deinit {
         if let row = cell as? TextFieldFormableRow {
             let textField = row.formTextField()
             textField.delegate = nil
+        }
+    }
+    
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? TextFieldFormableRow {
+            let textField = row.formTextField()
+            text = textField.text
+            placeholder = textField.placeholder
+            attributedPlaceholder = textField.attributedPlaceholder
         }
     }
     
@@ -60,8 +66,9 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
             let textField = row.formTextField()
             textField.text = text
             textField.placeholder =? placeholder
+            textField.attributedPlaceholder =? attributedPlaceholder
             textField.userInteractionEnabled = false
-            textField.delegate = self
+//            textField.delegate = self
             
             if enabled {
                 if isEditing {
@@ -107,7 +114,12 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
         return onValidate?(text) ?? true
     }
     
-    public func textChanged(textField: UITextField) {
+    // MARK: Private
+    
+    private var textColor: UIColor?
+    private var titleColor: UIColor?
+    
+    private dynamic func textChanged(textField: UITextField) {
         if enabled {
             let text = textField.text ?? ""
             self.text = text
@@ -115,7 +127,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
         }
     }
     
-    public func editingDidBegin(textField: UITextField) {
+    private dynamic func editingDidBegin(textField: UITextField) {
         if let row = cell as? TextFieldFormableRow where enabled {
             let titleLabel = row.formTitleLabel()
             titleColor ?= titleLabel?.textColor
@@ -123,7 +135,7 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
         }
     }
     
-    public func editingDidEnd(textField: UITextField) {
+    private dynamic func editingDidEnd(textField: UITextField) {
         if let row = cell as? TextFieldFormableRow {
             let titleLabel = row.formTitleLabel()
             if enabled {
@@ -138,15 +150,15 @@ public class TextFieldRowFormer: RowFormer, FormerValidatable {
     }
 }
 
-extension TextFieldRowFormer: UITextFieldDelegate {
-    
-    public func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if returnToNextRow {
-            let returnToNextRow = (former?.canBecomeEditingNext() ?? false) ?
-                former?.becomeEditingNext :
-                former?.endEditing
-            returnToNextRow?()
-        }
-        return !returnToNextRow
-    }
-}
+//extension TextFieldRowFormer: UITextFieldDelegate {
+//    
+//    public func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        if returnToNextRow {
+//            let returnToNextRow = (former?.canBecomeEditingNext() ?? false) ?
+//                former?.becomeEditingNext :
+//                former?.endEditing
+//            returnToNextRow?()
+//        }
+//        return !returnToNextRow
+//    }
+//}

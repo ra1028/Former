@@ -17,7 +17,10 @@ public protocol StepperFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class StepperRowFormer: RowFormer, FormerValidatable {
+public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: (Double -> Bool)?
     
@@ -27,16 +30,8 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    private var displayColor: UIColor?
-    
-    public init<T : UITableViewCell where T : StepperFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onValueChanged: (Double -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onValueChanged = onValueChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -74,7 +69,12 @@ public class StepperRowFormer: RowFormer, FormerValidatable {
         return onValidate?(value) ?? true
     }
     
-    public dynamic func valueChanged(stepper: UIStepper) {
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    private var displayColor: UIColor?
+    
+    private dynamic func valueChanged(stepper: UIStepper) {
         if let row = cell as? StepperFormableRow where enabled {
             let value = stepper.value
             self.value = value

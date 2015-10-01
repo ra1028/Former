@@ -10,19 +10,21 @@ import UIKit
 
 public class FormCell: UITableViewCell, FormableRow {
     
+    // MARK: Public
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        configureViews()
+        setup()
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureViews()
+        setup()
     }
     
     public func updateWithRowFormer(rowFormer: RowFormer) {}
     
-    public func configureViews() {
+    public func setup() {
         contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         textLabel?.backgroundColor = .clearColor()
     }

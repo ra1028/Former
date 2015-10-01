@@ -27,12 +27,12 @@ final class DemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        configureViews()
+        setup()
     }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        configureViews()
+        setup()
     }
     
     override func setHighlighted(highlighted: Bool, animated: Bool) {
@@ -55,7 +55,7 @@ final class DemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
         }
     }
     
-    func configureViews() {
+    func setup() {
         contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         textLabel?.backgroundColor = .clearColor()
         

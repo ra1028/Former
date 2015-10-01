@@ -13,33 +13,28 @@ public protocol FormableView: class {
     func updateWithViewFormer(viewFormer: ViewFormer)
 }
 
-public class ViewFormer: NSObject {
+public class ViewFormer {
+    
+    // MARK: Public
     
     public private(set) final var view: UITableViewHeaderFooterView?
-    public private(set) var instantiateType: Former.InstantiateType
     public var viewHeight: CGFloat = 10.0
     
-    private private(set) var viewType: UITableViewHeaderFooterView.Type
-    private final let viewConfiguration: (UITableViewHeaderFooterView -> Void)
+    private final let viewType: UITableViewHeaderFooterView.Type
+    private final let instantiateType: Former.InstantiateType
+    private final let viewSetup: (UITableViewHeaderFooterView -> Void)
     
     public init<T: UITableViewHeaderFooterView>(
         viewType: T.Type,
         instantiateType: Former.InstantiateType,
-        viewConfiguration: (T -> Void)? = nil) {
+        viewSetup: (T -> Void)? = nil) {
             self.viewType = viewType
             self.instantiateType = instantiateType
-            self.viewConfiguration = {
-                if let view = $0 as? T {
-                    viewConfiguration?(view)
-                } else {
-                    assert(false, "[Former]View type is not match at creation time.")
-                }
-            }
-            super.init()
-            initialize()
+            self.viewSetup = { viewSetup?(($0 as! T)) }
+            initialized()
     }
     
-    public func initialize() {}
+    public func initialized() {}
     
     final func viewConfigure() {
         
@@ -50,11 +45,11 @@ public class ViewFormer: NSObject {
             case .Nib(nibName: let nibName, bundle: let bundle):
                 let bundle = bundle ?? NSBundle.mainBundle()
                 view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
-                assert(view != nil, "[Former]Failed to load header footer view \(nibName) from nib.")
+                assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
             }
             _ = view.map {
                 $0.contentView.backgroundColor = .clearColor()
-                viewConfiguration($0)
+                viewSetup($0)
             }
         }
         if let formableView = view as? FormableView {
@@ -67,14 +62,6 @@ public class ViewFormer: NSObject {
         if let view = view,
             let formableView = view as? FormableView {
                 formableView.updateWithViewFormer(self)
-        }
-    }
-    
-    public final func viewUpdate<T: UITableViewHeaderFooterView>(@noescape update: (T? -> Void)) {
-        if let view = view as? T {
-            update(view)
-        } else {
-            assert(false, "[Former]Can't cast view to \(T.self).")
         }
     }
 }

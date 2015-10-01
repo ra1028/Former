@@ -10,14 +10,16 @@ import UIKit
 
 public class FormPickerCell: FormCell, PickerFormableRow {
     
+    // MARK: Public
+    
     public private(set) weak var pickerView: UIPickerView!
     
     public func formPickerView() -> UIPickerView {
         return pickerView
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let pickerView = UIPickerView()
         pickerView.translatesAutoresizingMaskIntoConstraints = false

@@ -17,7 +17,10 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
+public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     override public var canBecomeEditing: Bool {
         return self.enabled
@@ -33,22 +36,14 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
-    
     private lazy var inputView: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
         return datePicker
         }()
     
-    public init<T: UITableViewCell where T: SelectorDatePickerFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onDateChanged: (NSDate -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onDateChanged = onDateChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -88,7 +83,12 @@ public class SelectorDatePickerRowFormer: RowFormer, FormerValidatable {
         return onValidate?(date) ?? true
     }
     
-    public dynamic func dateChanged(datePicker: UIDatePicker) {
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
+    
+    private dynamic func dateChanged(datePicker: UIDatePicker) {
         if let row = cell as? SelectorDatePickerFormableRow where enabled {
             let date = datePicker.date
             self.date = date

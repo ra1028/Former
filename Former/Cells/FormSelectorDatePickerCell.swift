@@ -10,13 +10,13 @@ import UIKit
 
 public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
     
+    // MARK: Public
+    
     public var selectorDatePicker: UIDatePicker?
     public var selectorAccessoryView: UIView?
     
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
-    
-    private weak var rightConst: NSLayoutConstraint!
     
     public func formTitleLabel() -> UILabel? {
         return titleLabel
@@ -28,12 +28,11 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
-        
         rightConst.constant = (accessoryType == .None) ? -15.0 : 0
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
@@ -42,6 +41,7 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
+        displayLabel.textAlignment = .Right
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel
@@ -78,4 +78,8 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
         contentView.addConstraints(constraints + [rightConst])
         self.rightConst = rightConst
     }
+    
+    // MARK: Private
+    
+    private weak var rightConst: NSLayoutConstraint!
 }

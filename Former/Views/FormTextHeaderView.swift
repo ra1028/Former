@@ -10,6 +10,8 @@ import UIKit
 
 public class FormTextHeaderView: FormHeaderFooterView, TextFormableView {
     
+    // MARK: Public
+    
     public private(set) weak var titleLabel: UILabel!
     
     public func formTextLabel() -> UILabel {

@@ -13,7 +13,10 @@ public protocol CheckFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class CheckRowFormer: RowFormer, FormerValidatable {
+public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     public var onValidate: (Bool -> Bool)?
     
@@ -21,15 +24,8 @@ public class CheckRowFormer: RowFormer, FormerValidatable {
     public var checked = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    
-    public init<T : UITableViewCell where T : CheckFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onCheckChanged: (Bool -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onCheckChanged = onCheckChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -61,4 +57,8 @@ public class CheckRowFormer: RowFormer, FormerValidatable {
     public func validate() -> Bool {
         return onValidate?(checked) ?? true
     }
+    
+    // MARK: Private
+    
+    private var titleColor: UIColor?
 }

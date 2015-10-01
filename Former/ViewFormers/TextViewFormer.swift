@@ -13,21 +13,19 @@ public protocol TextFormableView: FormableView {
     func formTextLabel() -> UILabel
 }
 
-public class TextViewFormer: ViewFormer {
+public class TextViewFormer<T: UITableViewHeaderFooterView where T: TextFormableView>
+: CustomViewFormer<T> {
+    
+    // MARK: Public
     
     public var text: String?
     
-    public init<T: UITableViewHeaderFooterView where T: TextFormableView>(
-        viewType: T.Type,
-        instantiateType: Former.InstantiateType,
-        text: String? = nil,
-        viewConfiguration: (T -> Void)? = nil) {
-            super.init(viewType: viewType, instantiateType: instantiateType, viewConfiguration: viewConfiguration)
-            self.text = text
+    required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, viewSetup: viewSetup)
     }
     
-    public override func initialize() {
-        super.initialize()
+    public override func initialized() {
+        super.initialized()
         viewHeight = 30.0
     }
     

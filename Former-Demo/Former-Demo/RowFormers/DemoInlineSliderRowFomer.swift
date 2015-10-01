@@ -15,12 +15,12 @@ public protocol DemoInlineSliderFormableRow: FormableRow {
     func formerColorDisplayView() -> UIView?
 }
 
-public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
+public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSliderFormableRow>
+: CustomRowFormer<T>, InlineRow {
     
-    public private(set) var inlineRowFormer: RowFormer = SliderRowFormer(
-        cellType: FormSliderCell.self,
-        instantiateType: .Class
-    )
+    // MARK: Public
+    
+    public private(set) var inlineRowFormer: RowFormer = SliderRowFormer<FormSliderCell>(instantiateType: .Class)
     override public var canBecomeEditing: Bool {
         return enabled
     }
@@ -31,15 +31,8 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
     public var color: UIColor?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    private var titleColor: UIColor?
-    
-    public init<T : UITableViewCell where T : DemoInlineSliderFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onValueChanged: (Float -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onValueChanged = onValueChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -57,7 +50,7 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
             let colorDisplayView = row.formerColorDisplayView()
             colorDisplayView?.backgroundColor = color
         }
-        if let inlineRowFormer = inlineRowFormer as? SliderRowFormer {
+        if let inlineRowFormer = inlineRowFormer as? SliderRowFormer<FormSliderCell> {
             inlineRowFormer.cellHeight = 44.0
             inlineRowFormer.onValueChanged = valueChanged
             inlineRowFormer.adjustedValueFromValue = adjustedValueFromValue
@@ -80,4 +73,8 @@ public class DemoInlineSliderRowFormer: RowFormer, InlineRow {
     public func editingDidBegin() {}
     
     public func editingDidEnd() {}
+    
+    // MARK: Private
+    
+    private var titleColor: UIColor?
 }

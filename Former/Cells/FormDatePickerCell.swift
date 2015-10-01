@@ -10,6 +10,8 @@ import UIKit
 
 public class FormDatePickerCell: FormCell, DatePickerFormableRow {
     
+    // MARK: Public
+    
     public let observer = FormerObserver()
     
     public private(set) weak var datePicker: UIDatePicker!
@@ -18,8 +20,8 @@ public class FormDatePickerCell: FormCell, DatePickerFormableRow {
         return datePicker
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false

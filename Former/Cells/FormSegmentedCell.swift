@@ -10,6 +10,8 @@ import UIKit
 
 public class FormSegmentedCell: FormCell, SegmentedFormableRow {
     
+    // MARK: Public
+    
     public let observer = FormerObserver()
     
     public private(set) weak var titleLabel: UILabel!
@@ -23,8 +25,8 @@ public class FormSegmentedCell: FormCell, SegmentedFormableRow {
         return segmentedControl
     }
     
-    public override func configureViews() {
-        super.configureViews()
+    public override func setup() {
+        super.setup()
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

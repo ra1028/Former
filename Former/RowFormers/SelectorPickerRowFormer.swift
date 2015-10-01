@@ -17,7 +17,10 @@ public protocol SelectorPickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
+public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerFormableRow>
+: CustomRowFormer<T>, FormerValidatable {
+    
+    // MARK: Public
     
     override public var canBecomeEditing: Bool {
         return enabled
@@ -31,24 +34,9 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
     public var inputAccessoryView: UIView?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
-
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
     
-    private lazy var inputView: UIPickerView = {
-        let picker = UIPickerView()
-        picker.delegate = self
-        picker.dataSource = self
-        return picker
-    }()
-    
-    public init<T: UITableViewCell where T: SelectorPickerFormableRow>(
-        cellType: T.Type,
-        instantiateType: Former.InstantiateType,
-        onValueChanged: ((Int, String) -> Void)? = nil,
-        cellSetup: (T -> Void)? = nil) {
-            super.init(cellType: cellType, instantiateType: instantiateType, cellSetup: cellSetup)
-            self.onValueChanged = onValueChanged
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
@@ -97,31 +85,42 @@ public class SelectorPickerRowFormer: RowFormer, FormerValidatable {
         let selectedTitle = valueTitles[row]
         return onValidate?(row, selectedTitle) ?? true
     }
+    
+    // MARK: Private
+    
+    private var titleColor: UIColor?
+    private var displayTextColor: UIColor?
+    private lazy var inputView: UIPickerView = {
+        let picker = UIPickerView()
+        //        picker.delegate = self
+        //        picker.dataSource = self
+        return picker
+        }()
 }
 
-extension SelectorPickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if enabled {
-            selectedRow = row
-            let selectedTitle = valueTitles[row]
-            onValueChanged?(row, selectedTitle)
-            if let row = cell as? SelectorPickerFormableRow {
-                let displayTextLabel = row.formDisplayLabel()
-                displayTextLabel?.text = selectedTitle
-            }
-        }
-    }
-    
-    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return valueTitles.count
-    }
-    
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return valueTitles[row]
-    }
-}
+//extension SelectorPickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
+//    
+//    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        if enabled {
+//            selectedRow = row
+//            let selectedTitle = valueTitles[row]
+//            onValueChanged?(row, selectedTitle)
+//            if let row = cell as? SelectorPickerFormableRow {
+//                let displayTextLabel = row.formDisplayLabel()
+//                displayTextLabel?.text = selectedTitle
+//            }
+//        }
+//    }
+//    
+//    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//    
+//    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return valueTitles.count
+//    }
+//    
+//    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return valueTitles[row]
+//    }
+//}

@@ -10,6 +10,8 @@ import UIKit
 
 public class FormViewController: UIViewController {
     
+    // MARK: Public
+    
     public private(set) var tableView = UITableView(frame: CGRect.zero, style: .Grouped)
     public lazy var former: Former = {
         return Former(tableView: self.tableView)
@@ -24,6 +26,8 @@ public class FormViewController: UIViewController {
         super.init(coder: aDecoder)
         setup()
     }
+    
+    // MARK: Private
     
     private final func setup() {
         view.backgroundColor = .groupTableViewBackgroundColor()
