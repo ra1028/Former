@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2A01AF841BBC4CBD0034EAEB /* CustomViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A01AF831BBC4CBD0034EAEB /* CustomViewFormer.swift */; settings = {ASSET_TAGS = (); }; };
-		2A25C3051BBD1EB700BA800C /* RowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A25C3031BBD1EB700BA800C /* RowFormer.swift */; settings = {ASSET_TAGS = (); }; };
-		2A25C3061BBD1EB700BA800C /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A25C3041BBD1EB700BA800C /* ViewFormer.swift */; settings = {ASSET_TAGS = (); }; };
+		2A3365BD1BBDB40800603F71 /* RowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A25C3071BBD1ED600BA800C /* RowFormer.swift */; };
+		2A3365BE1BBDB41100603F71 /* ViewFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A25C3081BBD1ED600BA800C /* ViewFormer.swift */; };
 		2A65655F1BA43E9100C78E81 /* Former.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A65655E1BA43E9100C78E81 /* Former.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A6566201BA4427D00C78E81 /* FormCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565EF1BA4427D00C78E81 /* FormCell.swift */; };
 		2A6566211BA4427D00C78E81 /* FormCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565F01BA4427D00C78E81 /* FormCheckCell.swift */; };
@@ -55,8 +55,6 @@
 
 /* Begin PBXFileReference section */
 		2A01AF831BBC4CBD0034EAEB /* CustomViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewFormer.swift; sourceTree = "<group>"; };
-		2A25C3031BBD1EB700BA800C /* RowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RowFormer.swift; path = Former/Commons/RowFormer.swift; sourceTree = SOURCE_ROOT; };
-		2A25C3041BBD1EB700BA800C /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewFormer.swift; path = Former/Commons/ViewFormer.swift; sourceTree = SOURCE_ROOT; };
 		2A25C3071BBD1ED600BA800C /* RowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowFormer.swift; sourceTree = "<group>"; };
 		2A25C3081BBD1ED600BA800C /* ViewFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFormer.swift; sourceTree = "<group>"; };
 		2A65655E1BA43E9100C78E81 /* Former.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Former.h; sourceTree = "<group>"; };
@@ -193,8 +191,6 @@
 		2A65660A1BA4427D00C78E81 /* RowFormers */ = {
 			isa = PBXGroup;
 			children = (
-				2A25C3031BBD1EB700BA800C /* RowFormer.swift */,
-				2A25C3041BBD1EB700BA800C /* ViewFormer.swift */,
 				2AA795611BBC3A4D005949B9 /* CustomRowFormer.swift */,
 				2A65660B1BA4427D00C78E81 /* CheckRowFormer.swift */,
 				2A65660C1BA4427D00C78E81 /* DatePickerRowFormer.swift */,
@@ -312,10 +308,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A3365BE1BBDB41100603F71 /* ViewFormer.swift in Sources */,
+				2A3365BD1BBDB40800603F71 /* RowFormer.swift in Sources */,
 				2A65663C1BA4427D00C78E81 /* PickerRowFormer.swift in Sources */,
 				2A6566461BA4427D00C78E81 /* TextViewRowFormer.swift in Sources */,
 				2A6566341BA4427D00C78E81 /* FormViewController.swift in Sources */,
-				2A25C3051BBD1EB700BA800C /* RowFormer.swift in Sources */,
 				2A6566281BA4427D00C78E81 /* FormSelectorPickerCell.swift in Sources */,
 				2A6566321BA4427D00C78E81 /* SectionFormer.swift in Sources */,
 				2A6566411BA4427D00C78E81 /* SliderRowFormer.swift in Sources */,
@@ -353,7 +350,6 @@
 				2A65663E1BA4427D00C78E81 /* SegmentedRowFormer.swift in Sources */,
 				2A6566231BA4427D00C78E81 /* FormInlineDatePickerCell.swift in Sources */,
 				2A65663B1BA4427D00C78E81 /* InlinePickerRowFormer.swift in Sources */,
-				2A25C3061BBD1EB700BA800C /* ViewFormer.swift in Sources */,
 				2A6566221BA4427D00C78E81 /* FormDatePickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

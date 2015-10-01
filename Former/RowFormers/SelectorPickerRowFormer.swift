@@ -90,37 +90,50 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     
     private var titleColor: UIColor?
     private var displayTextColor: UIColor?
+    private lazy var observer: Observer<T> = {
+        Observer<T>(selectorPickerRowFormer: self)
+        }()
     private lazy var inputView: UIPickerView = {
         let picker = UIPickerView()
-        //        picker.delegate = self
-        //        picker.dataSource = self
+        picker.delegate = self.observer
+        picker.dataSource = self.observer
         return picker
         }()
 }
 
-//extension SelectorPickerRowFormer: UIPickerViewDelegate, UIPickerViewDataSource {
-//    
-//    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        if enabled {
-//            selectedRow = row
-//            let selectedTitle = valueTitles[row]
-//            onValueChanged?(row, selectedTitle)
-//            if let row = cell as? SelectorPickerFormableRow {
-//                let displayTextLabel = row.formDisplayLabel()
-//                displayTextLabel?.text = selectedTitle
-//            }
-//        }
-//    }
-//    
-//    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-//        return 1
-//    }
-//    
-//    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-//        return valueTitles.count
-//    }
-//    
-//    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return valueTitles[row]
-//    }
-//}
+private class Observer<T: UITableViewCell where T: SelectorPickerFormableRow>
+: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    private weak var selectorPickerRowFormer: SelectorPickerRowFormer<T>?
+    
+    init(selectorPickerRowFormer: SelectorPickerRowFormer<T>?) {
+        self.selectorPickerRowFormer = selectorPickerRowFormer
+    }
+    
+    private dynamic func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        guard let selectorPickerRowFormer = selectorPickerRowFormer else { return }
+        if selectorPickerRowFormer.enabled {
+            selectorPickerRowFormer.selectedRow = row
+            let selectedTitle = selectorPickerRowFormer.valueTitles[row]
+            selectorPickerRowFormer.onValueChanged?(row, selectedTitle)
+            if let row = selectorPickerRowFormer.cell as? SelectorPickerFormableRow {
+                let displayTextLabel = row.formDisplayLabel()
+                displayTextLabel?.text = selectedTitle
+            }
+        }
+    }
+    
+    private dynamic func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    private dynamic func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        guard let selectorPickerRowFormer = selectorPickerRowFormer else { return 0 }
+        return selectorPickerRowFormer.valueTitles.count
+    }
+    
+    private dynamic func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        guard let selectorPickerRowFormer = selectorPickerRowFormer else { return nil }
+        return selectorPickerRowFormer.valueTitles[row]
+    }
+}

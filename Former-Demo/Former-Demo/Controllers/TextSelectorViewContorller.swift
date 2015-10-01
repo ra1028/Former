@@ -24,7 +24,7 @@ final class TextSelectorViewContoller: FormViewController {
             former.rowFormers.forEach {
                 if let textRowFormer = $0 as? TextRowFormer<FormTextCell>
                  where textRowFormer.text == selectedText {
-                    textRowFormer.cellUpdate({ $0?.accessoryType = .Checkmark })
+                    textRowFormer.cellUpdate({ $0.accessoryType = .Checkmark })
                 }
             }
         }

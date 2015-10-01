@@ -58,7 +58,7 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
             textField.placeholder =? placeholder
             textField.attributedPlaceholder =? attributedPlaceholder
             textField.userInteractionEnabled = false
-//            textField.delegate = self
+            textField.delegate = observer
             
             if enabled {
                 if isEditing {
@@ -109,6 +109,10 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     private var textColor: UIColor?
     private var titleColor: UIColor?
     
+    private lazy var observer: Observer<T> = {
+        Observer<T>(textFieldRowFormer: self)
+        }()
+    
     private dynamic func textChanged(textField: UITextField) {
         if enabled {
             let text = textField.text ?? ""
@@ -140,15 +144,22 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     }
 }
 
-//extension TextFieldRowFormer: UITextFieldDelegate {
-//    
-//    public func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        if returnToNextRow {
-//            let returnToNextRow = (former?.canBecomeEditingNext() ?? false) ?
-//                former?.becomeEditingNext :
-//                former?.endEditing
-//            returnToNextRow?()
-//        }
-//        return !returnToNextRow
-//    }
-//}
+private class Observer<T: UITableViewCell where T: TextFieldFormableRow>: NSObject, UITextFieldDelegate {
+    
+    private weak var textFieldRowFormer: TextFieldRowFormer<T>?
+    
+    init(textFieldRowFormer: TextFieldRowFormer<T>) {
+        self.textFieldRowFormer = textFieldRowFormer
+    }
+    
+    private dynamic func textFieldShouldReturn(textField: UITextField) -> Bool {
+        guard let textFieldRowFormer = textFieldRowFormer else { return false }
+        if textFieldRowFormer.returnToNextRow {
+            let returnToNextRow = (textFieldRowFormer.former?.canBecomeEditingNext() ?? false) ?
+                textFieldRowFormer.former?.becomeEditingNext :
+                textFieldRowFormer.former?.endEditing
+            returnToNextRow?()
+        }
+        return !textFieldRowFormer.returnToNextRow
+    }
+}

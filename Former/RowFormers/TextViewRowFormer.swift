@@ -58,7 +58,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
             let titleLabel = row.formTitleLabel()
             textView.text = text
             textView.userInteractionEnabled = false
-//            textView.delegate = self
+            textView.delegate = observer
             
             if placeholderLabel == nil {
                 let placeholderLabel = UILabel()
@@ -82,7 +82,10 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
                 textView.addConstraints(constraints)
             }
             placeholderLabel?.text =? placeholder
-            placeholderLabel?.attributedText =? attributedPlaceholder
+            if let attributedPlaceholder = attributedPlaceholder {
+                placeholderLabel?.text = nil
+                placeholderLabel?.attributedText = attributedPlaceholder
+            }
             updatePlaceholderColor(textView.text)
             
             if enabled {
@@ -122,51 +125,75 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     
     private var textColor: UIColor?
     private var titleColor: UIColor?
+    private var actualAttributedString: NSAttributedString?
     private weak var placeholderLabel: UILabel?
+    private lazy var observer: Observer<T> = {
+        Observer<T>(textViewRowFormer: self)
+        }()
     
     private func updatePlaceholderColor(text: String?) {
-        placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
-            UIColor(red: 0, green: 0, blue: 0.098 / 255.0, alpha: 0.22) :
-            .clearColor()
+        if attributedPlaceholder == nil {
+            placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
+                UIColor(red: 0, green: 0, blue: 0.098 / 255.0, alpha: 0.22) :
+                .clearColor()
+        } else {
+            if text?.isEmpty ?? true {
+                placeholderLabel?.attributedText =? actualAttributedString
+                actualAttributedString = nil
+            } else {
+                actualAttributedString ?= placeholderLabel?.attributedText
+                placeholderLabel?.attributedText = nil
+            }
+        }
     }
 }
 
-//extension TextViewRowFormer: UITextViewDelegate {
-//    
-//    public func textViewDidChange(textView: UITextView) {
-//        if enabled {
-//            if UIDevice.currentDevice().systemVersion.compare("8.0.0", options: .NumericSearch) == .OrderedAscending {
-//                textView.scrollRangeToVisible(textView.selectedRange)
-//            }
-//            let text = textView.text ?? ""
-//            self.text = text
-//            textChangedHandler?(text)
-//            updatePlaceholderColor(text)
-//        }
-//    }
-//    
-//    public func textViewDidBeginEditing(textView: UITextView) {
-//        if let row = cell as? TextViewFormableRow where enabled {
-//            let titleLabel = row.formTitleLabel()
-//            titleColor ?= titleLabel?.textColor
-//            titleLabel?.textColor =? titleEditingColor
-//            isEditing = true
-//        }
-//    }
-//    
-//    public func textViewDidEndEditing(textView: UITextView) {
-//        if let row = cell as? TextViewFormableRow {
-//            let titleLabel = row.formTitleLabel()
-//            row.formTextView().userInteractionEnabled = false
-//            
-//            if enabled {
-//                titleLabel?.textColor =? titleColor
-//                titleColor = nil
-//            } else {
-//                titleColor ?= titleLabel?.textColor
-//                titleLabel?.textColor = titleDisabledColor
-//            }
-//            isEditing = false
-//        }
-//    }
-//}
+private class Observer<T: UITableViewCell where T: TextViewFormableRow>:
+NSObject, UITextViewDelegate {
+    
+    private weak var textViewRowFormer: TextViewRowFormer<T>?
+    
+    init(textViewRowFormer: TextViewRowFormer<T>) {
+        self.textViewRowFormer = textViewRowFormer
+    }
+    
+    private dynamic func textViewDidChange(textView: UITextView) {
+        guard let textViewRowFormer = textViewRowFormer else { return }
+        if textViewRowFormer.enabled {
+            if UIDevice.currentDevice().systemVersion.compare("8.0.0", options: .NumericSearch) == .OrderedAscending {
+                textView.scrollRangeToVisible(textView.selectedRange)
+            }
+            let text = textView.text ?? ""
+            textViewRowFormer.text = text
+            textViewRowFormer.textChangedHandler?(text)
+            textViewRowFormer.updatePlaceholderColor(text)
+        }
+    }
+    
+    private dynamic func textViewDidBeginEditing(textView: UITextView) {
+        guard let textViewRowFormer = textViewRowFormer else { return }
+        if let row = textViewRowFormer.cell as? TextViewFormableRow where textViewRowFormer.enabled {
+            let titleLabel = row.formTitleLabel()
+            textViewRowFormer.titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor =? textViewRowFormer.titleEditingColor
+            textViewRowFormer.isEditing = true
+        }
+    }
+    
+    private dynamic func textViewDidEndEditing(textView: UITextView) {
+        guard let textViewRowFormer = textViewRowFormer else { return }
+        if let row = textViewRowFormer.cell as? TextViewFormableRow {
+            let titleLabel = row.formTitleLabel()
+            row.formTextView().userInteractionEnabled = false
+            
+            if textViewRowFormer.enabled {
+                titleLabel?.textColor =? textViewRowFormer.titleColor
+                textViewRowFormer.titleColor = nil
+            } else {
+                textViewRowFormer.titleColor ?= titleLabel?.textColor
+                titleLabel?.textColor = textViewRowFormer.titleDisabledColor
+            }
+            textViewRowFormer.isEditing = false
+        }
+    }
+}
