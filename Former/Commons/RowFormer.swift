@@ -68,8 +68,6 @@ public class RowFormer {
         }
     }
     
-    public func cellInitialized(cell: UITableViewCell) {}
-    
     // MARK: Internal
     
     final func cellConfigure() {
@@ -84,7 +82,6 @@ public class RowFormer {
             }
             _ = rowFormer.cell.map {
                 rowFormer.cellSetup($0)
-                self.cellInitialized($0)
             }
         }
         

@@ -28,14 +28,6 @@ public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
-        super.cellInitialized(cell)
-        if let row = cell as? TextFormableRow {
-            text = row.formTextLabel()?.text
-            subText = row.formerSubTextLabel()?.text
-        }
-    }
-    
     public override func update() {
         super.update()
         

@@ -49,13 +49,6 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
         cellHeight = 110.0
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
-        super.cellInitialized(cell)
-        if let row = cell as? TextViewFormableRow {
-            text = row.formTextView().text
-        }
-    }
-    
     public override func update() {
         super.update()
         

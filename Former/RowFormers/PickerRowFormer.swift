@@ -41,8 +41,7 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
         }
     }
     
-    public override func update() {
-        
+    public override func update() {        
         super.update()
         
         cell?.selectionStyle = .None

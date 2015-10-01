@@ -47,16 +47,6 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
         }
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
-        super.cellInitialized(cell)
-        if let row = cell as? TextFieldFormableRow {
-            let textField = row.formTextField()
-            text = textField.text
-            placeholder = textField.placeholder
-            attributedPlaceholder = textField.attributedPlaceholder
-        }
-    }
-    
     public override func update() {
         super.update()
         
