@@ -31,9 +31,7 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     }
     
     deinit {
-        if let row = cell as? SwitchFormableRow {
-            row.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
-        }
+        typedCell.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func cellInitialized(cell: UITableViewCell) {
@@ -47,26 +45,24 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         super.update()
         
         if !switchWhenSelected {
-            selectionStyle ?= cell.selectionStyle
-            cell.selectionStyle = .None
+            selectionStyle ?= typedCell.selectionStyle
+            typedCell.selectionStyle = .None
         } else {
-            cell.selectionStyle =? selectionStyle
+            typedCell.selectionStyle =? selectionStyle
             selectionStyle = nil
         }
         
-        if let row = cell as? SwitchFormableRow {
-            let titleLabel = row.formTitleLabel()
-            let switchButton = row.formSwitch()
-            switchButton.on = switched
-            switchButton.enabled = enabled
-            
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                titleColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-            }
+        let titleLabel = typedCell.formTitleLabel()
+        let switchButton = typedCell.formSwitch()
+        switchButton.on = switched
+        switchButton.enabled = enabled
+        
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            titleColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
         }
     }
     
@@ -74,8 +70,8 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         super.cellSelected(indexPath)
         
         former?.deselect(true)
-        if let row = cell as? SwitchFormableRow where switchWhenSelected && enabled {
-            let switchButton = row.formSwitch()
+        if switchWhenSelected && enabled {
+            let switchButton = typedCell.formSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
             switchChanged(switchButton)
         }

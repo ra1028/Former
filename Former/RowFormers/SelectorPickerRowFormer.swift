@@ -43,28 +43,26 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
         super.update()
         
         inputView.selectRow(selectedRow, inComponent: 0, animated: false)
-        if let row = cell as? SelectorPickerFormableRow {
-            row.selectorPickerView = inputView
-            row.selectorAccessoryView = inputAccessoryView
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            if valueTitles.isEmpty {
-                displayLabel?.text = ""
-            } else {
-                displayLabel?.text = valueTitles[selectedRow]
-            }
-            
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                displayLabel?.textColor =? displayTextColor
-                self.titleColor = nil
-                self.displayTextColor = nil
-            } else {
-                self.titleColor ?= titleLabel?.textColor
-                self.displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-                displayLabel?.textColor = displayDisabledColor
-            }
+        typedCell.selectorPickerView = inputView
+        typedCell.selectorAccessoryView = inputAccessoryView
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        if valueTitles.isEmpty {
+            displayLabel?.text = ""
+        } else {
+            displayLabel?.text = valueTitles[selectedRow]
+        }
+        
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayTextColor
+            self.titleColor = nil
+            self.displayTextColor = nil
+        } else {
+            self.titleColor ?= titleLabel?.textColor
+            self.displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
         }
     }
     
@@ -76,7 +74,7 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
         super.cellSelected(indexPath)
         former?.deselect(true)
         if enabled {
-            cell.becomeFirstResponder()
+            typedCell.becomeFirstResponder()
         }
     }
     
@@ -116,10 +114,9 @@ private class Observer<T: UITableViewCell where T: SelectorPickerFormableRow>
             selectorPickerRowFormer.selectedRow = row
             let selectedTitle = selectorPickerRowFormer.valueTitles[row]
             selectorPickerRowFormer.onValueChanged?(row, selectedTitle)
-            if let row = selectorPickerRowFormer.cell as? SelectorPickerFormableRow {
-                let displayTextLabel = row.formDisplayLabel()
-                displayTextLabel?.text = selectedTitle
-            }
+            let cell = selectorPickerRowFormer.typedCell
+            let displayTextLabel = cell.formDisplayLabel()
+            displayTextLabel?.text = selectedTitle
         }
     }
     

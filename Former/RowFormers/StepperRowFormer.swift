@@ -33,9 +33,7 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     }
     
     deinit {
-        if let row = cell as? StepperFormableRow {
-            row.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        }
+        typedCell.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func cellInitialized(cell: UITableViewCell) {
@@ -48,30 +46,28 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
-        if let row = cell as? StepperFormableRow {
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            let stepper = row.formStepper()
-            stepper.value = value
-            stepper.enabled = enabled
-            displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
-            
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                displayLabel?.textColor =? displayColor
-                stepper.tintColor =? stepperTintColor
-                titleColor = nil
-                displayColor = nil
-                stepperTintColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                displayColor ?= displayLabel?.textColor
-                stepperTintColor ?= stepper.tintColor
-                titleLabel?.textColor = titleDisabledColor
-                displayLabel?.textColor = displayDisabledColor
-                stepper.tintColor = stepperTintColor?.colorWithAlphaComponent(0.5)
-            }
+        typedCell.selectionStyle = .None
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        let stepper = typedCell.formStepper()
+        stepper.value = value
+        stepper.enabled = enabled
+        displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
+        
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayColor
+            stepper.tintColor =? stepperTintColor
+            titleColor = nil
+            displayColor = nil
+            stepperTintColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayColor ?= displayLabel?.textColor
+            stepperTintColor ?= stepper.tintColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
+            stepper.tintColor = stepperTintColor?.colorWithAlphaComponent(0.5)
         }
     }
     
@@ -86,11 +82,9 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     private var stepperTintColor: UIColor?
     
     private dynamic func valueChanged(stepper: UIStepper) {
-        if let row = cell as? StepperFormableRow where enabled {
-            let value = stepper.value
-            self.value = value
-            row.formDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
-            onValueChanged?(value)
-        }
+        let value = stepper.value
+        self.value = value
+        typedCell.formDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
+        onValueChanged?(value)
     }
 }

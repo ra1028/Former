@@ -31,16 +31,14 @@ public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
     public override func update() {
         super.update()
         
-        cell.accessoryType = checked ? .Checkmark : .None
-        if let row = cell as? CheckFormableRow {
-            let titleLabel = row.formTitleLabel()
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                titleColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-            }
+        typedCell.accessoryType = checked ? .Checkmark : .None
+        let titleLabel = typedCell.formTitleLabel()
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            titleColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
         }
     }
     
@@ -50,7 +48,7 @@ public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
         if enabled {
             checked = !checked
             onCheckChanged?(checked)
-            cell.accessoryType = checked ? .Checkmark : .None
+            typedCell.accessoryType = checked ? .Checkmark : .None
         }
     }
     

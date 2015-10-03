@@ -28,9 +28,7 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     }
     
     deinit {
-        if let row = cell as? DatePickerFormableRow {
-            row.formDatePicker().removeTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
-        }
+        typedCell.formDatePicker().removeTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func initialized() {
@@ -48,13 +46,11 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
-        if let row = cell as? DatePickerFormableRow {
-            let datePicker = row.formDatePicker()
-            datePicker.setDate(date, animated: false)
-            datePicker.userInteractionEnabled = enabled
-            datePicker.alpha = enabled ? 1.0 : 0.5
-        }
+        typedCell.selectionStyle = .None
+        let datePicker = typedCell.formDatePicker()
+        datePicker.setDate(date, animated: false)
+        datePicker.userInteractionEnabled = enabled
+        datePicker.alpha = enabled ? 1.0 : 0.5
     }
     
     public func validate() -> Bool {

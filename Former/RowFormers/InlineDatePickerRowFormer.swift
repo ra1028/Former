@@ -45,29 +45,27 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     public override func update() {
         super.update()
         
-        if let row = cell as? InlineDatePickerFormableRow {
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
-            
-            if enabled {
-                if isEditing {
-                    titleColor ?= titleLabel?.textColor
-                    displayTextColor ?= displayLabel?.textColor
-                    titleLabel?.textColor =? titleEditingColor
-                    displayLabel?.textColor =? displayEditingColor
-                } else {
-                    titleLabel?.textColor =? titleColor
-                    displayLabel?.textColor =? displayTextColor
-                    titleColor = nil
-                    displayTextColor = nil
-                }
-            } else {
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        
+        if enabled {
+            if isEditing {
                 titleColor ?= titleLabel?.textColor
                 displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor =? titleDisabledColor
-                displayLabel?.textColor =? displayDisabledColor
+                titleLabel?.textColor =? titleEditingColor
+                displayLabel?.textColor =? displayEditingColor
+            } else {
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayTextColor
+                titleColor = nil
+                displayTextColor = nil
             }
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor =? titleDisabledColor
+            displayLabel?.textColor =? displayDisabledColor
         }
         
         if let pickerRowFormer = inlineRowFormer as? DatePickerRowFormer<FormDatePickerCell> {
@@ -78,8 +76,8 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         }
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell? -> Void)) {
-        update(inlineRowFormer.cell as? FormDatePickerCell)
+    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell -> Void)) {
+        update(inlineRowFormer.cell as! FormDatePickerCell)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -92,17 +90,17 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     }
     
     private func dateChanged(date: NSDate) {
-        if let row = cell as? InlineDatePickerFormableRow where enabled {
+        if enabled {
             self.date = date
-            row.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+            typedCell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
             onDateChanged?(date)
         }
     }
     
     public func editingDidBegin() {
-        if let row = cell as? InlineDatePickerFormableRow where enabled {
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
+        if enabled {
+            let titleLabel = typedCell.formTitleLabel()
+            let displayLabel = typedCell.formDisplayLabel()
             titleColor ?= titleLabel?.textColor
             displayTextColor ?= displayLabel?.textColor
             titleLabel?.textColor =? titleEditingColor
@@ -112,22 +110,20 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     }
     
     public func editingDidEnd() {
-        if let row = cell as? InlineDatePickerFormableRow {
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                displayLabel?.textColor =? displayTextColor
-                titleColor = nil
-                displayTextColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-                displayLabel?.textColor = displayDisabledColor
-            }
-            isEditing = false
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayTextColor
+            titleColor = nil
+            displayTextColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
         }
+        isEditing = false
     }
     
     // MARK: Private

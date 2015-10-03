@@ -50,24 +50,22 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         super.update()
         
         inputViewUpdate?(inputView)
-        if let row = cell as? SelectorDatePickerFormableRow {
-            row.selectorDatePicker = inputView
-            row.selectorAccessoryView = inputAccessoryView
-            
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
-            if self.enabled {
-                titleLabel?.textColor =? titleColor
-                displayLabel?.textColor =? displayTextColor
-                titleColor = nil
-                displayTextColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-                displayLabel?.textColor = displayDisabledColor
-            }
+        typedCell.selectorDatePicker = inputView
+        typedCell.selectorAccessoryView = inputAccessoryView
+        
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        if self.enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayTextColor
+            titleColor = nil
+            displayTextColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
         }
     }
     
@@ -75,7 +73,7 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         super.cellSelected(indexPath)
         former?.deselect(true)
         if enabled {
-            cell.becomeFirstResponder()
+            typedCell.becomeFirstResponder()
         }
     }
     
@@ -89,11 +87,9 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     private var displayTextColor: UIColor?
     
     private dynamic func dateChanged(datePicker: UIDatePicker) {
-        if let row = cell as? SelectorDatePickerFormableRow where enabled {
-            let date = datePicker.date
-            self.date = date
-            row.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
-            onDateChanged?(date)
-        }
+        let date = datePicker.date
+        self.date = date
+        typedCell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+        onDateChanged?(date)
     }
 }

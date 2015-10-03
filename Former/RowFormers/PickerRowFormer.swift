@@ -34,25 +34,21 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
     }
     
     deinit {
-        if let row = cell as? PickerFormableRow {
-            let picker = row.formPickerView()
-            picker.delegate = nil
-            picker.dataSource = nil
-        }
+        let picker = typedCell.formPickerView()
+        picker.delegate = nil
+        picker.dataSource = nil
     }
     
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
-        if let row = cell as? PickerFormableRow {
-            let picker = row.formPickerView()
-            picker.delegate = observer
-            picker.dataSource = observer
-            picker.selectRow(selectedRow, inComponent: 0, animated: false)
-            picker.userInteractionEnabled = enabled
-            picker.alpha = self.enabled ? 1.0 : 0.5
-        }
+        typedCell.selectionStyle = .None
+        let picker = typedCell.formPickerView()
+        picker.delegate = observer
+        picker.dataSource = observer
+        picker.selectRow(selectedRow, inComponent: 0, animated: false)
+        picker.userInteractionEnabled = enabled
+        picker.alpha = self.enabled ? 1.0 : 0.5
     }
     
     public func validate() -> Bool {

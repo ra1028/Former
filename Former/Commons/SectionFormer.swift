@@ -35,6 +35,11 @@ public final class SectionFormer {
         return rowFormers.first
     }
     
+    /// Returns the last element of RowFormers, or `nil` if `self.rowFormers` is empty.
+    public var lastRowFormer: RowFormer? {
+        return rowFormers.last
+    }
+    
     public subscript(index: Int) -> RowFormer {
         return rowFormers[index]
     }
@@ -57,6 +62,30 @@ public final class SectionFormer {
             return self
         }
         self.rowFormers.insertContentsOf(rowFormers, at: toIndex)
+        return self
+    }
+    
+    /// Insert RowFormers to above other SectionFormer.
+    public func insert(rowFormers rowFormers: [RowFormer], above: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerate() {
+            if rowFormer === above {
+                insert(rowFormers: [rowFormer], toIndex: row)
+                return self
+            }
+        }
+        add(rowFormers: rowFormers)
+        return self
+    }
+    
+    /// Insert RowFormers to below other SectionFormer.
+    public func insert(rowFormers rowFormers: [RowFormer], below: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerate() {
+            if rowFormer === below {
+                insert(rowFormers: [rowFormer], toIndex: row + 1)
+                return self
+            }
+        }
+        add(rowFormers: rowFormers)
         return self
     }
     

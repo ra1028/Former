@@ -45,33 +45,31 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
     public override func update() {
         super.update()
         
-        if let row = cell as? InlinePickerFormableRow {
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            if valueTitles.isEmpty {
-                displayLabel?.text = ""
-            } else {
-                displayLabel?.text = valueTitles[selectedRow]
-            }
-            
-            if enabled {
-                if isEditing {
-                    titleColor ?= titleLabel?.textColor
-                    displayTextColor ?= displayLabel?.textColor
-                    titleLabel?.textColor =? titleEditingColor
-                    displayLabel?.textColor =? displayEditingColor
-                } else {
-                    titleLabel?.textColor =? titleColor
-                    displayLabel?.textColor =? displayTextColor
-                    titleColor = nil
-                    displayTextColor = nil
-                }
-            } else {
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        if valueTitles.isEmpty {
+            displayLabel?.text = ""
+        } else {
+            displayLabel?.text = valueTitles[selectedRow]
+        }
+        
+        if enabled {
+            if isEditing {
                 titleColor ?= titleLabel?.textColor
                 displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-                displayLabel?.textColor = displayDisabledColor
+                titleLabel?.textColor =? titleEditingColor
+                displayLabel?.textColor =? displayEditingColor
+            } else {
+                titleLabel?.textColor =? titleColor
+                displayLabel?.textColor =? displayTextColor
+                titleColor = nil
+                displayTextColor = nil
             }
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
         }
         
         if let pickerRowFormer = inlineRowFormer as? PickerRowFormer<FormPickerCell> {
@@ -83,8 +81,8 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
         }
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormPickerCell? -> Void)) {
-        update(inlineRowFormer.cell as? FormPickerCell)
+    public final func inlineCellUpdate(@noescape update: (FormPickerCell -> Void)) {
+        update(inlineRowFormer.cell as! FormPickerCell)
     }
 
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -99,9 +97,9 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
     }
     
     public func editingDidBegin() {
-        if let row = cell as? InlinePickerFormableRow where enabled {
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
+        if enabled {
+            let titleLabel = typedCell.formTitleLabel()
+            let displayLabel = typedCell.formDisplayLabel()
             titleColor ?= titleLabel?.textColor
             displayTextColor ?= displayLabel?.textColor
             titleLabel?.textColor =? titleEditingColor
@@ -111,22 +109,19 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
     }
     
     public func editingDidEnd() {
-        if let row = cell as? InlinePickerFormableRow {
-            isEditing = false
-            let titleLabel = row.formTitleLabel()
-            let displayLabel = row.formDisplayLabel()
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                displayLabel?.textColor =? displayTextColor
-                titleColor = nil
-                displayTextColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                displayTextColor ?= displayLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-                displayLabel?.textColor = displayDisabledColor
-            }
-
+        isEditing = false
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayTextColor
+            titleColor = nil
+            displayTextColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
         }
     }
     
@@ -136,9 +131,9 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
     private var displayTextColor: UIColor?
     
     private func valueChanged(row: Int, title: String) {
-        if let pickerRow = cell as? InlinePickerFormableRow where enabled {
+        if enabled {
             selectedRow = row
-            pickerRow.formDisplayLabel()?.text = title
+            typedCell.formDisplayLabel()?.text = title
             onValueChanged?(row, title)
         }
     }

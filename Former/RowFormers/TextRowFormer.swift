@@ -31,23 +31,21 @@ public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
     public override func update() {
         super.update()
         
-        if let row = cell as? TextFormableRow {
-            let textLabel = row.formTextLabel()
-            let subTextLabel = row.formerSubTextLabel()
-            textLabel?.text = text
-            subTextLabel?.text = subText
-            
-            if enabled {
-                textLabel?.textColor =? textColor
-                subTextLabel?.textColor =? subTextColor
-                textColor = nil
-                subTextColor = nil
-            } else {
-                textColor ?= textLabel?.textColor
-                subTextColor ?= subTextLabel?.textColor
-                textLabel?.textColor = textDisabledColor
-                subTextLabel?.textColor = subTextDisabledColor
-            }
+        let textLabel = typedCell.formTextLabel()
+        let subTextLabel = typedCell.formerSubTextLabel()
+        textLabel?.text = text
+        subTextLabel?.text = subText
+        
+        if enabled {
+            textLabel?.textColor =? textColor
+            subTextLabel?.textColor =? subTextColor
+            textColor = nil
+            subTextColor = nil
+        } else {
+            textColor ?= textLabel?.textColor
+            subTextColor ?= subTextLabel?.textColor
+            textLabel?.textColor = textDisabledColor
+            subTextLabel?.textColor = subTextDisabledColor
         }
     }
     

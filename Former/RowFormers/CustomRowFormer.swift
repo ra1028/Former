@@ -12,6 +12,10 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
     
     // MARK: Public
     
+    public var typedCell: T {
+        return cell as! T
+    }
+    
     required public init(
         instantiateType: Former.InstantiateType = .Class,
         cellSetup: (T -> Void)? = nil){
@@ -23,6 +27,6 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
     }
     
     public final func cellUpdate(@noescape update: (T -> Void)) {
-        update((cell as! T))
+        update(typedCell)
     }
 }

@@ -31,9 +31,7 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     }
     
     deinit {
-        if let row = cell as? SegmentedFormableRow {
-            row.formSegmented().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        }
+        typedCell.formSegmented().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func cellInitialized(cell: UITableViewCell) {
@@ -46,24 +44,22 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
-        if let row = cell as? SegmentedFormableRow {
-            let titleLabel = row.formTitleLabel()
-            let segment = row.formSegmented()
-            segment.removeAllSegments()
-            for (index, title) in segmentTitles.enumerate() {
-                segment.insertSegmentWithTitle(title, atIndex: index, animated: false)
-            }
-            segment.selectedSegmentIndex = selectedIndex
-            segment.enabled = enabled
-            
-            if enabled {
-                titleLabel?.textColor =? titleColor
-                titleColor = nil
-            } else {
-                titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor = titleDisabledColor
-            }
+        typedCell.selectionStyle = .None
+        let titleLabel = typedCell.formTitleLabel()
+        let segment = typedCell.formSegmented()
+        segment.removeAllSegments()
+        for (index, title) in segmentTitles.enumerate() {
+            segment.insertSegmentWithTitle(title, atIndex: index, animated: false)
+        }
+        segment.selectedSegmentIndex = selectedIndex
+        segment.enabled = enabled
+        
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            titleColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
         }
     }
     
