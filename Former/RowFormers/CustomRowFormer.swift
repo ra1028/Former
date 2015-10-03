@@ -23,7 +23,6 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
     }
     
     public final func cellUpdate(@noescape update: (T -> Void)) {
-        cellConfigure()
         update((cell as! T))
     }
 }

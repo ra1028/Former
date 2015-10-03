@@ -23,7 +23,6 @@ public class CustomViewFormer<T: UITableViewHeaderFooterView>: ViewFormer {
     }
     
     public final func viewUpdate(@noescape update: (T -> Void)) {
-        viewConfigure()
         update((view as! T))
     }
 }

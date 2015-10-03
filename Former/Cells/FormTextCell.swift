@@ -38,6 +38,8 @@ public class FormTextCell: FormCell, TextFormableRow {
         self.titleLabel = titleLabel
         
         let subTextLabel = UILabel()
+        subTextLabel.textColor = .lightGrayColor()
+        subTextLabel.textAlignment = .Right
         subTextLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(subTextLabel, atIndex: 0)
         self.subTextLabel = subTextLabel

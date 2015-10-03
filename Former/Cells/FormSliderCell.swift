@@ -39,6 +39,7 @@ public class FormSliderCell: FormCell, SliderFormableRow {
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
+        displayLabel.textColor = .lightGrayColor()
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(displayLabel, atIndex: 0)
         self.displayLabel = displayLabel

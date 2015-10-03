@@ -44,7 +44,7 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
     public override func update() {
         super.update()
         
-        cell?.selectionStyle = .None
+        cell.selectionStyle = .None
         if let row = cell as? PickerFormableRow {
             let picker = row.formPickerView()
             picker.delegate = observer
@@ -62,7 +62,7 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
     
     // MARK: Private
     
-    private lazy var observer: Observer<T> = {
+    private lazy var observer: Observer<T> = { [unowned self] in
         Observer<T>(pickerRowFormer: self)
         }()
 }

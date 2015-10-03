@@ -76,7 +76,7 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
         super.cellSelected(indexPath)
         former?.deselect(true)
         if enabled {
-            cell?.becomeFirstResponder()
+            cell.becomeFirstResponder()
         }
     }
     
@@ -90,10 +90,10 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     
     private var titleColor: UIColor?
     private var displayTextColor: UIColor?
-    private lazy var observer: Observer<T> = {
+    private lazy var observer: Observer<T> = { [unowned self] in
         Observer<T>(selectorPickerRowFormer: self)
         }()
-    private lazy var inputView: UIPickerView = {
+    private lazy var inputView: UIPickerView = { [unowned self] in
         let picker = UIPickerView()
         picker.delegate = self.observer
         picker.dataSource = self.observer

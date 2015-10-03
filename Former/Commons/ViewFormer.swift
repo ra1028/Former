@@ -17,12 +17,21 @@ public class ViewFormer {
     
     // MARK: Public
     
-    public private(set) final var view: UITableViewHeaderFooterView?
+    public final lazy var view: UITableViewHeaderFooterView = { [unowned self] in
+        var view: UITableViewHeaderFooterView?
+        switch self.instantiateType {
+        case .Class:
+            view = self.viewType.init(reuseIdentifier: nil)
+        case .Nib(nibName: let nibName, bundle: let bundle):
+            let bundle = bundle ?? NSBundle.mainBundle()
+            view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+            assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
+        }
+        view!.contentView.backgroundColor = .clearColor()
+        self.viewSetup(view!)
+        return view!
+        }()
     public var viewHeight: CGFloat = 10.0
-    
-    private final let viewType: UITableViewHeaderFooterView.Type
-    private final let instantiateType: Former.InstantiateType
-    private final let viewSetup: (UITableViewHeaderFooterView -> Void)
     
     public init<T: UITableViewHeaderFooterView>(
         viewType: T.Type,
@@ -36,32 +45,15 @@ public class ViewFormer {
     
     public func initialized() {}
     
-    final func viewConfigure() {
-        
-        if view == nil {
-            switch instantiateType {
-            case .Class:
-                view = viewType.init(reuseIdentifier: nil)
-            case .Nib(nibName: let nibName, bundle: let bundle):
-                let bundle = bundle ?? NSBundle.mainBundle()
-                view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
-                assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
-            }
-            _ = view.map {
-                $0.contentView.backgroundColor = .clearColor()
-                viewSetup($0)
-            }
-        }
+    public func update() {
         if let formableView = view as? FormableView {
             formableView.updateWithViewFormer(self)
         }
-        update()
     }
     
-    public func update() {
-        if let view = view,
-            let formableView = view as? FormableView {
-                formableView.updateWithViewFormer(self)
-        }
-    }
+    // MARK: Private
+    
+    private final let viewType: UITableViewHeaderFooterView.Type
+    private final let instantiateType: Former.InstantiateType
+    private final let viewSetup: (UITableViewHeaderFooterView -> Void)
 }

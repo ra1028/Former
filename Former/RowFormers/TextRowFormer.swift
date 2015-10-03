@@ -44,7 +44,7 @@ public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
                 subTextColor = nil
             } else {
                 textColor ?= textLabel?.textColor
-                subTextColor ?= textLabel?.textColor
+                subTextColor ?= subTextLabel?.textColor
                 textLabel?.textColor = textDisabledColor
                 subTextLabel?.textColor = subTextDisabledColor
             }

@@ -41,6 +41,7 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
+        displayLabel.textColor = .lightGrayColor()
         displayLabel.textAlignment = .Right
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(displayLabel, atIndex: 0)

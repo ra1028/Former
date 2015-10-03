@@ -36,10 +36,10 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         super.update()
         
         if !switchWhenSelected {
-            selectionStyle ?= cell?.selectionStyle
-            cell?.selectionStyle = .None
+            selectionStyle ?= cell.selectionStyle
+            cell.selectionStyle = .None
         } else {
-            cell?.selectionStyle =? selectionStyle
+            cell.selectionStyle =? selectionStyle
             selectionStyle = nil
         }
         

@@ -49,7 +49,6 @@ final class DefaultExampleViewController: FormViewController {
                 $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.displayLabel.textColor = .formerSubColor()
                 $0.displayLabel.font = .boldSystemFontOfSize(14.0)
-                $0.displayLabel.textAlignment = .Right
         }
         dateRow.displayTextFromDate = String.mediumDateShortTime
         dateRow.displayEditingColor = .formerHighlightedSubColor()
@@ -119,7 +118,6 @@ final class DefaultExampleViewController: FormViewController {
                 $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.subTextLabel.textColor = .formerSubColor()
                 $0.subTextLabel.font = .boldSystemFontOfSize(14.0)
-                $0.subTextLabel.textAlignment = .Right
                 $0.accessoryType = .DisclosureIndicator
             }
             selectorRow.text = text
@@ -139,7 +137,6 @@ final class DefaultExampleViewController: FormViewController {
             $0.titleLabel.font = .boldSystemFontOfSize(16.0)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14.0)
-            $0.displayLabel.textAlignment = .Right
             $0.accessoryType = .DisclosureIndicator
         }
         pickerSelectorRow.inputViewUpdate {
@@ -157,7 +154,6 @@ final class DefaultExampleViewController: FormViewController {
                 $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.textField.textColor = .formerSubColor()
                 $0.textField.font = .boldSystemFontOfSize(14.0)
-                $0.textField.textAlignment = .Right
                 $0.textField.inputAccessoryView = self?.formerInputAccessoryView
                 $0.textField.returnKeyType = .Next
                 $0.tintColor = .formerColor()
@@ -172,7 +168,6 @@ final class DefaultExampleViewController: FormViewController {
             $0.titleLabel.font = .boldSystemFontOfSize(16.0)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14.0)
-            $0.displayLabel.textAlignment = .Right
         }
         inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
         inlinePickerRow.displayEditingColor = .formerHighlightedSubColor()
@@ -240,7 +235,7 @@ final class DefaultExampleViewController: FormViewController {
             ])
         }()
     
-    private lazy var formerInputAccessoryView: FormerInputAccessoryView = {
+    private lazy var formerInputAccessoryView: FormerInputAccessoryView = { [unowned self] in
         FormerInputAccessoryView(former: self.former)
         }()
     

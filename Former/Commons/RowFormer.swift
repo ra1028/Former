@@ -30,7 +30,19 @@ public class RowFormer {
     // MARK: Public
     
     public internal(set) final weak var former: Former?
-    public private(set) final var cell: UITableViewCell?
+    public final lazy var cell: UITableViewCell = { [unowned self] in
+        var cell: UITableViewCell?
+        switch self.instantiateType {
+        case .Class:
+            cell = self.cellType.init(style: .Default, reuseIdentifier: nil)
+        case .Nib(nibName: let nibName, bundle: let bundle):
+            let bundle = bundle ?? NSBundle.mainBundle()
+            cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
+            assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
+        }
+        self.cellSetup(cell!)
+        return cell!
+        }()
     public var cellHeight: CGFloat = 44.0
     public internal(set) final var isEditing = false
     public var enabled = true {
@@ -54,10 +66,16 @@ public class RowFormer {
     public func initialized() {}
     
     public func update() {
-        if let cell = cell {
-            cell.userInteractionEnabled = enabled
-            if let formableRow = cell as? FormableRow {
-                formableRow.updateWithRowFormer(self)
+        cell.userInteractionEnabled = enabled
+        
+        if let formableRow = cell as? FormableRow {
+            formableRow.updateWithRowFormer(self)
+        }
+        if let inlineRow = self as? InlineRow {
+            let inlineRowFormer = inlineRow.inlineRowFormer
+            inlineRowFormer.update()
+            if let inlineFormableRow = inlineRowFormer.cell as? FormableRow {
+                inlineFormableRow.updateWithRowFormer(inlineRowFormer)
             }
         }
     }
@@ -65,43 +83,6 @@ public class RowFormer {
     public func cellSelected(indexPath: NSIndexPath) {
         if enabled {
            onSelected?(indexPath: indexPath, rowFormer: self)
-        }
-    }
-    
-    // MARK: Internal
-    
-    final func cellConfigure() {
-        let instantiateCell: (RowFormer -> Void) = { rowFormer in
-            switch rowFormer.instantiateType {
-            case .Class:
-                rowFormer.cell = rowFormer.cellType.init(style: .Default, reuseIdentifier: nil)
-            case .Nib(nibName: let nibName, bundle: let bundle):
-                let bundle = bundle ?? NSBundle.mainBundle()
-                rowFormer.cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-                assert(rowFormer.cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
-            }
-            _ = rowFormer.cell.map {
-                rowFormer.cellSetup($0)
-            }
-        }
-        
-        if cell == nil {
-            instantiateCell(self)
-        }
-        update()
-        
-        if let formableRow = cell as? FormableRow {
-            formableRow.updateWithRowFormer(self)
-        }
-        if let inlineRow = self as? InlineRow {
-            let inlineRowFormer = inlineRow.inlineRowFormer
-            if inlineRowFormer.cell == nil {
-                instantiateCell(inlineRowFormer)
-            }
-            inlineRowFormer.update()
-            if let inlineFormableRow = inlineRowFormer.cell as? FormableRow {
-                inlineFormableRow.updateWithRowFormer(inlineRowFormer)
-            }
         }
     }
     

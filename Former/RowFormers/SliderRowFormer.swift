@@ -43,7 +43,7 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     public override func update() {
         super.update()
         
-        cell?.selectionStyle = .None
+        cell.selectionStyle = .None
         if let row = cell as? SliderFormableRow {
             let titleLabel = row.formTitleLabel()
             let displayLabel = row.formDisplayLabel()

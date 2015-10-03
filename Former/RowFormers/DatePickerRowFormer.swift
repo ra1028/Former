@@ -37,7 +37,7 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     public override func update() {
         super.update()
         
-        cell?.selectionStyle = .None
+        cell.selectionStyle = .None
         if let row = cell as? DatePickerFormableRow {
             let datePicker = row.formDatePicker()
             datePicker.setDate(date, animated: false)

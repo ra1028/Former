@@ -36,7 +36,7 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    private lazy var inputView: UIDatePicker = {
+    private lazy var inputView: UIDatePicker = { [unowned self] in
         let datePicker = UIDatePicker()
         datePicker.addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
         return datePicker
@@ -75,7 +75,7 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         super.cellSelected(indexPath)
         former?.deselect(true)
         if enabled {
-            cell?.becomeFirstResponder()
+            cell.becomeFirstResponder()
         }
     }
     

@@ -35,7 +35,7 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     public override func update() {
         super.update()
         
-        cell?.selectionStyle = .None
+        cell.selectionStyle = .None
         if let row = cell as? SegmentedFormableRow {
             let titleLabel = row.formTitleLabel()
             let segment = row.formSegmented()

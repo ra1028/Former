@@ -565,8 +565,8 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let rowFormer = self.rowFormer(indexPath)
         rowFormer.former ?= self
-        rowFormer.cellConfigure()
-        return rowFormer.cell!
+        rowFormer.update()
+        return rowFormer.cell
     }
     
     // for HeaderFooterView
@@ -581,13 +581,13 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let viewFormer = self[section].headerViewFormer else { return nil }
-        viewFormer.viewConfigure()
+        viewFormer.update()
         return viewFormer.view
     }
     
     public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {        
         guard let viewFormer = self[section].footerViewFormer else { return nil }
-        viewFormer.viewConfigure()
+        viewFormer.update()
         return viewFormer.view
     }
 }

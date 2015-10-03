@@ -52,7 +52,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     public override func update() {
         super.update()
         
-        cell?.selectionStyle = .None
+        cell.selectionStyle = .None
         if let row = cell as? TextViewFormableRow {
             let textView = row.formTextView()
             let titleLabel = row.formTitleLabel()
@@ -127,7 +127,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     private var titleColor: UIColor?
     private var actualAttributedString: NSAttributedString?
     private weak var placeholderLabel: UILabel?
-    private lazy var observer: Observer<T> = {
+    private lazy var observer: Observer<T> = { [unowned self] in
         Observer<T>(textViewRowFormer: self)
         }()
     

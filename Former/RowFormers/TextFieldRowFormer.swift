@@ -50,7 +50,7 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     public override func update() {
         super.update()
         
-        cell?.selectionStyle = .None
+        cell.selectionStyle = .None
         if let row = cell as? TextFieldFormableRow {
             let titleLabel = row.formTitleLabel()
             let textField = row.formTextField()
@@ -109,7 +109,7 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     private var textColor: UIColor?
     private var titleColor: UIColor?
     
-    private lazy var observer: Observer<T> = {
+    private lazy var observer: Observer<T> = { [unowned self] in
         Observer<T>(textFieldRowFormer: self)
         }()
     

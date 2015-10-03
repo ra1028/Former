@@ -13,7 +13,7 @@ public class FormViewController: UIViewController {
     // MARK: Public
     
     public private(set) var tableView = UITableView(frame: CGRect.zero, style: .Grouped)
-    public lazy var former: Former = {
+    public lazy var former: Former = { [unowned self] in
         return Former(tableView: self.tableView)
     }()
     
