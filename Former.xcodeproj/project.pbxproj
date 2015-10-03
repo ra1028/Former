@@ -27,7 +27,6 @@
 		2A65662D1BA4427D00C78E81 /* FormTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FC1BA4427D00C78E81 /* FormTextFieldCell.swift */; };
 		2A65662E1BA4427D00C78E81 /* FormTextViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FD1BA4427D00C78E81 /* FormTextViewCell.swift */; };
 		2A65662F1BA4427D00C78E81 /* Former.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6565FF1BA4427D00C78E81 /* Former.swift */; };
-		2A6566301BA4427D00C78E81 /* FormerObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566001BA4427D00C78E81 /* FormerObserver.swift */; };
 		2A6566321BA4427D00C78E81 /* SectionFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566021BA4427D00C78E81 /* SectionFormer.swift */; };
 		2A6566341BA4427D00C78E81 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566051BA4427D00C78E81 /* FormViewController.swift */; };
 		2A6566351BA4427D00C78E81 /* FormerInternalOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6566071BA4427D00C78E81 /* FormerInternalOperators.swift */; };
@@ -75,7 +74,6 @@
 		2A6565FC1BA4427D00C78E81 /* FormTextFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextFieldCell.swift; sourceTree = "<group>"; };
 		2A6565FD1BA4427D00C78E81 /* FormTextViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTextViewCell.swift; sourceTree = "<group>"; };
 		2A6565FF1BA4427D00C78E81 /* Former.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Former.swift; sourceTree = "<group>"; };
-		2A6566001BA4427D00C78E81 /* FormerObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerObserver.swift; sourceTree = "<group>"; };
 		2A6566021BA4427D00C78E81 /* SectionFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionFormer.swift; sourceTree = "<group>"; };
 		2A6566051BA4427D00C78E81 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
 		2A6566071BA4427D00C78E81 /* FormerInternalOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInternalOperators.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				2A25C3071BBD1ED600BA800C /* RowFormer.swift */,
 				2A25C3081BBD1ED600BA800C /* ViewFormer.swift */,
 				2A6565FF1BA4427D00C78E81 /* Former.swift */,
-				2A6566001BA4427D00C78E81 /* FormerObserver.swift */,
 				2A6566021BA4427D00C78E81 /* SectionFormer.swift */,
 			);
 			path = Commons;
@@ -338,7 +335,6 @@
 				2A6566201BA4427D00C78E81 /* FormCell.swift in Sources */,
 				2AA795621BBC3A4D005949B9 /* CustomRowFormer.swift in Sources */,
 				2A6566401BA4427D00C78E81 /* SelectorPickerRowFormer.swift in Sources */,
-				2A6566301BA4427D00C78E81 /* FormerObserver.swift in Sources */,
 				2A01AF841BBC4CBD0034EAEB /* CustomViewFormer.swift in Sources */,
 				2A65663F1BA4427D00C78E81 /* SelectorDatePickerRowFormer.swift in Sources */,
 				2A6566241BA4427D00C78E81 /* FormInlinePickerCell.swift in Sources */,

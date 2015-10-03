@@ -10,8 +10,6 @@ import UIKit
 
 public protocol SwitchFormableRow: FormableRow {
     
-    var observer: FormerObserver { get }
-    
     func formSwitch() -> UISwitch
     func formTitleLabel() -> UILabel?
 }
@@ -30,6 +28,19 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    deinit {
+        if let row = cell as? SwitchFormableRow {
+            row.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
+        }
+    }
+    
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? SwitchFormableRow {
+            row.formSwitch().addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
+        }
     }
     
     public override func update() {
@@ -56,11 +67,6 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
                 titleColor ?= titleLabel?.textColor
                 titleLabel?.textColor = titleDisabledColor
             }
-            
-            row.observer.setTargetRowFormer(self,
-                control: switchButton,
-                actionEvents: [("switchChanged:", .ValueChanged)]
-            )
         }
     }
     

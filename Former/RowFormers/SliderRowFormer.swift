@@ -9,9 +9,7 @@
 import UIKit
 
 public protocol SliderFormableRow: FormableRow {
-    
-    var observer: FormerObserver { get }
-    
+        
     func formSlider() -> UISlider
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
@@ -40,6 +38,19 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
         cellHeight = 88.0
     }
     
+    deinit {
+        if let row = cell as? SliderFormableRow {
+            row.formSlider().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
+    }
+    
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? SliderFormableRow {
+            row.formSlider().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
+    }
+    
     public override func update() {
         super.update()
         
@@ -63,11 +74,6 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
                 titleLabel?.textColor = titleDisabledColor
                 displayLabel?.textColor = displayDisabledColor
             }
-            
-            row.observer.setTargetRowFormer(self,
-                control: slider,
-                actionEvents: [("valueChanged:", .ValueChanged)]
-            )
         }
     }
     

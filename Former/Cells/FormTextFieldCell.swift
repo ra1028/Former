@@ -12,8 +12,6 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
     
     // MARK: Public
     
-    public let observer = FormerObserver()
-    
     public private(set) weak var textField: UITextField!
     public private(set) weak var titleLabel: UILabel!
 

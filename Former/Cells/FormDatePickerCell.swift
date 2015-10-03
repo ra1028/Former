@@ -12,8 +12,6 @@ public class FormDatePickerCell: FormCell, DatePickerFormableRow {
     
     // MARK: Public
     
-    public let observer = FormerObserver()
-    
     public private(set) weak var datePicker: UIDatePicker!
     
     public func formDatePicker() -> UIDatePicker {

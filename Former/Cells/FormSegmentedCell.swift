@@ -12,8 +12,6 @@ public class FormSegmentedCell: FormCell, SegmentedFormableRow {
     
     // MARK: Public
     
-    public let observer = FormerObserver()
-    
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var segmentedControl: UISegmentedControl!
     

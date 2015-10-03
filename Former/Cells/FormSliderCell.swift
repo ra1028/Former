@@ -12,8 +12,6 @@ public class FormSliderCell: FormCell, SliderFormableRow {
     
     // MARK: Public
     
-    public let observer = FormerObserver()
-    
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
     public private(set) weak var slider: UISlider!

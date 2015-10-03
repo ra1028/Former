@@ -9,9 +9,7 @@
 import UIKit
 
 public protocol SegmentedFormableRow: FormableRow {
-    
-    var observer: FormerObserver { get }
-    
+        
     func formSegmented() -> UISegmentedControl
     func formTitleLabel() -> UILabel?
 }
@@ -30,6 +28,19 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    deinit {
+        if let row = cell as? SegmentedFormableRow {
+            row.formSegmented().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
+    }
+    
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? SegmentedFormableRow {
+            row.formSegmented().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
     }
     
     public override func update() {
@@ -53,11 +64,6 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
                 titleColor ?= titleLabel?.textColor
                 titleLabel?.textColor = titleDisabledColor
             }
-            
-            row.observer.setTargetRowFormer(self,
-                control: segment,
-                actionEvents: [("valueChanged:", .ValueChanged)]
-            )
         }
     }
     

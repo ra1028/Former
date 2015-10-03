@@ -10,8 +10,6 @@ import UIKit
 
 public protocol TextFieldFormableRow: FormableRow {
     
-    var observer: FormerObserver { get }
-    
     func formTextField() -> UITextField
     func formTitleLabel() -> UILabel?
 }
@@ -45,6 +43,26 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
             let textField = row.formTextField()
             textField.delegate = nil
         }
+        if let row = cell as? TextFieldFormableRow {
+            let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
+                ("editingDidBegin:", .EditingDidBegin),
+                ("editingDidEnd:", .EditingDidEnd)]
+            events.forEach {
+                row.formTextField().removeTarget(self, action: $0.0, forControlEvents: $0.1)
+            }
+        }
+    }
+    
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? TextFieldFormableRow {
+            let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
+                ("editingDidBegin:", .EditingDidBegin),
+                ("editingDidEnd:", .EditingDidEnd)]
+            events.forEach {
+                row.formTextField().addTarget(self, action: $0.0, forControlEvents: $0.1)
+            }
+        }
     }
     
     public override func update() {
@@ -76,15 +94,6 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
                 titleLabel?.textColor = titleDisabledColor
                 textField.textColor = textDisabledColor
             }
-            
-            row.observer.setTargetRowFormer(self,
-                control: textField,
-                actionEvents: [
-                    ("textChanged:", .EditingChanged),
-                    ("editingDidBegin:", .EditingDidBegin),
-                    ("editingDidEnd:", .EditingDidEnd)
-                ]
-            )
         }
     }
     

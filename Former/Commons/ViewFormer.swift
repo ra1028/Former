@@ -29,6 +29,7 @@ public class ViewFormer {
         }
         view!.contentView.backgroundColor = .clearColor()
         self.viewSetup(view!)
+        self.viewInitialized(view!)
         return view!
         }()
     public var viewHeight: CGFloat = 10.0
@@ -44,6 +45,8 @@ public class ViewFormer {
     }
     
     public func initialized() {}
+    
+    public func viewInitialized(view: UITableViewHeaderFooterView) {}
     
     public func update() {
         if let formableView = view as? FormableView {

@@ -10,8 +10,6 @@ import UIKit
 
 public protocol StepperFormableRow: FormableRow {
     
-    var observer: FormerObserver { get }
-    
     func formStepper() -> UIStepper
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
@@ -32,6 +30,19 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    deinit {
+        if let row = cell as? StepperFormableRow {
+            row.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
+    }
+    
+    public override func cellInitialized(cell: UITableViewCell) {
+        super.cellInitialized(cell)
+        if let row = cell as? StepperFormableRow {
+            row.formStepper().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
     }
     
     public override func update() {
@@ -61,11 +72,6 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
                 displayLabel?.textColor = displayDisabledColor
                 stepper.tintColor = stepperTintColor?.colorWithAlphaComponent(0.5)
             }
-            
-            row.observer.setTargetRowFormer(self,
-                control: stepper,
-                actionEvents: [("valueChanged:", .ValueChanged)]
-            )
         }
     }
     

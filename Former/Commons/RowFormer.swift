@@ -41,6 +41,7 @@ public class RowFormer {
             assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
         }
         self.cellSetup(cell!)
+        self.cellInitialized(cell!)
         return cell!
         }()
     public var cellHeight: CGFloat = 44.0
@@ -64,6 +65,8 @@ public class RowFormer {
     }
     
     public func initialized() {}
+    
+    public func cellInitialized(cell: UITableViewCell) {}
     
     public func update() {
         cell.userInteractionEnabled = enabled
