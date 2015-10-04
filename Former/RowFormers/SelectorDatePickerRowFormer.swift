@@ -18,7 +18,7 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
 }
 
 public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormSelectorInputable, FormerValidatable {
     
     // MARK: Public
     
@@ -35,6 +35,8 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     public var inputAccessoryView: UIView?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
+    public var titleEditingColor: UIColor?
+    public var displayEditingColor: UIColor?
     
     private lazy var inputView: UIDatePicker = { [unowned self] in
         let datePicker = UIDatePicker()
@@ -72,13 +74,39 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         former?.deselect(true)
-        if enabled {
-            typedCell.becomeFirstResponder()
-        }
     }
     
     public func validate() -> Bool {
         return onValidate?(date) ?? true
+    }
+    
+    public func editingDidBegin() {
+        if enabled {
+            let titleLabel = typedCell.formTitleLabel()
+            let displayLabel = typedCell.formDisplayLabel()
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor =? titleEditingColor
+            displayEditingColor =? displayEditingColor
+            isEditing = true
+        }
+    }
+    
+    public func editingDidEnd() {
+        isEditing = false
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayTextColor
+            titleColor = nil
+            displayTextColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
+        }
     }
     
     // MARK: Private

@@ -90,6 +90,7 @@ final class DefaultExampleViewController: FormViewController {
         }
         insertRowAnimationRow.valueTitles = UITableViewRowAnimation.animationNames()
         insertRowAnimationRow.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertRowAnimation) ?? 0
+        insertRowAnimationRow.displayEditingColor = .formerHighlightedSubColor()
         insertRowAnimationRow.onValueChanged = { [weak self] index, _ in
             self?.insertRowAnimation = UITableViewRowAnimation.allAnimations()[index]
         }
@@ -128,6 +129,7 @@ final class DefaultExampleViewController: FormViewController {
         }
         insertSectionAnimationRow.valueTitles = UITableViewRowAnimation.animationNames()
         insertSectionAnimationRow.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertSectionAnimation) ?? 0
+        insertSectionAnimationRow.displayEditingColor = .formerHighlightedSubColor()
         insertSectionAnimationRow.onValueChanged = { [weak self] index, _ in
             self?.insertSectionAnimation = UITableViewRowAnimation.allAnimations()[index]
         }
@@ -170,6 +172,7 @@ final class DefaultExampleViewController: FormViewController {
         }
         pickerSelectorRow.valueTitles = options
         pickerSelectorRow.inputAccessoryView = formerInputAccessoryView
+        pickerSelectorRow.displayEditingColor = .formerHighlightedSubColor()
         
         // Custom Input Accessory View Example
 

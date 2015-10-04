@@ -143,7 +143,7 @@ public final class Former: NSObject {
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             select(indexPath: indexPath, animated: false)
             
-            let scrollIndexPath = (rowFormer(indexPath) is InlineRow) ?
+            let scrollIndexPath = (rowFormer(indexPath) is FormInlinable) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
             tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
         }
@@ -165,7 +165,7 @@ public final class Former: NSObject {
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             select(indexPath: indexPath, animated: false)
             
-            let scrollIndexPath = (rowFormer(indexPath) is InlineRow) ?
+            let scrollIndexPath = (rowFormer(indexPath) is FormInlinable) ?
                 NSIndexPath(forRow: row + 1, inSection: section) : indexPath
             tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
         }
@@ -175,6 +175,10 @@ public final class Former: NSObject {
     /// To end editing of tableView.
     public func endEditing() -> Self {
         tableView?.endEditing(true)
+        if let selectorRowFormer = selectorRowFormer as? FormSelectorInputable {
+            selectorRowFormer.editingDidEnd()
+            self.selectorRowFormer = nil
+        }
         return self
     }
     
@@ -496,10 +500,10 @@ public final class Former: NSObject {
                 if rowFormers.contains({ $0 === rowFormer }) {
                     removeIndexPaths.append(NSIndexPath(forRow: row, inSection: section))
                     sectionFormer.remove(rowFormers: [rowFormer])
-                    if let oldInlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer {
+                    if let oldInlineRowFormer = (rowFormer as? FormInlinable)?.inlineRowFormer {
                         removeIndexPaths.append(NSIndexPath(forRow: row + 1, inSection: section))
                         remove(rowFormers: [oldInlineRowFormer])
-                        (inlineRowFormer as? InlineRow)?.editingDidEnd()
+                        (inlineRowFormer as? FormInlinable)?.editingDidEnd()
                         inlineRowFormer = nil
                     }
                     if ++removedCount >= rowFormers.count {
@@ -526,6 +530,7 @@ public final class Former: NSObject {
     
     private weak var tableView: UITableView?
     private weak var inlineRowFormer: RowFormer?
+    private weak var selectorRowFormer: RowFormer?
     private var selectedIndexPath: NSIndexPath?
     private var oldBottomContentInset: CGFloat?
     
@@ -538,10 +543,10 @@ public final class Former: NSObject {
     
     private func removeCurrentInlineRow() -> NSIndexPath? {
         var indexPath: NSIndexPath? = nil
-        if let oldInlineRowFormer = (inlineRowFormer as? InlineRow)?.inlineRowFormer,
+        if let oldInlineRowFormer = (inlineRowFormer as? FormInlinable)?.inlineRowFormer,
             let removedIndexPath = remove(rowFormers: [oldInlineRowFormer]).first {
                 indexPath = removedIndexPath
-                (inlineRowFormer as? InlineRow)?.editingDidEnd()
+                (inlineRowFormer as? FormInlinable)?.editingDidEnd()
                 inlineRowFormer = nil
         }
         return indexPath
@@ -645,8 +650,9 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         rowFormer.cellSelected(indexPath)
         onCellSelected?(indexPath: indexPath)
         
-        if let oldInlineRowFormer = (inlineRowFormer as? InlineRow)?.inlineRowFormer {
-            if let currentInlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer
+        // FormInlinable
+        if let oldInlineRowFormer = (inlineRowFormer as? FormInlinable)?.inlineRowFormer {
+            if let currentInlineRowFormer = (rowFormer as? FormInlinable)?.inlineRowFormer
                 where rowFormer !== inlineRowFormer {
                     self.tableView?.beginUpdates()
                     if let removedIndexPath = remove(rowFormers: [oldInlineRowFormer]).first {
@@ -658,17 +664,30 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
                         self.tableView?.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Middle)
                     }
                     self.tableView?.endUpdates()
-                    (inlineRowFormer as? InlineRow)?.editingDidEnd()
-                    (rowFormer as? InlineRow)?.editingDidBegin()
+                    (inlineRowFormer as? FormInlinable)?.editingDidEnd()
+                    (rowFormer as? FormInlinable)?.editingDidBegin()
                     inlineRowFormer = rowFormer
             } else {
                 removeCurrentInlineRowAndUpdate()
             }
-        } else if let inlineRowFormer = (rowFormer as? InlineRow)?.inlineRowFormer {
+        } else if let inlineRowFormer = (rowFormer as? FormInlinable)?.inlineRowFormer {
             let inlineIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
             insertAndUpdate(rowFormers: [inlineRowFormer], toIndexPath: inlineIndexPath, rowAnimation: .Middle)
-            (rowFormer as? InlineRow)?.editingDidBegin()
+            (rowFormer as? FormInlinable)?.editingDidBegin()
             self.inlineRowFormer = rowFormer
+        }
+        
+        // FormSelectorInputable
+        if let selectorRow = rowFormer as? FormSelectorInputable {
+            if let selectorRowFormer = selectorRowFormer {
+                if !(selectorRowFormer === rowFormer) {
+                    selectorRow.editingDidBegin()
+                }
+            } else {
+                selectorRow.editingDidBegin()
+            }
+            selectorRowFormer = rowFormer
+            selectorRow.cell.becomeFirstResponder()
         }
     }
     

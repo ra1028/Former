@@ -15,7 +15,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
 }
 
 public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
-: CustomRowFormer<T>, InlineRow, FormerValidatable {
+: CustomRowFormer<T>, FormInlinable, FormerValidatable {
     
     // MARK: Public
     

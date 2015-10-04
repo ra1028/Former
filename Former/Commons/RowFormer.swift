@@ -13,9 +13,16 @@ public protocol FormableRow: class {
     func updateWithRowFormer(rowFormer: RowFormer)
 }
 
-public protocol InlineRow: class {
+public protocol FormInlinable: class {
     
     var inlineRowFormer: RowFormer { get }
+    func editingDidBegin()
+    func editingDidEnd()
+}
+
+public protocol FormSelectorInputable: class {
+    
+    var cell: UITableViewCell { get }
     func editingDidBegin()
     func editingDidEnd()
 }
@@ -72,7 +79,7 @@ public class RowFormer {
         if let formableRow = cell as? FormableRow {
             formableRow.updateWithRowFormer(self)
         }
-        if let inlineRow = self as? InlineRow {
+        if let inlineRow = self as? FormInlinable {
             let inlineRowFormer = inlineRow.inlineRowFormer
             inlineRowFormer.update()
             if let inlineFormableRow = inlineRowFormer.cell as? FormableRow {

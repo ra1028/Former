@@ -16,7 +16,7 @@ public protocol DemoInlineSliderFormableRow: FormableRow {
 }
 
 public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSliderFormableRow>
-: CustomRowFormer<T>, InlineRow {
+: CustomRowFormer<T>, FormInlinable {
     
     // MARK: Public
     

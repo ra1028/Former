@@ -18,7 +18,7 @@ public protocol SelectorPickerFormableRow: FormableRow {
 }
 
 public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormSelectorInputable, FormerValidatable {
     
     // MARK: Public
     
@@ -34,6 +34,8 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     public var inputAccessoryView: UIView?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
+    public var titleEditingColor: UIColor?
+    public var displayEditingColor: UIColor?
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -73,15 +75,41 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         former?.deselect(true)
-        if enabled {
-            typedCell.becomeFirstResponder()
-        }
     }
     
     public func validate() -> Bool {
         let row = selectedRow
         let selectedTitle = valueTitles[row]
         return onValidate?(row, selectedTitle) ?? true
+    }
+    
+    public func editingDidBegin() {
+        if enabled {
+            let titleLabel = typedCell.formTitleLabel()
+            let displayLabel = typedCell.formDisplayLabel()
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor =? titleEditingColor
+            displayLabel?.textColor =? displayEditingColor
+            isEditing = true
+        }
+    }
+    
+    public func editingDidEnd() {
+        isEditing = false
+        let titleLabel = typedCell.formTitleLabel()
+        let displayLabel = typedCell.formDisplayLabel()
+        if enabled {
+            titleLabel?.textColor =? titleColor
+            displayLabel?.textColor =? displayTextColor
+            titleColor = nil
+            displayTextColor = nil
+        } else {
+            titleColor ?= titleLabel?.textColor
+            displayTextColor ?= displayLabel?.textColor
+            titleLabel?.textColor = titleDisabledColor
+            displayLabel?.textColor = displayDisabledColor
+        }
     }
     
     // MARK: Private
