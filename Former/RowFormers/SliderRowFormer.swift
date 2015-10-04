@@ -44,7 +44,9 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     
     public override func cellInitialized(cell: UITableViewCell) {
         super.cellInitialized(cell)
-        typedCell.formSlider().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        if let row = cell as? SliderFormableRow {
+            row.formSlider().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        }
     }
     
     public override func update() {

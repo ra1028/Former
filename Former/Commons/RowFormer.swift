@@ -46,9 +46,7 @@ public class RowFormer {
         }()
     public var cellHeight: CGFloat = 44.0
     public internal(set) final var isEditing = false
-    public var enabled = true {
-        didSet { update() }
-    }
+    public var enabled = true { didSet { update() } }
     public var canBecomeEditing: Bool {
         return false
     }

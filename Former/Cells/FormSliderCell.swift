@@ -55,7 +55,7 @@ public class FormSliderCell: FormCell, SliderFormableRow {
                 views: ["title": titleLabel, "slider": slider]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-10-[display(>=0)]->=0-[slider(>=0)]-10-|",
+                "V:|-10-[display(>=0)]->=0-[slider(>=0)]",
                 options: [],
                 metrics: nil,
                 views: ["display": displayLabel, "slider": slider]
