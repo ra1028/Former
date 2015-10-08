@@ -27,7 +27,7 @@ public protocol FormSelectorInputable: class {
     func editingDidEnd()
 }
 
-internal protocol FormerValidatable: class {
+internal protocol FormValidatable: class {
     
     func validate() -> Bool
 }

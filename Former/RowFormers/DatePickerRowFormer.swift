@@ -14,7 +14,7 @@ public protocol DatePickerFormableRow: FormableRow {
 }
 
 public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     

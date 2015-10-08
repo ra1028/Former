@@ -16,7 +16,7 @@ public protocol StepperFormableRow: FormableRow {
 }
 
 public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -55,16 +55,16 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
         displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
         
         if enabled {
-            titleLabel?.textColor =? titleColor
-            displayLabel?.textColor =? displayColor
-            stepper.tintColor =? stepperTintColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
+            _ = displayColor.map { displayLabel?.textColor = $0 }
+            _ = stepperTintColor.map { stepper.tintColor = $0 }
             titleColor = nil
             displayColor = nil
             stepperTintColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            displayColor ?= displayLabel?.textColor
-            stepperTintColor ?= stepper.tintColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if displayColor == nil { displayColor = displayLabel?.textColor }
+            if stepperTintColor == nil { stepperTintColor = stepper.tintColor }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
             stepper.tintColor = stepperTintColor?.colorWithAlphaComponent(0.5)

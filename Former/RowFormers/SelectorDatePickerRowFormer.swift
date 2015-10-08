@@ -18,12 +18,12 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
 }
 
 public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: CustomRowFormer<T>, FormSelectorInputable, FormerValidatable {
+: CustomRowFormer<T>, FormSelectorInputable, FormValidatable {
     
     // MARK: Public
     
     override public var canBecomeEditing: Bool {
-        return self.enabled
+        return enabled
     }
     
     public var onValidate: (NSDate -> Bool)?
@@ -59,13 +59,13 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         let displayLabel = typedCell.formDisplayLabel()
         displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
         if self.enabled {
-            titleLabel?.textColor =? titleColor
-            displayLabel?.textColor =? displayTextColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
+            _ = displayTextColor.map { displayLabel?.textColor = $0 }
             titleColor = nil
             displayTextColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            displayTextColor ?= displayLabel?.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
@@ -84,10 +84,10 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         if enabled {
             let titleLabel = typedCell.formTitleLabel()
             let displayLabel = typedCell.formDisplayLabel()
-            titleColor ?= titleLabel?.textColor
-            displayTextColor ?= displayLabel?.textColor
-            titleLabel?.textColor =? titleEditingColor
-            displayEditingColor =? displayEditingColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            _ = titleEditingColor.map { titleLabel?.textColor = $0 }
+            _ = displayEditingColor.map { displayEditingColor = $0 }
             isEditing = true
         }
     }
@@ -97,13 +97,13 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         let titleLabel = typedCell.formTitleLabel()
         let displayLabel = typedCell.formDisplayLabel()
         if enabled {
-            titleLabel?.textColor =? titleColor
-            displayLabel?.textColor =? displayTextColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
+            _ = displayTextColor.map { displayLabel?.textColor = $0 }
             titleColor = nil
             displayTextColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            displayTextColor ?= displayLabel?.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }

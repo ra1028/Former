@@ -16,7 +16,7 @@ public protocol SliderFormableRow: FormableRow {
 }
 
 public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -61,13 +61,13 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
         displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
         
         if enabled {
-            titleLabel?.textColor =? titleColor
-            displayLabel?.textColor =? displayColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
+            _ = displayColor.map { displayLabel?.textColor = $0 }
             titleColor = nil
             displayColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            displayColor ?= displayLabel?.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if displayColor == nil { displayColor = displayLabel?.textColor }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }

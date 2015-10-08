@@ -14,7 +14,7 @@ public protocol CheckFormableRow: FormableRow {
 }
 
 public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -34,10 +34,10 @@ public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
         typedCell.accessoryType = checked ? .Checkmark : .None
         let titleLabel = typedCell.formTitleLabel()
         if enabled {
-            titleLabel?.textColor =? titleColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
             titleLabel?.textColor = titleDisabledColor
         }
     }

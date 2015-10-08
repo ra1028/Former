@@ -15,7 +15,7 @@ public protocol SegmentedFormableRow: FormableRow {
 }
 
 public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -55,10 +55,10 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
         segment.enabled = enabled
         
         if enabled {
-            titleLabel?.textColor =? titleColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor}
             titleLabel?.textColor = titleDisabledColor
         }
     }

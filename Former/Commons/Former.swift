@@ -184,7 +184,7 @@ public final class Former: NSObject {
     
     /// Validate RowFormer
     public func validate(rowFormer rowFormer: RowFormer) -> Bool {
-        if let validatable = rowFormer as? FormerValidatable {
+        if let validatable = rowFormer as? FormValidatable {
             return validatable.validate()
         }
         return true
@@ -195,7 +195,7 @@ public final class Former: NSObject {
         guard indexPath.section < numberOfSections else { return true }
         guard indexPath.row < sectionFormers[indexPath.section].numberOfRows else { return true }
         
-        if let validatable = self[indexPath.section][indexPath.row] as? FormerValidatable {
+        if let validatable = self[indexPath.section][indexPath.row] as? FormValidatable {
             return validatable.validate()
         }
         return true
@@ -205,7 +205,7 @@ public final class Former: NSObject {
     public func validateAll() -> [RowFormer] {
         var invalidRowFormers = [RowFormer]()
         rowFormers.forEach {
-            if let validatable = $0 as? FormerValidatable where !validatable.validate() {
+            if let validatable = $0 as? FormValidatable where !validatable.validate() {
                 invalidRowFormers.append($0)
             }
         }
@@ -592,7 +592,9 @@ public final class Former: NSObject {
             let bottomInset = CGRectGetMinY(tableView.frame) + CGRectGetHeight(tableView.frame) - CGRectGetMinY(keyboardFrame)
             guard bottomInset > 0 else { return }
             
-            oldBottomContentInset ?= tableView.contentInset.bottom
+            if oldBottomContentInset == nil {
+                oldBottomContentInset = tableView.contentInset.bottom
+            }
             let duration = keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue!
             let curve = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
             guard let indexPath = tableView.indexPathForCell(cell) else { return }
@@ -715,7 +717,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let rowFormer = self.rowFormer(indexPath)
-        rowFormer.former ?= self
+        if rowFormer.former == nil { rowFormer.former = self }
         rowFormer.update()
         return rowFormer.cell
     }

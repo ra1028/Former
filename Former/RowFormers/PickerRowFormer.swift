@@ -14,7 +14,7 @@ public protocol PickerFormableRow: FormableRow {
 }
 
 public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     

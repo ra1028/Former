@@ -15,7 +15,7 @@ public protocol SwitchFormableRow: FormableRow {
 }
 
 public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -45,10 +45,10 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         super.update()
         
         if !switchWhenSelected {
-            selectionStyle ?= typedCell.selectionStyle
+            if selectionStyle == nil { selectionStyle = typedCell.selectionStyle }
             typedCell.selectionStyle = .None
         } else {
-            typedCell.selectionStyle =? selectionStyle
+            _ = selectionStyle.map { typedCell.selectionStyle = $0 }
             selectionStyle = nil
         }
         
@@ -58,10 +58,10 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         switchButton.enabled = enabled
         
         if enabled {
-            titleLabel?.textColor =? titleColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
             titleLabel?.textColor = titleDisabledColor
         }
     }

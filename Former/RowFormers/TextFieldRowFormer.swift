@@ -15,7 +15,7 @@ public protocol TextFieldFormableRow: FormableRow {
 }
 
 public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -68,24 +68,24 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
         let titleLabel = typedCell.formTitleLabel()
         let textField = typedCell.formTextField()
         textField.text = text
-        textField.placeholder =? placeholder
-        textField.attributedPlaceholder =? attributedPlaceholder
+        _ = placeholder.map { textField.placeholder = $0 }
+        _ = attributedPlaceholder.map { textField.attributedPlaceholder = $0 }
         textField.userInteractionEnabled = false
         textField.delegate = observer
         
         if enabled {
             if isEditing {
-                titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor =? titleEditingColor
+                if titleColor == nil { titleColor = titleLabel?.textColor }
+                _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             } else {
-                titleLabel?.textColor =? titleColor
+                _ = titleColor.map { titleLabel?.textColor = $0 }
                 titleColor = nil
             }
-            textField.textColor =? textColor
+            _ = textColor.map { textField.textColor = $0 }
             textColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            textColor ?= textField.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if textColor == nil { textColor = textField.textColor }
             titleLabel?.textColor = titleDisabledColor
             textField.textColor = textDisabledColor
         }
@@ -124,18 +124,18 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     
     private dynamic func editingDidBegin(textField: UITextField) {
         let titleLabel = typedCell.formTitleLabel()
-        titleColor ?= titleLabel?.textColor
-        titleLabel?.textColor =? titleEditingColor
+        if titleColor == nil { textColor = textField.textColor }
+        _ = titleEditingColor.map { titleLabel?.textColor = $0 }
     }
     
     private dynamic func editingDidEnd(textField: UITextField) {
         let titleLabel = typedCell.formTitleLabel()
         if enabled {
-            titleLabel?.textColor =? titleColor
+            _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            titleLabel?.textColor =? titleEditingColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            _ = titleEditingColor.map { titleLabel?.textColor = $0 }
         }
         typedCell.formTextField().userInteractionEnabled = false
     }

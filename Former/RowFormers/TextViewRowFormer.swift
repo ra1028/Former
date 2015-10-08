@@ -15,7 +15,7 @@ public protocol TextViewFormableRow: FormableRow {
 }
 
 public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
-: CustomRowFormer<T>, FormerValidatable {
+: CustomRowFormer<T>, FormValidatable {
     
     // MARK: Public
     
@@ -78,7 +78,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
                 ].flatMap { $0 }
             textView.addConstraints(constraints)
         }
-        placeholderLabel?.text =? placeholder
+        _ = placeholder.map {placeholderLabel?.text  = $0 }
         if let attributedPlaceholder = attributedPlaceholder {
             placeholderLabel?.text = nil
             placeholderLabel?.attributedText = attributedPlaceholder
@@ -87,17 +87,17 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
         
         if enabled {
             if isEditing {
-                titleColor ?= titleLabel?.textColor
-                titleLabel?.textColor =? titleEditingColor
+                if titleColor == nil { titleColor = titleLabel?.textColor }
+                _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             } else {
-                titleLabel?.textColor =? titleColor
+                _ = titleColor.map { titleLabel?.textColor = $0 }
                 titleColor = nil
             }
-            textView.textColor =? textColor
+            _ = textColor.map { textView.textColor = $0 }
             textColor = nil
         } else {
-            titleColor ?= titleLabel?.textColor
-            textColor ?= textView.textColor
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if textColor == nil { textColor = textView.textColor }
             titleLabel?.textColor = titleDisabledColor
             textView.textColor = textDisabledColor
         }
@@ -132,10 +132,10 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
                 .clearColor()
         } else {
             if text?.isEmpty ?? true {
-                placeholderLabel?.attributedText =? actualAttributedString
+                _ = actualAttributedString.map { placeholderLabel?.attributedText = $0 }
                 actualAttributedString = nil
             } else {
-                actualAttributedString ?= placeholderLabel?.attributedText
+                if actualAttributedString == nil { actualAttributedString = placeholderLabel?.attributedText }
                 placeholderLabel?.attributedText = nil
             }
         }
@@ -168,8 +168,10 @@ NSObject, UITextViewDelegate {
         guard let textViewRowFormer = textViewRowFormer else { return }
         if textViewRowFormer.enabled {
             let titleLabel = textViewRowFormer.typedCell.formTitleLabel()
-            textViewRowFormer.titleColor ?= titleLabel?.textColor
-            titleLabel?.textColor =? textViewRowFormer.titleEditingColor
+            if textViewRowFormer.titleColor == nil {
+                textViewRowFormer.titleColor = titleLabel?.textColor
+            }
+            _ = textViewRowFormer.titleEditingColor.map { titleLabel?.textColor = $0 }
             textViewRowFormer.isEditing = true
         }
     }
@@ -180,10 +182,12 @@ NSObject, UITextViewDelegate {
         textViewRowFormer.typedCell.formTextView().userInteractionEnabled = false
         
         if textViewRowFormer.enabled {
-            titleLabel?.textColor =? textViewRowFormer.titleColor
+            _ = textViewRowFormer.titleColor.map { titleLabel?.textColor = $0 }
             textViewRowFormer.titleColor = nil
         } else {
-            textViewRowFormer.titleColor ?= titleLabel?.textColor
+            if textViewRowFormer.titleColor == nil {
+                textViewRowFormer.titleColor = titleLabel?.textColor
+            }
             titleLabel?.textColor = textViewRowFormer.titleDisabledColor
         }
         textViewRowFormer.isEditing = false

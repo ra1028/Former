@@ -37,13 +37,13 @@ public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
         subTextLabel?.text = subText
         
         if enabled {
-            textLabel?.textColor =? textColor
-            subTextLabel?.textColor =? subTextColor
+            _ = textColor.map { textLabel?.textColor = $0 }
+            _ = subTextColor.map { subTextLabel?.textColor = $0 }
             textColor = nil
             subTextColor = nil
         } else {
-            textColor ?= textLabel?.textColor
-            subTextColor ?= subTextLabel?.textColor
+            if textColor == nil { textColor = textLabel?.textColor }
+            if subTextColor == nil { subTextColor = subTextLabel?.textColor }
             textLabel?.textColor = textDisabledColor
             subTextLabel?.textColor = subTextDisabledColor
         }
