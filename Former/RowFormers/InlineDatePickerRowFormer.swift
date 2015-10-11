@@ -66,15 +66,14 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
             _ = displayDisabledColor.map { displayLabel?.textColor = $0 }
         }
         
-        if let pickerRowFormer = inlineRowFormer as? DatePickerRowFormer<FormDatePickerCell> {
-            pickerRowFormer.onDateChanged = dateChanged
-            pickerRowFormer.date = date
-            pickerRowFormer.enabled = enabled
-            pickerRowFormer.update()
-        }
+        let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<FormDatePickerCell>
+        inlineRowFormer.onDateChanged = dateChanged
+        inlineRowFormer.date = date
+        inlineRowFormer.enabled = enabled
+        inlineRowFormer.update()
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell -> Void)) {        
+    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell -> Void)) {
         let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<FormDatePickerCell>
         update(inlineRowFormer.cell)
     }

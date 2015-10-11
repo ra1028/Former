@@ -70,13 +70,12 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
             displayLabel?.textColor = displayDisabledColor
         }
         
-        if let pickerRowFormer = inlineRowFormer as? PickerRowFormer<FormPickerCell> {
-            pickerRowFormer.onValueChanged = valueChanged
-            pickerRowFormer.valueTitles = valueTitles
-            pickerRowFormer.selectedRow = selectedRow
-            pickerRowFormer.enabled = enabled
-            pickerRowFormer.update()
-        }
+        let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<FormPickerCell>
+        inlineRowFormer.onValueChanged = valueChanged
+        inlineRowFormer.valueTitles = valueTitles
+        inlineRowFormer.selectedRow = selectedRow
+        inlineRowFormer.enabled = enabled
+        inlineRowFormer.update()
     }
     
     public final func inlineCellUpdate(@noescape update: (FormPickerCell -> Void)) {
