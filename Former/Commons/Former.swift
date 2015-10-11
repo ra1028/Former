@@ -689,7 +689,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
                 selectorRow.editingDidBegin()
             }
             selectorRowFormer = rowFormer
-            selectorRow.cell.becomeFirstResponder()
+            rowFormer.cellInstance.becomeFirstResponder()
         }
     }
     
@@ -719,7 +719,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         let rowFormer = self.rowFormer(indexPath)
         if rowFormer.former == nil { rowFormer.former = self }
         rowFormer.update()
-        return rowFormer.cell
+        return rowFormer.cellInstance
     }
     
     // for HeaderFooterView

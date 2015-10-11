@@ -20,7 +20,7 @@ public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSli
     
     // MARK: Public
     
-    public private(set) var inlineRowFormer: RowFormer = SliderRowFormer<FormSliderCell>(instantiateType: .Class)
+    public private(set) var inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
         return enabled
     }
@@ -31,33 +31,35 @@ public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSli
     public var color: UIColor?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
-        super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    public init(
+        instantiateType: Former.InstantiateType = .Class,
+        inlineCellSetup: (FormSliderCell -> Void)? = nil,
+        cellSetup: (T -> Void)? = nil) {
+            inlineRowFormer = SliderRowFormer<FormSliderCell>(instantiateType: .Class, cellSetup: inlineCellSetup)
+            super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func update() {
         super.update()
         
-        if let row = cell as? DemoInlineSliderFormableRow {
-            let titleLabel = row.formTitleLabel()
-            if enabled {
-                _ = titleColor.map { titleLabel?.textColor = $0 }
-                titleColor = nil
-            } else {
-                if titleColor == nil { titleColor = titleLabel?.textColor }
-                titleLabel?.textColor = titleDisabledColor
-            }
-            let colorDisplayView = row.formerColorDisplayView()
-            colorDisplayView?.backgroundColor = color
+        let titleLabel = cell.formTitleLabel()
+        if enabled {
+            _ = titleColor.map { titleLabel?.textColor = $0 }
+            titleColor = nil
+        } else {
+            if titleColor == nil { titleColor = titleLabel?.textColor }
+            titleLabel?.textColor = titleDisabledColor
         }
-        if let inlineRowFormer = inlineRowFormer as? SliderRowFormer<FormSliderCell> {
-            inlineRowFormer.cellHeight = 44.0
-            inlineRowFormer.onValueChanged = valueChanged
-            inlineRowFormer.adjustedValueFromValue = adjustedValueFromValue
-            inlineRowFormer.value = adjustedValueFromValue?(value) ?? value
-            inlineRowFormer.enabled = enabled
-            inlineRowFormer.update()
-        }
+        let colorDisplayView = cell.formerColorDisplayView()
+        colorDisplayView?.backgroundColor = color
+        
+        let inlineRowFormer = self.inlineRowFormer as! SliderRowFormer<FormSliderCell>
+        inlineRowFormer.cellHeight = 44.0
+        inlineRowFormer.onValueChanged = valueChanged
+        inlineRowFormer.adjustedValueFromValue = adjustedValueFromValue
+        inlineRowFormer.value = adjustedValueFromValue?(value) ?? value
+        inlineRowFormer.enabled = enabled
+        inlineRowFormer.update()
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {

@@ -31,29 +31,27 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     }
     
     deinit {
-        typedCell.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
+        cell.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
+    public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        if let row = cell as? SwitchFormableRow {
-            row.formSwitch().addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
-        }
+        cell.formSwitch().addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func update() {
         super.update()
         
         if !switchWhenSelected {
-            if selectionStyle == nil { selectionStyle = typedCell.selectionStyle }
-            typedCell.selectionStyle = .None
+            if selectionStyle == nil { selectionStyle = cell.selectionStyle }
+            cell.selectionStyle = .None
         } else {
-            _ = selectionStyle.map { typedCell.selectionStyle = $0 }
+            _ = selectionStyle.map { cell.selectionStyle = $0 }
             selectionStyle = nil
         }
         
-        let titleLabel = typedCell.formTitleLabel()
-        let switchButton = typedCell.formSwitch()
+        let titleLabel = cell.formTitleLabel()
+        let switchButton = cell.formSwitch()
         switchButton.on = switched
         switchButton.enabled = enabled
         
@@ -71,7 +69,7 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         
         former?.deselect(true)
         if switchWhenSelected && enabled {
-            let switchButton = typedCell.formSwitch()
+            let switchButton = cell.formSwitch()
             switchButton.setOn(!switchButton.on, animated: true)
             switchChanged(switchButton)
         }

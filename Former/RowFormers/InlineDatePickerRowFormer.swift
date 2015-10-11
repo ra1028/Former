@@ -45,8 +45,8 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     public override func update() {
         super.update()
         
-        let titleLabel = typedCell.formTitleLabel()
-        let displayLabel = typedCell.formDisplayLabel()
+        let titleLabel = cell.formTitleLabel()
+        let displayLabel = cell.formDisplayLabel()
         displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
         
         if enabled {
@@ -76,8 +76,9 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         }
     }
     
-    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell -> Void)) {
-        update(inlineRowFormer.cell as! FormDatePickerCell)
+    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell -> Void)) {        
+        let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<FormDatePickerCell>
+        update(inlineRowFormer.cell)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -92,15 +93,15 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     private func dateChanged(date: NSDate) {
         if enabled {
             self.date = date
-            typedCell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+            cell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
             onDateChanged?(date)
         }
     }
     
     public func editingDidBegin() {
         if enabled {
-            let titleLabel = typedCell.formTitleLabel()
-            let displayLabel = typedCell.formDisplayLabel()
+            let titleLabel = cell.formTitleLabel()
+            let displayLabel = cell.formDisplayLabel()
             if titleColor == nil { titleColor = titleLabel?.textColor }
             if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
@@ -110,8 +111,8 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     }
     
     public func editingDidEnd() {
-        let titleLabel = typedCell.formTitleLabel()
-        let displayLabel = typedCell.formDisplayLabel()
+        let titleLabel = cell.formTitleLabel()
+        let displayLabel = cell.formDisplayLabel()
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             _ = displayTextColor.map { displayLabel?.textColor = $0 }

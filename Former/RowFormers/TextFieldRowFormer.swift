@@ -39,34 +39,32 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     }
     
     deinit {
-        let textField = typedCell.formTextField()
+        let textField = cell.formTextField()
         textField.delegate = nil
         let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
             ("editingDidBegin:", .EditingDidBegin),
             ("editingDidEnd:", .EditingDidEnd)]
         events.forEach {
-            typedCell.formTextField().removeTarget(self, action: $0.0, forControlEvents: $0.1)
+            cell.formTextField().removeTarget(self, action: $0.0, forControlEvents: $0.1)
         }
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
+    public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        if let row = cell as? TextFieldFormableRow {
-            let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
-                ("editingDidBegin:", .EditingDidBegin),
-                ("editingDidEnd:", .EditingDidEnd)]
-            events.forEach {
-                row.formTextField().addTarget(self, action: $0.0, forControlEvents: $0.1)
-            }
+        let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
+            ("editingDidBegin:", .EditingDidBegin),
+            ("editingDidEnd:", .EditingDidEnd)]
+        events.forEach {
+            cell.formTextField().addTarget(self, action: $0.0, forControlEvents: $0.1)
         }
     }
     
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let titleLabel = typedCell.formTitleLabel()
-        let textField = typedCell.formTextField()
+        cell.selectionStyle = .None
+        let titleLabel = cell.formTitleLabel()
+        let textField = cell.formTextField()
         textField.text = text
         _ = placeholder.map { textField.placeholder = $0 }
         _ = attributedPlaceholder.map { textField.attributedPlaceholder = $0 }
@@ -94,7 +92,7 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         
-        let textField = typedCell.formTextField()
+        let textField = cell.formTextField()
         if !textField.editing {
             textField.userInteractionEnabled = true
             textField.becomeFirstResponder()
@@ -123,13 +121,13 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     }
     
     private dynamic func editingDidBegin(textField: UITextField) {
-        let titleLabel = typedCell.formTitleLabel()
+        let titleLabel = cell.formTitleLabel()
         if titleColor == nil { textColor = textField.textColor }
         _ = titleEditingColor.map { titleLabel?.textColor = $0 }
     }
     
     private dynamic func editingDidEnd(textField: UITextField) {
-        let titleLabel = typedCell.formTitleLabel()
+        let titleLabel = cell.formTitleLabel()
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
@@ -137,7 +135,7 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
             if titleColor == nil { titleColor = titleLabel?.textColor }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
         }
-        typedCell.formTextField().userInteractionEnabled = false
+        cell.formTextField().userInteractionEnabled = false
     }
 }
 

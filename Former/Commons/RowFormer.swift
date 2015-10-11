@@ -22,7 +22,6 @@ public protocol FormInlinable: class {
 
 public protocol FormSelectorInputable: class {
     
-    var cell: UITableViewCell { get }
     func editingDidBegin()
     func editingDidEnd()
 }
@@ -37,20 +36,6 @@ public class RowFormer {
     // MARK: Public
     
     public internal(set) final weak var former: Former?
-    public final lazy var cell: UITableViewCell = { [unowned self] in
-        var cell: UITableViewCell?
-        switch self.instantiateType {
-        case .Class:
-            cell = self.cellType.init(style: .Default, reuseIdentifier: nil)
-        case .Nib(nibName: let nibName, bundle: let bundle):
-            let bundle = bundle ?? NSBundle.mainBundle()
-            cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
-            assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
-        }
-        self.cellSetup(cell!)
-        self.cellInitialized(cell!)
-        return cell!
-        }()
     public var cellHeight: CGFloat = 44.0
     public internal(set) final var isEditing = false
     public var enabled = true { didSet { update() } }
@@ -71,18 +56,18 @@ public class RowFormer {
     
     public func initialized() {}
     
-    public func cellInitialized(cell: UITableViewCell) {}
-    
     public func update() {
-        cell.userInteractionEnabled = enabled
+        cellInstance.userInteractionEnabled = enabled
         
-        if let formableRow = cell as? FormableRow {
+        if let formableRow = cellInstance as? FormableRow {
             formableRow.updateWithRowFormer(self)
         }
+        
         if let inlineRow = self as? FormInlinable {
             let inlineRowFormer = inlineRow.inlineRowFormer
             inlineRowFormer.update()
-            if let inlineFormableRow = inlineRowFormer.cell as? FormableRow {
+            
+            if let inlineFormableRow = inlineRowFormer.cellInstance as? FormableRow {
                 inlineFormableRow.updateWithRowFormer(inlineRowFormer)
             }
         }
@@ -94,8 +79,33 @@ public class RowFormer {
         }
     }
     
+    // MARK: Internal
+    
+    internal final var cellInstance: UITableViewCell {
+        if _cellInstance == nil {
+            var cell: UITableViewCell?
+            switch instantiateType {
+            case .Class:
+                cell = cellType.init(style: .Default, reuseIdentifier: nil)
+            case .Nib(nibName: let nibName, bundle: let bundle):
+                let bundle = bundle ?? NSBundle.mainBundle()
+                cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
+                assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
+            }
+            _cellInstance = cell
+            cellInstanceInitialized(cell!)
+            cellSetup(cell!)
+        }
+        return _cellInstance!
+    }
+    
+    internal func cellInstanceInitialized(cell: UITableViewCell) {
+        
+    }
+    
     // MARK: Private
     
+    private final var _cellInstance: UITableViewCell?
     private final let cellType: UITableViewCell.Type
     private final let instantiateType: Former.InstantiateType
     private final let cellSetup: (UITableViewCell -> Void)

@@ -33,23 +33,21 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     }
     
     deinit {
-        typedCell.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        cell.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
+    public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        if let row = cell as? StepperFormableRow {
-            row.formStepper().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        }
+        cell.formStepper().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let titleLabel = typedCell.formTitleLabel()
-        let displayLabel = typedCell.formDisplayLabel()
-        let stepper = typedCell.formStepper()
+        cell.selectionStyle = .None
+        let titleLabel = cell.formTitleLabel()
+        let displayLabel = cell.formDisplayLabel()
+        let stepper = cell.formStepper()
         stepper.value = value
         stepper.enabled = enabled
         displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
@@ -84,7 +82,7 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     private dynamic func valueChanged(stepper: UIStepper) {
         let value = stepper.value
         self.value = value
-        typedCell.formDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
+        cell.formDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
         onValueChanged?(value)
     }
 }

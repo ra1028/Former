@@ -34,7 +34,7 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
     }
     
     deinit {
-        let picker = typedCell.formPickerView()
+        let picker = cell.formPickerView()
         picker.delegate = nil
         picker.dataSource = nil
     }
@@ -42,8 +42,8 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let picker = typedCell.formPickerView()
+        cell.selectionStyle = .None
+        let picker = cell.formPickerView()
         picker.delegate = observer
         picker.dataSource = observer
         picker.selectRow(selectedRow, inComponent: 0, animated: false)

@@ -28,7 +28,7 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     }
     
     deinit {
-        typedCell.formDatePicker().removeTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
+        cell.formDatePicker().removeTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func initialized() {
@@ -36,18 +36,16 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
         cellHeight = 216.0
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
+    public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        if let row = cell as? DatePickerFormableRow {
-            row.formDatePicker().addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
-        }
+        cell.formDatePicker().addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let datePicker = typedCell.formDatePicker()
+        cell.selectionStyle = .None
+        let datePicker = cell.formDatePicker()
         datePicker.setDate(date, animated: false)
         datePicker.userInteractionEnabled = enabled
         datePicker.alpha = enabled ? 1.0 : 0.5

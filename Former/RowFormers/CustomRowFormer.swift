@@ -12,8 +12,8 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
     
     // MARK: Public
     
-    public var typedCell: T {
-        return cell as! T
+    public var cell: T {
+        return cellInstance as! T
     }
     
     required public init(
@@ -27,6 +27,14 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
     }
     
     public final func cellUpdate(@noescape update: (T -> Void)) {
-        update(typedCell)
+        update(cell)
+    }
+    
+    public func cellInitialized(cell: T) {}
+    
+    // MARK: Internal
+    
+    override func cellInstanceInitialized(cell: UITableViewCell) {
+        cellInitialized(cell as! T)
     }
 }

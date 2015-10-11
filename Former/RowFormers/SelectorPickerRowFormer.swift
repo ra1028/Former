@@ -45,10 +45,10 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
         super.update()
         
         inputView.selectRow(selectedRow, inComponent: 0, animated: false)
-        typedCell.selectorPickerView = inputView
-        typedCell.selectorAccessoryView = inputAccessoryView
-        let titleLabel = typedCell.formTitleLabel()
-        let displayLabel = typedCell.formDisplayLabel()
+        cell.selectorPickerView = inputView
+        cell.selectorAccessoryView = inputAccessoryView
+        let titleLabel = cell.formTitleLabel()
+        let displayLabel = cell.formDisplayLabel()
         if valueTitles.isEmpty {
             displayLabel?.text = ""
         } else {
@@ -85,8 +85,8 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     
     public func editingDidBegin() {
         if enabled {
-            let titleLabel = typedCell.formTitleLabel()
-            let displayLabel = typedCell.formDisplayLabel()
+            let titleLabel = cell.formTitleLabel()
+            let displayLabel = cell.formDisplayLabel()
             if titleColor == nil { titleColor = titleLabel?.textColor }
             if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
@@ -97,8 +97,8 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     
     public func editingDidEnd() {
         isEditing = false
-        let titleLabel = typedCell.formTitleLabel()
-        let displayLabel = typedCell.formDisplayLabel()
+        let titleLabel = cell.formTitleLabel()
+        let displayLabel = cell.formDisplayLabel()
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             _ = displayTextColor.map { displayLabel?.textColor = $0 }
@@ -142,7 +142,7 @@ private class Observer<T: UITableViewCell where T: SelectorPickerFormableRow>
             selectorPickerRowFormer.selectedRow = row
             let selectedTitle = selectorPickerRowFormer.valueTitles[row]
             selectorPickerRowFormer.onValueChanged?(row, selectedTitle)
-            let cell = selectorPickerRowFormer.typedCell
+            let cell = selectorPickerRowFormer.cell
             let displayTextLabel = cell.formDisplayLabel()
             displayTextLabel?.text = selectedTitle
         }

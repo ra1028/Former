@@ -38,7 +38,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     }
     
     deinit {
-        let textView = typedCell.formTextView()
+        let textView = cell.formTextView()
         textView.delegate = nil
     }
     
@@ -50,9 +50,9 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let textView = typedCell.formTextView()
-        let titleLabel = typedCell.formTitleLabel()
+        cell.selectionStyle = .None
+        let textView = cell.formTextView()
+        let titleLabel = cell.formTitleLabel()
         textView.text = text
         textView.userInteractionEnabled = false
         textView.delegate = observer
@@ -106,7 +106,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
 
-        let textView = typedCell.formTextView()
+        let textView = cell.formTextView()
         textView.becomeFirstResponder()
         textView.userInteractionEnabled = enabled
     }
@@ -167,7 +167,7 @@ NSObject, UITextViewDelegate {
     private dynamic func textViewDidBeginEditing(textView: UITextView) {
         guard let textViewRowFormer = textViewRowFormer else { return }
         if textViewRowFormer.enabled {
-            let titleLabel = textViewRowFormer.typedCell.formTitleLabel()
+            let titleLabel = textViewRowFormer.cell.formTitleLabel()
             if textViewRowFormer.titleColor == nil {
                 textViewRowFormer.titleColor = titleLabel?.textColor
             }
@@ -178,8 +178,8 @@ NSObject, UITextViewDelegate {
     
     private dynamic func textViewDidEndEditing(textView: UITextView) {
         guard let textViewRowFormer = textViewRowFormer else { return }
-        let titleLabel = textViewRowFormer.typedCell.formTitleLabel()
-        textViewRowFormer.typedCell.formTextView().userInteractionEnabled = false
+        let titleLabel = textViewRowFormer.cell.formTitleLabel()
+        textViewRowFormer.cell.formTextView().userInteractionEnabled = false
         
         if textViewRowFormer.enabled {
             _ = textViewRowFormer.titleColor.map { titleLabel?.textColor = $0 }

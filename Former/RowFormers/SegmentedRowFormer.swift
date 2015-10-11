@@ -31,22 +31,20 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     }
     
     deinit {
-        typedCell.formSegmented().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        cell.formSegmented().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
+    public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        if let row = cell as? SegmentedFormableRow {
-            row.formSegmented().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        }
+        cell.formSegmented().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let titleLabel = typedCell.formTitleLabel()
-        let segment = typedCell.formSegmented()
+        cell.selectionStyle = .None
+        let titleLabel = cell.formTitleLabel()
+        let segment = cell.formSegmented()
         segment.removeAllSegments()
         for (index, title) in segmentTitles.enumerate() {
             segment.insertSegmentWithTitle(title, atIndex: index, animated: false)

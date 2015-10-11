@@ -31,8 +31,8 @@ public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
     public override func update() {
         super.update()
         
-        let textLabel = typedCell.formTextLabel()
-        let subTextLabel = typedCell.formerSubTextLabel()
+        let textLabel = cell.formTextLabel()
+        let subTextLabel = cell.formerSubTextLabel()
         textLabel?.text = text
         subTextLabel?.text = subText
         

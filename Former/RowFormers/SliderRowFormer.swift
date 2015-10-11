@@ -39,23 +39,21 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     }
     
     deinit {
-        typedCell.formSlider().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        cell.formSlider().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
-    public override func cellInitialized(cell: UITableViewCell) {
+    public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        if let row = cell as? SliderFormableRow {
-            row.formSlider().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
-        }
+        cell.formSlider().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public override func update() {
         super.update()
         
-        typedCell.selectionStyle = .None
-        let titleLabel = typedCell.formTitleLabel()
-        let displayLabel = typedCell.formDisplayLabel()
-        let slider = typedCell.formSlider()
+        cell.selectionStyle = .None
+        let titleLabel = cell.formTitleLabel()
+        let displayLabel = cell.formDisplayLabel()
+        let slider = cell.formSlider()
         slider.value = adjustedValueFromValue?(value) ?? value
         slider.enabled = enabled
         displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
@@ -84,7 +82,7 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     private var displayColor: UIColor?
     
     private dynamic func valueChanged(slider: UISlider) {
-        let displayLabel = typedCell.formDisplayLabel()
+        let displayLabel = cell.formDisplayLabel()
         let value = slider.value
         let adjustedValue = adjustedValueFromValue?(value) ?? value
         self.value = adjustedValue
