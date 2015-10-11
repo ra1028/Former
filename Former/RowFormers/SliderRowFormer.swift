@@ -16,11 +16,9 @@ public protocol SliderFormableRow: FormableRow {
 }
 
 public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: (Float -> Bool)?
     
     public var onValueChanged: (Float -> Void)?
     public var displayTextFromValue: (Float -> String)?
@@ -69,11 +67,6 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
-    }
-    
-    public func validate() -> Bool {
-        let adjustedValue = adjustedValueFromValue?(value) ?? value
-        return onValidate?(adjustedValue) ?? true
     }
     
     // MARK: Private

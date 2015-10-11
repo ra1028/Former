@@ -18,15 +18,13 @@ public protocol SelectorPickerFormableRow: FormableRow {
 }
 
 public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerFormableRow>
-: CustomRowFormer<T>, FormSelectorInputable, FormValidatable {
+: CustomRowFormer<T>, FormSelectorInputable {
     
     // MARK: Public
     
     override public var canBecomeEditing: Bool {
         return enabled
     }
-    
-    public var onValidate: ((Int, String) -> Bool)?
     
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
@@ -75,12 +73,6 @@ public class SelectorPickerRowFormer<T: UITableViewCell where T: SelectorPickerF
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         former?.deselect(true)
-    }
-    
-    public func validate() -> Bool {
-        let row = selectedRow
-        let selectedTitle = valueTitles[row]
-        return onValidate?(row, selectedTitle) ?? true
     }
     
     public func editingDidBegin() {

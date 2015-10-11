@@ -14,11 +14,9 @@ public protocol DatePickerFormableRow: FormableRow {
 }
 
 public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     public var date: NSDate = NSDate()
@@ -49,10 +47,6 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
         datePicker.setDate(date, animated: false)
         datePicker.userInteractionEnabled = enabled
         datePicker.alpha = enabled ? 1.0 : 0.5
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(date) ?? true
     }
     
     // MARK: Private

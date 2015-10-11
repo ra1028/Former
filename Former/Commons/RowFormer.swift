@@ -26,11 +26,6 @@ public protocol FormSelectorInputable: class {
     func editingDidEnd()
 }
 
-internal protocol FormValidatable: class {
-    
-    func validate() -> Bool
-}
-
 public class RowFormer {
     
     // MARK: Public

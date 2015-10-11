@@ -15,11 +15,9 @@ public protocol SwitchFormableRow: FormableRow {
 }
 
 public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: (Bool -> Bool)?
     
     public var onSwitchChanged: (Bool -> Void)?
     public var switched: Bool = false
@@ -73,10 +71,6 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
             switchButton.setOn(!switchButton.on, animated: true)
             switchChanged(switchButton)
         }
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(switched) ?? true
     }
     
     // MARK: Private

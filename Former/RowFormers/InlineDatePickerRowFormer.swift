@@ -15,7 +15,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
 }
 
 public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
-: CustomRowFormer<T>, FormInlinable, FormValidatable {
+: CustomRowFormer<T>, FormInlinable {
     
     // MARK: Public
     
@@ -23,8 +23,6 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     override public var canBecomeEditing: Bool {
         return enabled
     }
-    
-    public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     public var displayTextFromDate: (NSDate -> String)?
@@ -84,10 +82,6 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         former?.deselect(true)
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(date) ?? true
     }
     
     private func dateChanged(date: NSDate) {

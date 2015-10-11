@@ -15,15 +15,13 @@ public protocol TextViewFormableRow: FormableRow {
 }
 
 public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
     
     override public var canBecomeEditing: Bool {
         return enabled
     }
-    
-    public var onValidate: (String? -> Bool)?
     
     public var textChangedHandler: (String -> Void)?
     public var text: String?
@@ -109,10 +107,6 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
         let textView = cell.formTextView()
         textView.becomeFirstResponder()
         textView.userInteractionEnabled = enabled
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(text) ?? true
     }
     
     // MARK: Private

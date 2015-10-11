@@ -15,7 +15,7 @@ public protocol InlinePickerFormableRow: FormableRow {
 }
 
 public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerFormableRow>
-: CustomRowFormer<T>, FormInlinable, FormValidatable {
+: CustomRowFormer<T>, FormInlinable {
     
     // MARK: Public
     
@@ -23,8 +23,6 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
     override public var canBecomeEditing: Bool {
         return enabled
     }
-    
-    public var onValidate: ((Int, String) -> Bool)?
 
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
@@ -89,12 +87,6 @@ public class InlinePickerRowFormer<T: UITableViewCell where T: InlinePickerForma
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         former?.deselect(true)
-    }
-    
-    public func validate() -> Bool {
-        let row = selectedRow
-        let title = valueTitles[row]
-        return onValidate?(row, title) ?? true
     }
     
     public func editingDidBegin() {

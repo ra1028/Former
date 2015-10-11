@@ -15,11 +15,9 @@ public protocol SegmentedFormableRow: FormableRow {
 }
 
 public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: ((Int, String) -> Bool)?
     
     public var onSegmentSelected: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
@@ -59,12 +57,6 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
             if titleColor == nil { titleColor = titleLabel?.textColor}
             titleLabel?.textColor = titleDisabledColor
         }
-    }
-    
-    public func validate() -> Bool {
-        let index = selectedIndex
-        let selectedTitle = segmentTitles[selectedIndex]
-        return onValidate?(index, selectedTitle) ?? true
     }
     
     // MARK: Private

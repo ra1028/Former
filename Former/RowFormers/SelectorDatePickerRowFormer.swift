@@ -18,15 +18,13 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
 }
 
 public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: CustomRowFormer<T>, FormSelectorInputable, FormValidatable {
+: CustomRowFormer<T>, FormSelectorInputable {
     
     // MARK: Public
     
     override public var canBecomeEditing: Bool {
         return enabled
     }
-    
-    public var onValidate: (NSDate -> Bool)?
     
     public var onDateChanged: (NSDate -> Void)?
     public var inputViewUpdate: (UIDatePicker -> Void)?
@@ -74,10 +72,6 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     public override func cellSelected(indexPath: NSIndexPath) {
         super.cellSelected(indexPath)
         former?.deselect(true)
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(date) ?? true
     }
     
     public func editingDidBegin() {

@@ -16,11 +16,9 @@ public protocol StepperFormableRow: FormableRow {
 }
 
 public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: (Double -> Bool)?
     
     public var onValueChanged: (Double -> Void)?
     public var displayTextFromValue: (Double -> String?)?
@@ -67,10 +65,6 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
             displayLabel?.textColor = displayDisabledColor
             stepper.tintColor = stepperTintColor?.colorWithAlphaComponent(0.5)
         }
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(value) ?? true
     }
     
     // MARK: Private

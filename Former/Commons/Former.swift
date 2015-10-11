@@ -182,36 +182,6 @@ public final class Former: NSObject {
         return self
     }
     
-    /// Validate RowFormer
-    public func validate(rowFormer rowFormer: RowFormer) -> Bool {
-        if let validatable = rowFormer as? FormValidatable {
-            return validatable.validate()
-        }
-        return true
-    }
-    
-    /// Validate RowFormer from indexPath
-    public func validate(indexPath indexPath: NSIndexPath) -> Bool {
-        guard indexPath.section < numberOfSections else { return true }
-        guard indexPath.row < sectionFormers[indexPath.section].numberOfRows else { return true }
-        
-        if let validatable = self[indexPath.section][indexPath.row] as? FormValidatable {
-            return validatable.validate()
-        }
-        return true
-    }
-    
-    /// Validate all RowFormers. Return RowFormers that are validate failed. So, return empty array iff all 'true'.
-    public func validateAll() -> [RowFormer] {
-        var invalidRowFormers = [RowFormer]()
-        rowFormers.forEach {
-            if let validatable = $0 as? FormValidatable where !validatable.validate() {
-                invalidRowFormers.append($0)
-            }
-        }
-        return invalidRowFormers
-    }
-    
     /// To select row from indexPath.
     public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
         if let tableView = tableView {

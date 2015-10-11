@@ -14,11 +14,9 @@ public protocol PickerFormableRow: FormableRow {
 }
 
 public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: ((Int, String) -> Bool)?
     
     public var onValueChanged: ((Int, String) -> Void)?
     public var valueTitles: [String] = []
@@ -49,11 +47,6 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
         picker.selectRow(selectedRow, inComponent: 0, animated: false)
         picker.userInteractionEnabled = enabled
         picker.alpha = self.enabled ? 1.0 : 0.5
-    }
-    
-    public func validate() -> Bool {
-        let row = selectedRow
-        return onValidate?(row, valueTitles[row]) ?? true
     }
     
     // MARK: Private

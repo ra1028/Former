@@ -14,11 +14,9 @@ public protocol CheckFormableRow: FormableRow {
 }
 
 public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
-: CustomRowFormer<T>, FormValidatable {
+: CustomRowFormer<T> {
     
     // MARK: Public
-    
-    public var onValidate: (Bool -> Bool)?
     
     public var onCheckChanged: (Bool -> Void)?
     public var checked = false
@@ -50,10 +48,6 @@ public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
             onCheckChanged?(checked)
             cell.accessoryType = checked ? .Checkmark : .None
         }
-    }
-    
-    public func validate() -> Bool {
-        return onValidate?(checked) ?? true
     }
     
     // MARK: Private
