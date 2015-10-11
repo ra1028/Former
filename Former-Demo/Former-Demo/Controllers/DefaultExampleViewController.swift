@@ -81,18 +81,20 @@ final class DefaultExampleViewController: FormViewController {
             self?.insertRowPosition = InsertPosition(rawValue: index)!
         }
         
-        let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell>(instantiateType: .Class) {
+        let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
         }
-        insertRowAnimationRow.valueTitles = UITableViewRowAnimation.animationNames()
+        insertRowAnimationRow.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
+            InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
+        }
         insertRowAnimationRow.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertRowAnimation) ?? 0
         insertRowAnimationRow.displayEditingColor = .formerHighlightedSubColor()
-        insertRowAnimationRow.onValueChanged = { [weak self] index, _ in
-            self?.insertRowAnimation = UITableViewRowAnimation.allAnimations()[index]
+        insertRowAnimationRow.onValueChanged = { [weak self] in
+            self?.insertRowAnimation = $0.value!
         }
         
         let insertRowsRow = SwitchRowFormer<FormSwitchCell> {
@@ -120,18 +122,20 @@ final class DefaultExampleViewController: FormViewController {
             self?.insertSectionPosition = InsertPosition(rawValue: index)!
         }
         
-        let insertSectionAnimationRow = InlinePickerRowFormer<FormInlinePickerCell>(instantiateType: .Class) {
+        let insertSectionAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
         }
-        insertSectionAnimationRow.valueTitles = UITableViewRowAnimation.animationNames()
+        insertSectionAnimationRow.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
+            InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
+        }
         insertSectionAnimationRow.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertSectionAnimation) ?? 0
         insertSectionAnimationRow.displayEditingColor = .formerHighlightedSubColor()
-        insertSectionAnimationRow.onValueChanged = { [weak self] index, _ in
-            self?.insertSectionAnimation = UITableViewRowAnimation.allAnimations()[index]
+        insertSectionAnimationRow.onValueChanged = { [weak self] in
+            self?.insertSectionAnimation = $0.value!
         }
         
         // Selector Example
@@ -159,7 +163,7 @@ final class DefaultExampleViewController: FormViewController {
         
         let sheetSelectorRow = createSelectorRow("Sheet", options[0], sheetSelectorRowSelected(options))
         
-        let pickerSelectorRow = SelectorPickerRowFormer<FormSelectorPickerCell> {
+        let pickerSelectorRow = SelectorPickerRowFormer<FormSelectorPickerCell, Any> {
             $0.titleLabel.text = "Picker"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)
@@ -170,7 +174,7 @@ final class DefaultExampleViewController: FormViewController {
         pickerSelectorRow.inputViewUpdate {
             $0.backgroundColor = .whiteColor()
         }
-        pickerSelectorRow.valueTitles = options
+        pickerSelectorRow.pickerItems = options.map { SelectorPickerItem<Any>(title: $0) }
         pickerSelectorRow.inputAccessoryView = formerInputAccessoryView
         pickerSelectorRow.displayEditingColor = .formerHighlightedSubColor()
         
@@ -191,14 +195,14 @@ final class DefaultExampleViewController: FormViewController {
             return input
         }
         
-        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell>() {
+        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Any>() {
             $0.titleLabel.text = "Inline Picker"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
         }
-        inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
+        inlinePickerRow.pickerItems = (1...20).map { InlinePickerItem<Any>(title: "Option\($0)") }
         inlinePickerRow.displayEditingColor = .formerHighlightedSubColor()
         
         // Create Headers and Footers

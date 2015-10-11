@@ -13,13 +13,23 @@ public protocol PickerFormableRow: FormableRow {
     func formPickerView() -> UIPickerView
 }
 
-public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
+public class PickerItem<S> {
+    public let title: String
+    public let value: S?
+    
+    public init(title: String, value: S? = nil) {
+        self.title = title
+        self.value = value
+    }
+}
+
+public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
 : CustomRowFormer<T> {
     
     // MARK: Public
     
-    public var onValueChanged: ((Int, String) -> Void)?
-    public var valueTitles: [String] = []
+    public var onValueChanged: ((PickerItem<S>) -> Void)?
+    public var pickerItems: [PickerItem<S>] = []
     public var selectedRow: Int = 0
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
@@ -51,17 +61,17 @@ public class PickerRowFormer<T: UITableViewCell where T: PickerFormableRow>
     
     // MARK: Private
     
-    private lazy var observer: Observer<T> = { [unowned self] in
-        Observer<T>(pickerRowFormer: self)
+    private lazy var observer: Observer<T, S> = { [unowned self] in
+        Observer<T, S>(pickerRowFormer: self)
         }()
 }
 
-private class Observer<T: UITableViewCell where T: PickerFormableRow>
+private class Observer<T: UITableViewCell, S where T: PickerFormableRow>
 : NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    private weak var pickerRowFormer: PickerRowFormer<T>?
+    private weak var pickerRowFormer: PickerRowFormer<T, S>?
     
-    init(pickerRowFormer: PickerRowFormer<T>) {
+    init(pickerRowFormer: PickerRowFormer<T, S>) {
         self.pickerRowFormer = pickerRowFormer
     }
     
@@ -69,7 +79,8 @@ private class Observer<T: UITableViewCell where T: PickerFormableRow>
         guard let pickerRowFormer = pickerRowFormer else { return }
         if pickerRowFormer.enabled {
             pickerRowFormer.selectedRow = row
-            pickerRowFormer.onValueChanged?(row, pickerRowFormer.valueTitles[row])
+            let pickerItem = pickerRowFormer.pickerItems[row]
+            pickerRowFormer.onValueChanged?(pickerItem)
         }
     }
     
@@ -79,11 +90,11 @@ private class Observer<T: UITableViewCell where T: PickerFormableRow>
     
     private dynamic func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         guard let pickerRowFormer = pickerRowFormer else { return 0 }
-        return pickerRowFormer.valueTitles.count
+        return pickerRowFormer.pickerItems.count
     }
     
     private dynamic func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         guard let pickerRowFormer = pickerRowFormer else { return nil }
-        return pickerRowFormer.valueTitles[row]
+        return pickerRowFormer.pickerItems[row].title
     }
 }

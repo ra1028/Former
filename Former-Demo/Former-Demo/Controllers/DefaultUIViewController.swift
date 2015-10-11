@@ -72,28 +72,37 @@ final class DefaultUIViewController: FormViewController {
         }
         sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
         
-        let selectorPickerRow = SelectorPickerRowFormer<FormSelectorPickerCell>() {
+        let selectorPickerRow = SelectorPickerRowFormer<FormSelectorPickerCell, Any>() {
             $0.titleLabel.text = "SelectorPicker"
         }
-        selectorPickerRow.valueTitles = (1...20).map { "Option\($0)" }
+        selectorPickerRow.pickerItems = [SelectorPickerItem<Any>(
+            title: "",
+            displayTitle: NSAttributedString(string: "Not set", attributes: [NSForegroundColorAttributeName : UIColor.redColor()]),
+            value: nil)]
+            + (1...20).map { SelectorPickerItem<Any>(title: "Option\($0)") }
+        selectorPickerRow.displayEditingColor = UIColor.blueColor()
         
         let selectorDatePickerRow = SelectorDatePickerRowFormer<FormSelectorDatePickerCell> {
             $0.titleLabel.text = "SelectorDatePicker"
         }
         selectorDatePickerRow.displayTextFromDate = String.mediumDateShortTime
         
-        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell>() {
+        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Any>() {
             $0.titleLabel.text = "InlinePicker"
         }
-        inlinePickerRow.valueTitles = (1...20).map { "Option\($0)" }
+        inlinePickerRow.pickerItems = [InlinePickerItem<Any>(
+            title: "",
+            displayTitle: NSAttributedString(string: "Not set", attributes: [NSForegroundColorAttributeName : UIColor.redColor()]),
+            value: nil)]
+            + (1...20).map { InlinePickerItem<Any>(title: "Option\($0)") }
         
         let inlineDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
             $0.titleLabel.text = "InlineDatePicker"
         }
         inlineDateRow.displayTextFromDate = String.mediumDateShortTime
         
-        let pickerRow = PickerRowFormer<FormPickerCell>()
-        pickerRow.valueTitles = (1...20).map { "Option\($0)" }
+        let pickerRow = PickerRowFormer<FormPickerCell, Any>()
+        pickerRow.pickerItems = (1...20).map { PickerItem<Any>(title: "Option\($0)") }
         
         let datePickerRow = DatePickerRowFormer<FormDatePickerCell>()
         
