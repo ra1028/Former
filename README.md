@@ -18,14 +18,15 @@ __Former__ is a fully customizable Swift2 library for easy creating UITableView 
 - iOS 8.0+  
 - Swift 2.0  
 
-To be support iOS7.0+
+To be supported: iOS7.0+
 
-## Usage
+## Usage (example)
 ```swift
 import Former
+
 class YourViewController : UIViewController {
 
-    @IBOutlet private weak var tableView = UITableView(frame: CGRect.zero, style: .Grouped)
+    @IBOutlet private weak var tableView: UITableView!
 
     public lazy var former: Former = { [unowned self] in
         return Former(tableView: self.tableView)
@@ -37,12 +38,18 @@ class YourViewController : UIViewController {
         let textRow = TextRowFormer<FormTextCell>() {
             // Cell setup
         }
+        .onSelected {
+            // Selection handler
+        }
 
         let inlineDatePickerRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>(
             inlineCellSetup: {
               // Datepicker cell setup
             }) {
               // Cell setup
+        }
+        .onValueChanged {
+            // Value change handler
         }
 
         let header = TextViewFormer<FormTextHeaderView>() {
@@ -53,6 +60,9 @@ class YourViewController : UIViewController {
             .set(headerViewFormer: header)
 
         former.add(sectionFormers: [section])
+            .onScroll {
+                // TableView scroll handler
+            }
     }
 }
 ```
