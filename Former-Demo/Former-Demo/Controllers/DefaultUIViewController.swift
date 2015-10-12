@@ -80,7 +80,6 @@ final class DefaultUIViewController: FormViewController {
             displayTitle: NSAttributedString(string: "Not set", attributes: [NSForegroundColorAttributeName : UIColor.redColor()]),
             value: nil)]
             + (1...20).map { SelectorPickerItem<Any>(title: "Option\($0)") }
-        selectorPickerRow.displayEditingColor = UIColor.blueColor()
         
         let selectorDatePickerRow = SelectorDatePickerRowFormer<FormSelectorDatePickerCell> {
             $0.titleLabel.text = "SelectorDatePicker"
