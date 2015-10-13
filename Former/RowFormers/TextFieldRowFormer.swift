@@ -23,7 +23,6 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
         return enabled
     }
     
-    public var onTextChanged: (String -> Void)?
     public var text: String?
     public var placeholder: String?
     public var attributedPlaceholder: NSAttributedString?
@@ -43,17 +42,24 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
             ("editingDidBegin:", .EditingDidBegin),
             ("editingDidEnd:", .EditingDidEnd)]
         events.forEach {
-            cell.formTextField().removeTarget(self, action: $0.0, forControlEvents: $0.1)
+            textField.removeTarget(self, action: $0.0, forControlEvents: $0.1)
         }
+    }
+    
+    public final func onTextChanged(handler: (String -> Void)) -> Self {
+        onTextChanged = handler
+        return self
     }
     
     public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
+        let textField = cell.formTextField()
+        textField.delegate = observer
         let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
             ("editingDidBegin:", .EditingDidBegin),
             ("editingDidEnd:", .EditingDidEnd)]
         events.forEach {
-            cell.formTextField().addTarget(self, action: $0.0, forControlEvents: $0.1)
+            textField.addTarget(self, action: $0.0, forControlEvents: $0.1)
         }
     }
     
@@ -67,7 +73,6 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
         _ = placeholder.map { textField.placeholder = $0 }
         _ = attributedPlaceholder.map { textField.attributedPlaceholder = $0 }
         textField.userInteractionEnabled = false
-        textField.delegate = observer
         
         if enabled {
             if isEditing {
@@ -99,8 +104,9 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     
     // MARK: Private
     
-    private var textColor: UIColor?
-    private var titleColor: UIColor?
+    private final var onTextChanged: (String -> Void)?
+    private final var textColor: UIColor?
+    private final var titleColor: UIColor?
     
     private lazy var observer: Observer<T> = { [unowned self] in
         Observer<T>(textFieldRowFormer: self)

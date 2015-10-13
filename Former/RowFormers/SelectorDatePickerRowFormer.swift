@@ -18,7 +18,7 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
 }
 
 public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: CustomRowFormer<T>, SelectorRow {
+: CustomRowFormer<T>, SelectorForm {
     
     // MARK: Public
     
@@ -26,9 +26,6 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         return enabled
     }
     
-    public var onDateChanged: (NSDate -> Void)?
-    public var inputViewUpdate: (UIDatePicker -> Void)?
-    public var displayTextFromDate: (NSDate -> String)?
     public var date: NSDate = NSDate()
     public var inputAccessoryView: UIView?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
@@ -46,10 +43,24 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
+    public final func inputViewUpdate(@noescape update: (UIDatePicker -> Void)) -> Self {
+        update(inputView)
+        return self
+    }
+    
+    public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
+        onDateChanged = handler
+        return self
+    }
+    
+    public final func displayTextFromDate(handler: (NSDate -> String)) -> Self {
+        displayTextFromDate = handler
+        return self
+    }
+    
     public override func update() {
         super.update()
         
-        inputViewUpdate?(inputView)
         cell.selectorDatePicker = inputView
         cell.selectorAccessoryView = inputAccessoryView
         
@@ -105,8 +116,10 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
+    private final var onDateChanged: (NSDate -> Void)?
+    private final var displayTextFromDate: (NSDate -> String)?
+    private final var titleColor: UIColor?
+    private final var displayTextColor: UIColor?
     
     private dynamic func dateChanged(datePicker: UIDatePicker) {
         let date = datePicker.date

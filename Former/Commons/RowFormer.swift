@@ -13,14 +13,14 @@ public protocol FormableRow: class {
     func updateWithRowFormer(rowFormer: RowFormer)
 }
 
-public protocol InlineRow: class {
+public protocol InlineForm: class {
     
     var inlineRowFormer: RowFormer { get }
     func editingDidBegin()
     func editingDidEnd()
 }
 
-public protocol SelectorRow: class {
+public protocol SelectorForm: class {
     
     func editingDidBegin()
     func editingDidEnd()
@@ -31,13 +31,12 @@ public class RowFormer {
     // MARK: Public
     
     public internal(set) final weak var former: Former?
-    public var cellHeight: CGFloat = 44.0
+    public final var cellHeight: CGFloat = 44.0
     public internal(set) final var isEditing = false
-    public var enabled = true { didSet { update() } }
+    public final var enabled = true { didSet { update() } }
     public var canBecomeEditing: Bool {
         return false
     }
-    public var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     
     public init<T: UITableViewCell>(
         cellType: T.Type,
@@ -49,6 +48,11 @@ public class RowFormer {
             initialized()
     }
     
+    public final func onSelected(handler: (indexPath: NSIndexPath, rowFormer: RowFormer) -> Void) -> Self {
+        onSelected = handler
+        return self
+    }
+    
     public func initialized() {}
     
     public func update() {
@@ -58,7 +62,7 @@ public class RowFormer {
             formableRow.updateWithRowFormer(self)
         }
         
-        if let inlineRow = self as? InlineRow {
+        if let inlineRow = self as? InlineForm {
             let inlineRowFormer = inlineRow.inlineRowFormer
             inlineRowFormer.update()
             
@@ -98,6 +102,7 @@ public class RowFormer {
     
     // MARK: Private
     
+    private final var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     private final var _cellInstance: UITableViewCell?
     private final let cellType: UITableViewCell.Type
     private final let instantiateType: Former.InstantiateType

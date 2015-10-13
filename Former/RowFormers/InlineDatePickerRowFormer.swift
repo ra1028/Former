@@ -15,7 +15,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
 }
 
 public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
-: CustomRowFormer<T>, InlineRow {
+: CustomRowFormer<T>, InlineForm {
     
     // MARK: Public
     
@@ -24,8 +24,6 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         return enabled
     }
     
-    public var onDateChanged: (NSDate -> Void)?
-    public var displayTextFromDate: (NSDate -> String)?
     public var date: NSDate = NSDate()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     public var titleDisabledColor: UIColor? = .lightGrayColor()
@@ -38,6 +36,16 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         cellSetup: (T -> Void)?) {
             inlineRowFormer = DatePickerRowFormer<FormDatePickerCell>(instantiateType: .Class, cellSetup: inlineCellSetup)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
+        onDateChanged = handler
+        return self
+    }
+    
+    public final func displayTextFromDate(handler: (NSDate -> String)) -> Self {
+        displayTextFromDate = handler
+        return self
     }
     
     public override func update() {
@@ -122,6 +130,8 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
+    private final var onDateChanged: (NSDate -> Void)?
+    private final var displayTextFromDate: (NSDate -> String)?
+    private final var titleColor: UIColor?
+    private final var displayTextColor: UIColor?
 }

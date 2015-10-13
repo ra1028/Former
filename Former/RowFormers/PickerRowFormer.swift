@@ -28,17 +28,11 @@ public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
     
     // MARK: Public
     
-    public var onValueChanged: ((PickerItem<S>) -> Void)?
     public var pickerItems: [PickerItem<S>] = []
     public var selectedRow: Int = 0
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
-    }
-    
-    public override func initialized() {
-        super.initialized()
-        cellHeight = 216.0
     }
     
     deinit {
@@ -47,19 +41,35 @@ public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
         picker.dataSource = nil
     }
     
+    public final func onValueChanged(handler: (PickerItem<S> -> Void)) -> Self {
+        onValueChanged = handler
+        return self
+    }
+    
+    public override func initialized() {
+        super.initialized()
+        cellHeight = 216.0
+    }
+    
+    public override func cellInitialized(cell: T) {
+        let picker = cell.formPickerView()
+        picker.delegate = observer
+        picker.dataSource = observer
+    }
+    
     public override func update() {
         super.update()
         
         cell.selectionStyle = .None
         let picker = cell.formPickerView()
-        picker.delegate = observer
-        picker.dataSource = observer
         picker.selectRow(selectedRow, inComponent: 0, animated: false)
         picker.userInteractionEnabled = enabled
         picker.alpha = self.enabled ? 1.0 : 0.5
     }
     
     // MARK: Private
+    
+    private final var onValueChanged: ((PickerItem<S>) -> Void)?
     
     private lazy var observer: Observer<T, S> = { [unowned self] in
         Observer<T, S>(pickerRowFormer: self)

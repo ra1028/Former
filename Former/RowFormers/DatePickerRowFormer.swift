@@ -18,7 +18,6 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     
     // MARK: Public
     
-    public var onDateChanged: (NSDate -> Void)?
     public var date: NSDate = NSDate()
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
@@ -27,6 +26,11 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     
     deinit {
         cell.formDatePicker().removeTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
+        onDateChanged = handler
+        return self
     }
     
     public override func initialized() {
@@ -50,6 +54,8 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     }
     
     // MARK: Private
+    
+    public final var onDateChanged: (NSDate -> Void)?
     
     private dynamic func dateChanged(datePicker: UIDatePicker) {
         if enabled {

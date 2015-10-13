@@ -11,7 +11,7 @@ import UIKit
 public protocol LabelFormableRow: FormableRow {
     
     func formTextLabel() -> UILabel?
-    func formerSubTextLabel() -> UILabel?
+    func formSubTextLabel() -> UILabel?
 }
 
 public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
@@ -32,7 +32,7 @@ public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
         super.update()
         
         let textLabel = cell.formTextLabel()
-        let subTextLabel = cell.formerSubTextLabel()
+        let subTextLabel = cell.formSubTextLabel()
         textLabel?.text = text
         subTextLabel?.text = subText
         
@@ -51,6 +51,6 @@ public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
     
     // MARK: Private
     
-    private var textColor: UIColor?
-    private var subTextColor: UIColor?
+    private final var textColor: UIColor?
+    private final var subTextColor: UIColor?
 }

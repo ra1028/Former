@@ -23,7 +23,7 @@ public class InlinePickerItem<S>: PickerItem<S> {
 }
 
 public class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFormableRow>
-: CustomRowFormer<T>, InlineRow {
+: CustomRowFormer<T>, InlineForm {
     
     // MARK: Public
     
@@ -31,8 +31,7 @@ public class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFo
     override public var canBecomeEditing: Bool {
         return enabled
     }
-
-    public var onValueChanged: (InlinePickerItem<S> -> Void)?
+    
     public var pickerItems: [InlinePickerItem<S>] = []
     public var selectedRow: Int = 0
     public var titleDisabledColor: UIColor? = .lightGrayColor()
@@ -46,6 +45,11 @@ public class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFo
         cellSetup: (T -> Void)?) {
             inlineRowFormer = PickerRowFormer<FormPickerCell, S>(instantiateType: .Class, cellSetup: inlineCellSetup)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    public final func onValueChanged(handler: (InlinePickerItem<S> -> Void)) -> Self {
+        onValueChanged = handler
+        return self
     }
     
     public override func update() {
@@ -83,7 +87,7 @@ public class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFo
         }
         
         let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<FormPickerCell, S>
-        inlineRowFormer.onValueChanged = valueChanged
+        inlineRowFormer.onValueChanged(valueChanged)
         inlineRowFormer.pickerItems = pickerItems
         inlineRowFormer.selectedRow = selectedRow
         inlineRowFormer.enabled = enabled
@@ -139,8 +143,9 @@ public class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFo
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
+    private final var onValueChanged: (InlinePickerItem<S> -> Void)?
+    private final var titleColor: UIColor?
+    private final var displayTextColor: UIColor?
     
     private func valueChanged(pickerItem: PickerItem<S>) {
         if enabled {

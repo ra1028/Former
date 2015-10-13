@@ -26,8 +26,9 @@ public class CustomViewFormer<T: UITableViewHeaderFooterView>: ViewFormer {
             )
     }
     
-    public final func viewUpdate(@noescape update: (T -> Void)) {
+    public final func viewUpdate(@noescape update: (T -> Void)) -> Self {
         update(view)
+        return self
     }
     
     public func viewInitialized(view: T) {}

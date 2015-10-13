@@ -26,7 +26,7 @@ public class SelectorPickerItem<S>: PickerItem<S> {
 }
 
 public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPickerFormableRow>
-: CustomRowFormer<T>, SelectorRow {
+: CustomRowFormer<T>, SelectorForm {
     
     // MARK: Public
     
@@ -34,7 +34,6 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
         return enabled
     }
     
-    public var onValueChanged: (SelectorPickerItem<S> -> Void)?
     public var pickerItems: [SelectorPickerItem<S>] = []
     public var selectedRow: Int = 0
     public var inputAccessoryView: UIView?
@@ -45,6 +44,11 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    public final func onValueChanged(handler: (SelectorPickerItem<S> -> Void)) -> Self {
+        onValueChanged = handler
+        return self
     }
     
     public override func update() {
@@ -85,8 +89,9 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
         }
     }
     
-    public final func inputViewUpdate(@noescape update: (UIPickerView -> Void)) {
+    public final func inputViewUpdate(@noescape update: (UIPickerView -> Void)) -> Self {
         update(inputView)
+        return self
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -133,12 +138,13 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var displayTextColor: UIColor?
-    private lazy var observer: Observer<T, S> = { [unowned self] in
+    private final var onValueChanged: (SelectorPickerItem<S> -> Void)?
+    private final var titleColor: UIColor?
+    private final var displayTextColor: UIColor?
+    private final lazy var observer: Observer<T, S> = { [unowned self] in
         Observer<T, S>(selectorPickerRowFormer: self)
         }()
-    private lazy var inputView: UIPickerView = { [unowned self] in
+    private final lazy var inputView: UIPickerView = { [unowned self] in
         let picker = UIPickerView()
         picker.delegate = self.observer
         picker.dataSource = self.observer

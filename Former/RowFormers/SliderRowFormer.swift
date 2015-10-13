@@ -20,9 +20,6 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     
     // MARK: Public
     
-    public var onValueChanged: (Float -> Void)?
-    public var displayTextFromValue: (Float -> String)?
-    public var adjustedValueFromValue: (Float -> Float)?
     public var value: Float = 0
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
@@ -38,6 +35,21 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     
     deinit {
         cell.formSlider().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    public final func onValueChanged(handler: (Float -> Void)) -> Self {
+        onValueChanged = handler
+        return self
+    }
+    
+    public final func displayTextFromValue(handler: (Float -> String)) -> Self {
+        displayTextFromValue = handler
+        return self
+    }
+    
+    public final func adjustedValueFromValue(handler: (Float -> Float)) -> Self {
+        adjustedValueFromValue = handler
+        return self
     }
     
     public override func cellInitialized(cell: T) {
@@ -71,8 +83,11 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var displayColor: UIColor?
+    private final var onValueChanged: (Float -> Void)?
+    private final var displayTextFromValue: (Float -> String)?
+    private final var adjustedValueFromValue: (Float -> Float)?
+    private final var titleColor: UIColor?
+    private final var displayColor: UIColor?
     
     private dynamic func valueChanged(slider: UISlider) {
         let displayLabel = cell.formDisplayLabel()

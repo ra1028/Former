@@ -22,7 +22,7 @@ final class TextSelectorViewContoller: FormViewController {
     var selectedText: String? {
         didSet {
             former.rowFormers.forEach {
-                if let LabelRowFormer = $0 as? LabelRowFormer<FormTextCell>
+                if let LabelRowFormer = $0 as? LabelRowFormer<FormLabelCell>
                  where LabelRowFormer.text == selectedText {
                     LabelRowFormer.cellUpdate({ $0.accessoryType = .Checkmark })
                 }
@@ -36,20 +36,19 @@ final class TextSelectorViewContoller: FormViewController {
         
         // Create RowFormers
         
-        let rowFormers = texts.map { text -> LabelRowFormer<FormTextCell> in
-            let rowFormer = LabelRowFormer<FormTextCell>() { [weak self] in
+        let rowFormers = texts.map { text -> LabelRowFormer<FormLabelCell> in
+            let rowFormer = LabelRowFormer<FormLabelCell>() { [weak self] in
                 if let sSelf = self {
                     $0.titleLabel.textColor = .formerColor()
                     $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                     $0.tintColor = .formerSubColor()
                     $0.accessoryType = (text == sSelf.selectedText) ? .Checkmark : .None
                 }
-            }
-            rowFormer.text = text
-            rowFormer.onSelected = { [weak self] _ in
+            }.onSelected { [weak self] _ in
                 self?.onSelected?(text)
                 self?.navigationController?.popViewControllerAnimated(true)
             }
+            rowFormer.text = text
             return rowFormer
         }
         

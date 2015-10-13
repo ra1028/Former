@@ -1,5 +1,5 @@
 //
-//  FormTextCell.swift
+//  FormLabelCell.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/24/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormTextCell: FormCell, LabelFormableRow {
+public class FormLabelCell: FormCell, LabelFormableRow {
     
     // MARK: Public
     
@@ -19,7 +19,7 @@ public class FormTextCell: FormCell, LabelFormableRow {
         return titleLabel
     }
     
-    public func formerSubTextLabel() -> UILabel? {
+    public func formSubTextLabel() -> UILabel? {
         return subTextLabel
     }
     

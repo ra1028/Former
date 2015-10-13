@@ -20,8 +20,6 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     
     // MARK: Public
     
-    public var onValueChanged: (Double -> Void)?
-    public var displayTextFromValue: (Double -> String?)?
     public var value: Double = 0
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
@@ -32,6 +30,16 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     
     deinit {
         cell.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    public final func onValueChanged(handler: (Double -> Void)) -> Self {
+        onValueChanged = handler
+        return self
+    }
+    
+    public final func displayTextFromValue(handler: (Double -> String?)) -> Self {
+        displayTextFromValue = handler
+        return self
     }
     
     public override func cellInitialized(cell: T) {
@@ -69,9 +77,11 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var displayColor: UIColor?
-    private var stepperTintColor: UIColor?
+    private final var onValueChanged: (Double -> Void)?
+    private final var displayTextFromValue: (Double -> String?)?
+    private final var titleColor: UIColor?
+    private final var displayColor: UIColor?
+    private final var stepperTintColor: UIColor?
     
     private dynamic func valueChanged(stepper: UIStepper) {
         let value = stepper.value

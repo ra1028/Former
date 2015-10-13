@@ -10,7 +10,7 @@ import UIKit
 
 public protocol LabelFormableView: FormableView {
     
-    func formTextLabel() -> UILabel
+    func formTitleLabel() -> UILabel
 }
 
 public class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormableView>
@@ -31,6 +31,6 @@ public class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormab
     
     public override func update() {
         super.update()
-        view.formTextLabel().text = text
+        view.formTitleLabel().text = text
     }
 }

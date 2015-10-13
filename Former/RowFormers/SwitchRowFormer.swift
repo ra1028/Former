@@ -19,7 +19,6 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     
     // MARK: Public
     
-    public var onSwitchChanged: (Bool -> Void)?
     public var switched: Bool = false
     public var switchWhenSelected = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
@@ -30,6 +29,11 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     
     deinit {
         cell.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    public final func onSwitchChanged(handler: (Bool -> Void)) -> Self {
+        onSwitchChanged = handler
+        return self
     }
     
     public override func cellInitialized(cell: T) {
@@ -75,8 +79,9 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     
     // MARK: Private
     
-    private var titleColor: UIColor?
-    private var selectionStyle: UITableViewCellSelectionStyle?
+    private final var onSwitchChanged: (Bool -> Void)?
+    private final var titleColor: UIColor?
+    private final var selectionStyle: UITableViewCellSelectionStyle?
     
     private dynamic func switchChanged(switchButton: UISwitch) {
         if self.enabled {

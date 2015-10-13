@@ -36,7 +36,7 @@ final class CustomExampleViewController: FormViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = {
-            let header = LabelViewFormer<FormTextHeaderView>() {
+            let header = LabelViewFormer<FormLabelHeaderView>() {
                 $0.titleLabel.textColor = .grayColor()
                 $0.titleLabel.font = .systemFontOfSize(14.0)
             }

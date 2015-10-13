@@ -19,7 +19,6 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     
     // MARK: Public
     
-    public var onSegmentSelected: ((Int, String) -> Void)?
     public var segmentTitles = [String]()
     public var selectedIndex: Int = 0
     public var titleDisabledColor: UIColor? = .lightGrayColor()
@@ -30,6 +29,11 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     
     deinit {
         cell.formSegmented().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+    }
+    
+    public final func onSegmentSelected(handler: ((Int, String) -> Void)) -> Self {
+        onSegmentSelected = handler
+        return self
     }
     
     public override func cellInitialized(cell: T) {
@@ -61,7 +65,8 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     
     // MARK: Private
     
-    private var titleColor: UIColor?
+    private final var onSegmentSelected: ((Int, String) -> Void)?
+    private final var titleColor: UIColor?
     
     private dynamic func valueChanged(segment: UISegmentedControl) {
         if enabled {

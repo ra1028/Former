@@ -27,17 +27,17 @@ final class DefaultUIViewController: FormViewController {
         
         // Create RowFomers
         
-        let disableRow = LabelRowFormer<FormTextCell>()
+        let disableRow = LabelRowFormer<FormLabelCell>()
+            .onSelected(disableRowSelected)
         let disableRowText: (Bool -> String) = {
             return ($0 ? "Enable" : "Disable") + " All Cells"
         }
         disableRow.text = disableRowText(false)
-        disableRow.onSelected = disableRowSelected
         
-        let textRow = LabelRowFormer<FormTextCell>()
+        let textRow = LabelRowFormer<FormLabelCell>()
+            .onSelected { [weak self] _ in self?.former.deselect(true) }
         textRow.text = "Text"
         textRow.subText = "SubText"
-        textRow.onSelected = { [weak self] _ in self?.former.deselect(true) }
         
         let textFieldRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.titleLabel.text = "TextField"
@@ -59,8 +59,7 @@ final class DefaultUIViewController: FormViewController {
         
         let stepperRow = StepperRowFormer<FormStepperCell>(){
             $0.titleLabel.text = "Stepper"
-        }
-        stepperRow.displayTextFromValue = { "\(Int($0))" }
+        }.displayTextFromValue { "\(Int($0))" }
         
         let segmentRow = SegmentedRowFormer<FormSegmentedCell>() {
             $0.titleLabel.text = "Segmented"
@@ -69,8 +68,7 @@ final class DefaultUIViewController: FormViewController {
         
         let sliderRow = SliderRowFormer<FormSliderCell>(){
             $0.titleLabel.text = "Slider"
-        }
-        sliderRow.displayTextFromValue = { "\(Float(round($0 * 10) / 10))" }
+        }.displayTextFromValue { "\(Float(round($0 * 10) / 10))" }
         
         let selectorPickerRow = SelectorPickerRowFormer<FormSelectorPickerCell, Any>() {
             $0.titleLabel.text = "SelectorPicker"
@@ -83,8 +81,7 @@ final class DefaultUIViewController: FormViewController {
         
         let selectorDatePickerRow = SelectorDatePickerRowFormer<FormSelectorDatePickerCell> {
             $0.titleLabel.text = "SelectorDatePicker"
-        }
-        selectorDatePickerRow.displayTextFromDate = String.mediumDateShortTime
+        }.displayTextFromDate(String.mediumDateShortTime)
         
         let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Any>() {
             $0.titleLabel.text = "InlinePicker"
@@ -97,8 +94,7 @@ final class DefaultUIViewController: FormViewController {
         
         let inlineDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
             $0.titleLabel.text = "InlineDatePicker"
-        }
-        inlineDateRow.displayTextFromDate = String.mediumDateShortTime
+        }.displayTextFromDate(String.mediumDateShortTime)
         
         let pickerRow = PickerRowFormer<FormPickerCell, Any>()
         pickerRow.pickerItems = (1...20).map { PickerItem<Any>(title: "Option\($0)") }
@@ -123,7 +119,7 @@ final class DefaultUIViewController: FormViewController {
     }
     
     private func disableRowSelected(indexPath: NSIndexPath, rowFormer: RowFormer) {
-        guard let disableRow = rowFormer as? LabelRowFormer<FormTextCell> else { return }
+        guard let disableRow = rowFormer as? LabelRowFormer<FormLabelCell> else { return }
         self.former.deselect(true)
         self.former[1...2].flatMap { $0.rowFormers }.forEach {
             $0.enabled = !enabled

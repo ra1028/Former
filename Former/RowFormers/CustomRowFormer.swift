@@ -26,8 +26,9 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
             )
     }
     
-    public final func cellUpdate(@noescape update: (T -> Void)) {
+    public final func cellUpdate(@noescape update: (T -> Void)) -> Self {
         update(cell)
+        return self
     }
     
     public func cellInitialized(cell: T) {}

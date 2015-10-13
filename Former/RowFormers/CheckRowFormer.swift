@@ -18,12 +18,16 @@ public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
     
     // MARK: Public
     
-    public var onCheckChanged: (Bool -> Void)?
     public var checked = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    public final func onCheckChanged(handler: (Bool -> Void)) -> Self {
+        onCheckChanged = handler
+        return self
     }
     
     public override func update() {
@@ -52,5 +56,6 @@ public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
     
     // MARK: Private
     
-    private var titleColor: UIColor?
+    private final var titleColor: UIColor?
+    private final var onCheckChanged: (Bool -> Void)?
 }

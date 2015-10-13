@@ -16,7 +16,7 @@ public protocol DemoInlineSliderFormableRow: FormableRow {
 }
 
 public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSliderFormableRow>
-: CustomRowFormer<T>, InlineRow {
+: CustomRowFormer<T>, InlineForm {
     
     // MARK: Public
     
@@ -55,8 +55,8 @@ public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSli
         
         let inlineRowFormer = self.inlineRowFormer as! SliderRowFormer<FormSliderCell>
         inlineRowFormer.cellHeight = 44.0
-        inlineRowFormer.onValueChanged = valueChanged
-        inlineRowFormer.adjustedValueFromValue = adjustedValueFromValue
+        inlineRowFormer.onValueChanged(valueChanged)
+        _ = adjustedValueFromValue.map { inlineRowFormer.adjustedValueFromValue($0) }
         inlineRowFormer.value = adjustedValueFromValue?(value) ?? value
         inlineRowFormer.enabled = enabled
         inlineRowFormer.update()
