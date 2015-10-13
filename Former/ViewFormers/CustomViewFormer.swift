@@ -12,6 +12,10 @@ public class CustomViewFormer<T: UITableViewHeaderFooterView>: ViewFormer {
     
     // MARK: Public
     
+    public var view: T {
+        return viewInstance as! T
+    }
+    
     required public init(
         instantiateType: Former.InstantiateType = .Class,
         viewSetup: (T -> Void)? = nil) {
@@ -23,6 +27,12 @@ public class CustomViewFormer<T: UITableViewHeaderFooterView>: ViewFormer {
     }
     
     public final func viewUpdate(@noescape update: (T -> Void)) {
-        update((view as! T))
+        update(view)
+    }
+    
+    public func viewInitialized(view: T) {}
+    
+    override func viewInstanceInitialized(view: UITableViewHeaderFooterView) {
+        viewInitialized(view as! T)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  TextRowFormer.swift
+//  LabelRowFormer.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/24/15.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-public protocol TextFormableRow: FormableRow {
+public protocol LabelFormableRow: FormableRow {
     
     func formTextLabel() -> UILabel?
     func formerSubTextLabel() -> UILabel?
 }
 
-public class TextRowFormer<T: UITableViewCell where T: TextFormableRow>
+public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
 : CustomRowFormer<T> {
     
     // MARK: Public

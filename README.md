@@ -35,10 +35,9 @@ class YourViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let textRow = TextRowFormer<FormTextCell>() {
+        let textRow = LabelRowFormer<FormTextCell>() {
             // Cell setup
-        }
-        .onSelected {
+        }.onSelected {
             // Selection handler
         }
 
@@ -47,12 +46,11 @@ class YourViewController : UIViewController {
               // Datepicker cell setup
             }) {
               // Cell setup
-        }
-        .onValueChanged {
+        }.onValueChanged {
             // Value change handler
         }
 
-        let header = TextViewFormer<FormTextHeaderView>() {
+        let header = LabelViewFormer<FormTextHeaderView>() {
             // Header view setup
         }
 

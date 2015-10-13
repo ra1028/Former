@@ -145,7 +145,7 @@ final class DefaultExampleViewController: FormViewController {
             subText: String,
             onSelected: ((indexPath: NSIndexPath,rowFormer: RowFormer) -> Void)?
             ) -> RowFormer in
-            let selectorRow = TextRowFormer<FormTextCell>() {
+            let selectorRow = LabelRowFormer<FormTextCell>() {
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.subTextLabel.textColor = .formerSubColor()
@@ -208,7 +208,7 @@ final class DefaultExampleViewController: FormViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = {
-            let header = TextViewFormer<FormTextHeaderView>() {
+            let header = LabelViewFormer<FormTextHeaderView>() {
                 $0.titleLabel.textColor = .grayColor()
                 $0.titleLabel.font = .systemFontOfSize(14)
                 $0.contentView.backgroundColor = .groupTableViewBackgroundColor()
@@ -306,7 +306,7 @@ final class DefaultExampleViewController: FormViewController {
     }
     
     private func pushSelectorRowSelected(options: [String])(insdexPath: NSIndexPath, rowFormer: RowFormer) {
-        if let rowFormer = rowFormer as? TextRowFormer<FormTextCell> {
+        if let rowFormer = rowFormer as? LabelRowFormer<FormTextCell> {
             let controller = TextSelectorViewContoller()
             controller.texts = options
             controller.selectedText = rowFormer.subText
@@ -319,7 +319,7 @@ final class DefaultExampleViewController: FormViewController {
     }
     
     private func sheetSelectorRowSelected(options: [String])(insdexPath: NSIndexPath, rowFormer: RowFormer) {
-        if let rowFormer = rowFormer as? TextRowFormer<FormTextCell> {
+        if let rowFormer = rowFormer as? LabelRowFormer<FormTextCell> {
             let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             options.forEach { title in
                 sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak rowFormer] _ in

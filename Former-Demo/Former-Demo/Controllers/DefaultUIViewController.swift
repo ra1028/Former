@@ -27,14 +27,14 @@ final class DefaultUIViewController: FormViewController {
         
         // Create RowFomers
         
-        let disableRow = TextRowFormer<FormTextCell>()
+        let disableRow = LabelRowFormer<FormTextCell>()
         let disableRowText: (Bool -> String) = {
             return ($0 ? "Enable" : "Disable") + " All Cells"
         }
         disableRow.text = disableRowText(false)
         disableRow.onSelected = disableRowSelected
         
-        let textRow = TextRowFormer<FormTextCell>()
+        let textRow = LabelRowFormer<FormTextCell>()
         textRow.text = "Text"
         textRow.subText = "SubText"
         textRow.onSelected = { [weak self] _ in self?.former.deselect(true) }
@@ -123,7 +123,7 @@ final class DefaultUIViewController: FormViewController {
     }
     
     private func disableRowSelected(indexPath: NSIndexPath, rowFormer: RowFormer) {
-        guard let disableRow = rowFormer as? TextRowFormer<FormTextCell> else { return }
+        guard let disableRow = rowFormer as? LabelRowFormer<FormTextCell> else { return }
         self.former.deselect(true)
         self.former[1...2].flatMap { $0.rowFormers }.forEach {
             $0.enabled = !enabled

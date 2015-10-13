@@ -50,7 +50,7 @@ final class TopViewContoller: FormViewController {
         ]
         
         let createMenu: ((String, (() -> Void)?) -> RowFormer) = { text, onSelected in
-            let rowFormer = TextRowFormer<FormTextCell>() {
+            let rowFormer = LabelRowFormer<FormTextCell>() {
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                 $0.accessoryType = .DisclosureIndicator
@@ -63,7 +63,7 @@ final class TopViewContoller: FormViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = {
-            let header = TextViewFormer<FormTextHeaderView>() {
+            let header = LabelViewFormer<FormTextHeaderView>() {
                 $0.titleLabel.textColor = .grayColor()
                 $0.titleLabel.font = .systemFontOfSize(14.0)
             }
@@ -73,7 +73,7 @@ final class TopViewContoller: FormViewController {
         }
         
         let createFooter: (String -> ViewFormer) = {
-            let footer = TextViewFormer<FormTextFooterView>() {
+            let footer = LabelViewFormer<FormTextFooterView>() {
                 $0.titleLabel.textColor = .grayColor()
                 $0.titleLabel.font = .systemFontOfSize(14.0)
             }

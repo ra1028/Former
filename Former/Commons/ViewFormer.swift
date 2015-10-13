@@ -17,21 +17,6 @@ public class ViewFormer {
     
     // MARK: Public
     
-    public final lazy var view: UITableViewHeaderFooterView = { [unowned self] in
-        var view: UITableViewHeaderFooterView?
-        switch self.instantiateType {
-        case .Class:
-            view = self.viewType.init(reuseIdentifier: nil)
-        case .Nib(nibName: let nibName, bundle: let bundle):
-            let bundle = bundle ?? NSBundle.mainBundle()
-            view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
-            assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
-        }
-        view!.contentView.backgroundColor = .clearColor()
-        self.viewSetup(view!)
-        self.viewInitialized(view!)
-        return view!
-        }()
     public var viewHeight: CGFloat = 10.0
     
     public init<T: UITableViewHeaderFooterView>(
@@ -46,16 +31,38 @@ public class ViewFormer {
     
     public func initialized() {}
     
-    public func viewInitialized(view: UITableViewHeaderFooterView) {}
-    
     public func update() {
-        if let formableView = view as? FormableView {
+        if let formableView = viewInstance as? FormableView {
             formableView.updateWithViewFormer(self)
         }
     }
     
+    // MARK: Internal
+    
+    internal final var viewInstance: UITableViewHeaderFooterView {
+        if _viewInstance == nil {
+            var view: UITableViewHeaderFooterView?
+            switch instantiateType {
+            case .Class:
+                view = viewType.init(reuseIdentifier: nil)
+            case .Nib(nibName: let nibName, bundle: let bundle):
+                let bundle = bundle ?? NSBundle.mainBundle()
+                view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+                assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
+            }
+            view!.contentView.backgroundColor = .clearColor()
+            _viewInstance = view
+            viewInstanceInitialized(view!)
+            viewSetup(view!)
+        }
+        return _viewInstance!
+    }
+    
+    internal func viewInstanceInitialized(view: UITableViewHeaderFooterView) {}
+    
     // MARK: Private
     
+    private var _viewInstance: UITableViewHeaderFooterView?
     private final let viewType: UITableViewHeaderFooterView.Type
     private final let instantiateType: Former.InstantiateType
     private final let viewSetup: (UITableViewHeaderFooterView -> Void)

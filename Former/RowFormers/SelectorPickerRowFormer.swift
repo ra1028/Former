@@ -26,7 +26,7 @@ public class SelectorPickerItem<S>: PickerItem<S> {
 }
 
 public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPickerFormableRow>
-: CustomRowFormer<T>, FormSelectorInputable {
+: CustomRowFormer<T>, SelectorRow {
     
     // MARK: Public
     

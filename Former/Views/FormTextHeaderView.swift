@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormTextHeaderView: FormHeaderFooterView, TextFormableView {
+public class FormTextHeaderView: FormHeaderFooterView, LabelFormableView {
     
     // MARK: Public
     

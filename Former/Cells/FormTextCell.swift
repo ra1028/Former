@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormTextCell: FormCell, TextFormableRow {
+public class FormTextCell: FormCell, LabelFormableRow {
     
     // MARK: Public
     

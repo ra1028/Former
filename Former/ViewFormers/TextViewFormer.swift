@@ -1,5 +1,5 @@
 //
-//  TextViewFormer.swift
+//  LabelViewFormer.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/26/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-public protocol TextFormableView: FormableView {
+public protocol LabelFormableView: FormableView {
     
     func formTextLabel() -> UILabel
 }
 
-public class TextViewFormer<T: UITableViewHeaderFooterView where T: TextFormableView>
+public class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormableView>
 : CustomViewFormer<T> {
     
     // MARK: Public
@@ -31,10 +31,6 @@ public class TextViewFormer<T: UITableViewHeaderFooterView where T: TextFormable
     
     public override func update() {
         super.update()
-        
-        if let view = view as? TextFormableView {
-            let textLabel = view.formTextLabel()
-            textLabel.text = text
-        }
+        view.formTextLabel().text = text
     }
 }
