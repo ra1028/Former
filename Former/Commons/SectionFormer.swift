@@ -12,6 +12,10 @@ public final class SectionFormer {
     
     // MARK: Public
     
+    public init(rowFormer: RowFormer) {
+        self.rowFormers.append(rowFormer)
+    }
+    
     public init(rowFormers: [RowFormer] = []) {
         self.rowFormers = rowFormers
     }
@@ -46,6 +50,12 @@ public final class SectionFormer {
     
     public subscript(range: Range<Int>) -> [RowFormer] {
         return Array<RowFormer>(rowFormers[range])
+    }
+    
+    /// Append RowFormer to last index.
+    public func append(rowFormer rowFormer: RowFormer) -> Self {
+        self.rowFormers.append(rowFormer)
+        return self
     }
     
     /// Add RowFormers to last index.

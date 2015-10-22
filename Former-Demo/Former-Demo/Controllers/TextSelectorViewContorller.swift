@@ -56,6 +56,6 @@ final class TextSelectorViewContoller: FormViewController {
         
         let sectionFormer = SectionFormer(rowFormers: rowFormers)
         
-        former.removeAll().add(sectionFormers: [sectionFormer]).reload()
+        former.removeAll().append(sectionFormer: sectionFormer).reload()
     }
 }

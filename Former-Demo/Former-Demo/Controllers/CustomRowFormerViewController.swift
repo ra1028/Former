@@ -48,9 +48,9 @@ final class CustomRowFormerViewController: FormViewController {
         
         // Create SectionFormers
         
-        let section1 = SectionFormer(rowFormers: [sliderRow])
+        let section1 = SectionFormer(rowFormer: sliderRow)
             .set(headerViewFormer: createHeader("Custom Inline Slider Row"))
         
-        former.add(sectionFormers: [section1])
+        former.append(sectionFormer: section1)
     }
 }

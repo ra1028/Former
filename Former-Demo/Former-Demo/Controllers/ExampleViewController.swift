@@ -238,8 +238,8 @@ final class ExampleViewController: FormViewController {
         
         former.add(sectionFormers:
             [section1, section2, section3, section4, section5]
-        ).onCellSelected { [weak self] _ in
-            self?.formerInputAccessoryView.update()
+            ).onCellSelected { [weak self] _ in
+                self?.formerInputAccessoryView.update()
         }
     }
     

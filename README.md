@@ -71,31 +71,47 @@ final class YourViewController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        former.add(sectionFormers: [
-            SectionFormer(rowFormers: [
-                LabelRowFormer<FormLabelCell>() { _ in
-                      // Cell setup
+        former.append(sectionFormer:
+
+            SectionFormer().append(rowFormer:
+
+                LabelRowFormer<FormLabelCell>() {
+                    $0
+                    // Cell setup
                     }.configure {
+                        $0
                         // RowFormer setup
                     }.onSelected {
+                        $0
                         // Selection handler
-                },
-                InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
-                        // Cell setup
-                    }.configure {
-                        // Row Former setup
-                    }.onValueChanged {
-                        // Value change handler
-                    }.inlineCellSetup {
-                        // Datepicker cell setup
                 }
-                ])
-                .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>() {
+                ).append(rowFormer:
+
+                    InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
+                        $0
+                        // Cell setup
+                        }.configure {
+                            $0
+                            // Row Former setup
+                        }.onDateChanged {
+                            $0
+                            // Value change handler
+                        }.inlineCellSetup {
+                            $0
+                            // Datepicker cell setup
+                    }
+                )
+                .set(headerViewFormer:
+
+                    LabelViewFormer<FormLabelHeaderView>() {
+                        $0
                         // Header view setup
-                    }.configure {
-                        // ViewFormer setup
-                    })
-            ])
+                        }.configure {
+                            $0
+                            // ViewFormer setup
+                    }
+            )
+        )
     }
 }
 ```
