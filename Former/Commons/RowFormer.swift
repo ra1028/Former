@@ -13,40 +13,6 @@ public protocol FormableRow: class {
     func updateWithRowFormer(rowFormer: RowFormer)
 }
 
-public protocol InlineForm: class {
-    
-    var inlineRowFormer: RowFormer { get }
-    func editingDidBegin()
-    func editingDidEnd()
-}
-
-public protocol SelectorForm: class {
-    
-    func editingDidBegin()
-    func editingDidEnd()
-}
-
-public protocol ConfigurableForm: class {
-    
-    func configure(@noescape handler: (Self -> Void)) -> Self
-}
-
-public extension ConfigurableForm where Self: RowFormer {
-    
-    func configure(@noescape handler: (Self -> Void)) -> Self {
-        handler(self)
-        return self
-    }
-}
-
-public extension ConfigurableForm where Self: ViewFormer {
-    
-    func configure(@noescape handler: (Self -> Void)) -> Self {
-        handler(self)
-        return self
-    }
-}
-
 public class RowFormer {
     
     // MARK: Public
@@ -68,6 +34,11 @@ public class RowFormer {
             self.instantiateType = instantiateType
             self.cellSetup = { cellSetup?(($0 as! T)) }
             initialized()
+    }
+    
+    public final func cellSetup(handler: (UITableViewCell -> Void)) -> Self {
+        cellSetup = handler
+        return self
     }
     
     public final func onSelected(handler: (indexPath: NSIndexPath, rowFormer: RowFormer) -> Void) -> Self {
@@ -102,6 +73,7 @@ public class RowFormer {
     
     // MARK: Internal
     
+    internal final var cellSetup: (UITableViewCell -> Void)?
     internal final var cellInstance: UITableViewCell {
         if _cellInstance == nil {
             var cell: UITableViewCell?
@@ -115,7 +87,7 @@ public class RowFormer {
             }
             _cellInstance = cell
             cellInstanceInitialized(cell!)
-            cellSetup(cell!)
+            cellSetup?(cell!)
         }
         return _cellInstance!
     }
@@ -124,8 +96,7 @@ public class RowFormer {
     
     // MARK: Private
     
-    private final var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
+    internal final var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     private final var _cellInstance: UITableViewCell?
     private final let instantiateType: Former.InstantiateType
-    private final let cellSetup: (UITableViewCell -> Void)
 }

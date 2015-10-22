@@ -18,7 +18,7 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
 }
 
 public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: CustomRowFormer<T>, SelectorForm, ConfigurableForm {
+: CustomRowFormer<T>, UpdatableSelectorForm, ConfigurableForm {
     
     // MARK: Public
     
@@ -33,7 +33,7 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
     public var titleEditingColor: UIColor?
     public var displayEditingColor: UIColor?
     
-    private lazy var inputView: UIDatePicker = { [unowned self] in
+    public private(set) final lazy var selectorView: UIDatePicker = { [unowned self] in
         let datePicker = UIDatePicker()
         datePicker.addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
         return datePicker
@@ -41,11 +41,6 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
-    }
-    
-    public final func inputViewUpdate(@noescape update: (UIDatePicker -> Void)) -> Self {
-        update(inputView)
-        return self
     }
     
     public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
@@ -61,7 +56,7 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
     public override func update() {
         super.update()
         
-        cell.selectorDatePicker = inputView
+        cell.selectorDatePicker = selectorView
         cell.selectorAccessoryView = inputAccessoryView
         
         let titleLabel = cell.formTitleLabel()

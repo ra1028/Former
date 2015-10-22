@@ -1,5 +1,5 @@
 //
-//  CustomExampleViewController.swift
+//  CustomRowFormerViewController.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/29/15.
@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class CustomExampleViewController: FormViewController {
+final class CustomRowFormerViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,7 @@ final class CustomExampleViewController: FormViewController {
         
         // Create RowFormers
         
-        let sliderRow = DemoInlineSliderRowFormer<DemoInlineSliderCell>() {
+        let sliderRow = InlineSliderRowFormer<DemoInlineSliderCell>() {
             $0.titleLabel.text = "Inline Slider"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)

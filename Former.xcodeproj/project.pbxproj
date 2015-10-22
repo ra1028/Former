@@ -49,6 +49,7 @@
 		2A6566491BA4427D00C78E81 /* FormLabelFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661E1BA4427D00C78E81 /* FormLabelFooterView.swift */; };
 		2A65664A1BA4427D00C78E81 /* FormLabelHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A65661F1BA4427D00C78E81 /* FormLabelHeaderView.swift */; };
 		2AA795621BBC3A4D005949B9 /* CustomRowFormer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA795611BBC3A4D005949B9 /* CustomRowFormer.swift */; settings = {ASSET_TAGS = (); }; };
+		2AF88D8F1BD92B8B00CFFDAC /* FormerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AF88D8E1BD92B8B00CFFDAC /* FormerProtocol.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +97,7 @@
 		2A65661F1BA4427D00C78E81 /* FormLabelHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormLabelHeaderView.swift; sourceTree = "<group>"; };
 		2A7D956C1BA4528700F0B005 /* Former.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Former.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AA795611BBC3A4D005949B9 /* CustomRowFormer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRowFormer.swift; sourceTree = "<group>"; };
+		2AF88D8E1BD92B8B00CFFDAC /* FormerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				2A25C3081BBD1ED600BA800C /* ViewFormer.swift */,
 				2A6565FF1BA4427D00C78E81 /* Former.swift */,
 				2A6566021BA4427D00C78E81 /* SectionFormer.swift */,
+				2AF88D8E1BD92B8B00CFFDAC /* FormerProtocol.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			files = (
 				2A3365BE1BBDB41100603F71 /* ViewFormer.swift in Sources */,
 				2A3365BD1BBDB40800603F71 /* RowFormer.swift in Sources */,
+				2AF88D8F1BD92B8B00CFFDAC /* FormerProtocol.swift in Sources */,
 				2A65663C1BA4427D00C78E81 /* PickerRowFormer.swift in Sources */,
 				2A6566461BA4427D00C78E81 /* TextViewRowFormer.swift in Sources */,
 				2A6566341BA4427D00C78E81 /* FormViewController.swift in Sources */,

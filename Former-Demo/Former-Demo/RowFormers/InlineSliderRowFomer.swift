@@ -1,5 +1,5 @@
 //
-//  DemoInlineSliderRowFomer.swift
+//  InlineSliderRowFomer.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 9/6/15.
@@ -9,16 +9,18 @@
 import UIKit
 import Former
 
-public protocol DemoInlineSliderFormableRow: FormableRow {
+public protocol InlineSliderFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
     func formerColorDisplayView() -> UIView?
 }
 
-public final class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSliderFormableRow>
-: CustomRowFormer<T>, InlineForm, ConfigurableForm {
+public final class InlineSliderRowFormer<T: UITableViewCell where T: InlineSliderFormableRow>
+: CustomRowFormer<T>, ConfigurableInlineForm, ConfigurableForm {
     
     // MARK: Public
+    
+    public typealias InlineCellType = FormSliderCell
     
     public private(set) var inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
@@ -33,9 +35,9 @@ public final class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInl
     
     public init(
         instantiateType: Former.InstantiateType = .Class,
-        inlineCellSetup: (FormSliderCell -> Void)? = nil,
+        inlineCellSetup: (InlineCellType -> Void)? = nil,
         cellSetup: (T -> Void)? = nil) {
-            inlineRowFormer = SliderRowFormer<FormSliderCell>(instantiateType: .Class, cellSetup: inlineCellSetup)
+            inlineRowFormer = SliderRowFormer<InlineCellType>(instantiateType: .Class, cellSetup: inlineCellSetup)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -53,14 +55,13 @@ public final class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInl
         let colorDisplayView = cell.formerColorDisplayView()
         colorDisplayView?.backgroundColor = color
         
-        let inlineRowFormer = self.inlineRowFormer as! SliderRowFormer<FormSliderCell>
+        let inlineRowFormer = self.inlineRowFormer as! SliderRowFormer<InlineCellType>
         inlineRowFormer.configure { form in
             form.value = adjustedValueFromValue?(value) ?? value
             form.enabled = enabled
             form.cellHeight = 44
             _ = adjustedValueFromValue.map { form.adjustedValueFromValue($0) }
-        }.onValueChanged(valueChanged)
-        .update()
+        }.onValueChanged(valueChanged).update()
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {

@@ -1,5 +1,5 @@
 //
-//  DefaultExampleViewController.swift
+//  ExampleViewController.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 8/7/15.
@@ -20,7 +20,7 @@ private extension UITableViewRowAnimation {
     }
 }
 
-final class DefaultExampleViewController: FormViewController {
+final class ExampleViewController: FormViewController {
     
     // MARK: Public
     
@@ -40,15 +40,14 @@ final class DefaultExampleViewController: FormViewController {
         // Create RowFormers
         // Date Setting Example
         
-        let dateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>(
-            inlineCellSetup: {
-                $0.datePicker.datePickerMode = .DateAndTime
-            }) {
+        let dateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
                 $0.titleLabel.text = "Date"
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.displayLabel.textColor = .formerSubColor()
                 $0.displayLabel.font = .boldSystemFontOfSize(14)
+            }.inlineCellSetup {
+                $0.datePicker.datePickerMode = .DateAndTime
             }.configure {
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.displayTextFromDate(String.mediumDateShortTime)
@@ -61,11 +60,11 @@ final class DefaultExampleViewController: FormViewController {
             }.configure {
                 $0.switched = false
             }.onSwitchChanged { switched in
-            dateRow.displayTextFromDate(switched ? String.fullDate : String.mediumDateShortTime)
-            dateRow.inlineCellUpdate {
-                $0.datePicker.datePickerMode = switched ? .Date : .DateAndTime
-            }
-            dateRow.update()
+                dateRow.displayTextFromDate(switched ? String.fullDate : String.mediumDateShortTime)
+                dateRow.inlineCellUpdate {
+                    $0.datePicker.datePickerMode = switched ? .Date : .DateAndTime
+                }
+                dateRow.update()
         }
         
         // Insert Rows Example
@@ -171,7 +170,7 @@ final class DefaultExampleViewController: FormViewController {
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             $0.accessoryType = .DisclosureIndicator
             }.configure {
-                $0.inputViewUpdate {
+                $0.selectorViewUpdate {
                     $0.backgroundColor = .whiteColor()
                 }
                 $0.pickerItems = options.map { SelectorPickerItem<Any>(title: $0) }

@@ -31,26 +31,25 @@ final class YourViewController: FormViewController {
         super.viewDidLoad()
 
         let textRow = LabelRowFormer<FormLabelCell>() {
-            // Cell setup
+                // Cell setup
             }.configure {
                 // RowFormer setup
             }.onSelected {
                 // Selection handler
         }
 
-        let inlineDatePickerRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>(
-            inlineCellSetup: {
-                // Datepicker cell setup
-            }) {
+        let inlineDatePickerRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
                 // Cell setup
             }.configure {
                 // Row Former setup
             }.onValueChanged {
                 // Value change handler
+            }.inlineCellSetup {
+                // Datepicker cell setup
         }
 
         let header = LabelViewFormer<FormLabelHeaderView>() {
-            // Header view setup
+                // Header view setup
             }.configure {
                 // ViewFormer setup
         }
@@ -75,25 +74,24 @@ final class YourViewController: FormViewController {
         former.add(sectionFormers: [
             SectionFormer(rowFormers: [
                 LabelRowFormer<FormLabelCell>() { _ in
-                    // Cell setup
+                      // Cell setup
                     }.configure {
                         // RowFormer setup
                     }.onSelected {
                         // Selection handler
                 },
-                InlineDatePickerRowFormer<FormInlineDatePickerCell>(
-                    inlineCellSetup: {
-                        // Datepicker cell setup
-                    }) {
+                InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
                         // Cell setup
                     }.configure {
                         // Row Former setup
                     }.onValueChanged {
                         // Value change handler
+                    }.inlineCellSetup {
+                        // Datepicker cell setup
                 }
                 ])
                 .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>() {
-                    // Header view setup
+                        // Header view setup
                     }.configure {
                         // ViewFormer setup
                     })

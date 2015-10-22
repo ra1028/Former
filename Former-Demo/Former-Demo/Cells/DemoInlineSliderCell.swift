@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class DemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
+final class DemoInlineSliderCell: UITableViewCell, InlineSliderFormableRow {
     
     private(set) var titleLabel: UILabel!
     private(set) var colorDisplayView: UIView!

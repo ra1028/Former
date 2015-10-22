@@ -1,5 +1,5 @@
 //
-//  DemoViewController.swift
+//  DefaultRowFormerViewController.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/23/15.
@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class DefaultUIViewController: FormViewController {
+final class DefaultRowFormerViewController: FormViewController {
     
     // MARK: Public
 

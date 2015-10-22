@@ -15,6 +15,7 @@ public protocol InlinePickerFormableRow: FormableRow {
 }
 
 public class InlinePickerItem<S>: PickerItem<S> {
+    
     public let displayTitle: NSAttributedString?
     public init(title: String, displayTitle: NSAttributedString? = nil, value: S? = nil) {
         self.displayTitle = displayTitle
@@ -23,9 +24,11 @@ public class InlinePickerItem<S>: PickerItem<S> {
 }
 
 public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFormableRow>
-: CustomRowFormer<T>, InlineForm, ConfigurableForm {
+: CustomRowFormer<T>, ConfigurableInlineForm, ConfigurableForm {
     
     // MARK: Public
+    
+    public typealias InlineCellType = FormPickerCell
     
     public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
@@ -39,11 +42,10 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
     public var titleEditingColor: UIColor?
     public var displayEditingColor: UIColor?
     
-    public init(
+    required public init(
         instantiateType: Former.InstantiateType = .Class,
-        inlineCellSetup: (FormPickerCell -> Void)? = nil,
         cellSetup: (T -> Void)?) {
-            inlineRowFormer = PickerRowFormer<FormPickerCell, S>(instantiateType: .Class, cellSetup: inlineCellSetup)
+            inlineRowFormer = PickerRowFormer<InlineCellType, S>(instantiateType: .Class)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -86,17 +88,12 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
             displayLabel?.textColor = displayDisabledColor
         }
         
-        let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<FormPickerCell, S>
-        inlineRowFormer.onValueChanged(valueChanged)
-        inlineRowFormer.pickerItems = pickerItems
-        inlineRowFormer.selectedRow = selectedRow
-        inlineRowFormer.enabled = enabled
-        inlineRowFormer.update()
-    }
-    
-    public final func inlineCellUpdate(@noescape update: (FormPickerCell -> Void)) {
-        let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<FormPickerCell, S>
-        update(inlineRowFormer.cell)
+        let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<InlineCellType, S>
+        inlineRowFormer.configure {
+            $0.pickerItems = pickerItems
+            $0.selectedRow = selectedRow
+            $0.enabled = enabled
+        }.onValueChanged(valueChanged).update()
     }
 
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -149,7 +146,7 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
     
     private func valueChanged(pickerItem: PickerItem<S>) {
         if enabled {
-            let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<FormPickerCell, S>
+            let inlineRowFormer = self.inlineRowFormer as! PickerRowFormer<InlineCellType, S>
             let inlinePickerItem = pickerItem as! InlinePickerItem
             let displayLabel = cell.formDisplayLabel()
             

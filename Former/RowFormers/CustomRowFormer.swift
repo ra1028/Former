@@ -26,6 +26,11 @@ public class CustomRowFormer<T: UITableViewCell>: RowFormer {
             )
     }
     
+    public final func cellSetup(handler: (T -> Void)) -> Self {
+        cellSetup = { handler(($0 as! T)) }
+        return self
+    }
+    
     public final func cellUpdate(@noescape update: (T -> Void)) -> Self {
         update(cell)
         return self

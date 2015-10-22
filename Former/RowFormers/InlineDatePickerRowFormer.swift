@@ -15,9 +15,11 @@ public protocol InlineDatePickerFormableRow: FormableRow {
 }
 
 public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
-: CustomRowFormer<T>, InlineForm, ConfigurableForm {
+: CustomRowFormer<T>, ConfigurableInlineForm, ConfigurableForm {
     
     // MARK: Public
+    
+    public typealias InlineCellType = FormDatePickerCell
     
     public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
@@ -30,11 +32,10 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
     public var displayEditingColor: UIColor?
     public var titleEditingColor: UIColor?
     
-    public init(
+    required public init(
         instantiateType: Former.InstantiateType = .Class,
-        inlineCellSetup: (FormDatePickerCell -> Void)? = nil,
         cellSetup: (T -> Void)?) {
-            inlineRowFormer = DatePickerRowFormer<FormDatePickerCell>(instantiateType: .Class, cellSetup: inlineCellSetup)
+            inlineRowFormer = DatePickerRowFormer<InlineCellType>(instantiateType: .Class)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -74,17 +75,12 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
             _ = displayDisabledColor.map { displayLabel?.textColor = $0 }
         }
         
-        let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<FormDatePickerCell>
+        let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<InlineCellType>
         inlineRowFormer.configure {
             $0.onDateChanged = dateChanged
             $0.date = date
             $0.enabled = enabled
         }.update()
-    }
-    
-    public final func inlineCellUpdate(@noescape update: (FormDatePickerCell -> Void)) {
-        let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<FormDatePickerCell>
-        update(inlineRowFormer.cell)
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {

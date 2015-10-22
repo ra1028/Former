@@ -33,20 +33,20 @@ final class TopViewContoller: FormViewController {
         // Create RowFormers
         
         let firstComponets: [(String, (() -> Void)?)] = [
-            ("Edit Profile", { [weak self] in
-                self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)})
+            ("Edit Profile", { /*[weak self] in
+                self?.navigationController?.pushViewController(, animated: true)*/})
         ]
         
         let secondComponents: [(String, (() -> Void)?)] = [
             ("All Defaults", { [weak self] in
-                self?.navigationController?.pushViewController(DefaultUIViewController(), animated: true)})
+                self?.navigationController?.pushViewController(DefaultRowFormerViewController(), animated: true)})
         ]
         
         let thirdComponents: [(String, (() -> Void)?)] = [
-            ("Default Former Examples", { [weak self] in
-                self?.navigationController?.pushViewController(DefaultExampleViewController(), animated: true)}),
-            ("Custom Former Examples", { [weak self] in
-                self?.navigationController?.pushViewController(CustomExampleViewController(), animated: true)})
+            ("Default RowFormer Examples", { [weak self] in
+                self?.navigationController?.pushViewController(ExampleViewController(), animated: true)}),
+            ("Custom  RowFormer Examples", { [weak self] in
+                self?.navigationController?.pushViewController(CustomRowFormerViewController(), animated: true)})
         ]
         
         let createMenu: ((String, (() -> Void)?) -> RowFormer) = { text, onSelected in

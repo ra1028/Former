@@ -14,6 +14,7 @@ public protocol PickerFormableRow: FormableRow {
 }
 
 public class PickerItem<S> {
+    
     public let title: String
     public let value: S?
     

@@ -26,7 +26,7 @@ public class SelectorPickerItem<S>: PickerItem<S> {
 }
 
 public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPickerFormableRow>
-: CustomRowFormer<T>, SelectorForm, ConfigurableForm {
+: CustomRowFormer<T>, UpdatableSelectorForm, ConfigurableForm {
     
     // MARK: Public
     
@@ -42,6 +42,13 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
     public var titleEditingColor: UIColor?
     public var displayEditingColor: UIColor?
     
+    public private(set) final lazy var selectorView: UIPickerView = { [unowned self] in
+        let picker = UIPickerView()
+        picker.delegate = self.observer
+        picker.dataSource = self.observer
+        return picker
+        }()
+    
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
@@ -54,8 +61,8 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
     public override func update() {
         super.update()
         
-        inputView.selectRow(selectedRow, inComponent: 0, animated: false)
-        cell.selectorPickerView = inputView
+        selectorView.selectRow(selectedRow, inComponent: 0, animated: false)
+        cell.selectorPickerView = selectorView
         cell.selectorAccessoryView = inputAccessoryView
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
@@ -87,11 +94,6 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
-    }
-    
-    public final func inputViewUpdate(@noescape update: (UIPickerView -> Void)) -> Self {
-        update(inputView)
-        return self
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
@@ -143,12 +145,6 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
     private final var displayTextColor: UIColor?
     private final lazy var observer: Observer<T, S> = { [unowned self] in
         Observer<T, S>(selectorPickerRowFormer: self)
-        }()
-    private final lazy var inputView: UIPickerView = { [unowned self] in
-        let picker = UIPickerView()
-        picker.delegate = self.observer
-        picker.dataSource = self.observer
-        return picker
         }()
 }
 
