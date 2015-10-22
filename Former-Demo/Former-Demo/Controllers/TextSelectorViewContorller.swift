@@ -15,7 +15,7 @@ final class TextSelectorViewContoller: FormViewController {
     
     var texts = [String]() {
         didSet {
-            update()
+            reloadForm()
         }
     }
     
@@ -32,24 +32,24 @@ final class TextSelectorViewContoller: FormViewController {
     
     var onSelected: (String -> Void)?
     
-    private func update() {
+    private func reloadForm() {
         
         // Create RowFormers
         
         let rowFormers = texts.map { text -> LabelRowFormer<FormLabelCell> in
-            let rowFormer = LabelRowFormer<FormLabelCell>() { [weak self] in
+            return LabelRowFormer<FormLabelCell>() { [weak self] in
                 if let sSelf = self {
                     $0.titleLabel.textColor = .formerColor()
                     $0.titleLabel.font = .boldSystemFontOfSize(16.0)
                     $0.tintColor = .formerSubColor()
                     $0.accessoryType = (text == sSelf.selectedText) ? .Checkmark : .None
                 }
-            }.onSelected { [weak self] _ in
-                self?.onSelected?(text)
-                self?.navigationController?.popViewControllerAnimated(true)
+                }.configure {
+                    $0.text = text
+                }.onSelected { [weak self] _ in
+                    self?.onSelected?(text)
+                    self?.navigationController?.popViewControllerAnimated(true)
             }
-            rowFormer.text = text
-            return rowFormer
         }
         
         // Create SectionFormers

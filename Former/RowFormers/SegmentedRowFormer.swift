@@ -14,8 +14,8 @@ public protocol SegmentedFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
-: CustomRowFormer<T> {
+public final class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     

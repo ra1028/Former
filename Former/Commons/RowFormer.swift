@@ -26,11 +26,33 @@ public protocol SelectorForm: class {
     func editingDidEnd()
 }
 
+public protocol ConfigurableForm: class {
+    
+    func configure(@noescape handler: (Self -> Void)) -> Self
+}
+
+public extension ConfigurableForm where Self: RowFormer {
+    
+    func configure(@noescape handler: (Self -> Void)) -> Self {
+        handler(self)
+        return self
+    }
+}
+
+public extension ConfigurableForm where Self: ViewFormer {
+    
+    func configure(@noescape handler: (Self -> Void)) -> Self {
+        handler(self)
+        return self
+    }
+}
+
 public class RowFormer {
     
     // MARK: Public
     
     public internal(set) final weak var former: Former?
+    public final let cellType: UITableViewCell.Type
     public final var cellHeight: CGFloat = 44.0
     public internal(set) final var isEditing = false
     public final var enabled = true { didSet { update() } }
@@ -104,7 +126,6 @@ public class RowFormer {
     
     private final var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
     private final var _cellInstance: UITableViewCell?
-    private final let cellType: UITableViewCell.Type
     private final let instantiateType: Former.InstantiateType
     private final let cellSetup: (UITableViewCell -> Void)
 }

@@ -15,8 +15,8 @@ public protocol SliderFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
-: CustomRowFormer<T> {
+public final class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     

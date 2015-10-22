@@ -24,25 +24,26 @@ final class CustomExampleViewController: FormViewController {
         let sliderRow = DemoInlineSliderRowFormer<DemoInlineSliderCell>() {
             $0.titleLabel.text = "Inline Slider"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16.0)
-        }
-        sliderRow.color = UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-        sliderRow.onValueChanged = { [weak sliderRow] in
-            let value = 1.0 - CGFloat($0)
-            sliderRow?.color = UIColor(hue: value, saturation: value, brightness: value, alpha: 1.0)
-            sliderRow?.update()
+            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            }.configure { form in
+                form.color = UIColor(hue: 1, saturation: 1, brightness: 1, alpha: 1)
+                form.onValueChanged = { [weak form] in
+                    let value = 1 - CGFloat($0)
+                    form?.color = UIColor(hue: value, saturation: value, brightness: value, alpha: 1)
+                    form?.update()
+                }
         }
         
         // Create Headers and Footers
         
-        let createHeader: (String -> ViewFormer) = {
-            let header = LabelViewFormer<FormLabelHeaderView>() {
+        let createHeader: (String -> ViewFormer) = { text in
+            return LabelViewFormer<FormLabelHeaderView>() {
                 $0.titleLabel.textColor = .grayColor()
-                $0.titleLabel.font = .systemFontOfSize(14.0)
+                $0.titleLabel.font = .systemFontOfSize(14)
+                }.configure {
+                    $0.text = text
+                    $0.viewHeight = 40
             }
-            header.text = $0
-            header.viewHeight = 40.0
-            return header
         }
         
         // Create SectionFormers

@@ -49,22 +49,24 @@ final class DefaultExampleViewController: FormViewController {
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.displayLabel.textColor = .formerSubColor()
                 $0.displayLabel.font = .boldSystemFontOfSize(14)
-        }.displayTextFromDate(String.mediumDateShortTime)
-        dateRow.displayEditingColor = .formerHighlightedSubColor()
+            }.configure {
+                $0.displayEditingColor = .formerHighlightedSubColor()
+            }.displayTextFromDate(String.mediumDateShortTime)
         
         let switchDateStyleRow = SwitchRowFormer<FormSwitchCell>() {
             $0.titleLabel.text = "Switch Date Style"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.switchButton.onTintColor = .formerSubColor()
-        }.onSwitchChanged { switched in
+            }.configure {
+                $0.switched = false
+            }.onSwitchChanged { switched in
             dateRow.displayTextFromDate(switched ? String.fullDate : String.mediumDateShortTime)
             dateRow.inlineCellUpdate {
                 $0.datePicker.datePickerMode = switched ? .Date : .DateAndTime
             }
             dateRow.update()
         }
-        switchDateStyleRow.switched = false
         
         // Insert Rows Example
         
@@ -72,11 +74,12 @@ final class DefaultExampleViewController: FormViewController {
         
         let insertRowPositionRow = SegmentedRowFormer<FormSegmentedCell>(instantiateType: .Class) {
             $0.tintColor = .formerSubColor()
-        }.onSegmentSelected { [weak self] index, _ in
+            }.configure {
+                $0.segmentTitles = positions
+                $0.selectedIndex = insertRowPosition.rawValue
+            }.onSegmentSelected { [weak self] index, _ in
             self?.insertRowPosition = InsertPosition(rawValue: index)!
         }
-        insertRowPositionRow.segmentTitles = positions
-        insertRowPositionRow.selectedIndex = insertRowPosition.rawValue
         
         let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
@@ -84,14 +87,15 @@ final class DefaultExampleViewController: FormViewController {
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
-        }.onValueChanged { [weak self] in
-            self?.insertRowAnimation = $0.value!
+            }.configure {
+                $0.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
+                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
+                }
+                $0.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertRowAnimation) ?? 0
+                $0.displayEditingColor = .formerHighlightedSubColor()
+            }.onValueChanged { [weak self] in
+                self?.insertRowAnimation = $0.value!
         }
-        insertRowAnimationRow.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
-            InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
-        }
-        insertRowAnimationRow.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertRowAnimation) ?? 0
-        insertRowAnimationRow.displayEditingColor = .formerHighlightedSubColor()
         
         let insertRowsRow = SwitchRowFormer<FormSwitchCell> {
             $0.titleLabel.text = "Insert Rows"
@@ -111,11 +115,12 @@ final class DefaultExampleViewController: FormViewController {
         
         let insertSectionPositionRow = SegmentedRowFormer<FormSegmentedCell>(instantiateType: .Class) {
             $0.tintColor = .formerSubColor()
-        }.onSegmentSelected { [weak self] index, _ in
+            }.configure {
+                $0.segmentTitles = positions
+                $0.selectedIndex = insertSectionPosition.rawValue
+            }.onSegmentSelected { [weak self] index, _ in
                 self?.insertSectionPosition = InsertPosition(rawValue: index)!
         }
-        insertSectionPositionRow.segmentTitles = positions
-        insertSectionPositionRow.selectedIndex = insertSectionPosition.rawValue
         
         let insertSectionAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
@@ -123,14 +128,15 @@ final class DefaultExampleViewController: FormViewController {
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
-        }.onValueChanged { [weak self] in
+            }.configure {
+                $0.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
+                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
+                }
+                $0.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertSectionAnimation) ?? 0
+                $0.displayEditingColor = .formerHighlightedSubColor()
+            }.onValueChanged { [weak self] in
                 self?.insertSectionAnimation = $0.value!
         }
-        insertSectionAnimationRow.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
-            InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
-        }
-        insertSectionAnimationRow.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertSectionAnimation) ?? 0
-        insertSectionAnimationRow.displayEditingColor = .formerHighlightedSubColor()
         
         // Selector Example
         
@@ -139,17 +145,17 @@ final class DefaultExampleViewController: FormViewController {
             subText: String,
             onSelected: ((indexPath: NSIndexPath,rowFormer: RowFormer) -> Void)?
             ) -> RowFormer in
-            let selectorRow = LabelRowFormer<FormLabelCell>() {
+            return LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.subTextLabel.textColor = .formerSubColor()
                 $0.subTextLabel.font = .boldSystemFontOfSize(14)
                 $0.accessoryType = .DisclosureIndicator
+                }.configure { form in
+                    _ = onSelected.map { form.onSelected($0) }
+                    form.text = text
+                    form.subText = subText
             }
-            _ = onSelected.map { selectorRow.onSelected($0) }
-            selectorRow.text = text
-            selectorRow.subText = subText
-            return selectorRow
         }
         let options = ["Option1", "Option2", "Option3"]
         
@@ -164,18 +170,19 @@ final class DefaultExampleViewController: FormViewController {
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             $0.accessoryType = .DisclosureIndicator
+            }.configure {
+                $0.inputViewUpdate {
+                    $0.backgroundColor = .whiteColor()
+                }
+                $0.pickerItems = options.map { SelectorPickerItem<Any>(title: $0) }
+                $0.inputAccessoryView = formerInputAccessoryView
+                $0.displayEditingColor = .formerHighlightedSubColor()
         }
-        pickerSelectorRow.inputViewUpdate {
-            $0.backgroundColor = .whiteColor()
-        }
-        pickerSelectorRow.pickerItems = options.map { SelectorPickerItem<Any>(title: $0) }
-        pickerSelectorRow.inputAccessoryView = formerInputAccessoryView
-        pickerSelectorRow.displayEditingColor = .formerHighlightedSubColor()
         
         // Custom Input Accessory View Example
 
         let textFields = (1...2).map { index -> RowFormer in
-            let input = TextFieldRowFormer<FormTextFieldCell>() { [weak self] in
+            return TextFieldRowFormer<FormTextFieldCell>() { [weak self] in
                 $0.titleLabel.text = "Field\(index)"
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
@@ -184,9 +191,9 @@ final class DefaultExampleViewController: FormViewController {
                 $0.textField.inputAccessoryView = self?.formerInputAccessoryView
                 $0.textField.returnKeyType = .Next
                 $0.tintColor = .formerColor()
+                }.configure {
+                    $0.placeholder = "Example"
             }
-            input.placeholder = "Example"
-            return input
         }
         
         let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Any>() {
@@ -195,21 +202,22 @@ final class DefaultExampleViewController: FormViewController {
             $0.titleLabel.font = .boldSystemFontOfSize(16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
+            }.configure {
+                $0.pickerItems = (1...20).map { InlinePickerItem<Any>(title: "Option\($0)") }
+                $0.displayEditingColor = .formerHighlightedSubColor()
         }
-        inlinePickerRow.pickerItems = (1...20).map { InlinePickerItem<Any>(title: "Option\($0)") }
-        inlinePickerRow.displayEditingColor = .formerHighlightedSubColor()
         
         // Create Headers and Footers
         
-        let createHeader: (String -> ViewFormer) = {
-            let header = LabelViewFormer<FormLabelHeaderView>() {
+        let createHeader: (String -> ViewFormer) = { text in
+            return LabelViewFormer<FormLabelHeaderView>() {
                 $0.titleLabel.textColor = .grayColor()
                 $0.titleLabel.font = .systemFontOfSize(14)
                 $0.contentView.backgroundColor = .groupTableViewBackgroundColor()
+                }.configure {
+                    $0.text = text
+                    $0.viewHeight = 40
             }
-            header.text = $0
-            header.viewHeight = 40
-            return header
         }
         
         // Create SectionFormers
@@ -249,13 +257,12 @@ final class DefaultExampleViewController: FormViewController {
     
     private lazy var subRowFormers: [RowFormer] = {
         return (1...2).map { index -> RowFormer in
-            let row = CheckRowFormer<FormCheckCell>() {
+            return CheckRowFormer<FormCheckCell>() {
                 $0.titleLabel.text = "Check\(index)"
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.tintColor = .formerSubColor()
             }
-            return row
         }
         }()
     

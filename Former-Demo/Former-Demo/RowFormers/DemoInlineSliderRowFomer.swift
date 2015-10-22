@@ -15,8 +15,8 @@ public protocol DemoInlineSliderFormableRow: FormableRow {
     func formerColorDisplayView() -> UIView?
 }
 
-public class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSliderFormableRow>
-: CustomRowFormer<T>, InlineForm {
+public final class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInlineSliderFormableRow>
+: CustomRowFormer<T>, InlineForm, ConfigurableForm {
     
     // MARK: Public
     

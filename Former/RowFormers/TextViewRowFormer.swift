@@ -14,8 +14,8 @@ public protocol TextViewFormableRow: FormableRow {
     func formTextView() -> UITextView
 }
 
-public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
-: CustomRowFormer<T> {
+public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     
@@ -120,7 +120,7 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
     private final var onTextChanged: (String -> Void)?
     private final var textColor: UIColor?
     private final var titleColor: UIColor?
-    private final var actualAttributedString: NSAttributedString?
+    private final var _attributedString: NSAttributedString?
     private final weak var placeholderLabel: UILabel?
     private final lazy var observer: Observer<T> = { [unowned self] in
         Observer<T>(textViewRowFormer: self)
@@ -133,10 +133,10 @@ public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
                 .clearColor()
         } else {
             if text?.isEmpty ?? true {
-                _ = actualAttributedString.map { placeholderLabel?.attributedText = $0 }
-                actualAttributedString = nil
+                _ = _attributedString.map { placeholderLabel?.attributedText = $0 }
+                _attributedString = nil
             } else {
-                if actualAttributedString == nil { actualAttributedString = placeholderLabel?.attributedText }
+                if _attributedString == nil { _attributedString = placeholderLabel?.attributedText }
                 placeholderLabel?.attributedText = nil
             }
         }

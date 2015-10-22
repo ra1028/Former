@@ -13,8 +13,8 @@ public protocol CheckFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
-: CustomRowFormer<T> {
+public final class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     

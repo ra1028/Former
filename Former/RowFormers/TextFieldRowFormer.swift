@@ -14,8 +14,8 @@ public protocol TextFieldFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow>
-: CustomRowFormer<T> {
+public final class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     

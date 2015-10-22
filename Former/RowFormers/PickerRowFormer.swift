@@ -23,8 +23,8 @@ public class PickerItem<S> {
     }
 }
 
-public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
-: CustomRowFormer<T> {
+public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     

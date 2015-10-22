@@ -50,37 +50,38 @@ final class TopViewContoller: FormViewController {
         ]
         
         let createMenu: ((String, (() -> Void)?) -> RowFormer) = { text, onSelected in
-            let rowFormer = LabelRowFormer<FormLabelCell>() {
+            return LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16.0)
+                $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.accessoryType = .DisclosureIndicator
-            }.onSelected { _ in
-                onSelected?()
+                }.configure {
+                    $0.text = text
+                }
+                .onSelected { _ in
+                    onSelected?()
             }
-            rowFormer.text = text
-            return rowFormer
         }
         
         // Create Headers and Footers
         
-        let createHeader: (String -> ViewFormer) = {
-            let header = LabelViewFormer<FormLabelHeaderView>() {
+        let createHeader: (String -> ViewFormer) = { text in
+            return LabelViewFormer<FormLabelHeaderView>() {
                 $0.titleLabel.textColor = .grayColor()
-                $0.titleLabel.font = .systemFontOfSize(14.0)
+                $0.titleLabel.font = .systemFontOfSize(14)
+                }.configure {
+                    $0.text = text
+                    $0.viewHeight = 40
             }
-            header.text = $0
-            header.viewHeight = 40.0
-            return header
         }
         
-        let createFooter: (String -> ViewFormer) = {
-            let footer = LabelViewFormer<FormLabelFooterView>() {
+        let createFooter: (String -> ViewFormer) = { text in
+            return LabelViewFormer<FormLabelFooterView>() {
                 $0.titleLabel.textColor = .grayColor()
-                $0.titleLabel.font = .systemFontOfSize(14.0)
+                $0.titleLabel.font = .systemFontOfSize(14)
+                }.configure {
+                    $0.text = text
+                    $0.viewHeight = 100
             }
-            footer.text = $0
-            footer.viewHeight = 100.0
-            return footer
         }
         
         // Create SectionFormers

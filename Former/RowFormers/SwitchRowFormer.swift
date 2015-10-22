@@ -14,12 +14,12 @@ public protocol SwitchFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
-: CustomRowFormer<T> {
+public final class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
+: CustomRowFormer<T>, ConfigurableForm {
     
     // MARK: Public
     
-    public var switched: Bool = false
+    public var switched = false
     public var switchWhenSelected = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
