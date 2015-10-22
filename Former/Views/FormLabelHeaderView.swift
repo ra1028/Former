@@ -22,7 +22,7 @@ public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
+        titleLabel.font = UIFont.systemFontOfSize(14)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel

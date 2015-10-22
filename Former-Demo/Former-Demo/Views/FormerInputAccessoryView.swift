@@ -16,7 +16,7 @@ final class FormerInputAccessoryView: UIToolbar {
     private weak var rightArrow: UIBarButtonItem!
     
     init(former: Former) {
-        super.init(frame: CGRect(origin: CGPointZero, size: CGSize(width: 0, height: 44.0)))
+        super.init(frame: CGRect(origin: CGPointZero, size: CGSize(width: 0, height: 44)))
         self.former = former
         configure()
     }
@@ -39,7 +39,7 @@ final class FormerInputAccessoryView: UIToolbar {
         let flexible = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         let leftArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 105)!, target: self, action: "handleBackButton")
         let space = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-        space.width = 20.0
+        space.width = 20
         let rightArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 106)!, target: self, action: "handleForwardButton")
         let doneButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "handleDoneButton")
         let rightSpace = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)

@@ -69,7 +69,7 @@ final class DemoInlineSliderCell: UITableViewCell, DemoInlineSliderFormableRow {
         colorDisplayView.userInteractionEnabled = false
         colorDisplayView.translatesAutoresizingMaskIntoConstraints = false
         colorDisplayView.backgroundColor = .clearColor()
-        colorDisplayView.layer.cornerRadius = 10.0
+        colorDisplayView.layer.cornerRadius = 10
         contentView.insertSubview(colorDisplayView, atIndex: 0)
         self.colorDisplayView = colorDisplayView
         

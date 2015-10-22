@@ -25,8 +25,8 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
-        leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
-        rightConst.constant = (textField.textAlignment == .Right) ? -15.0 : 0
+        leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5 : 15
+        rightConst.constant = (textField.textAlignment == .Right) ? -15 : 0
     }
     
     public override func setup() {
@@ -73,8 +73,8 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
             relatedBy: .Equal,
             toItem: contentView,
             attribute: .Leading,
-            multiplier: 1.0,
-            constant: 15.0
+            multiplier: 1,
+            constant: 15
         )
         let rightConst = NSLayoutConstraint(
             item: textField,
@@ -82,7 +82,7 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
             relatedBy: .Equal,
             toItem: contentView,
             attribute: .Trailing,
-            multiplier: 1.0,
+            multiplier: 1,
             constant: 0
         )
         contentView.addConstraints(constraints + [leftConst, rightConst])

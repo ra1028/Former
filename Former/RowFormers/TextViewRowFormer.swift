@@ -45,7 +45,7 @@ public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormabl
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 110.0
+        cellHeight = 110
     }
     
     public override func cellInitialized(cell: T) {
@@ -129,7 +129,7 @@ public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormabl
     private final func updatePlaceholderColor(text: String?) {
         if attributedPlaceholder == nil {
             placeholderLabel?.textColor = (text?.isEmpty ?? true) ?
-                UIColor(red: 0, green: 0, blue: 0.098 / 255.0, alpha: 0.22) :
+                UIColor(red: 0, green: 0, blue: 0.098 / 255, alpha: 0.22) :
                 .clearColor()
         } else {
             if text?.isEmpty ?? true {

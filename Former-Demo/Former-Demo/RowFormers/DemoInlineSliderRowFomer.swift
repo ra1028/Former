@@ -54,12 +54,13 @@ public final class DemoInlineSliderRowFormer<T: UITableViewCell where T: DemoInl
         colorDisplayView?.backgroundColor = color
         
         let inlineRowFormer = self.inlineRowFormer as! SliderRowFormer<FormSliderCell>
-        inlineRowFormer.cellHeight = 44.0
-        inlineRowFormer.onValueChanged(valueChanged)
-        _ = adjustedValueFromValue.map { inlineRowFormer.adjustedValueFromValue($0) }
-        inlineRowFormer.value = adjustedValueFromValue?(value) ?? value
-        inlineRowFormer.enabled = enabled
-        inlineRowFormer.update()
+        inlineRowFormer.configure { form in
+            form.value = adjustedValueFromValue?(value) ?? value
+            form.enabled = enabled
+            form.cellHeight = 44
+            _ = adjustedValueFromValue.map { form.adjustedValueFromValue($0) }
+        }.onValueChanged(valueChanged)
+        .update()
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {

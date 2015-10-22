@@ -26,7 +26,7 @@ public final class LabelViewFormer<T: UITableViewHeaderFooterView where T: Label
     
     public override func initialized() {
         super.initialized()
-        viewHeight = 30.0
+        viewHeight = 30
     }
     
     public override func update() {

@@ -35,7 +35,7 @@ public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFor
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 216.0
+        cellHeight = 216
     }
     
     public override func cellInitialized(cell: T) {
@@ -50,7 +50,7 @@ public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFor
         let datePicker = cell.formDatePicker()
         datePicker.setDate(date, animated: false)
         datePicker.userInteractionEnabled = enabled
-        datePicker.alpha = enabled ? 1.0 : 0.5
+        datePicker.alpha = enabled ? 1 : 0.5
     }
     
     // MARK: Private

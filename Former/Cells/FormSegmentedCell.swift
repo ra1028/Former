@@ -62,7 +62,7 @@ public class FormSegmentedCell: FormCell, SegmentedFormableRow {
             relatedBy: .Equal,
             toItem: contentView,
             attribute: .CenterY,
-            multiplier: 1.0,
+            multiplier: 1,
             constant: 0
         )
         contentView.addConstraints(constraints + [centerYConst])

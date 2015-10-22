@@ -17,7 +17,7 @@ public class ViewFormer {
     
     // MARK: Public
     
-    public var viewHeight: CGFloat = 10.0
+    public var viewHeight: CGFloat = 10
     
     public init<T: UITableViewHeaderFooterView>(
         viewType: T.Type,

@@ -25,7 +25,7 @@ public class FormTextViewCell: FormCell, TextViewFormableRow {
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
-        leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5.0 : 15.0
+        leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5 : 15
     }
     
     public override func setup() {
@@ -39,7 +39,7 @@ public class FormTextViewCell: FormCell, TextViewFormableRow {
         
         let textView = UITextView()
         textView.backgroundColor = .clearColor()
-        textView.font = .systemFontOfSize(17.0)
+        textView.font = .systemFontOfSize(17)
         textView.contentSize.height = 0
         textView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(textView, atIndex: 0)
@@ -71,8 +71,8 @@ public class FormTextViewCell: FormCell, TextViewFormableRow {
             relatedBy: .Equal,
             toItem: contentView,
             attribute: .Leading,
-            multiplier: 1.0,
-            constant: 15.0
+            multiplier: 1,
+            constant: 15
         )
         contentView.addConstraints(constraints + [leftConst])
         self.leftConst = leftConst

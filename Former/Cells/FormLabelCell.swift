@@ -25,7 +25,7 @@ public class FormLabelCell: FormCell, LabelFormableRow {
     
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
-        rightConst.constant = (accessoryType == .None) ? -15.0 : 0
+        rightConst.constant = (accessoryType == .None) ? -15 : 0
     }
     
     public override func setup() {
@@ -70,7 +70,7 @@ public class FormLabelCell: FormCell, LabelFormableRow {
             relatedBy: .Equal,
             toItem: contentView,
             attribute: .Trailing,
-            multiplier: 1.0,
+            multiplier: 1,
             constant: 0
         )
         contentView.addConstraints(constraints + [rightConst])

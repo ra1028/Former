@@ -22,7 +22,7 @@ public class FormLabelFooterView: FormHeaderFooterView, LabelFormableView {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFontOfSize(14.0)
+        titleLabel.font = UIFont.systemFontOfSize(14)
         titleLabel.textAlignment = .Center
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

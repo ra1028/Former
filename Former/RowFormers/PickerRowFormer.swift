@@ -48,7 +48,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 216.0
+        cellHeight = 216
     }
     
     public override func cellInitialized(cell: T) {
@@ -64,7 +64,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
         let picker = cell.formPickerView()
         picker.selectRow(selectedRow, inComponent: 0, animated: false)
         picker.userInteractionEnabled = enabled
-        picker.alpha = self.enabled ? 1.0 : 0.5
+        picker.alpha = self.enabled ? 1 : 0.5
     }
     
     // MARK: Private
