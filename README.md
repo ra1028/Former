@@ -75,39 +75,30 @@ final class YourViewController: FormViewController {
 
             SectionFormer().append(rowFormer:
 
-                LabelRowFormer<FormLabelCell>() {
-                    $0
+                LabelRowFormer<FormLabelCell>() {                    
                     // Cell setup
-                    }.configure {
-                        $0
+                    }.configure {                        
                         // RowFormer setup
-                    }.onSelected {
-                        $0
+                    }.onSelected {                        
                         // Selection handler
                 }
                 ).append(rowFormer:
 
-                    InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
-                        $0
+                    InlineDatePickerRowFormer<FormInlineDatePickerCell>() {                        
                         // Cell setup
-                        }.configure {
-                            $0
+                        }.configure {                    
                             // Row Former setup
-                        }.onDateChanged {
-                            $0
+                        }.onDateChanged {                            
                             // Value change handler
-                        }.inlineCellSetup {
-                            $0
+                        }.inlineCellSetup {                            
                             // Datepicker cell setup
                     }
                 )
                 .set(headerViewFormer:
 
-                    LabelViewFormer<FormLabelHeaderView>() {
-                        $0
+                    LabelViewFormer<FormLabelHeaderView>() {                        
                         // Header view setup
-                        }.configure {
-                            $0
+                        }.configure {                    
                             // ViewFormer setup
                     }
             )
