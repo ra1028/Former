@@ -22,36 +22,37 @@ To be supported: iOS7.0+
 
 ## Usage (example)
 ```swift
-import Former
-
-class YourViewController : UIViewController {
-
-    @IBOutlet private weak var tableView: UITableView!
-
-    public lazy var former: Former = { [unowned self] in
-        return Former(tableView: self.tableView)
-    }()
+/* You can also use your own ViewController that implemented TableView.
+*  See FormViewController.
+*/
+final class YourViewController: FormViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let textRow = LabelRowFormer<FormTextCell>() {
+        let textRow = LabelRowFormer<FormLabelCell>() {
             // Cell setup
-        }.onSelected {
-            // Selection handler
+            }.configure {
+                // RowFormer setup
+            }.onSelected {
+                // Selection handler
         }
 
         let inlineDatePickerRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>(
             inlineCellSetup: {
-              // Datepicker cell setup
+                // Datepicker cell setup
             }) {
-              // Cell setup
-        }.onValueChanged {
-            // Value change handler
+                // Cell setup
+            }.configure {
+                // Row Former setup
+            }.onValueChanged {
+                // Value change handler
         }
 
-        let header = LabelViewFormer<FormTextHeaderView>() {
+        let header = LabelViewFormer<FormLabelHeaderView>() {
             // Header view setup
+            }.configure {
+                // ViewFormer setup
         }
 
         let section = SectionFormer(rowFormers: [textRow, inlineDatePickerRow])
@@ -60,10 +61,46 @@ class YourViewController : UIViewController {
         former.add(sectionFormers: [section])
             .onScroll {
                 // TableView scroll handler
-            }
+        }
+    }
+}
+```
+__OR__
+```swift
+final class YourViewController: FormViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        former.add(sectionFormers: [
+            SectionFormer(rowFormers: [
+                LabelRowFormer<FormLabelCell>() { _ in
+                    // Cell setup
+                    }.configure {
+                        // RowFormer setup
+                    }.onSelected {
+                        // Selection handler
+                },
+                InlineDatePickerRowFormer<FormInlineDatePickerCell>(
+                    inlineCellSetup: {
+                        // Datepicker cell setup
+                    }) {
+                        // Cell setup
+                    }.configure {
+                        // Row Former setup
+                    }.onValueChanged {
+                        // Value change handler
+                }
+                ])
+                .set(headerViewFormer: LabelViewFormer<FormLabelHeaderView>() {
+                    // Header view setup
+                    }.configure {
+                        // ViewFormer setup
+                    })
+            ])
     }
 }
 ```
 
 ## License
-RAReorderableLayout is available under the MIT license. See the LICENSE file for more info.
+Former is available under the MIT license. See the LICENSE file for more info.
