@@ -142,7 +142,7 @@ final class ExampleViewController: FormViewController {
         let createSelectorRow = { (
             text: String,
             subText: String,
-            onSelected: ((indexPath: NSIndexPath,rowFormer: RowFormer) -> Void)?
+            onSelected: (RowFormer -> Void)?
             ) -> RowFormer in
             return LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.textColor = .formerColor()
@@ -221,13 +221,13 @@ final class ExampleViewController: FormViewController {
         
         // Create SectionFormers
         
-        let section1 = SectionFormer(rowFormers: [switchDateStyleRow, dateRow])
+        let section1 = SectionFormer(rowFormer: switchDateStyleRow, dateRow)
             .set(headerViewFormer: createHeader("Date Setting Example"))
-        let section2 = SectionFormer(rowFormers: [insertRowsRow, insertRowPositionRow, insertRowAnimationRow])
+        let section2 = SectionFormer(rowFormer: insertRowsRow, insertRowPositionRow, insertRowAnimationRow)
             .set(headerViewFormer: createHeader("Insert Rows Example"))
-        let section3 = SectionFormer(rowFormers: [insertSectionRow, insertSectionPositionRow, insertSectionAnimationRow])
+        let section3 = SectionFormer(rowFormer: insertSectionRow, insertSectionPositionRow, insertSectionAnimationRow)
             .set(headerViewFormer: createHeader("Insert Section Example"))
-        let section4 = SectionFormer(rowFormers: [pushSelectorRow, sheetSelectorRow, pickerSelectorRow])
+        let section4 = SectionFormer(rowFormer: pushSelectorRow, sheetSelectorRow, pickerSelectorRow)
             .set(headerViewFormer: createHeader("Selector Example"))
         let section5 = SectionFormer(rowFormers: textFields + [inlinePickerRow])
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
@@ -236,8 +236,8 @@ final class ExampleViewController: FormViewController {
         insertRowsRow.onSwitchChanged(insertRows(sectionTop: section2.firstRowFormer!, sectionBottom: section2.lastRowFormer!))
         insertSectionRow.onSwitchChanged(insertSection(relate: section3))
         
-        former.add(sectionFormers:
-            [section1, section2, section3, section4, section5]
+        former.append(sectionFormer:
+            section1, section2, section3, section4, section5
             ).onCellSelected { [weak self] _ in
                 self?.formerInputAccessoryView.update()
         }
@@ -304,7 +304,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func pushSelectorRowSelected(options: [String])(insdexPath: NSIndexPath, rowFormer: RowFormer) {
+    private func pushSelectorRowSelected(options: [String])(rowFormer: RowFormer) {
         if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
             let controller = TextSelectorViewContoller()
             controller.texts = options
@@ -317,7 +317,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func sheetSelectorRowSelected(options: [String])(insdexPath: NSIndexPath, rowFormer: RowFormer) {
+    private func sheetSelectorRowSelected(options: [String])(rowFormer: RowFormer) {
         if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
             let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             options.forEach { title in

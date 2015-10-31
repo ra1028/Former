@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let navigationController = UINavigationController(rootViewController: TopViewContoller())
         configureNavigationBar(navigationController.navigationBar)
@@ -29,6 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSForegroundColorAttributeName: UIColor.whiteColor(),
             NSFontAttributeName: UIFont.boldSystemFontOfSize(20)
         ]
+        navigationBar.barStyle = .BlackTranslucent
         navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationBar.shadowImage = UIImage()
         navigationBar.subviews.forEach {

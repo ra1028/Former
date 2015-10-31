@@ -114,22 +114,22 @@ final class DefaultRowFormerViewController: FormViewController {
         
         // Create SectionFormers
         
-        let sectionFormer1 = SectionFormer(rowFormers: [disableRow])
+        let sectionFormer1 = SectionFormer(rowFormer: disableRow)
         
-        let sectionFormer2 = SectionFormer(rowFormers: [
+        let sectionFormer2 = SectionFormer(rowFormer:
             textRow, textFieldRow, textViewRow,
             checkRow, switchRow, stepperRow,
             segmentRow, sliderRow, selectorPickerRow,
             selectorDatePickerRow, inlinePickerRow, inlineDateRow
-            ])
+        )
         
-        let sectionFormer3 = SectionFormer(rowFormers: [pickerRow, datePickerRow])
+        let sectionFormer3 = SectionFormer(rowFormer: pickerRow, datePickerRow)
             .set(footerViewFormer: CustomViewFormer<FormHeaderFooterView>())
         
-        former.add(sectionFormers: [sectionFormer1, sectionFormer2, sectionFormer3])
+        former.append(sectionFormer: sectionFormer1, sectionFormer2, sectionFormer3)
     }
     
-    private func disableRowSelected(indexPath: NSIndexPath, rowFormer: RowFormer) {
+    private func disableRowSelected(rowFormer: RowFormer) {
         guard let disableRow = rowFormer as? LabelRowFormer<FormLabelCell> else { return }
         self.former.deselect(true)
         self.former[1...2].flatMap { $0.rowFormers }.forEach {

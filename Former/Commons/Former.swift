@@ -912,7 +912,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return rowFormer(indexPath).cellHeight
+        return rowFormer(indexPath).rowHeight
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

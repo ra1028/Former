@@ -19,7 +19,7 @@ public class RowFormer {
     
     public internal(set) final weak var former: Former?
     public final let cellType: UITableViewCell.Type
-    public final var cellHeight: CGFloat = 44
+    public final var rowHeight: CGFloat = 44
     public internal(set) final var isEditing = false
     public final var enabled = true { didSet { update() } }
     public var canBecomeEditing: Bool {
@@ -41,7 +41,7 @@ public class RowFormer {
         return self
     }
     
-    public final func onSelected(handler: (indexPath: NSIndexPath, rowFormer: RowFormer) -> Void) -> Self {
+    public final func onSelected(handler: (RowFormer -> Void)) -> Self {
         onSelected = handler
         return self
     }
@@ -67,7 +67,7 @@ public class RowFormer {
     
     public func cellSelected(indexPath: NSIndexPath) {
         if enabled {
-           onSelected?(indexPath: indexPath, rowFormer: self)
+           onSelected?(self)
         }
     }
     
@@ -96,7 +96,7 @@ public class RowFormer {
     
     // MARK: Private
     
-    internal final var onSelected: ((indexPath: NSIndexPath, rowFormer: RowFormer) -> Void)?
+    internal final var onSelected: (RowFormer -> Void)?
     private final var _cellInstance: UITableViewCell?
     private final let instantiateType: Former.InstantiateType
 }

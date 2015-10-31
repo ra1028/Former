@@ -30,7 +30,7 @@ public final class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 88
+        rowHeight = 88
     }
     
     deinit {

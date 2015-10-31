@@ -45,7 +45,7 @@ public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormabl
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 110
+        rowHeight = 110
     }
     
     public override func cellInitialized(cell: T) {

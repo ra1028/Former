@@ -79,16 +79,16 @@ final class TopViewContoller: FormViewController {
         
         // Create SectionFormers
         
-        let firstSection = SectionFormer(rowFormers: [realExampleRow])
+        let firstSection = SectionFormer(rowFormer: realExampleRow)
             .set(headerViewFormer: createHeader("Real Example"))
         
-        let secondSection = SectionFormer(rowFormers: [defaultExampleRow])
+        let secondSection = SectionFormer(rowFormer: defaultExampleRow)
             .set(headerViewFormer: createHeader("Usage Examples"))
         
-        let thirdSection = SectionFormer(rowFormers: [defaultRow])
+        let thirdSection = SectionFormer(rowFormer: defaultRow)
             .set(headerViewFormer: createHeader("Default UI"))
             .set(footerViewFormer: createFooter("Former is a fully customizable Swift2 library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
-        former.add(sectionFormers: [firstSection, secondSection, thirdSection])
+        former.append(sectionFormer: firstSection, secondSection, thirdSection)
     }
 }

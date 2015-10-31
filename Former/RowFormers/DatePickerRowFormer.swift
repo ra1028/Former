@@ -35,7 +35,7 @@ public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFor
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 216
+        rowHeight = 216
     }
     
     public override func cellInitialized(cell: T) {

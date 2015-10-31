@@ -49,7 +49,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
     
     public override func initialized() {
         super.initialized()
-        cellHeight = 216
+        rowHeight = 216
     }
     
     public override func cellInitialized(cell: T) {

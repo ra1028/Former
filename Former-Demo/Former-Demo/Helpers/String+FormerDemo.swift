@@ -18,6 +18,14 @@ extension String {
         return dateFormatter.stringFromDate(date)
     }
     
+    static func mediumDateNoTime(date: NSDate) -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = .currentLocale()
+        dateFormatter.timeStyle = .NoStyle
+        dateFormatter.dateStyle = .MediumStyle
+        return dateFormatter.stringFromDate(date)
+    }
+    
     static func fullDate(date: NSDate) -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.locale = .currentLocale()
