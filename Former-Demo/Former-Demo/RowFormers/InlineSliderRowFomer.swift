@@ -12,7 +12,7 @@ import Former
 public protocol InlineSliderFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
-    func formerColorDisplayView() -> UIView?
+    func formColorDisplayView() -> UIView?
 }
 
 public final class InlineSliderRowFormer<T: UITableViewCell where T: InlineSliderFormableRow>
@@ -22,23 +22,30 @@ public final class InlineSliderRowFormer<T: UITableViewCell where T: InlineSlide
     
     public typealias InlineCellType = FormSliderCell
     
-    public private(set) var inlineRowFormer: RowFormer
+    public let inlineRowFormer: RowFormer
     override public var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var onValueChanged: (Float -> Void)?
-    public var adjustedValueFromValue: (Float -> Float)?
     public var value: Float = 0
-    public var color: UIColor?
+    public var color: UIColor = UIColor(hue: 1, saturation: 1, brightness: 1, alpha: 1)
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    public init(
+    required public init(
         instantiateType: Former.InstantiateType = .Class,
-        inlineCellSetup: (InlineCellType -> Void)? = nil,
         cellSetup: (T -> Void)? = nil) {
-            inlineRowFormer = SliderRowFormer<InlineCellType>(instantiateType: .Class, cellSetup: inlineCellSetup)
+            inlineRowFormer = SliderRowFormer<InlineCellType>(instantiateType: .Class)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
+    }
+    
+    public final func onValueChanged(handler: (Float -> Void)) -> Self {
+        onValueChanged = handler
+        return self
+    }
+    
+    public final func adjustedValueFromValue(handler: (Float -> Float)) -> Self {
+        adjustedValueFromValue = handler
+        return self
     }
     
     public override func update() {
@@ -52,7 +59,7 @@ public final class InlineSliderRowFormer<T: UITableViewCell where T: InlineSlide
             if titleColor == nil { titleColor = titleLabel?.textColor }
             titleLabel?.textColor = titleDisabledColor
         }
-        let colorDisplayView = cell.formerColorDisplayView()
+        let colorDisplayView = cell.formColorDisplayView()
         colorDisplayView?.backgroundColor = color
         
         let inlineRowFormer = self.inlineRowFormer as! SliderRowFormer<InlineCellType>
@@ -71,6 +78,9 @@ public final class InlineSliderRowFormer<T: UITableViewCell where T: InlineSlide
     
     private func valueChanged(value: Float) {
         self.value = value
+        let colorValue = CGFloat(value)
+        color = UIColor(hue: colorValue, saturation: colorValue, brightness: colorValue, alpha: 1)
+        update()
         onValueChanged?(value)
     }
     
@@ -80,5 +90,7 @@ public final class InlineSliderRowFormer<T: UITableViewCell where T: InlineSlide
     
     // MARK: Private
     
+    private var onValueChanged: (Float -> Void)?
+    private var adjustedValueFromValue: (Float -> Float)?
     private var titleColor: UIColor?
 }

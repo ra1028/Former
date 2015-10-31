@@ -41,11 +41,11 @@ final class ExampleViewController: FormViewController {
         // Date Setting Example
         
         let dateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
-                $0.titleLabel.text = "Date"
-                $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16)
-                $0.displayLabel.textColor = .formerSubColor()
-                $0.displayLabel.font = .boldSystemFontOfSize(14)
+            $0.titleLabel.text = "Date"
+            $0.titleLabel.textColor = .formerColor()
+            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.displayLabel.textColor = .formerSubColor()
+            $0.displayLabel.font = .boldSystemFontOfSize(14)
             }.inlineCellSetup {
                 $0.datePicker.datePickerMode = .DateAndTime
             }.configure {
@@ -77,7 +77,7 @@ final class ExampleViewController: FormViewController {
                 $0.segmentTitles = positions
                 $0.selectedIndex = insertRowPosition.rawValue
             }.onSegmentSelected { [weak self] index, _ in
-            self?.insertRowPosition = InsertPosition(rawValue: index)!
+                self?.insertRowPosition = InsertPosition(rawValue: index)!
         }
         
         let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {

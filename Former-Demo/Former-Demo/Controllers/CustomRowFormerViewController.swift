@@ -25,13 +25,6 @@ final class CustomRowFormerViewController: FormViewController {
             $0.titleLabel.text = "Inline Slider"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFontOfSize(16)
-            }.configure { form in
-                form.color = UIColor(hue: 1, saturation: 1, brightness: 1, alpha: 1)
-                form.onValueChanged = { [weak form] in
-                    let value = 1 - CGFloat($0)
-                    form?.color = UIColor(hue: value, saturation: value, brightness: value, alpha: 1)
-                    form?.update()
-                }
         }
         
         // Create Headers and Footers
