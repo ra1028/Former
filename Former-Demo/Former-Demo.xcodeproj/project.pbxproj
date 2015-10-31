@@ -7,19 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A53250E1BE48C3F00E4A3F2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */; };
 		2A59E2391BADDB4000A48997 /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A61D84E1BA47B0B001439CC /* Former.framework */; };
 		2A59E23A1BADDB4000A48997 /* Former.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A61D84E1BA47B0B001439CC /* Former.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3813B1BA447D3009C7EFF /* AppDelegate.swift */; };
 		2AC3814F1BA447D3009C7EFF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AC3813C1BA447D3009C7EFF /* Assets.xcassets */; };
 		2AC381501BA447D3009C7EFF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AC3813D1BA447D3009C7EFF /* LaunchScreen.storyboard */; };
-		2AC381511BA447D3009C7EFF /* DemoInlineSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381401BA447D3009C7EFF /* DemoInlineSliderCell.swift */; };
-		2AC381521BA447D3009C7EFF /* CustomRowFormerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381421BA447D3009C7EFF /* CustomRowFormerViewController.swift */; };
 		2AC381531BA447D3009C7EFF /* ExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381431BA447D3009C7EFF /* ExampleViewController.swift */; };
 		2AC381541BA447D3009C7EFF /* DefaultRowFormerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381441BA447D3009C7EFF /* DefaultRowFormerViewController.swift */; };
 		2AC381551BA447D3009C7EFF /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381451BA447D3009C7EFF /* TopViewController.swift */; };
 		2AC381561BA447D3009C7EFF /* String+FormerDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381471BA447D3009C7EFF /* String+FormerDemo.swift */; };
 		2AC381571BA447D3009C7EFF /* UIColor+FormerDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC381481BA447D3009C7EFF /* UIColor+FormerDemo.swift */; };
-		2AC381591BA447D3009C7EFF /* InlineSliderRowFomer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3814B1BA447D3009C7EFF /* InlineSliderRowFomer.swift */; };
 		2AC3815A1BA447D3009C7EFF /* FormerInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3814D1BA447D3009C7EFF /* FormerInputAccessoryView.swift */; };
 		2AC3815C1BA4498D009C7EFF /* TextSelectorViewContorller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AC3815B1BA4498D009C7EFF /* TextSelectorViewContorller.swift */; };
 /* End PBXBuildFile section */
@@ -56,20 +54,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		2A61D8491BA47B0B001439CC /* Former.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Former.xcodeproj; path = ../Former.xcodeproj; sourceTree = "<group>"; };
 		2AB293031BA469FB00D83445 /* Former-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Former-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AC3813B1BA447D3009C7EFF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AC3813C1BA447D3009C7EFF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2AC3813E1BA447D3009C7EFF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		2AC381401BA447D3009C7EFF /* DemoInlineSliderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoInlineSliderCell.swift; sourceTree = "<group>"; };
-		2AC381421BA447D3009C7EFF /* CustomRowFormerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomRowFormerViewController.swift; sourceTree = "<group>"; };
 		2AC381431BA447D3009C7EFF /* ExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleViewController.swift; sourceTree = "<group>"; };
 		2AC381441BA447D3009C7EFF /* DefaultRowFormerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultRowFormerViewController.swift; sourceTree = "<group>"; };
 		2AC381451BA447D3009C7EFF /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		2AC381471BA447D3009C7EFF /* String+FormerDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FormerDemo.swift"; sourceTree = "<group>"; };
 		2AC381481BA447D3009C7EFF /* UIColor+FormerDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+FormerDemo.swift"; sourceTree = "<group>"; };
 		2AC381491BA447D3009C7EFF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2AC3814B1BA447D3009C7EFF /* InlineSliderRowFomer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineSliderRowFomer.swift; sourceTree = "<group>"; };
 		2AC3814D1BA447D3009C7EFF /* FormerInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormerInputAccessoryView.swift; sourceTree = "<group>"; };
 		2AC3815B1BA4498D009C7EFF /* TextSelectorViewContorller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextSelectorViewContorller.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,7 +102,6 @@
 		2AC3813A1BA447D3009C7EFF /* Former-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				2AC3814A1BA447D3009C7EFF /* RowFormers */,
 				2AC381411BA447D3009C7EFF /* Controllers */,
 				2AC3813F1BA447D3009C7EFF /* Cells */,
 				2AC3814C1BA447D3009C7EFF /* Views */,
@@ -122,7 +117,6 @@
 		2AC3813F1BA447D3009C7EFF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2AC381401BA447D3009C7EFF /* DemoInlineSliderCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -130,11 +124,11 @@
 		2AC381411BA447D3009C7EFF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2AC381421BA447D3009C7EFF /* CustomRowFormerViewController.swift */,
 				2AC381431BA447D3009C7EFF /* ExampleViewController.swift */,
 				2AC381441BA447D3009C7EFF /* DefaultRowFormerViewController.swift */,
 				2AC381451BA447D3009C7EFF /* TopViewController.swift */,
 				2AC3815B1BA4498D009C7EFF /* TextSelectorViewContorller.swift */,
+				2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -146,14 +140,6 @@
 				2AC381481BA447D3009C7EFF /* UIColor+FormerDemo.swift */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		2AC3814A1BA447D3009C7EFF /* RowFormers */ = {
-			isa = PBXGroup;
-			children = (
-				2AC3814B1BA447D3009C7EFF /* InlineSliderRowFomer.swift */,
-			);
-			path = RowFormers;
 			sourceTree = "<group>";
 		};
 		2AC3814C1BA447D3009C7EFF /* Views */ = {
@@ -254,15 +240,13 @@
 			files = (
 				2AC3815C1BA4498D009C7EFF /* TextSelectorViewContorller.swift in Sources */,
 				2AC381551BA447D3009C7EFF /* TopViewController.swift in Sources */,
-				2AC381591BA447D3009C7EFF /* InlineSliderRowFomer.swift in Sources */,
 				2AC381571BA447D3009C7EFF /* UIColor+FormerDemo.swift in Sources */,
 				2AC381541BA447D3009C7EFF /* DefaultRowFormerViewController.swift in Sources */,
-				2AC381511BA447D3009C7EFF /* DemoInlineSliderCell.swift in Sources */,
 				2AC3815A1BA447D3009C7EFF /* FormerInputAccessoryView.swift in Sources */,
 				2AC381561BA447D3009C7EFF /* String+FormerDemo.swift in Sources */,
 				2AC381531BA447D3009C7EFF /* ExampleViewController.swift in Sources */,
-				2AC381521BA447D3009C7EFF /* CustomRowFormerViewController.swift in Sources */,
 				2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */,
+				2A53250E1BE48C3F00E4A3F2 /* EditProfileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

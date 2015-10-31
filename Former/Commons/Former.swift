@@ -316,9 +316,8 @@ public final class Former: NSObject {
     }
     
     /// Append SectionFormer to last index.
-    public func append(sectionFormer sectionFormer: SectionFormer) -> Self {
-        sectionFormers.append(sectionFormer)
-        return self
+    public func append(sectionFormer sectionFormer: SectionFormer...) -> Self {
+        return add(sectionFormers: sectionFormer)
     }
     
     /// Add SectionFormers to last index.
@@ -328,6 +327,11 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormer to index of section with NO updates.
+    public func insert(sectionFormer sectionFormer: SectionFormer..., toSection: Int) -> Self {
+        return insert(sectionFormers: sectionFormer, toSection: toSection)
+    }
+    
+    /// Insert SectionFormers to index of section with NO updates.
     public func insert(sectionFormers sectionFormers: [SectionFormer], toSection: Int) -> Self {
         let count = self.sectionFormers.count
         if count == 0 ||  toSection >= count {
@@ -342,27 +346,44 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormer to above other SectionFormer with NO updates.
+    public func insert(sectionFormer sectionFormer: SectionFormer..., above: SectionFormer) -> Self {
+        return insert(sectionFormers: sectionFormer, above: above)
+    }
+    
+    /// Insert SectionFormers to above other SectionFormer with NO updates.
     public func insert(sectionFormers sectionFormers: [SectionFormer], above: SectionFormer) -> Self {
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             if sectionFormer === above {
-                insert(sectionFormers: sectionFormers, toSection: section - 1)
-                return self
+                return insert(sectionFormers: sectionFormers, toSection: section - 1)
             }
         }
-        add(sectionFormers: sectionFormers)
-        return self
+        return add(sectionFormers: sectionFormers)
     }
     
     /// Insert SectionFormer to below other SectionFormer with NO updates.
-    public func insert(sectionFormers sectionFormers: [SectionFormer], below: SectionFormer) -> Self {
+    public func insert(sectionFormer sectionFormer: SectionFormer..., below: SectionFormer) -> Self {
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             if sectionFormer === below {
-                insert(sectionFormers: sectionFormers, toSection: section + 1)
-                return self
+                return insert(sectionFormers: sectionFormers, toSection: section + 1)
             }
         }
         add(sectionFormers: sectionFormers)
-        return self
+        return insert(sectionFormers: sectionFormer, below: below)
+    }
+    
+    /// Insert SectionFormers to below other SectionFormer with NO updates.
+    public func insert(sectionFormers sectionFormers: [SectionFormer], below: SectionFormer) -> Self {
+        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+            if sectionFormer === below {
+                return insert(sectionFormers: sectionFormers, toSection: section + 1)
+            }
+        }
+        return add(sectionFormers: sectionFormers)
+    }
+    
+    /// Insert SectionFormer to index of section with animated updates.
+    public func insertUpdate(sectionFormer sectionFormer: SectionFormer..., toSection: Int, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return insertUpdate(sectionFormers: sectionFormer, toSection: toSection, rowAnimation: rowAnimation)
     }
     
     /// Insert SectionFormers to index of section with animated updates.
@@ -376,51 +397,100 @@ public final class Former: NSObject {
         return self
     }
     
+    /// Insert SectionFormer to above other SectionFormer with animated updates.
+    public func insertUpdate(sectionFormer sectionFormer: SectionFormer..., above: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return insertUpdate(sectionFormers: sectionFormer, above: above, rowAnimation: rowAnimation)
+    }
+    
     /// Insert SectionFormers to above other SectionFormer with animated updates.
     public func insertUpdate(sectionFormers sectionFormers: [SectionFormer], above: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         removeCurrentInlineRowUpdate()
-        guard !sectionFormers.isEmpty else { return self }
-        tableView?.beginUpdates()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             if sectionFormer === above {
                 let indexSet = NSIndexSet(indexesInRange: NSMakeRange(section, sectionFormers.count))
+                tableView?.beginUpdates()
                 insert(sectionFormers: sectionFormers, toSection: section)
                 tableView?.insertSections(indexSet, withRowAnimation: rowAnimation)
                 tableView?.endUpdates()
                 return self
             }
         }
-        let indexSet = NSIndexSet(indexesInRange: NSMakeRange(self.sectionFormers.count - 1, sectionFormers.count))
-        add(sectionFormers: sectionFormers)
-        tableView?.insertSections(indexSet, withRowAnimation: rowAnimation)
-        tableView?.endUpdates()
         return self
+    }
+    
+    /// Insert SectionFormer to below other SectionFormer with animated updates.
+    public func insertUpdate(sectionFormer sectionFormer: SectionFormer..., below: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return insertUpdate(sectionFormers: sectionFormer, below: below, rowAnimation: rowAnimation)
     }
     
     /// Insert SectionFormers to below other SectionFormer with animated updates.
     public func insertUpdate(sectionFormers sectionFormers: [SectionFormer], below: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         removeCurrentInlineRowUpdate()
-        tableView?.beginUpdates()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             if sectionFormer === below {
                 let indexSet = NSIndexSet(indexesInRange: NSMakeRange(section + 1, sectionFormers.count))
+                tableView?.beginUpdates()
                 insert(sectionFormers: sectionFormers, toSection: section + 1)
                 tableView?.insertSections(indexSet, withRowAnimation: rowAnimation)
                 tableView?.endUpdates()
                 return self
             }
         }
-        let indexSet = NSIndexSet(indexesInRange: NSMakeRange(0, sectionFormers.count))
-        insert(sectionFormers: sectionFormers, toSection: 0)
-        tableView?.insertSections(indexSet, withRowAnimation: rowAnimation)
-        tableView?.endUpdates()
         return self
+    }
+    
+    /// Insert RowFormer with NO updates.
+    public func insert(rowFormer rowFormer: RowFormer..., toIndexPath: NSIndexPath) -> Self {
+        return insert(rowFormers: rowFormer, toIndexPath: toIndexPath)
     }
     
     /// Insert RowFormers with NO updates.
     public func insert(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath) -> Self {
         self[toIndexPath.section].insert(rowFormers: rowFormers, toIndex: toIndexPath.row)
         return self
+    }
+    
+    /// Insert RowFormer to above other RowFormer with NO updates.
+    public func insert(rowFormer rowFormer: RowFormer..., above: RowFormer) -> Self {
+        return insert(rowFormers: rowFormer, above: above)
+    }
+    
+    /// Insert RowFormers to above other RowFormer with NO updates.
+    public func insert(rowFormers rowFormers: [RowFormer], above: RowFormer) -> Self {
+        guard !rowFormers.isEmpty else { return self }
+        for sectionFormer in self.sectionFormers {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+                if rowFormer === above {
+                    sectionFormer.insert(rowFormers: rowFormers, toIndex: row)
+                    return self
+                }
+            }
+        }
+        return self
+    }
+    
+    /// Insert RowFormers to below other RowFormer with NO updates.
+    public func insert(rowFormer rowFormer: RowFormer..., below: RowFormer) -> Self {
+        return insert(rowFormers: rowFormer, below: below)
+    }
+    
+    /// Insert RowFormers to below other RowFormer with NO updates.
+    public func insert(rowFormers rowFormers: [RowFormer], below: RowFormer) -> Self {
+        guard !rowFormers.isEmpty else { return self }
+        for sectionFormer in self.sectionFormers {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+                if rowFormer === below {
+                    sectionFormer.insert(rowFormers: rowFormers, toIndex: row + 1)
+                    return self
+                }
+            }
+        }
+        return self
+    }
+    
+    /// Insert RowFormer with animated updates.
+    public func insertUpdate(rowFormer rowFormer: RowFormer..., toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return insertUpdate(rowFormers: rowFormer, toIndexPath: toIndexPath, rowAnimation: rowAnimation)
     }
     
     /// Insert RowFormers with animated updates.
@@ -437,17 +507,21 @@ public final class Former: NSObject {
         return self
     }
     
+    /// Insert RowFormer to above other RowFormer with animated updates.
+    public func insertUpdate(rowFormer rowFormer: RowFormer..., above: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return insertUpdate(rowFormers: rowFormer, above: above, rowAnimation: rowAnimation)
+    }
+    
     /// Insert RowFormers to above other RowFormer with animated updates.
     public func insertUpdate(rowFormers rowFormers: [RowFormer], above: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         removeCurrentInlineRowUpdate()
-        guard !rowFormers.isEmpty else { return self }
-        tableView?.beginUpdates()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
                 if rowFormer === above {
                     let indexPaths = (row..<row + rowFormers.count).map {
                         NSIndexPath(forRow: $0, inSection: section)
                     }
+                    tableView?.beginUpdates()
                     sectionFormer.insert(rowFormers: rowFormers, toIndex: row)
                     tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
                     tableView?.endUpdates()
@@ -455,24 +529,24 @@ public final class Former: NSObject {
                 }
             }
         }
-        let sectionFormer = SectionFormer(rowFormers: rowFormers)
-        add(sectionFormers: [sectionFormer])
-        tableView?.insertSections(NSIndexSet(index: self.sectionFormers.count), withRowAnimation: rowAnimation)
-        tableView?.endUpdates()
         return self
+    }
+    
+    /// Insert RowFormer to below other RowFormer with animated updates.
+    public func insertUpdate(rowFormer rowFormer: RowFormer..., below: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return insertUpdate(rowFormers: rowFormer, below: below, rowAnimation: rowAnimation)
     }
     
     /// Insert RowFormers to below other RowFormer with animated updates.
     public func insertUpdate(rowFormers rowFormers: [RowFormer], below: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
         removeCurrentInlineRowUpdate()
-        guard !rowFormers.isEmpty else { return self }
-        tableView?.beginUpdates()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
             for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
                 if rowFormer === below {
                     let indexPaths = (row + 1..<row + 1 + rowFormers.count).map {
                         NSIndexPath(forRow: $0, inSection: section)
                     }
+                    tableView?.beginUpdates()
                     sectionFormer.insert(rowFormers: rowFormers, toIndex: row + 1)
                     tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
                     tableView?.endUpdates()
@@ -480,10 +554,6 @@ public final class Former: NSObject {
                 }
             }
         }
-        let sectionFormer = SectionFormer(rowFormers: rowFormers)
-        insert(sectionFormers: [sectionFormer], toSection: 0)
-        tableView?.insertSections(NSIndexSet(index: 0), withRowAnimation: rowAnimation)
-        tableView?.endUpdates()
         return self
     }
     
@@ -511,16 +581,25 @@ public final class Former: NSObject {
     }
     
     /// Remove SectionFormers from instances of SectionFormer with NO updates.
-    // TODO:
+    public func remove(sectionFormer sectionFormer: SectionFormer...) -> Self {
+        return remove(sectionFormers: sectionFormer)
+    }
+    
+    /// Remove SectionFormers from instances of SectionFormer with NO updates.
     public func remove(sectionFormers sectionFormers: [SectionFormer]) -> Self {
-        removeFromSectionFormers(sectionFormers)
+        removeSectionFormers(sectionFormers)
         return self
+    }
+    
+    /// Remove SectionFormers from instances of SectionFormer with animated updates.
+    public func removeUpdate(sectionFormer sectionFormer: SectionFormer..., rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return removeUpdate(sectionFormers: sectionFormer, rowAnimation: rowAnimation)
     }
     
     /// Remove SectionFormers from instances of SectionFormer with animated updates.
     public func removeUpdate(sectionFormers sectionFormers: [SectionFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
         guard !sectionFormers.isEmpty else { return self }
-        let indexSet = removeFromSectionFormers(sectionFormers)
+        let indexSet = removeSectionFormers(sectionFormers)
         guard indexSet.count > 0 else { return self }
         tableView?.beginUpdates()
         tableView?.deleteSections(indexSet, withRowAnimation: rowAnimation)
@@ -528,10 +607,20 @@ public final class Former: NSObject {
         return self
     }
     
+    /// Remove RowFormer with NO updates.
+    public func remove(rowFormer rowFormer: RowFormer...) -> Self {
+        return remove(rowFormers: rowFormer)
+    }
+    
     /// Remove RowFormers with NO updates.
     public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
-        removeFromRowFormers(rowFormers)
+        removeRowFormers(rowFormers)
         return self
+    }
+    
+    /// Remove RowFormers with animated updates.
+    public func removeUpdate(rowFormer rowFormer: RowFormer..., rowAnimation: UITableViewRowAnimation = .None) -> Self {
+        return removeUpdate(rowFormers: rowFormer, rowAnimation: rowAnimation)
     }
     
     /// Remove RowFormers with animated updates.
@@ -539,7 +628,7 @@ public final class Former: NSObject {
         removeCurrentInlineRowUpdate()
         guard !rowFormers.isEmpty else { return self }
         tableView?.beginUpdates()
-        let oldIndexPaths = removeFromRowFormers(rowFormers)
+        let oldIndexPaths = removeRowFormers(rowFormers)
         tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
         tableView?.endUpdates()
         return self
@@ -577,7 +666,7 @@ public final class Former: NSObject {
     private func removeCurrentInlineRow() -> NSIndexPath? {
         var indexPath: NSIndexPath? = nil
         if let oldInlineRowFormer = (inlineRowFormer as? InlineForm)?.inlineRowFormer,
-            let removedIndexPath = removeFromRowFormers([oldInlineRowFormer]).first {
+            let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
                 indexPath = removedIndexPath
                 (inlineRowFormer as? InlineForm)?.editingDidEnd()
                 inlineRowFormer = nil
@@ -593,7 +682,7 @@ public final class Former: NSObject {
         }
     }
     
-    private func removeFromSectionFormers(sectionFormers: [SectionFormer]) -> NSIndexSet {
+    private func removeSectionFormers(sectionFormers: [SectionFormer]) -> NSIndexSet {
         var removedCount = 0
         let indexSet = NSMutableIndexSet()
         for (section, sectionFormer) in self.sectionFormers.enumerate() {
@@ -608,7 +697,7 @@ public final class Former: NSObject {
         return indexSet
     }
     
-    private func removeFromRowFormers(rowFormers: [RowFormer]) -> [NSIndexPath] {
+    private func removeRowFormers(rowFormers: [RowFormer]) -> [NSIndexPath] {
         var removedCount = 0
         var removeIndexPaths = [NSIndexPath]()
         for (section, sectionFormer) in sectionFormers.enumerate() {
@@ -618,7 +707,7 @@ public final class Former: NSObject {
                     sectionFormer.remove(rowFormers: [rowFormer])
                     if let oldInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer {
                         removeIndexPaths.append(NSIndexPath(forRow: row + 1, inSection: section))
-                        removeFromRowFormers([oldInlineRowFormer])
+                        removeRowFormers([oldInlineRowFormer])
                         (inlineRowFormer as? InlineForm)?.editingDidEnd()
                         inlineRowFormer = nil
                     }
@@ -768,7 +857,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
             if let currentInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer
                 where rowFormer !== inlineRowFormer {
                     self.tableView?.beginUpdates()
-                    if let removedIndexPath = removeFromRowFormers([oldInlineRowFormer]).first {
+                    if let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
                         let insertIndexPath =
                         (removedIndexPath.section == indexPath.section && removedIndexPath.row < indexPath.row)
                             ? indexPath : NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)

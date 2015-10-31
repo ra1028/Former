@@ -32,23 +32,6 @@ final class TopViewContoller: FormViewController {
         
         // Create RowFormers
         
-        let firstComponets: [(String, (() -> Void)?)] = [
-            ("Edit Profile", { /*[weak self] in
-                self?.navigationController?.pushViewController(, animated: true)*/})
-        ]
-        
-        let secondComponents: [(String, (() -> Void)?)] = [
-            ("All Defaults", { [weak self] in
-                self?.navigationController?.pushViewController(DefaultRowFormerViewController(), animated: true)})
-        ]
-        
-        let thirdComponents: [(String, (() -> Void)?)] = [
-            ("Default RowFormer Examples", { [weak self] in
-                self?.navigationController?.pushViewController(ExampleViewController(), animated: true)}),
-            ("Custom  RowFormer Examples", { [weak self] in
-                self?.navigationController?.pushViewController(CustomRowFormerViewController(), animated: true)})
-        ]
-        
         let createMenu: ((String, (() -> Void)?) -> RowFormer) = { text, onSelected in
             return LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.textColor = .formerColor()
@@ -60,6 +43,16 @@ final class TopViewContoller: FormViewController {
                 .onSelected { _ in
                     onSelected?()
             }
+        }
+        
+        let realExampleRow = createMenu("Edit Profile") { [weak self] in
+            self?.navigationController?.pushViewController(EditProfileViewController(), animated: true)
+        }
+        let defaultExampleRow = createMenu("Default RowFormer Examples") { [weak self] in
+            self?.navigationController?.pushViewController(ExampleViewController(), animated: true)
+        }
+        let defaultRow = createMenu("All Defaults") { [weak self] in
+            self?.navigationController?.pushViewController(DefaultRowFormerViewController(), animated: true)
         }
         
         // Create Headers and Footers
@@ -86,14 +79,14 @@ final class TopViewContoller: FormViewController {
         
         // Create SectionFormers
         
-        let firstSection = SectionFormer(rowFormers: firstComponets.map(createMenu))
+        let firstSection = SectionFormer(rowFormers: [realExampleRow])
             .set(headerViewFormer: createHeader("Real Example"))
         
-        let secondSection = SectionFormer(rowFormers: secondComponents.map(createMenu))
-            .set(headerViewFormer: createHeader("Default UI"))
-        
-        let thirdSection = SectionFormer(rowFormers: thirdComponents.map(createMenu))
+        let secondSection = SectionFormer(rowFormers: [defaultExampleRow])
             .set(headerViewFormer: createHeader("Usage Examples"))
+        
+        let thirdSection = SectionFormer(rowFormers: [defaultRow])
+            .set(headerViewFormer: createHeader("Default UI"))
             .set(footerViewFormer: createFooter("Former is a fully customizable Swift2 library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
         former.add(sectionFormers: [firstSection, secondSection, thirdSection])

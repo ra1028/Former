@@ -12,8 +12,8 @@ public final class SectionFormer {
     
     // MARK: Public
     
-    public init(rowFormer: RowFormer) {
-        self.rowFormers.append(rowFormer)
+    public init(rowFormer: RowFormer...) {
+        self.rowFormers = rowFormer
     }
     
     public init(rowFormers: [RowFormer] = []) {
@@ -53,14 +53,25 @@ public final class SectionFormer {
     }
     
     /// Append RowFormer to last index.
-    public func append(rowFormer rowFormer: RowFormer) -> Self {
-        self.rowFormers.append(rowFormer)
+    public func append(rowFormer rowFormer: RowFormer...) -> Self {
+        add(rowFormers: rowFormer)
         return self
     }
     
     /// Add RowFormers to last index.
     public func add(rowFormers rowFormers: [RowFormer]) -> Self {
         self.rowFormers += rowFormers
+        return self
+    }
+    
+    /// Insert RowFormer to any index.
+    public func insert(rowFormer rowFormer: RowFormer..., toIndex: Int) -> Self {
+        let count = self.rowFormers.count
+        if count == 0 ||  toIndex >= count {
+            add(rowFormers: rowFormers)
+            return self
+        }
+        self.rowFormers.insertContentsOf(rowFormers, at: toIndex)
         return self
     }
     
@@ -75,11 +86,35 @@ public final class SectionFormer {
         return self
     }
     
+    /// Insert RowFormer to above other SectionFormer.
+    public func insert(rowFormer rowFormer: RowFormer..., above: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerate() {
+            if rowFormer === above {
+                insert(rowFormers: [rowFormer], toIndex: row)
+                return self
+            }
+        }
+        add(rowFormers: rowFormers)
+        return self
+    }
+    
     /// Insert RowFormers to above other SectionFormer.
     public func insert(rowFormers rowFormers: [RowFormer], above: RowFormer) -> Self {
         for (row, rowFormer) in self.rowFormers.enumerate() {
             if rowFormer === above {
                 insert(rowFormers: [rowFormer], toIndex: row)
+                return self
+            }
+        }
+        add(rowFormers: rowFormers)
+        return self
+    }
+    
+    /// Insert RowFormer to below other SectionFormer.
+    public func insert(rowFormer rowFormer: RowFormer..., below: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerate() {
+            if rowFormer === below {
+                insert(rowFormers: [rowFormer], toIndex: row + 1)
                 return self
             }
         }
@@ -96,6 +131,20 @@ public final class SectionFormer {
             }
         }
         add(rowFormers: rowFormers)
+        return self
+    }
+    
+    /// Remove RowFormers from instances of RowFormer.
+    public func remove(rowFormer rowFormer: RowFormer...) -> Self {
+        var removedCount = 0
+        for (index, rowFormer) in self.rowFormers.enumerate() {
+            if rowFormers.contains({ $0 === rowFormer }) {
+                remove(index)
+                if ++removedCount >= rowFormers.count {
+                    return self
+                }
+            }
+        }
         return self
     }
     

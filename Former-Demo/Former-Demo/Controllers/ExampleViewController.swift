@@ -35,7 +35,7 @@ final class ExampleViewController: FormViewController {
     }
     
     private func configure() {
-        title = "Default Example"
+        title = "Usage Example"
         
         // Create RowFormers
         // Date Setting Example
