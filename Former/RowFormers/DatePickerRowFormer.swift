@@ -55,7 +55,7 @@ public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFor
     
     // MARK: Private
     
-    public final var onDateChanged: (NSDate -> Void)?
+    private final var onDateChanged: (NSDate -> Void)?
     
     private dynamic func dateChanged(datePicker: UIDatePicker) {
         if enabled {

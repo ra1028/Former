@@ -10,8 +10,8 @@ import UIKit
 
 public protocol SelectorDatePickerFormableRow: FormableRow {
     
-    var selectorDatePicker: UIDatePicker? { get set } // Not need to set UIDatePicker instance.
-    var selectorAccessoryView: UIView? { get set } // Not need to set UIView instance.
+    var selectorDatePicker: UIDatePicker? { get set } // Needs NOT to set instance.
+    var selectorAccessoryView: UIView? { get set } // Needs NOT to set instance.
     
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?

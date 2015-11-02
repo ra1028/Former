@@ -77,7 +77,7 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
         
         let inlineRowFormer = self.inlineRowFormer as! DatePickerRowFormer<InlineCellType>
         inlineRowFormer.configure {
-            $0.onDateChanged = dateChanged
+            $0.onDateChanged(dateChanged)
             $0.date = date
             $0.enabled = enabled
         }.update()

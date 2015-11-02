@@ -70,7 +70,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
     
     // MARK: Private
     
-    private final var onValueChanged: ((PickerItem<S>) -> Void)?
+    private final var onValueChanged: (PickerItem<S> -> Void)?
     
     private lazy var observer: Observer<T, S> = { [unowned self] in
         Observer<T, S>(pickerRowFormer: self)

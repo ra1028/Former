@@ -12,6 +12,7 @@ import UIKit
 
 public protocol InlineForm: class {
     
+    // Needs to implements
     var inlineRowFormer: RowFormer { get }
     func editingDidBegin()
     func editingDidEnd()
@@ -19,7 +20,10 @@ public protocol InlineForm: class {
 
 public protocol ConfigurableInlineForm: InlineForm {
     
+    // Needs to implements
     typealias InlineCellType: UITableViewCell
+    
+    // Needs NOT to implements
     func inlineCellSetup(handler: (InlineCellType -> Void)) -> Self
     func inlineCellUpdate(@noescape update: (InlineCellType -> Void)) -> Self
 }
@@ -41,12 +45,14 @@ extension ConfigurableInlineForm where Self: RowFormer {
 
 public protocol SelectorForm: class {
     
+    // Needs to implements
     func editingDidBegin()
     func editingDidEnd()
 }
 
 public protocol UpdatableSelectorForm: SelectorForm {
     
+    // Need NOT to implements
     typealias SelectorViewType: UIView
     var selectorView: SelectorViewType { get }
     func selectorViewUpdate(@noescape update: (SelectorViewType -> Void)) -> Self
@@ -64,6 +70,7 @@ extension UpdatableSelectorForm where Self: RowFormer {
 
 public protocol ConfigurableForm: class {
     
+    // Needs NOT to implements
     func configure(@noescape handler: (Self -> Void)) -> Self
 }
 
