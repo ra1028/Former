@@ -14,12 +14,14 @@ public final class Former: NSObject {
     
     /**
     InstantiateType is type of instantiate of Cell or HeaderFooterView.
-    Choose 'InstantiateType.Nib(nibName: String, bundle: NSBundle?)' if Cell or HeaderFooterView is instantiate from xib.
-    Or if without xib, choose 'InstantiateType.Class'.
+    If the cell or HeaderFooterView to instantiate from the nib of mainBudnle , use the case 'Nib(nibName: String)'.
+    Using the '.NibBundle(nibName: String, bundle: NSBundle)' If also using the custom bundle.
+    Or if without xib, use '.Class'.
     **/
     public enum InstantiateType {
         case Class
-        case Nib(nibName: String, bundle: NSBundle?)
+        case Nib(nibName: String)
+        case NibBundle(nibName: String, bundle: NSBundle)
     }
     
     /// All SectionFormers. Default is empty.

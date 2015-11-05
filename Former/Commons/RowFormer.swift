@@ -80,10 +80,12 @@ public class RowFormer {
             switch instantiateType {
             case .Class:
                 cell = cellType.init(style: .Default, reuseIdentifier: nil)
-            case .Nib(nibName: let nibName, bundle: let bundle):
-                let bundle = bundle ?? NSBundle.mainBundle()
-                cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
+            case .Nib(nibName: let nibName):
+                cell = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
                 assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
+            case .NibBundle(nibName: let nibName, bundle: let bundle):
+                cell = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewCell
+                assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName), bundle: \(bundle)).")
             }
             _cellInstance = cell
             cellInstanceInitialized(cell!)

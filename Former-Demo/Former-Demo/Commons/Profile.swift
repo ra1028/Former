@@ -1,5 +1,5 @@
 //
-//  ProfileData.swift
+//  Profile.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 10/31/15.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-final class ProfileData {
+final class Profile {
     
-    static let sharedInstance = ProfileData()
+    static let sharedInstance = Profile()
     
     var image: UIImage?
     var name: String?

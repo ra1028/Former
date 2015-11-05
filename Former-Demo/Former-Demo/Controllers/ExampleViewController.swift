@@ -11,11 +11,11 @@ import Former
 
 private extension UITableViewRowAnimation {
     
-    static func animationNames() -> [String] {
+    static func names() -> [String] {
         return ["None", "Fade", "Right", "Left", "Top", "Bottom", "Middle", "Automatic"]
     }
     
-    static func allAnimations() -> [UITableViewRowAnimation] {
+    static func all() -> [UITableViewRowAnimation] {
         return [.None, .Fade, .Right, .Left, .Top, .Bottom, .Middle, .Automatic]
     }
 }
@@ -87,10 +87,10 @@ final class ExampleViewController: FormViewController {
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             }.configure {
-                $0.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
-                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
+                $0.pickerItems = UITableViewRowAnimation.names().enumerate().map {
+                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
                 }
-                $0.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertRowAnimation) ?? 0
+                $0.selectedRow = UITableViewRowAnimation.all().indexOf(insertRowAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertRowAnimation = $0.value!
@@ -128,10 +128,10 @@ final class ExampleViewController: FormViewController {
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             }.configure {
-                $0.pickerItems = UITableViewRowAnimation.animationNames().enumerate().map {
-                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.allAnimations()[$0.index])
+                $0.pickerItems = UITableViewRowAnimation.names().enumerate().map {
+                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
                 }
-                $0.selectedRow = UITableViewRowAnimation.allAnimations().indexOf(insertSectionAnimation) ?? 0
+                $0.selectedRow = UITableViewRowAnimation.all().indexOf(insertSectionAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertSectionAnimation = $0.value!

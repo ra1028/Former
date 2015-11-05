@@ -45,10 +45,12 @@ public class ViewFormer {
             switch instantiateType {
             case .Class:
                 view = viewType.init(reuseIdentifier: nil)
-            case .Nib(nibName: let nibName, bundle: let bundle):
-                let bundle = bundle ?? NSBundle.mainBundle()
-                view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+            case .Nib(nibName: let nibName):
+                view = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
+            case .NibBundle(nibName: let nibName, bundle: let bundle):
+                view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+                assert(view != nil, "[Former] Failed to load header footer view from nib (nibName: \(nibName)), bundle: (\(bundle)).")
             }
             view!.contentView.backgroundColor = .clearColor()
             _viewInstance = view
