@@ -77,13 +77,21 @@ final class EditProfileViewController: FormViewController {
             }.onTextChanged {
                 Profile.sharedInstance.location = $0
         }
+        let introductionRow = TextViewRowFormer<FormTextViewCell>() {
+            $0.textView.textColor = .formerSubColor()
+            $0.textView.font = .systemFontOfSize(15)
+            }.configure {
+                $0.placeholder = "Add your self-introduction"
+                $0.text = Profile.sharedInstance.introduction
+            }.onTextChanged {
+                Profile.sharedInstance.introduction = $0
+        }
         
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = { text in
-            return LabelViewFormer<FormLabelHeaderView>() {
-                $0.titleLabel.textColor = .lightGrayColor()
-                }.configure {
+            return LabelViewFormer<FormLabelHeaderView>()
+                .configure {
                     $0.viewHeight = 44
                     $0.text = text
             }
@@ -95,8 +103,10 @@ final class EditProfileViewController: FormViewController {
             .set(headerViewFormer: createHeader("Profile Image"))
         let statusSection = SectionFormer(rowFormer: nameRow, genderRow, birthdayRow, locationRow)
             .set(headerViewFormer: createHeader("About"))
+        let introductionSection = SectionFormer(rowFormer: introductionRow)
+            .set(headerViewFormer: createHeader("Introduction"))
         
-        former.append(sectionFormer: imageSection, statusSection)
+        former.append(sectionFormer: imageSection, statusSection, introductionSection)
     }
     
     private func presentImagePicker() {

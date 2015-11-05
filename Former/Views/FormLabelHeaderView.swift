@@ -22,6 +22,7 @@ public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
         super.setup()
         
         let titleLabel = UILabel()
+        titleLabel.textColor = .lightGrayColor()
         titleLabel.font = .systemFontOfSize(14)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, atIndex: 0)

@@ -17,4 +17,5 @@ final class Profile {
     var gender: String?
     var birthDay: NSDate?
     var location: String?
+    var introduction: String?
 }

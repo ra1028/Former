@@ -209,13 +209,10 @@ final class ExampleViewController: FormViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = { text in
-            return LabelViewFormer<FormLabelHeaderView>() {
-                $0.titleLabel.textColor = .grayColor()
-                $0.titleLabel.font = .systemFontOfSize(14)
-                $0.contentView.backgroundColor = .groupTableViewBackgroundColor()
-                }.configure {
+            return LabelViewFormer<FormLabelHeaderView>()
+                .configure {
                     $0.text = text
-                    $0.viewHeight = 40
+                    $0.viewHeight = 44
             }
         }
         

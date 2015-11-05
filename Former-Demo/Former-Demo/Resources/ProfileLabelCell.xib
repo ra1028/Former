@@ -21,14 +21,14 @@
                             <constraint firstAttribute="width" constant="70" id="wAK-iH-XDx"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WbB-r5-lRb">
                         <rect key="frame" x="90" y="0.0" width="220" height="43.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -48,7 +48,7 @@
                 <outlet property="displayLabel" destination="WbB-r5-lRb" id="JF1-cq-Qbf"/>
                 <outlet property="titleLabel" destination="naM-Xr-r38" id="DTF-uf-LZw"/>
             </connections>
-            <point key="canvasLocation" x="256" y="219"/>
+            <point key="canvasLocation" x="228" y="244"/>
         </tableViewCell>
     </objects>
 </document>
