@@ -16,6 +16,10 @@ final class Profile {
     var name: String?
     var gender: String?
     var birthDay: NSDate?
-    var location: String?
     var introduction: String?
+    var moreInformation = false
+    var nickname: String?
+    var location: String?
+    var phoneNumber: String?
+    var job: String?
 }

@@ -40,6 +40,8 @@ final class ExampleViewController: FormViewController {
         // Create RowFormers
         // Date Setting Example
         
+        let inputAccessoryView = FormerInputAccessoryView(former: former)
+        
         let dateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
             $0.titleLabel.text = "Date"
             $0.titleLabel.textColor = .formerColor()
@@ -174,20 +176,20 @@ final class ExampleViewController: FormViewController {
                     $0.backgroundColor = .whiteColor()
                 }
                 $0.pickerItems = options.map { SelectorPickerItem<Any>(title: $0) }
-                $0.inputAccessoryView = formerInputAccessoryView
+                $0.inputAccessoryView = inputAccessoryView
                 $0.displayEditingColor = .formerHighlightedSubColor()
         }
         
         // Custom Input Accessory View Example
 
         let textFields = (1...2).map { index -> RowFormer in
-            return TextFieldRowFormer<FormTextFieldCell>() { [weak self] in
+            return TextFieldRowFormer<FormTextFieldCell>() {
                 $0.titleLabel.text = "Field\(index)"
                 $0.titleLabel.textColor = .formerColor()
                 $0.titleLabel.font = .boldSystemFontOfSize(16)
                 $0.textField.textColor = .formerSubColor()
                 $0.textField.font = .boldSystemFontOfSize(14)
-                $0.textField.inputAccessoryView = self?.formerInputAccessoryView
+                $0.textField.inputAccessoryView = inputAccessoryView
                 $0.textField.returnKeyType = .Next
                 $0.tintColor = .formerColor()
                 }.configure {
@@ -235,8 +237,8 @@ final class ExampleViewController: FormViewController {
         
         former.append(sectionFormer:
             section1, section2, section3, section4, section5
-            ).onCellSelected { [weak self] _ in
-                self?.formerInputAccessoryView.update()
+            ).onCellSelected { _ in
+                inputAccessoryView.update()
         }
     }
     
@@ -271,10 +273,6 @@ final class ExampleViewController: FormViewController {
                 $0.tintColor = .formerSubColor()
             }
             ])
-        }()
-    
-    private lazy var formerInputAccessoryView: FormerInputAccessoryView = { [unowned self] in
-        FormerInputAccessoryView(former: self.former)
         }()
     
     private func insertRows(sectionTop sectionTop: RowFormer, sectionBottom: RowFormer)(insert: Bool) {

@@ -119,13 +119,13 @@ public final class Former: NSObject {
     }
 
     /// Call just before header is display.
-    public func willDisplayHeader(handler: (Int -> Void)) -> Self {
+    public func willDisplayHeader(handler: (/*section:*/Int -> Void)) -> Self {
         willDisplayHeader = handler
         return self
     }
     
     /// Call just before cell is display.
-    public func willDisplayFooter(handler: (Int -> Void)) -> Self {
+    public func willDisplayFooter(handler: (/*section:*/Int -> Void)) -> Self {
         willDisplayFooter = handler
         return self
     }
@@ -143,13 +143,13 @@ public final class Former: NSObject {
     }
     
     /// Call when header has displayed.
-    public func didEndDisplayingHeader(handler: (Int -> Void)) -> Self {
+    public func didEndDisplayingHeader(handler: (/*section:*/Int -> Void)) -> Self {
         didEndDisplayingHeader = handler
         return self
     }
     
     /// Call when footer has displayed.
-    public func didEndDisplayingFooter(handler: (Int -> Void)) -> Self {
+    public func didEndDisplayingFooter(handler: (/*section:*/Int -> Void)) -> Self {
         didEndDisplayingFooter = handler
         return self
     }

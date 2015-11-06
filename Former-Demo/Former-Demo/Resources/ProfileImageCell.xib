@@ -23,10 +23,10 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdA-ET-WFO">
-                        <rect key="frame" x="59.5" y="10" width="250.5" height="39.5"/>
+                        <rect key="frame" x="59.5" y="10" width="245.5" height="39.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -34,7 +34,7 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="9XG-zi-0bK" secondAttribute="bottom" constant="10" id="6AL-0w-2aP"/>
                     <constraint firstAttribute="bottom" secondItem="kdA-ET-WFO" secondAttribute="bottom" constant="10" id="6a4-5g-ToA"/>
-                    <constraint firstAttribute="trailing" secondItem="kdA-ET-WFO" secondAttribute="trailing" constant="10" id="YVj-zy-UO6"/>
+                    <constraint firstAttribute="trailing" secondItem="kdA-ET-WFO" secondAttribute="trailing" constant="15" id="YVj-zy-UO6"/>
                     <constraint firstItem="9XG-zi-0bK" firstAttribute="leading" secondItem="2zz-cL-fth" secondAttribute="leading" constant="10" id="bGB-LA-Qvz"/>
                     <constraint firstItem="kdA-ET-WFO" firstAttribute="leading" secondItem="9XG-zi-0bK" secondAttribute="trailing" constant="10" id="eVx-cw-bmz"/>
                     <constraint firstItem="9XG-zi-0bK" firstAttribute="top" secondItem="2zz-cL-fth" secondAttribute="top" constant="10" id="fzS-h6-xk7"/>

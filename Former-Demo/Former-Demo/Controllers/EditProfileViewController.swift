@@ -20,6 +20,8 @@ final class EditProfileViewController: FormViewController {
     
     // MARK: Private
     
+    private lazy var formerInputAccessoryView: FormerInputAccessoryView = FormerInputAccessoryView(former: self.former)
+    
     private lazy var imageRow: LabelRowFormer<ProfileImageCell> = {
         LabelRowFormer<ProfileImageCell>(instantiateType: .Nib(nibName: "ProfileImageCell")) {
             $0.iconView.image = Profile.sharedInstance.image
@@ -32,13 +34,61 @@ final class EditProfileViewController: FormViewController {
         }
     }()
     
+    private lazy var informationSection: SectionFormer = {
+        let nicknameRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
+            $0.titleLabel.text = "Nickname"
+            $0.textField.clearButtonMode = .WhileEditing
+            $0.textField.inputAccessoryView = self?.formerInputAccessoryView
+            }.configure {
+                $0.placeholder = "Add your nickname"
+                $0.text = Profile.sharedInstance.nickname
+            }.onTextChanged {
+                Profile.sharedInstance.nickname = $0
+        }
+        let locationRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
+            $0.titleLabel.text = "Location"
+            $0.textField.clearButtonMode = .WhileEditing
+            $0.textField.inputAccessoryView = self?.formerInputAccessoryView
+            }.configure {                
+                $0.placeholder = "Add your location"
+                $0.text = Profile.sharedInstance.location
+            }.onTextChanged {
+                Profile.sharedInstance.location = $0
+        }
+        let phoneRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
+            $0.titleLabel.text = "Phone"
+            $0.textField.keyboardType = .NumberPad
+            $0.textField.clearButtonMode = .WhileEditing
+            $0.textField.inputAccessoryView = self?.formerInputAccessoryView
+            }.configure {
+                $0.placeholder = "Add your phone number"
+                $0.text = Profile.sharedInstance.phoneNumber
+            }.onTextChanged {
+                Profile.sharedInstance.phoneNumber = $0
+        }
+        let jobRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
+            $0.titleLabel.text = "Job"
+            $0.textField.clearButtonMode = .WhileEditing
+            $0.textField.inputAccessoryView = self?.formerInputAccessoryView
+            }.configure {
+                $0.placeholder = "Add your job"
+                $0.text = Profile.sharedInstance.job
+            }.onTextChanged {
+                Profile.sharedInstance.job = $0
+        }
+        return SectionFormer(rowFormer: nicknameRow, locationRow, phoneRow, jobRow)
+    }()
+    
     private func configure() {
         title = "Edit Profile"
+        tableView.contentInset.bottom = 30
         
         // Create RowFomers
         
-        let nameRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) {
+        let nameRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Name"
+            $0.textField.clearButtonMode = .WhileEditing
+            $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your name"
                 $0.text = Profile.sharedInstance.name
@@ -69,22 +119,27 @@ final class EditProfileViewController: FormViewController {
             }.onDateChanged {
                 Profile.sharedInstance.birthDay = $0
         }
-        let locationRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) {
-            $0.titleLabel.text = "Location"
-            }.configure {
-                $0.placeholder = "Add your location"
-                $0.text = Profile.sharedInstance.location
-            }.onTextChanged {
-                Profile.sharedInstance.location = $0
-        }
-        let introductionRow = TextViewRowFormer<FormTextViewCell>() {
+        let introductionRow = TextViewRowFormer<FormTextViewCell>() { [weak self] in
             $0.textView.textColor = .formerSubColor()
             $0.textView.font = .systemFontOfSize(15)
+            $0.textView.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your self-introduction"
                 $0.text = Profile.sharedInstance.introduction
             }.onTextChanged {
                 Profile.sharedInstance.introduction = $0
+        }
+        let moreRow = SwitchRowFormer<FormSwitchCell>() {
+            $0.titleLabel.text = "Add more information ?"
+            $0.titleLabel.textColor = .formerColor()
+            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.switchButton.onTintColor = .formerSubColor()
+            }.configure {
+                $0.switched = Profile.sharedInstance.moreInformation
+                $0.switchWhenSelected = true
+            }.onSwitchChanged { [weak self] in
+                Profile.sharedInstance.moreInformation = $0
+                self?.switchInfomationSection()
         }
         
         // Create Headers and Footers
@@ -101,12 +156,20 @@ final class EditProfileViewController: FormViewController {
         
         let imageSection = SectionFormer(rowFormer: imageRow)
             .set(headerViewFormer: createHeader("Profile Image"))
-        let statusSection = SectionFormer(rowFormer: nameRow, genderRow, birthdayRow, locationRow)
-            .set(headerViewFormer: createHeader("About"))
         let introductionSection = SectionFormer(rowFormer: introductionRow)
             .set(headerViewFormer: createHeader("Introduction"))
+        let aboutSection = SectionFormer(rowFormer: nameRow, genderRow, birthdayRow)
+            .set(headerViewFormer: createHeader("About"))
+        let moreSection = SectionFormer(rowFormer: moreRow)
+            .set(headerViewFormer: createHeader("More Infomation"))
         
-        former.append(sectionFormer: imageSection, statusSection, introductionSection)
+        former.append(sectionFormer: imageSection, introductionSection, aboutSection, moreSection)
+            .onCellSelected { [weak self] _ in
+                self?.formerInputAccessoryView.update()
+        }
+        if Profile.sharedInstance.moreInformation {
+            former.append(sectionFormer: informationSection)
+        }
     }
     
     private func presentImagePicker() {
@@ -115,6 +178,14 @@ final class EditProfileViewController: FormViewController {
         picker.sourceType = .PhotoLibrary
         picker.allowsEditing = false
         presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    private func switchInfomationSection() {
+        if Profile.sharedInstance.moreInformation {
+            former.insertUpdate(sectionFormer: informationSection, toSection: former.numberOfSections, rowAnimation: .Top)
+        } else {
+            former.removeUpdate(sectionFormer: informationSection, rowAnimation: .Top)
+        }
     }
 }
 

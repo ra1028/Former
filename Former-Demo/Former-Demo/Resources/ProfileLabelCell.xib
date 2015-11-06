@@ -14,18 +14,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naM-Xr-r38">
-                        <rect key="frame" x="10" y="0.0" width="70" height="43.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="naM-Xr-r38">
+                        <rect key="frame" x="15" y="0.0" width="75" height="43.5"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="wAK-iH-XDx"/>
+                            <constraint firstAttribute="width" constant="75" id="wAK-iH-XDx"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WbB-r5-lRb">
-                        <rect key="frame" x="90" y="0.0" width="220" height="43.5"/>
+                        <rect key="frame" x="100" y="0.0" width="205" height="43.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -36,9 +36,9 @@
                 <constraints>
                     <constraint firstItem="WbB-r5-lRb" firstAttribute="top" secondItem="PDn-Nk-GCp" secondAttribute="top" id="2zv-qr-Nwy"/>
                     <constraint firstAttribute="bottom" secondItem="naM-Xr-r38" secondAttribute="bottom" id="DvC-hv-pqX"/>
-                    <constraint firstItem="naM-Xr-r38" firstAttribute="leading" secondItem="PDn-Nk-GCp" secondAttribute="leading" constant="10" id="Y2x-ku-a1j"/>
+                    <constraint firstItem="naM-Xr-r38" firstAttribute="leading" secondItem="PDn-Nk-GCp" secondAttribute="leading" constant="15" id="Y2x-ku-a1j"/>
                     <constraint firstAttribute="bottom" secondItem="WbB-r5-lRb" secondAttribute="bottom" id="aux-El-HHG"/>
-                    <constraint firstAttribute="trailing" secondItem="WbB-r5-lRb" secondAttribute="trailing" constant="10" id="hhk-GQ-72t"/>
+                    <constraint firstAttribute="trailing" secondItem="WbB-r5-lRb" secondAttribute="trailing" constant="15" id="hhk-GQ-72t"/>
                     <constraint firstItem="WbB-r5-lRb" firstAttribute="leading" secondItem="naM-Xr-r38" secondAttribute="trailing" constant="10" id="jxe-M9-Wea"/>
                     <constraint firstItem="naM-Xr-r38" firstAttribute="top" secondItem="PDn-Nk-GCp" secondAttribute="top" id="slB-pr-cqr"/>
                 </constraints>

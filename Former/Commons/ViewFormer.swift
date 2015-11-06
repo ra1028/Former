@@ -59,7 +59,6 @@ public class ViewFormer {
                 view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (nibName: \(nibName)), bundle: (\(bundle)).")
             }
-            view!.contentView.backgroundColor = .clearColor()
             _viewInstance = view
             viewInstanceInitialized(view!)
             viewSetup(view!)
