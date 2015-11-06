@@ -14,7 +14,7 @@ public protocol LabelFormableView: FormableView {
 }
 
 public final class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormableView>
-: CustomViewFormer<T>, ConfigurableForm {
+: BaseViewFormer<T>, ConfigurableForm {
     
     // MARK: Public
     

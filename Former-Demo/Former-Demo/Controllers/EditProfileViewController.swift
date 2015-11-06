@@ -37,7 +37,6 @@ final class EditProfileViewController: FormViewController {
     private lazy var informationSection: SectionFormer = {
         let nicknameRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Nickname"
-            $0.textField.clearButtonMode = .WhileEditing
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your nickname"
@@ -47,7 +46,6 @@ final class EditProfileViewController: FormViewController {
         }
         let locationRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Location"
-            $0.textField.clearButtonMode = .WhileEditing
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {                
                 $0.placeholder = "Add your location"
@@ -58,7 +56,6 @@ final class EditProfileViewController: FormViewController {
         let phoneRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Phone"
             $0.textField.keyboardType = .NumberPad
-            $0.textField.clearButtonMode = .WhileEditing
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your phone number"
@@ -68,7 +65,6 @@ final class EditProfileViewController: FormViewController {
         }
         let jobRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Job"
-            $0.textField.clearButtonMode = .WhileEditing
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your job"
@@ -81,13 +77,13 @@ final class EditProfileViewController: FormViewController {
     
     private func configure() {
         title = "Edit Profile"
+        tableView.contentInset.top = 30
         tableView.contentInset.bottom = 30
         
         // Create RowFomers
         
         let nameRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Name"
-            $0.textField.clearButtonMode = .WhileEditing
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your name"
@@ -100,7 +96,7 @@ final class EditProfileViewController: FormViewController {
             }.configure {
                 let genders = ["Male", "Female"]
                 $0.pickerItems = genders.map {
-                    InlinePickerItem<String>(title: $0)
+                    InlinePickerItem(title: $0)
                 }
                 if let gender = Profile.sharedInstance.gender {
                     $0.selectedRow = genders.indexOf(gender) ?? 0
@@ -142,12 +138,12 @@ final class EditProfileViewController: FormViewController {
                 self?.switchInfomationSection()
         }
         
-        // Create Headers and Footers
+        // Create Headers
         
         let createHeader: (String -> ViewFormer) = { text in
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
-                    $0.viewHeight = 44
+                    $0.viewHeight = 30
                     $0.text = text
             }
         }

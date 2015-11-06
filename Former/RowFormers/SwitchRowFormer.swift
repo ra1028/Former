@@ -23,12 +23,8 @@ public final class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow
     public var switchWhenSelected = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
-    }
-    
-    deinit {
-        cell.formSwitch().removeTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
     }
     
     public final func onSwitchChanged(handler: (Bool -> Void)) -> Self {

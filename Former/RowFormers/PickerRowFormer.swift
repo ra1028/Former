@@ -32,7 +32,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
     public var pickerItems: [PickerItem<S>] = []
     public var selectedRow: Int = 0
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -72,9 +72,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
     
     private final var onValueChanged: (PickerItem<S> -> Void)?
     
-    private lazy var observer: Observer<T, S> = { [unowned self] in
-        Observer<T, S>(pickerRowFormer: self)
-        }()
+    private lazy var observer: Observer<T, S> = Observer<T, S>(pickerRowFormer: self)
 }
 
 private class Observer<T: UITableViewCell, S where T: PickerFormableRow>

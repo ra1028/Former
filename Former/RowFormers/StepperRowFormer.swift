@@ -24,12 +24,8 @@ public final class StepperRowFormer<T: UITableViewCell where T: StepperFormableR
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
-    }
-    
-    deinit {
-        cell.formStepper().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public final func onValueChanged(handler: (Double -> Void)) -> Self {

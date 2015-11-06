@@ -31,19 +31,8 @@ public final class TextFieldRowFormer<T: UITableViewCell where T: TextFieldForma
     public var titleEditingColor: UIColor?
     public var returnToNextRow = true
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
-    }
-    
-    deinit {
-        let textField = cell.formTextField()
-        textField.delegate = nil
-        let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
-            ("editingDidBegin:", .EditingDidBegin),
-            ("editingDidEnd:", .EditingDidEnd)]
-        events.forEach {
-            textField.removeTarget(self, action: $0.0, forControlEvents: $0.1)
-        }
     }
     
     public final func onTextChanged(handler: (String -> Void)) -> Self {
@@ -106,9 +95,7 @@ public final class TextFieldRowFormer<T: UITableViewCell where T: TextFieldForma
     private final var textColor: UIColor?
     private final var titleColor: UIColor?
     
-    private lazy var observer: Observer<T> = { [unowned self] in
-        Observer<T>(textFieldRowFormer: self)
-        }()
+    private lazy var observer: Observer<T> = Observer<T>(textFieldRowFormer: self)
     
     private dynamic func textChanged(textField: UITextField) {
         if enabled {

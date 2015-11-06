@@ -35,7 +35,8 @@ final class ExampleViewController: FormViewController {
     }
     
     private func configure() {
-        title = "Usage Example"
+        title = "Examples"
+        tableView.contentInset.bottom = 30
         
         // Create RowFormers
         // Date Setting Example
@@ -90,7 +91,7 @@ final class ExampleViewController: FormViewController {
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             }.configure {
                 $0.pickerItems = UITableViewRowAnimation.names().enumerate().map {
-                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
+                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
                 }
                 $0.selectedRow = UITableViewRowAnimation.all().indexOf(insertRowAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
@@ -131,7 +132,7 @@ final class ExampleViewController: FormViewController {
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             }.configure {
                 $0.pickerItems = UITableViewRowAnimation.names().enumerate().map {
-                    InlinePickerItem<UITableViewRowAnimation>(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
+                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
                 }
                 $0.selectedRow = UITableViewRowAnimation.all().indexOf(insertSectionAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
@@ -175,7 +176,7 @@ final class ExampleViewController: FormViewController {
                 $0.selectorViewUpdate {
                     $0.backgroundColor = .whiteColor()
                 }
-                $0.pickerItems = options.map { SelectorPickerItem<Any>(title: $0) }
+                $0.pickerItems = options.map { SelectorPickerItem(title: $0) }
                 $0.inputAccessoryView = inputAccessoryView
                 $0.displayEditingColor = .formerHighlightedSubColor()
         }
@@ -204,7 +205,7 @@ final class ExampleViewController: FormViewController {
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFontOfSize(14)
             }.configure {
-                $0.pickerItems = (1...20).map { InlinePickerItem<Any>(title: "Option\($0)") }
+                $0.pickerItems = (1...20).map { InlinePickerItem(title: "Option\($0)") }
                 $0.displayEditingColor = .formerHighlightedSubColor()
         }
         
@@ -230,7 +231,6 @@ final class ExampleViewController: FormViewController {
             .set(headerViewFormer: createHeader("Selector Example"))
         let section5 = SectionFormer(rowFormers: textFields + [inlinePickerRow])
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
-            .set(footerViewFormer: CustomViewFormer<FormHeaderFooterView>())
         
         insertRowsRow.onSwitchChanged(insertRows(sectionTop: section2.firstRowFormer!, sectionBottom: section2.lastRowFormer!))
         insertSectionRow.onSwitchChanged(insertSection(relate: section3))

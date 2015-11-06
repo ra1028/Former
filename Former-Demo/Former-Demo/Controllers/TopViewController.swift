@@ -43,10 +43,13 @@ final class TopViewContoller: FormViewController {
                     onSelected?()
             }
         }
-        let realExampleRow = createMenu("Edit Profile") { [weak self] in
+        let editProfileRow = createMenu("Edit Profile") { [weak self] in
             self?.navigationController?.pushViewController(EditProfileViewController(), animated: true)
         }
-        let defaultExampleRow = createMenu("Default RowFormer Examples") { [weak self] in
+        let addEventRow = createMenu("Add Event") { [weak self] in
+            self?.navigationController?.pushViewController(AddEventViewController(), animated: true)
+        }
+        let exampleRow = createMenu("Examples") { [weak self] in
             self?.navigationController?.pushViewController(ExampleViewController(), animated: true)
         }
         let defaultRow = createMenu("All Defaults") { [weak self] in
@@ -59,7 +62,7 @@ final class TopViewContoller: FormViewController {
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
                     $0.text = text
-                    $0.viewHeight = 44
+                    $0.viewHeight = 30
             }
         }
         
@@ -73,16 +76,14 @@ final class TopViewContoller: FormViewController {
         
         // Create SectionFormers
         
-        let firstSection = SectionFormer(rowFormer: realExampleRow)
-            .set(headerViewFormer: createHeader("Real Example"))
-        
-        let secondSection = SectionFormer(rowFormer: defaultExampleRow)
-            .set(headerViewFormer: createHeader("Usage Examples"))
-        
-        let thirdSection = SectionFormer(rowFormer: defaultRow)
+        let realExampleSection = SectionFormer(rowFormer: editProfileRow, addEventRow)
+            .set(headerViewFormer: createHeader("Real Examples"))
+        let useCaseSection = SectionFormer(rowFormer: exampleRow)
+            .set(headerViewFormer: createHeader("Use Case"))
+        let defaultSection = SectionFormer(rowFormer: defaultRow)
             .set(headerViewFormer: createHeader("Default UI"))
             .set(footerViewFormer: createFooter("Former is a fully customizable Swift2 library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
-        former.append(sectionFormer: firstSection, secondSection, thirdSection)
+        former.append(sectionFormer: realExampleSection, useCaseSection, defaultSection)
     }
 }

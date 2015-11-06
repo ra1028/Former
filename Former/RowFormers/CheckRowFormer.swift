@@ -21,7 +21,7 @@ public final class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
     public var checked = false
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     

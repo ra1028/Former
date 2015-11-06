@@ -12,6 +12,7 @@
 		2A5325151BE4A55D00E4A3F2 /* ProfileFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5325141BE4A55D00E4A3F2 /* ProfileFieldCell.swift */; };
 		2A59E2391BADDB4000A48997 /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A61D84E1BA47B0B001439CC /* Former.framework */; };
 		2A59E23A1BADDB4000A48997 /* Former.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2A61D84E1BA47B0B001439CC /* Former.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2AA777A51BECED6200900B01 /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777A41BECED6200900B01 /* AddEventViewController.swift */; };
 		2ABE8A591BE4B7FF00F9EB85 /* ProfileFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ABE8A571BE4B7FF00F9EB85 /* ProfileFieldCell.xib */; };
 		2ABE8A5A1BE4B7FF00F9EB85 /* ProfileImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ABE8A581BE4B7FF00F9EB85 /* ProfileImageCell.xib */; };
 		2ABE8A5D1BE4B81900F9EB85 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABE8A5C1BE4B81900F9EB85 /* Profile.swift */; };
@@ -65,6 +66,7 @@
 		2A53250F1BE4935700E4A3F2 /* ProfileImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
 		2A5325141BE4A55D00E4A3F2 /* ProfileFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFieldCell.swift; sourceTree = "<group>"; };
 		2A61D8491BA47B0B001439CC /* Former.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Former.xcodeproj; path = ../Former.xcodeproj; sourceTree = "<group>"; };
+		2AA777A41BECED6200900B01 /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		2AB293031BA469FB00D83445 /* Former-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Former-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ABE8A571BE4B7FF00F9EB85 /* ProfileFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileFieldCell.xib; sourceTree = "<group>"; };
 		2ABE8A581BE4B7FF00F9EB85 /* ProfileImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileImageCell.xib; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				2AC381451BA447D3009C7EFF /* TopViewController.swift */,
 				2AC3815B1BA4498D009C7EFF /* TextSelectorViewContorller.swift */,
 				2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */,
+				2AA777A41BECED6200900B01 /* AddEventViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				2AC381561BA447D3009C7EFF /* String+FormerDemo.swift in Sources */,
 				2AC381531BA447D3009C7EFF /* ExampleViewController.swift in Sources */,
 				2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */,
+				2AA777A51BECED6200900B01 /* AddEventViewController.swift in Sources */,
 				2A53250E1BE48C3F00E4A3F2 /* EditProfileViewController.swift in Sources */,
 				2ABE8A5D1BE4B81900F9EB85 /* Profile.swift in Sources */,
 			);

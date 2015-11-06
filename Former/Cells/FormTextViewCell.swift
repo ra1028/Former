@@ -40,7 +40,6 @@ public class FormTextViewCell: FormCell, TextViewFormableRow {
         let textView = UITextView()
         textView.backgroundColor = .clearColor()
         textView.font = .systemFontOfSize(17)
-        textView.contentSize.height = 0
         textView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(textView, atIndex: 0)
         self.textView = textView

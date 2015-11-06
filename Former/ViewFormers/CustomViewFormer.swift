@@ -2,38 +2,18 @@
 //  CustomViewFormer.swift
 //  Former
 //
-//  Created by Ryo Aoyama on 10/1/15.
+//  Created by Ryo Aoyama on 11/7/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
 
-public class CustomViewFormer<T: UITableViewHeaderFooterView>: ViewFormer {
+final public class CustomViewFormer<T: UITableViewHeaderFooterView>
+: BaseViewFormer<T>, ConfigurableForm {
     
     // MARK: Public
     
-    public var view: T {
-        return viewInstance as! T
-    }
-    
-    required public init(
-        instantiateType: Former.InstantiateType = .Class,
-        viewSetup: (T -> Void)? = nil) {
-        super.init(
-            viewType: T.self,
-            instantiateType: instantiateType,
-            viewSetup: viewSetup
-            )
-    }
-    
-    public final func viewUpdate(@noescape update: (T -> Void)) -> Self {
-        update(view)
-        return self
-    }
-    
-    public func viewInitialized(view: T) {}
-    
-    override func viewInstanceInitialized(view: UITableViewHeaderFooterView) {
-        viewInitialized(view as! T)
+    required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: (T -> Void)? = nil) {
+            super.init(instantiateType: instantiateType, viewSetup: viewSetup)
     }
 }

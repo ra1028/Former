@@ -11,7 +11,7 @@ import UIKit
 public final class CustomRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable {
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
 }

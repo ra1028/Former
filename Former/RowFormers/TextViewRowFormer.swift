@@ -30,7 +30,7 @@ public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormabl
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var titleEditingColor: UIColor?
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -120,9 +120,7 @@ public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormabl
     private final var titleColor: UIColor?
     private final var _attributedString: NSAttributedString?
     private final weak var placeholderLabel: UILabel?
-    private final lazy var observer: Observer<T> = { [unowned self] in
-        Observer<T>(textViewRowFormer: self)
-        }()
+    private final lazy var observer: Observer<T> = Observer<T>(textViewRowFormer: self)
     
     private final func updatePlaceholderColor(text: String?) {
         if attributedPlaceholder == nil {

@@ -49,7 +49,7 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
         return picker
         }()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -142,9 +142,7 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
     private final var onValueChanged: (SelectorPickerItem<S> -> Void)?
     private final var titleColor: UIColor?
     private final var displayTextColor: UIColor?
-    private final lazy var observer: Observer<T, S> = { [unowned self] in
-        Observer<T, S>(selectorPickerRowFormer: self)
-        }()
+    private final lazy var observer: Observer<T, S> = Observer<T, S>(selectorPickerRowFormer: self)
 }
 
 private class Observer<T: UITableViewCell, S where T: SelectorPickerFormableRow>

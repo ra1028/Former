@@ -15,7 +15,7 @@ public protocol LabelFormableRow: FormableRow {
 }
 
 public final class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
-: BaseRowFormer<T>, Formable {
+: BaseRowFormer<T>, ConfigurableForm, SelectableForm {
     
     // MARK: Public
     
@@ -24,7 +24,7 @@ public final class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
     public var textDisabledColor: UIColor? = .lightGrayColor()
     public var subTextDisabledColor: UIColor? = .lightGrayColor()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     

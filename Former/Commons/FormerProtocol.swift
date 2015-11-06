@@ -89,10 +89,17 @@ public extension SelectableForm where Self: RowFormer {
 public protocol UpdatableForm: class {
     
     // Needs NOT to implements
+    func update(@noescape handler: (Self -> Void)) -> Self
     func onUpdate(handler: (Self -> Void)) -> Self
 }
 
 public extension UpdatableForm where Self: RowFormer {
+    
+    func update(@noescape handler: (Self -> Void)) -> Self {
+        handler(self)
+        update()
+        return self
+    }
     
     func onUpdate(handler: (Self -> Void)) -> Self {
         onUpdate = {

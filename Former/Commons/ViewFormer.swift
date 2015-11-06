@@ -19,7 +19,7 @@ public class ViewFormer {
     
     public var viewHeight: CGFloat = 10
     
-    public init<T: UITableViewHeaderFooterView>(
+    internal init<T: UITableViewHeaderFooterView>(
         viewType: T.Type,
         instantiateType: Former.InstantiateType,
         viewSetup: (T -> Void)? = nil) {

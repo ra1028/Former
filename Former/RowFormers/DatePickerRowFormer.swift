@@ -20,12 +20,8 @@ public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFor
     
     public var date: NSDate = NSDate()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
-    }
-    
-    deinit {
-        cell.formDatePicker().removeTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
     }
     
     public final func onDateChanged(handler: (NSDate -> Void)) -> Self {

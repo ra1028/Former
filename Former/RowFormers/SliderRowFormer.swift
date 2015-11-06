@@ -24,17 +24,13 @@ public final class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
     public override func initialized() {
         super.initialized()
         rowHeight = 88
-    }
-    
-    deinit {
-        cell.formSlider().removeTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
     }
     
     public final func onValueChanged(handler: (Float -> Void)) -> Self {
