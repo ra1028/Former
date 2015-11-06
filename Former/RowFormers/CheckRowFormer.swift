@@ -14,7 +14,7 @@ public protocol CheckFormableRow: FormableRow {
 }
 
 public final class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     
@@ -45,7 +45,6 @@ public final class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
         former?.deselect(true)
         if enabled {
             checked = !checked

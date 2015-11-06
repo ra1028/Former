@@ -33,15 +33,15 @@ final class DefaultRowFormerViewController: FormViewController {
         let disableRow = LabelRowFormer<FormLabelCell>()
             .configure {
                 $0.text = disableRowText(false)
-            }
-            .onSelected(disableRowSelected)
+            }.onSelected(disableRowSelected)
         
         let textRow = LabelRowFormer<FormLabelCell>()
             .configure {
                 $0.text = "Text"
                 $0.subText = "SubText"
-            }
-            .onSelected { [weak self] _ in self?.former.deselect(true) }
+            }.onSelected { [weak self] _ in
+                self?.former.deselect(true)
+        }
         
         let textFieldRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.titleLabel.text = "TextField"

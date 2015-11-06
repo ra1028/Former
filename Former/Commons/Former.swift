@@ -914,7 +914,11 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return rowFormer(indexPath).rowHeight
+        let rowFormer = self.rowFormer(indexPath)
+        if let dynamicRowHeight = rowFormer.dynamicRowHeight {
+            rowFormer.rowHeight = dynamicRowHeight(tableView, indexPath)
+        }
+        return rowFormer.rowHeight
     }
     
     public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -927,11 +931,19 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     // for HeaderFooterView
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self[section].headerViewFormer?.viewHeight ?? 0
+        let headerViewFormer = self[section].headerViewFormer
+        if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
+            headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
+        }
+        return headerViewFormer?.viewHeight ?? 0
     }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return self[section].footerViewFormer?.viewHeight ?? 0
+        let footerViewFormer = self[section].footerViewFormer
+        if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
+            footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
+        }
+        return footerViewFormer?.viewHeight ?? 0
     }
     
     public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

@@ -26,7 +26,7 @@ public class SelectorPickerItem<S>: PickerItem<S> {
 }
 
 public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPickerFormableRow>
-: CustomRowFormer<T>, UpdatableSelectorForm, ConfigurableForm {
+: BaseRowFormer<T>, Formable, UpdatableSelectorForm {
     
     // MARK: Public
     
@@ -97,7 +97,6 @@ public final class SelectorPickerRowFormer<T: UITableViewCell, S where T: Select
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
         former?.deselect(true)
     }
     

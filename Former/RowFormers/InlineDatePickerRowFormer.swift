@@ -15,7 +15,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
 }
 
 public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
-: CustomRowFormer<T>, ConfigurableInlineForm, ConfigurableForm {
+: BaseRowFormer<T>, Formable, ConfigurableInlineForm {
     
     // MARK: Public
     
@@ -84,7 +84,6 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
         former?.deselect(true)
     }
     

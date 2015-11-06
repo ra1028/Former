@@ -18,7 +18,7 @@ public protocol InlineForm: class {
     func editingDidEnd()
 }
 
-public protocol ConfigurableInlineForm: InlineForm {
+public protocol ConfigurableInlineForm: class, InlineForm {
     
     // Needs to implements
     typealias InlineCellType: UITableViewCell
@@ -50,7 +50,7 @@ public protocol SelectorForm: class {
     func editingDidEnd()
 }
 
-public protocol UpdatableSelectorForm: SelectorForm {
+public protocol UpdatableSelectorForm: class, SelectorForm {
     
     // Need NOT to implements
     typealias SelectorViewType: UIView
@@ -67,6 +67,40 @@ extension UpdatableSelectorForm where Self: RowFormer {
 }
 
 // MARK: RowFormer
+
+public protocol Formable: class, SelectableForm, UpdatableForm, ConfigurableForm {}
+
+public protocol SelectableForm: class {
+    
+    // Needs NOT to implements
+    func onSelected(handler: (Self -> Void)) -> Self
+}
+
+public extension SelectableForm where Self: RowFormer {
+    
+    func onSelected(handler: (Self -> Void)) -> Self {
+        onSelected = {
+            handler($0 as! Self)
+        }
+        return self
+    }
+}
+
+public protocol UpdatableForm: class {
+    
+    // Needs NOT to implements
+    func onUpdate(handler: (Self -> Void)) -> Self
+}
+
+public extension UpdatableForm where Self: RowFormer {
+    
+    func onUpdate(handler: (Self -> Void)) -> Self {
+        onUpdate = {
+            handler($0 as! Self)
+        }
+        return self
+    }
+}
 
 public protocol ConfigurableForm: class {
     

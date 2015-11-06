@@ -15,7 +15,7 @@ public protocol SwitchFormableRow: FormableRow {
 }
 
 public final class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     
@@ -66,9 +66,7 @@ public final class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow
         }
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
-        
+    public override func cellSelected(indexPath: NSIndexPath) {        
         former?.deselect(true)
         if switchWhenSelected && enabled {
             let switchButton = cell.formSwitch()

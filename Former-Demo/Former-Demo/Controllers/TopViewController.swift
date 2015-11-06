@@ -39,12 +39,10 @@ final class TopViewContoller: FormViewController {
                 $0.accessoryType = .DisclosureIndicator
                 }.configure {
                     $0.text = text
-                }
-                .onSelected { _ in
+                }.onSelected { _ in
                     onSelected?()
             }
         }
-        
         let realExampleRow = createMenu("Edit Profile") { [weak self] in
             self?.navigationController?.pushViewController(EditProfileViewController(), animated: true)
         }

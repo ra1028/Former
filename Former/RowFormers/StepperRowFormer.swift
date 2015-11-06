@@ -16,7 +16,7 @@ public protocol StepperFormableRow: FormableRow {
 }
 
 public final class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     

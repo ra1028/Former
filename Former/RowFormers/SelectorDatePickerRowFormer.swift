@@ -18,7 +18,7 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
 }
 
 public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: CustomRowFormer<T>, UpdatableSelectorForm, ConfigurableForm {
+: BaseRowFormer<T>, Formable, UpdatableSelectorForm {
     
     // MARK: Public
     
@@ -76,7 +76,6 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
         former?.deselect(true)
     }
     

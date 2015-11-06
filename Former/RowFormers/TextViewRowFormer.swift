@@ -15,7 +15,7 @@ public protocol TextViewFormableRow: FormableRow {
 }
 
 public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     
@@ -108,8 +108,6 @@ public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormabl
     }
     
     public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
-
         let textView = cell.formTextView()
         textView.becomeFirstResponder()
         textView.userInteractionEnabled = enabled

@@ -29,6 +29,11 @@ public class ViewFormer {
             initialized()
     }
     
+    public func dynamicViewHeight(handler: ((UITableView, /*section:*/Int) -> CGFloat)) -> Self {
+        dynamicViewHeight = handler
+        return self
+    }
+    
     public func initialized() {}
     
     public func update() {
@@ -38,6 +43,8 @@ public class ViewFormer {
     }
     
     // MARK: Internal
+    
+    internal final var dynamicViewHeight: ((UITableView, Int) -> CGFloat)?
     
     internal final var viewInstance: UITableViewHeaderFooterView {
         if _viewInstance == nil {

@@ -24,7 +24,7 @@ public class InlinePickerItem<S>: PickerItem<S> {
 }
 
 public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFormableRow>
-: CustomRowFormer<T>, ConfigurableInlineForm, ConfigurableForm {
+: BaseRowFormer<T>, Formable, ConfigurableInlineForm {
     
     // MARK: Public
     
@@ -97,7 +97,6 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
     }
 
     public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
         former?.deselect(true)
     }
     

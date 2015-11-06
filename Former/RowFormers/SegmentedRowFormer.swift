@@ -15,7 +15,7 @@ public protocol SegmentedFormableRow: FormableRow {
 }
 
 public final class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     

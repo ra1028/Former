@@ -16,7 +16,7 @@ public protocol SliderFormableRow: FormableRow {
 }
 
 public final class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     

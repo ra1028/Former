@@ -15,7 +15,7 @@ public protocol TextFieldFormableRow: FormableRow {
 }
 
 public final class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow>
-: CustomRowFormer<T>, ConfigurableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     
@@ -92,9 +92,7 @@ public final class TextFieldRowFormer<T: UITableViewCell where T: TextFieldForma
         }
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {
-        super.cellSelected(indexPath)
-        
+    public override func cellSelected(indexPath: NSIndexPath) {        
         let textField = cell.formTextField()
         if !textField.editing {
             textField.userInteractionEnabled = true
