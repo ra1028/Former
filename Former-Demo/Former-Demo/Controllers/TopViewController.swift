@@ -29,7 +29,7 @@ final class TopViewContoller: FormViewController {
         let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButton
         title = "Former"
-        tableView.contentInset.top = 50
+        tableView.contentInset.top = 40
         
         // Create RowFormers
         
@@ -50,6 +50,10 @@ final class TopViewContoller: FormViewController {
         let addEventRow = createMenu("Add Event") { [weak self] in
             self?.navigationController?.pushViewController(AddEventViewController(), animated: true)
         }
+        let loginRow = createMenu("Login") { [weak self] in
+            _ = self.map { LoginViewController.present($0) }
+            self?.former.deselect(true)
+        }
         let exampleRow = createMenu("Examples") { [weak self] in
             self?.navigationController?.pushViewController(ExampleViewController(), animated: true)
         }
@@ -66,7 +70,7 @@ final class TopViewContoller: FormViewController {
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
                     $0.text = text
-                    $0.viewHeight = 30
+                    $0.viewHeight = 40
             }
         }
         
@@ -80,7 +84,7 @@ final class TopViewContoller: FormViewController {
         
         // Create SectionFormers
         
-        let realExampleSection = SectionFormer(rowFormer: editProfileRow, addEventRow)
+        let realExampleSection = SectionFormer(rowFormer: editProfileRow, addEventRow, loginRow)
             .set(headerViewFormer: createHeader("Real Examples"))
         let useCaseSection = SectionFormer(rowFormer: exampleRow, customCellRow)
             .set(headerViewFormer: createHeader("Use Case"))

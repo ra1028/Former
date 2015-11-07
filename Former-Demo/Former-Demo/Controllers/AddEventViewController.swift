@@ -56,7 +56,9 @@ final class AddEventViewController: FormViewController {
     
     private func configure() {
         title = "Add Event"
+        tableView.contentInset.top = 10
         tableView.contentInset.bottom = 30
+        tableView.contentOffset.y = -10
         
         // Create RowFomers
         
@@ -150,7 +152,7 @@ final class AddEventViewController: FormViewController {
                 }
         }
         let urlRow = TextFieldRowFormer<FormTextFieldCell>() {
-            $0.textField.textColor = .formerColor()
+            $0.textField.textColor = .formerSubColor()
             $0.textField.font = .systemFontOfSize(15)
             $0.textField.keyboardType = .Alphabet
             }.configure {
@@ -169,7 +171,7 @@ final class AddEventViewController: FormViewController {
         let createHeader: (() -> ViewFormer) = {
             return CustomViewFormer<FormHeaderFooterView>()
                 .configure {
-                    $0.viewHeight = 30
+                    $0.viewHeight = 20
             }
         }
         

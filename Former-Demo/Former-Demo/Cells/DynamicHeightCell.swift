@@ -29,14 +29,17 @@ final class DynamicHeightCell: UITableViewCell {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
-        bodyLabel.preferredMaxLayoutWidth = bodyLabel.bounds.width
-    }
-    
+    /** [Tips] for iOS 7
+     override func layoutSubviews() {
+         super.layoutSubviews()
+         titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
+         bodyLabel.preferredMaxLayoutWidth = bodyLabel.bounds.width
+     }
+     **/
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .None
         titleLabel.textColor = .formerColor()
         bodyLabel.textColor = .formerSubColor()
     }

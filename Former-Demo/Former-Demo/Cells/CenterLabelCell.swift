@@ -1,46 +1,51 @@
 //
-//  FormLabelHeaderView.swift
+//  CenterLabelCell.swift
 //  Former-Demo
 //
-//  Created by Ryo Aoyama on 7/26/15.
+//  Created by Ryo Aoyama on 11/8/15.
 //  Copyright © 2015 Ryo Aoyama. All rights reserved.
 //
 
 import UIKit
+import Former
 
-public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
+final class CenterLabelCell: FormCell, LabelFormableRow {
     
     // MARK: Public
     
-    public private(set) weak var titleLabel: UILabel!
-    
-    public func formTitleLabel() -> UILabel {
+    func formTextLabel() -> UILabel? {
         return titleLabel
     }
     
-    override public func setup() {
+    func formSubTextLabel() -> UILabel? {
+        return nil
+    }
+    
+    weak var titleLabel: UILabel!
+    
+    override func setup() {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.textColor = .lightGrayColor()
-        titleLabel.font = .systemFontOfSize(14)
-        titleLabel.numberOfLines = 0
+        titleLabel.textColor = .formerColor()
+        titleLabel.font = .boldSystemFontOfSize(15)
+        titleLabel.textAlignment = .Center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.addSubview(titleLabel)
         self.titleLabel = titleLabel
         
         let constraints = [
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:[label(>=0)]-5-|",
+                "V:|-0-[titleLabel]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["label": titleLabel]
+                views: ["titleLabel": titleLabel]
             ),
             NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[label]-15-|",
+                "H:|-0-[titleLabel]-0-|",
                 options: [],
                 metrics: nil,
-                views: ["label": titleLabel]
+                views: ["titleLabel": titleLabel]
             )
             ].flatMap { $0 }
         contentView.addConstraints(constraints)

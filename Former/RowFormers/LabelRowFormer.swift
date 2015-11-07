@@ -15,7 +15,7 @@ public protocol LabelFormableRow: FormableRow {
 }
 
 public final class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
-: BaseRowFormer<T>, ConfigurableForm, SelectableForm {
+: BaseRowFormer<T>, Formable {
     
     // MARK: Public
     

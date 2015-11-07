@@ -77,8 +77,8 @@ final class EditProfileViewController: FormViewController {
     
     private func configure() {
         title = "Edit Profile"
-        tableView.contentInset.top = 30
-        tableView.contentInset.bottom = 30
+        tableView.contentInset.top = 40
+        tableView.contentInset.bottom = 40
         
         // Create RowFomers
         
@@ -143,7 +143,7 @@ final class EditProfileViewController: FormViewController {
         let createHeader: (String -> ViewFormer) = { text in
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
-                    $0.viewHeight = 30
+                    $0.viewHeight = 40
                     $0.text = text
             }
         }

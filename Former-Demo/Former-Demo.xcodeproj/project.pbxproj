@@ -16,6 +16,12 @@
 		2AA777AB1BED4BF000900B01 /* CustomCellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777AA1BED4BF000900B01 /* CustomCellViewController.swift */; };
 		2AA777AD1BED4D3300900B01 /* DynamicHeightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777AC1BED4D3300900B01 /* DynamicHeightCell.swift */; };
 		2AA777AF1BED4D7300900B01 /* DynamicHeightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AA777AE1BED4D7300900B01 /* DynamicHeightCell.xib */; };
+		2AA777B11BEE7F2F00900B01 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AA777B01BEE7F2F00900B01 /* LoginViewController.storyboard */; };
+		2AA777B31BEE80A800900B01 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777B21BEE80A800900B01 /* LoginViewController.swift */; };
+		2AA777B51BEE86B000900B01 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777B41BEE86B000900B01 /* Login.swift */; };
+		2AA777B71BEE88BD00900B01 /* CenterLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777B61BEE88BD00900B01 /* CenterLabelCell.swift */; };
+		2AA777B91BEE9A7400900B01 /* ColorListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AA777B81BEE9A7400900B01 /* ColorListCell.xib */; };
+		2AA777BB1BEE9AEB00900B01 /* ColorListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AA777BA1BEE9AEB00900B01 /* ColorListCell.swift */; };
 		2ABE8A591BE4B7FF00F9EB85 /* ProfileFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ABE8A571BE4B7FF00F9EB85 /* ProfileFieldCell.xib */; };
 		2ABE8A5A1BE4B7FF00F9EB85 /* ProfileImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ABE8A581BE4B7FF00F9EB85 /* ProfileImageCell.xib */; };
 		2ABE8A5D1BE4B81900F9EB85 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ABE8A5C1BE4B81900F9EB85 /* Profile.swift */; };
@@ -73,6 +79,12 @@
 		2AA777AA1BED4BF000900B01 /* CustomCellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellViewController.swift; sourceTree = "<group>"; };
 		2AA777AC1BED4D3300900B01 /* DynamicHeightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicHeightCell.swift; sourceTree = "<group>"; };
 		2AA777AE1BED4D7300900B01 /* DynamicHeightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DynamicHeightCell.xib; sourceTree = "<group>"; };
+		2AA777B01BEE7F2F00900B01 /* LoginViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
+		2AA777B21BEE80A800900B01 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		2AA777B41BEE86B000900B01 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		2AA777B61BEE88BD00900B01 /* CenterLabelCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterLabelCell.swift; sourceTree = "<group>"; };
+		2AA777B81BEE9A7400900B01 /* ColorListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ColorListCell.xib; sourceTree = "<group>"; };
+		2AA777BA1BEE9AEB00900B01 /* ColorListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorListCell.swift; sourceTree = "<group>"; };
 		2AB293031BA469FB00D83445 /* Former-Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Former-Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2ABE8A571BE4B7FF00F9EB85 /* ProfileFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileFieldCell.xib; sourceTree = "<group>"; };
 		2ABE8A581BE4B7FF00F9EB85 /* ProfileImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileImageCell.xib; sourceTree = "<group>"; };
@@ -115,10 +127,12 @@
 		2ABE8A561BE4B7FF00F9EB85 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2AA777B01BEE7F2F00900B01 /* LoginViewController.storyboard */,
 				2ABE8A571BE4B7FF00F9EB85 /* ProfileFieldCell.xib */,
 				2ABE8A581BE4B7FF00F9EB85 /* ProfileImageCell.xib */,
 				2ABE8A601BE4BC8100F9EB85 /* ProfileLabelCell.xib */,
 				2AA777AE1BED4D7300900B01 /* DynamicHeightCell.xib */,
+				2AA777B81BEE9A7400900B01 /* ColorListCell.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -127,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				2ABE8A5C1BE4B81900F9EB85 /* Profile.swift */,
+				2AA777B41BEE86B000900B01 /* Login.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -164,6 +179,8 @@
 				2A5325141BE4A55D00E4A3F2 /* ProfileFieldCell.swift */,
 				2ABE8A5E1BE4BC5C00F9EB85 /* ProfileLabelCell.swift */,
 				2AA777AC1BED4D3300900B01 /* DynamicHeightCell.swift */,
+				2AA777B61BEE88BD00900B01 /* CenterLabelCell.swift */,
+				2AA777BA1BEE9AEB00900B01 /* ColorListCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -177,6 +194,7 @@
 				2AC3815B1BA4498D009C7EFF /* TextSelectorViewContorller.swift */,
 				2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */,
 				2AA777A41BECED6200900B01 /* AddEventViewController.swift */,
+				2AA777B21BEE80A800900B01 /* LoginViewController.swift */,
 				2AA777AA1BED4BF000900B01 /* CustomCellViewController.swift */,
 			);
 			path = Controllers;
@@ -280,6 +298,8 @@
 				2ABE8A5A1BE4B7FF00F9EB85 /* ProfileImageCell.xib in Resources */,
 				2AC381501BA447D3009C7EFF /* LaunchScreen.storyboard in Resources */,
 				2ABE8A591BE4B7FF00F9EB85 /* ProfileFieldCell.xib in Resources */,
+				2AA777B91BEE9A7400900B01 /* ColorListCell.xib in Resources */,
+				2AA777B11BEE7F2F00900B01 /* LoginViewController.storyboard in Resources */,
 				2ABE8A611BE4BC8100F9EB85 /* ProfileLabelCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,11 +312,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AA777AD1BED4D3300900B01 /* DynamicHeightCell.swift in Sources */,
+				2AA777BB1BEE9AEB00900B01 /* ColorListCell.swift in Sources */,
 				2AC3815C1BA4498D009C7EFF /* TextSelectorViewContorller.swift in Sources */,
 				2ABE8A5F1BE4BC5C00F9EB85 /* ProfileLabelCell.swift in Sources */,
 				2AA777AB1BED4BF000900B01 /* CustomCellViewController.swift in Sources */,
 				2A5325151BE4A55D00E4A3F2 /* ProfileFieldCell.swift in Sources */,
 				2A5325101BE4935700E4A3F2 /* ProfileImageCell.swift in Sources */,
+				2AA777B71BEE88BD00900B01 /* CenterLabelCell.swift in Sources */,
 				2AC381551BA447D3009C7EFF /* TopViewController.swift in Sources */,
 				2AC381571BA447D3009C7EFF /* UIColor+FormerDemo.swift in Sources */,
 				2AC381541BA447D3009C7EFF /* DefaultRowFormerViewController.swift in Sources */,
@@ -304,7 +326,9 @@
 				2AC381561BA447D3009C7EFF /* String+FormerDemo.swift in Sources */,
 				2AC381531BA447D3009C7EFF /* ExampleViewController.swift in Sources */,
 				2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */,
+				2AA777B31BEE80A800900B01 /* LoginViewController.swift in Sources */,
 				2AA777A51BECED6200900B01 /* AddEventViewController.swift in Sources */,
+				2AA777B51BEE86B000900B01 /* Login.swift in Sources */,
 				2A53250E1BE48C3F00E4A3F2 /* EditProfileViewController.swift in Sources */,
 				2ABE8A5D1BE4B81900F9EB85 /* Profile.swift in Sources */,
 			);
