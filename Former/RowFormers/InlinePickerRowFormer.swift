@@ -72,7 +72,7 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
                 _ = titleEditingColor.map { titleLabel?.textColor = $0 }
                 
                 if pickerItems[selectedRow].displayTitle == nil {
-                    if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+                    if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
                     _ = displayEditingColor.map { displayLabel?.textColor = $0 }
                 }
             } else {
@@ -82,9 +82,9 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
                 displayTextColor = nil
             }
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             displayLabel?.textColor = displayDisabledColor
         }
         
@@ -105,11 +105,11 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
             let titleLabel = cell.formTitleLabel()
             let displayLabel = cell.formDisplayLabel()
             
-            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             
             if pickerItems[selectedRow].displayTitle == nil {
-                if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+                if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
                 _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             }
             isEditing = true
@@ -130,8 +130,8 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
             }
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
@@ -154,7 +154,7 @@ public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePi
             if let displayTitle = inlinePickerItem.displayTitle {
                 displayLabel?.attributedText = displayTitle
             } else {
-                if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+                if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
                 _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             }
             onValueChanged?(inlinePickerItem)

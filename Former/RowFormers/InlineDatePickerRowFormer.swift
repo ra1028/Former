@@ -58,8 +58,8 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
         
         if enabled {
             if isEditing {
-                if titleColor == nil { titleColor = titleLabel?.textColor }
-                if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+                if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+                if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
                 _ = titleEditingColor.map { titleLabel?.textColor = $0 }
                 _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             } else {
@@ -69,8 +69,8 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
                 displayTextColor = nil
             }
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             _ = titleDisabledColor.map { titleLabel?.textColor = $0 }
             _ = displayDisabledColor.map { displayLabel?.textColor = $0 }
         }
@@ -99,8 +99,8 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
         if enabled {
             let titleLabel = cell.formTitleLabel()
             let displayLabel = cell.formDisplayLabel()
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             isEditing = true
@@ -116,8 +116,8 @@ public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineD
             titleColor = nil
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }

@@ -68,8 +68,8 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
             titleColor = nil
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
@@ -83,8 +83,8 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
         if enabled {
             let titleLabel = cell.formTitleLabel()
             let displayLabel = cell.formDisplayLabel()
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             _ = displayEditingColor.map { displayEditingColor = $0 }
             isEditing = true
@@ -101,8 +101,8 @@ public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: Selec
             titleColor = nil
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }

@@ -45,7 +45,7 @@ public final class CheckRowFormer<T: UITableViewCell where T: CheckFormableRow>
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
         }
     }

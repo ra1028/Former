@@ -70,8 +70,8 @@ public final class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow
             titleColor = nil
             displayColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayColor == nil { displayColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayColor == nil { displayColor = displayLabel?.textColor ?? .blackColor() }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }

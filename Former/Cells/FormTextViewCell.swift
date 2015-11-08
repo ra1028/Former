@@ -34,14 +34,14 @@ public class FormTextViewCell: FormCell, TextViewFormableRow {
         let titleLabel = UILabel()
         titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel
         
         let textView = UITextView()
         textView.backgroundColor = .clearColor()
         textView.font = .systemFontOfSize(17)
         textView.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.insertSubview(textView, atIndex: 0)
+        contentView.insertSubview(textView, atIndex: 0)
         self.textView = textView
         
         let constraints = [

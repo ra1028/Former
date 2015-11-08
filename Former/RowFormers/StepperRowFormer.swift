@@ -62,8 +62,8 @@ public final class StepperRowFormer<T: UITableViewCell where T: StepperFormableR
             displayColor = nil
             stepperTintColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor }
-            if displayColor == nil { displayColor = displayLabel?.textColor }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if displayColor == nil { displayColor = displayLabel?.textColor ?? .blackColor() }
             if stepperTintColor == nil { stepperTintColor = stepper.tintColor }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor

@@ -42,8 +42,8 @@ public final class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
             textColor = nil
             subTextColor = nil
         } else {
-            if textColor == nil { textColor = textLabel?.textColor }
-            if subTextColor == nil { subTextColor = subTextLabel?.textColor }
+            if textColor == nil { textColor = textLabel?.textColor ?? .blackColor() }
+            if subTextColor == nil { subTextColor = subTextLabel?.textColor ?? .blackColor() }
             textLabel?.textColor = textDisabledColor
             subTextLabel?.textColor = subTextDisabledColor
         }
