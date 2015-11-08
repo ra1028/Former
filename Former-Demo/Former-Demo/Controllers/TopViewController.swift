@@ -61,7 +61,7 @@ final class TopViewContoller: FormViewController {
             self?.navigationController?.pushViewController(CustomCellViewController(), animated: true)
         }
         let defaultRow = createMenu("All Defaults") { [weak self] in
-            self?.navigationController?.pushViewController(DefaultRowFormerViewController(), animated: true)
+            self?.navigationController?.pushViewController(DefaultsViewController(), animated: true)
         }
         
         // Create Headers and Footers

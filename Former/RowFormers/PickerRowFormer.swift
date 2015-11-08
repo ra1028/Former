@@ -65,7 +65,7 @@ public final class PickerRowFormer<T: UITableViewCell, S where T: PickerFormable
         let picker = cell.formPickerView()
         picker.selectRow(selectedRow, inComponent: 0, animated: false)
         picker.userInteractionEnabled = enabled
-        picker.alpha = self.enabled ? 1 : 0.5
+        picker.layer.opacity = enabled ? 1 : 0.5
     }
     
     // MARK: Private

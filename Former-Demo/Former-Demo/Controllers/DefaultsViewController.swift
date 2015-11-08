@@ -1,5 +1,5 @@
 //
-//  DefaultRowFormerViewController.swift
+//  DefaultsViewController.swift
 //  Former-Demo
 //
 //  Created by Ryo Aoyama on 7/23/15.
@@ -9,7 +9,7 @@
 import UIKit
 import Former
 
-final class DefaultRowFormerViewController: FormViewController {
+final class DefaultsViewController: FormViewController {
     
     // MARK: Public
 
@@ -35,7 +35,7 @@ final class DefaultRowFormerViewController: FormViewController {
                 $0.text = disableRowText(false)
             }.onSelected(disableRowSelected)
         
-        let textRow = LabelRowFormer<FormLabelCell>()
+        let labelRow = LabelRowFormer<FormLabelCell>()
             .configure {
                 $0.text = "Text"
                 $0.subText = "SubText"
@@ -117,7 +117,7 @@ final class DefaultRowFormerViewController: FormViewController {
         let sectionFormer1 = SectionFormer(rowFormer: disableRow)
         
         let sectionFormer2 = SectionFormer(rowFormer:
-            textRow, textFieldRow, textViewRow,
+            labelRow, textFieldRow, textViewRow,
             checkRow, switchRow, stepperRow,
             segmentRow, sliderRow, selectorPickerRow,
             selectorDatePickerRow, inlinePickerRow, inlineDateRow

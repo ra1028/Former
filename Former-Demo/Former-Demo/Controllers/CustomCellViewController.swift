@@ -61,8 +61,7 @@ final class CustomCellViewController: FormViewController {
                     $0.bodyColor = color
                 }
             }
-            }
-            .configure {
+            }.configure {
                 $0.rowHeight = 60
         }
         

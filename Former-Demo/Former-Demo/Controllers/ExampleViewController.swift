@@ -70,6 +70,19 @@ final class ExampleViewController: FormViewController {
                 dateRow.update()
         }
         
+        // Custom Check Row Example
+        
+        let customCheckRow = CheckRowFormer<FormCheckCell>() {
+            $0.titleLabel.text = "Custom Check Icon"
+            $0.titleLabel.textColor = .formerColor()
+            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            }.configure {
+                let check = UIImage(named: "check")!.imageWithRenderingMode(.AlwaysTemplate)
+                let checkView = UIImageView(image: check)
+                checkView.tintColor = .formerSubColor()
+                $0.customCheckView = checkView
+        }
+        
         // Insert Rows Example
         
         let positions = ["Below", "Above"]
@@ -223,20 +236,22 @@ final class ExampleViewController: FormViewController {
         
         let section1 = SectionFormer(rowFormer: switchDateStyleRow, dateRow)
             .set(headerViewFormer: createHeader("Date Setting Example"))
-        let section2 = SectionFormer(rowFormer: insertRowsRow, insertRowPositionRow, insertRowAnimationRow)
+        let section2 = SectionFormer(rowFormer: customCheckRow)
+            .set(headerViewFormer: createHeader("Custom Check Example"))
+        let section3 = SectionFormer(rowFormer: insertRowsRow, insertRowPositionRow, insertRowAnimationRow)
             .set(headerViewFormer: createHeader("Insert Rows Example"))
-        let section3 = SectionFormer(rowFormer: insertSectionRow, insertSectionPositionRow, insertSectionAnimationRow)
+        let section4 = SectionFormer(rowFormer: insertSectionRow, insertSectionPositionRow, insertSectionAnimationRow)
             .set(headerViewFormer: createHeader("Insert Section Example"))
-        let section4 = SectionFormer(rowFormer: pushSelectorRow, sheetSelectorRow, pickerSelectorRow)
+        let section5 = SectionFormer(rowFormer: pushSelectorRow, sheetSelectorRow, pickerSelectorRow)
             .set(headerViewFormer: createHeader("Selector Example"))
-        let section5 = SectionFormer(rowFormers: textFields + [inlinePickerRow])
+        let section6 = SectionFormer(rowFormers: textFields + [inlinePickerRow])
             .set(headerViewFormer: createHeader("Custom Input Accessory View Example"))
         
-        insertRowsRow.onSwitchChanged(insertRows(sectionTop: section2.firstRowFormer!, sectionBottom: section2.lastRowFormer!))
-        insertSectionRow.onSwitchChanged(insertSection(relate: section3))
+        insertRowsRow.onSwitchChanged(insertRows(sectionTop: section3.firstRowFormer!, sectionBottom: section3.lastRowFormer!))
+        insertSectionRow.onSwitchChanged(insertSection(relate: section4))
         
         former.append(sectionFormer:
-            section1, section2, section3, section4, section5
+            section1, section2, section3, section4, section5, section6
             ).onCellSelected { _ in
                 inputAccessoryView.update()
         }

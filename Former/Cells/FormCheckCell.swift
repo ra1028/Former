@@ -21,7 +21,7 @@ public class FormCheckCell: FormCell, CheckFormableRow {
     public override func setup() {
         super.setup()
         
-        let titleLabel = UILabel()
+        let titleLabel = UILabel()        
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, atIndex: 0)
         self.titleLabel = titleLabel

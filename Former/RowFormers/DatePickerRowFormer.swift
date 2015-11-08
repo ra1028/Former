@@ -46,7 +46,7 @@ public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFor
         let datePicker = cell.formDatePicker()
         datePicker.setDate(date, animated: false)
         datePicker.userInteractionEnabled = enabled
-        datePicker.alpha = enabled ? 1 : 0.5
+        datePicker.layer.opacity = enabled ? 1 : 0.5
     }
     
     // MARK: Private
