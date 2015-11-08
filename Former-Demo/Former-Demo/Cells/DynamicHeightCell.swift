@@ -25,7 +25,7 @@ final class DynamicHeightCell: UITableViewCell {
         set { bodyLabel.textColor = newValue }
     }
     
-    /** [Tips] for iOS 7
+    /** Dynamic height row for iOS 7
      override func layoutSubviews() {
          super.layoutSubviews()
          titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
