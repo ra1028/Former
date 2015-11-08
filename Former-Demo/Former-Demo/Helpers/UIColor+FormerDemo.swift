@@ -11,14 +11,14 @@ import UIKit
 extension UIColor {
     
     class func formerColor() -> UIColor {
-        return UIColor(red: 35 / 255 , green: 40 / 255, blue: 55 / 255, alpha: 1)
+        return UIColor(red: 0.14, green: 0.16, blue: 0.22, alpha: 1)
     }
     
     class func formerSubColor() -> UIColor {
-        return UIColor(red: 230 / 255, green: 140 / 255, blue: 20 / 255, alpha: 1)
+        return UIColor(red: 0.9, green: 0.55, blue: 0.08, alpha: 1)
     }
     
     class func formerHighlightedSubColor() -> UIColor {        
-        return UIColor(red: 255 / 255, green: 180 / 255, blue: 30 / 255, alpha: 1)
+        return UIColor(red: 1, green: 0.7, blue: 0.12, alpha: 1)
     }
 }

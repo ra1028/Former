@@ -12,21 +12,17 @@ import Former
 final class DynamicHeightCell: UITableViewCell {
     
     var title: String? {
-        get {
-            return titleLabel.text
-        }
-        set {
-            titleLabel.text = newValue
-        }
+        get { return titleLabel.text }
+        set { titleLabel.text = newValue }
     }
     
     var body: String? {
-        get {
-            return bodyLabel.text
-        }
-        set {
-            bodyLabel.text = newValue
-        }
+        get { return bodyLabel.text }
+        set { bodyLabel.text = newValue }
+    }
+    var bodyColor: UIColor? {
+        get { return bodyLabel.textColor }
+        set { bodyLabel.textColor = newValue }
     }
     
     /** [Tips] for iOS 7
@@ -41,7 +37,6 @@ final class DynamicHeightCell: UITableViewCell {
         super.awakeFromNib()
         selectionStyle = .None
         titleLabel.textColor = .formerColor()
-        bodyLabel.textColor = .formerSubColor()
     }
     
     // MARK: Private

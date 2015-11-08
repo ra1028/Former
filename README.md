@@ -12,7 +12,7 @@ __Former__ is a fully customizable Swift2 library for easy creating UITableView 
 - iOS 8.0+  
 - Swift 2.0+
 
-To be supported: iOS7.0+
+To be supported: iOS 7.0+
 
 ## Usage
 

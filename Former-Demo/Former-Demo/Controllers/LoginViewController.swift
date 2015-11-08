@@ -37,11 +37,15 @@ final class LoginViewController: UIViewController {
     // MARK: Private
     
     private lazy var former: Former = Former(tableView: self.tableView)
+    private var idRow: TextFieldRowFormer<FormTextFieldCell>?
+    private var passwordRow: TextFieldRowFormer<FormTextFieldCell>?
+    private var loginRow: LabelRowFormer<CenterLabelCell>?
     
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var dimmingView: UIControl!
     
     private func configure() {
+        tableView.backgroundColor = .formerColor()
         tableView.layer.cornerRadius = 5
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
@@ -56,18 +60,23 @@ final class LoginViewController: UIViewController {
             }.configure {
                 $0.placeholder = "User name"
                 $0.text = Login.sharedInstance.username
-            }.onTextChanged {
+            }.onTextChanged { [weak self] in
                 Login.sharedInstance.username = $0
+                self?.switchLoginRow()
         }
         let passwordRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.textField.textColor = .formerSubColor()
             $0.textField.font = .systemFontOfSize(15)
+            $0.textField.keyboardType = .DecimalPad
+            $0.textField.secureTextEntry = true
             }.configure {
                 $0.placeholder = "Password"
                 $0.text = Login.sharedInstance.password
-            }.onTextChanged {
+            }.onTextChanged { [weak self] in
                 Login.sharedInstance.password = $0
+                self?.switchLoginRow()
         }
+        
         let loginRow = LabelRowFormer<CenterLabelCell>()
             .configure {
                 $0.text = "Login"
@@ -75,16 +84,25 @@ final class LoginViewController: UIViewController {
                 self?.dismissViewControllerAnimated(true, completion: nil)
         }
         
+        self.idRow = idRow
+        self.passwordRow = passwordRow
+        self.loginRow = loginRow
+        
+        switchLoginRow()
+        
         // Create Headers
         
-        let descriptionHeader = LabelViewFormer<FormLabelHeaderView>()
-            .configure {
+        let descriptionHeader = LabelViewFormer<FormLabelHeaderView>() {
+            $0.contentView.backgroundColor = .clearColor()
+            $0.titleLabel.textColor = .whiteColor()
+            }.configure {
                 $0.viewHeight = 80
                 $0.text = "Welcome to the Former demo app\nPlease login"
         }
         let createSpaceHeader: (() -> ViewFormer) = {
-            return CustomViewFormer<FormHeaderFooterView>()
-                .configure {
+            return CustomViewFormer<FormHeaderFooterView>() {
+                $0.contentView.backgroundColor = .clearColor()
+                }.configure {
                     $0.viewHeight = 30
             }
         }
@@ -99,6 +117,12 @@ final class LoginViewController: UIViewController {
             .set(headerViewFormer: createSpaceHeader())
         
         former.append(sectionFormer: idSection, passwordSection, loginSection)
+    }
+    
+    private func switchLoginRow() {
+        let enabled = !(idRow?.text?.isEmpty ?? true) &&
+            !(passwordRow?.text?.isEmpty ?? true)
+        loginRow?.enabled = enabled
     }
     
     @IBAction func tapBackground(sender: UIControl) {

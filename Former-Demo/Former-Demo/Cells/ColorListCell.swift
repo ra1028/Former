@@ -12,32 +12,28 @@ final class ColorListCell: UITableViewCell {
  
     // MARK: Public
     
+    var colors = [UIColor]()
+    var onColorSelected: (UIColor -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
     }
     
-    // MARK: Private
+    func select(item: Int, animated: Bool = false) {
+        let indexPath = NSIndexPath(forItem: item, inSection: 0)
+        collectionView.selectItemAtIndexPath(indexPath, animated: animated, scrollPosition: .None)
+    }
     
-    private let colors: [UIColor] = [
-        UIColor(red: 0.1, green: 0.74, blue: 0.61, alpha: 1),
-        UIColor(red: 0.12, green: 0.81, blue: 0.43, alpha: 1),
-        UIColor(red: 0.17, green: 0.59, blue: 0.87, alpha: 1),
-        UIColor(red: 0.61, green: 0.34, blue: 0.72, alpha: 1),
-        UIColor(red: 0.2, green: 0.29, blue: 0.37, alpha: 1),
-        UIColor(red: 0.95, green: 0.77, blue: 0, alpha: 1),
-        UIColor(red: 0.91, green: 0.49, blue: 0.02, alpha: 1),
-        UIColor(red: 0.91, green: 0.29, blue: 0.21, alpha: 1),
-        UIColor(red: 0.93, green: 0.94, blue: 0.95, alpha: 1),
-        UIColor(red: 0.58, green: 0.65, blue: 0.65, alpha: 1),
-    ]
+    // MARK: Private
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private func configure() {
+        selectionStyle = .None
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
+        collectionView.registerClass(ColorCell.self, forCellWithReuseIdentifier: "ColorCell")
     }
 }
 
@@ -57,9 +53,70 @@ extension ColorListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("UICollectionViewCell", forIndexPath: indexPath)
-        let color = colors[indexPath.item]
-        cell.contentView.backgroundColor = color
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ColorCell", forIndexPath: indexPath) as! ColorCell
+        cell.color = colors[indexPath.item]
         return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let color = colors[indexPath.item]
+        onColorSelected?(color)
+    }
+}
+
+private class ColorCell: UICollectionViewCell {
+    
+    // MARK: Public
+    
+    var color: UIColor? {
+        get { return contentView.backgroundColor }
+        set { contentView.backgroundColor = newValue }
+    }
+    override var selected: Bool {
+        didSet { selectedView.hidden = !selected }
+    }
+    
+    override var highlighted: Bool {
+        didSet { contentView.alpha = highlighted ? 0.9 : 1 }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: Private
+    
+    private weak var selectedView: UIView!
+    
+    private func configure() {
+        let selectedView = UIView()
+        selectedView.layer.borderWidth = 4
+        selectedView.layer.borderColor = selectedView.tintColor.CGColor
+        selectedView.userInteractionEnabled = false
+        selectedView.hidden = !selected
+        selectedView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(selectedView)
+        self.selectedView = selectedView
+        
+        let constraints = [
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "V:|-0-[view]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["view": selectedView]
+            ),
+            NSLayoutConstraint.constraintsWithVisualFormat(
+                "H:|-0-[view]-0-|",
+                options: [],
+                metrics: nil,
+                views: ["view": selectedView]
+            )
+            ].flatMap { $0 }
+        contentView.addConstraints(constraints)
     }
 }
