@@ -11,6 +11,9 @@
 - Swift 2.0+
 
 ## Overview
+<img src="http://i.imgur.com/1gOwZZN.gif" width="220">
+<img src="http://i.imgur.com/g9yeTtV.gif" width="220">
+<img src="http://i.imgur.com/ouM1SsG.gif" width="220">
 
 ## Installation
 
