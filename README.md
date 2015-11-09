@@ -8,11 +8,9 @@
 __Former__ is a fully customizable Swift2 library for easy creating UITableView based form.
 
 ## Requirements  
-- Xcode 7+
-- iOS 8.0+  
-- Swift 2.0+
-
-To be supported: iOS 7.0+
+- Xcode 7 +
+- iOS 7.0 +
+- Swift 2.0 +
 
 ## Usage
 
@@ -50,15 +48,10 @@ final class YourViewController: FormViewController {
                 // ViewFormer setup
         }
 
-        let section = SectionFormer(rowFormers: [textRow, inlineDatePickerRow])
+        let section = SectionFormer(rowFormer: textRow, inlineDatePickerRow)
             .set(headerViewFormer: header)
 
-        former.add(sectionFormers: [section])
-            .onScroll {
-                // TableView scroll handler
-            }.onCellSelected {
-                // Cell selected handler
-        }
+        former.append(sectionFormer: section)
     }
 }
 ```
