@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,22 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Former" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b6u-vI-NVL">
-                                <rect key="frame" x="167.5" y="252.5" width="266" height="95.5"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="start_logo" translatesAutoresizingMaskIntoConstraints="NO" id="wsI-3K-lxL">
+                                <rect key="frame" x="173" y="268" width="255" height="64"/>
+                                <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" id="Xmj-91-L4i"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" id="yX7-yE-WnS"/>
+                                    <constraint firstAttribute="width" constant="255" id="qNn-qS-FZo"/>
+                                    <constraint firstAttribute="height" constant="64" id="rd9-qD-QIR"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="80"/>
-                                <color key="textColor" red="0.90196078431372551" green="0.5490196078431373" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </imageView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.13725490196078433" green="0.15686274509803921" blue="0.21568627450980393" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="b6u-vI-NVL" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QrD-mr-J6W"/>
-                            <constraint firstItem="b6u-vI-NVL" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qAh-od-ugF"/>
+                            <constraint firstItem="wsI-3K-lxL" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6Gd-Gw-ejw"/>
+                            <constraint firstItem="wsI-3K-lxL" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QeB-gB-F6L"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -41,4 +39,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="start_logo" width="255" height="64"/>
+    </resources>
 </document>
