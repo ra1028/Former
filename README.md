@@ -82,107 +82,107 @@ final class ViewController: FormViewController {
 ### RowFormer
 RowFormer is the base of the class that manages the cell.  
 Cell that managed by the RowFormer class should conform to the corresponding protocol.  
-Provided by default RowFormer classes and the protocols that corresponding to it are the below.  
+Each of RowFormer classes You can set the event handling in function named like on~ (onSelected, onValueChanged, etc...)  
+Default provided RowFormer classes and the protocols that corresponding to it are the below.  
 
-##### ○ LabelRowFormer
-LabelRowFormer is a class that manages the cell that displays a simple text.  
-__Default provided cell:__  
-FormLabelCell  
-__Protocol:__
-```Swift
-public protocol LabelFormableRow: FormableRow {    
-    func formTextLabel() -> UILabel?
-    func formSubTextLabel() -> UILabel?
-}
-```
-__Demo code__  
-```Swift
-let labelRow = LabelRowFormer<YourLabelCell>()
-    .configure {
-        $0.text = "main"
-        $0.subText = "sub"
-    }
-```
+<table>
+<thead>
+<tr>
+<th>Demo</th>
+<th>Class</th>
+<th>Protocol</th>
+<th>Default provided cell</th>
+</tr>
+</thead>
 
-##### ○ TextFieldRowFormer
-TextFieldRowFormer manages the String of the text field on the cell.  
-__Default provided cell:__  
-FormTextFieldCell
-__Protocol:__
-```Swift
-public protocol TextFieldFormableRow: FormableRow {
-    func formTextField() -> UITextField
-    func formTitleLabel() -> UILabel?
-}
-```
-__Demo code__  
-```Swift
-let textFieldRow = TextFieldRowFormer<YourTextFieldCell>() {
-    $0.titleLabel.text = "text field"
-    }.onTextChanged {
-        print($0)
-}
-```
+<tbody>
+<tr>
+<td><img src="http://i.imgur.com/ZTzZAG3.gif" width="200"></td>
+<td>LabelRowFormer</td>
+<td>LabelFormableRow</td>
+<td>FormLabelCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/sLfvbRz.gif" width="200"></td>
+<td>TextFieldRowFormer</td>
+<td>TextFieldFormableRow</td>
+<td>FormTextFieldCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/Es7JOYk.gif" width="200"></td>
+<td>TextViewRowFormer</td>
+<td>TextViewFormableRow</td>
+<td>FormTextViewCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/FjrTL51.gif" width="200"></td>
+<td>CheckRowFormer</td>
+<td>CheckFormableRow</td>
+<td>FormCheckCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/AfidFhs.gif" width="200"></td>
+<td>SwitchRowFormer</td>
+<td>SwitchFormableRow</td>
+<td>FormSwitchCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/ACeA4uq.gif" width="200"></td>
+<td>StepperRowFormer</td>
+<td>StepperFormableRow</td>
+<td>FormStepperCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/0KAJK6v.gif" width="200"></td>
+<td>SegmentedRowFormer</td>
+<td>SegmentedFormableRow</td>
+<td>FormSegmentedCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/i2ibb0P.gif" width="200"></td>
+<td>SliderRowFormer</td>
+<td>SliderFormableRow</td>
+<td>FormSliderCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/Vkfxf2P.gif" width="200"></td>
+<td>PickerRowFormer</td>
+<td>PickerFormableRow</td>
+<td>FormPickerCell</td>
+</tr>
+<tr>
+<td><img src="http://i.imgur.com/MLHG4oP.gif" width="200"></td>
+<td>DatePickerRowFormer</td>
+<td>DatePickerFormableRow</td>
+<td>FormDatePickerCell</td>
+</tr>
+<tr>
+<td></td>
+<td>SelecterPickerRowFormer</td>
+<td>SelecterPickerFormableRow</td>
+<td>FormSelecterPickerCell</td>
+</tr>
+<tr>
+<td></td>
+<td>SelecterDatePickerRowFormer</td>
+<td>SelecterDatePickerFormableRow</td>
+<td>FormSelecterDatePickerCell</td>
+</tr>
+<tr>
+<td></td>
+<td>InlinePickerRowFormer</td>
+<td>InlinePickerFormableRow</td>
+<td>FormInlinePickerCell</td>
+</tr>
+<tr>
+<td></td>
+<td>InlineDatePickerRowFormer</td>
+<td>InlineDatePickerFormableRow</td>
+<td>FormInlineDatePickerCell</td>
+</tr>
 
-##### ○ TextViewRowFormer
-TextViewRowFormer manages the String of the text view on the cell.  
-__Default provided cell:__  
-FormTextViewCell  
-__Protocol:__
-```Swift
-public protocol TextViewFormableRow: FormableRow {
-    func formTitleLabel() -> UILabel?
-    func formTextView() -> UITextView
-}
-```
-__Demo code__  
-```Swift
-let textViewRow = TextViewRowFormer<FormTextViewCell>() {
-    $0.titleLabel.text = "text view"
-    }.onTextChanged {
-        print($0)
-}
-```
-
-##### ○ CheckRowFormer
-CheckRowFormer is manage a Bool value with check mark display on the cell.  
-It's also possible to use the custom view instead of check mark.  
-__Default provided cell:__  
-FormCheckCell  
-__Protocol:__
-```Swift
-public protocol CheckFormableRow: FormableRow {    
-    func formTitleLabel() -> UILabel?
-}
-```
-__Demo code__  
-```Swift
-let checkRow = CheckRowFormer<YourCheckCell>() {
-    $0.titleLabel.text = "check"
-    }.onCheckChanged {
-        if $0 { print("Check!") }
-}
-```
-
-##### ○ SwitchRowFormer
-SwitchRowFormer is manage the switch change events on the cell.  
-__Default provided cell:__  
-FormCheckCell  
-__Protocol:__
-```Swift
-public protocol SwitchFormableRow: FormableRow {
-    func formSwitch() -> UISwitch
-    func formTitleLabel() -> UILabel?
-}
-```
-__Demo code__  
-```Swift
-let switchRow = SwitchRowFormer<YourSwitchCell>() {
-    $0.titleLabel.text = "switch"
-    }.onSwitchChanged {
-        if $0 { print("Switch On!") }
-}
-```
+</tbody>
+</table>
 
 
 ## License
