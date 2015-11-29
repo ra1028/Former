@@ -25,13 +25,8 @@ public class FormViewController: UIViewController {
     }()
     public lazy var former: Former = Former(tableView: self.tableView)
     
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
-    }
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    public override func viewDidLoad() {
+        super.viewDidLoad()
         setup()
     }
     
