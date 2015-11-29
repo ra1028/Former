@@ -25,7 +25,7 @@ final class AddEventViewController: FormViewController {
         func title() -> String {
             switch self {
             case Never: return "Never"
-            case Daily: return "Dayly"
+            case Daily: return "Daily"
             case Weekly: return "Weekly"
             case Monthly: return "Monthly"
             case Yearly: return "Yearly"
