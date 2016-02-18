@@ -14,7 +14,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public final class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
+public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
 : BaseRowFormer<T>, Formable, ConfigurableInlineForm {
     
     // MARK: Public

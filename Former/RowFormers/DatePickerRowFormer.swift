@@ -13,7 +13,7 @@ public protocol DatePickerFormableRow: FormableRow {
     func formDatePicker() -> UIDatePicker
 }
 
-public final class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableRow>
+public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableRow>
 : BaseRowFormer<T>, Formable {
     
     // MARK: Public

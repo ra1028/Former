@@ -17,7 +17,7 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public final class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
+public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
 : BaseRowFormer<T>, Formable, UpdatableSelectorForm {
     
     // MARK: Public

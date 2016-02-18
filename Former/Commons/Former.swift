@@ -938,14 +938,15 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     // for HeaderFooterView
-    
-    public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        let headerViewFormer = self[section].headerViewFormer
-        if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
-            headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
-        }
-        return headerViewFormer?.viewHeight ?? 0
-    }
+
+    // Not implemented for iOS8 estimatedHeight bug
+//    public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+//        let headerViewFormer = self[section].headerViewFormer
+//        if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
+//            headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
+//        }
+//        return headerViewFormer?.viewHeight ?? 0
+//    }
     
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let headerViewFormer = self[section].headerViewFormer
@@ -955,13 +956,14 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return headerViewFormer?.viewHeight ?? 0
     }
     
-    public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        let footerViewFormer = self[section].footerViewFormer
-        if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
-            footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
-        }
-        return footerViewFormer?.viewHeight ?? 0
-    }
+    // Not implemented for iOS8 estimatedHeight bug
+//    public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+//        let footerViewFormer = self[section].footerViewFormer
+//        if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
+//            footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
+//        }
+//        return footerViewFormer?.viewHeight ?? 0
+//    }
     
     public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let footerViewFormer = self[section].footerViewFormer

@@ -23,7 +23,7 @@ public class InlinePickerItem<S>: PickerItem<S> {
     }
 }
 
-public final class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFormableRow>
+public class InlinePickerRowFormer<T: UITableViewCell, S where T: InlinePickerFormableRow>
 : BaseRowFormer<T>, Formable, ConfigurableInlineForm {
     
     // MARK: Public

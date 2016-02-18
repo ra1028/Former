@@ -14,7 +14,7 @@ public protocol LabelFormableRow: FormableRow {
     func formSubTextLabel() -> UILabel?
 }
 
-public final class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
+public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
 : BaseRowFormer<T>, Formable {
     
     // MARK: Public

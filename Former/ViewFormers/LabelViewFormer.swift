@@ -13,8 +13,7 @@ public protocol LabelFormableView: FormableView {
     func formTitleLabel() -> UILabel
 }
 
-public final class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormableView>
-: BaseViewFormer<T>, ConfigurableForm {
+public final class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormableView>: BaseViewFormer<T> {
     
     // MARK: Public
     

@@ -12,7 +12,6 @@ import UIKit
 
 public protocol InlineForm: class {
     
-    // Needs to implements
     var inlineRowFormer: RowFormer { get }
     func editingDidBegin()
     func editingDidEnd()
@@ -20,12 +19,7 @@ public protocol InlineForm: class {
 
 public protocol ConfigurableInlineForm: class, InlineForm {
     
-    // Needs to implements
     typealias InlineCellType: UITableViewCell
-    
-    // Needs NOT to implements
-    func inlineCellSetup(handler: (InlineCellType -> Void)) -> Self
-    func inlineCellUpdate(@noescape update: (InlineCellType -> Void)) -> Self
 }
 
 extension ConfigurableInlineForm where Self: RowFormer {
@@ -45,17 +39,14 @@ extension ConfigurableInlineForm where Self: RowFormer {
 
 public protocol SelectorForm: class {
     
-    // Needs to implements
     func editingDidBegin()
     func editingDidEnd()
 }
 
 public protocol UpdatableSelectorForm: class, SelectorForm {
     
-    // Need NOT to implements
     typealias SelectorViewType: UIView
     var selectorView: SelectorViewType { get }
-    func selectorViewUpdate(@noescape update: (SelectorViewType -> Void)) -> Self
 }
 
 extension UpdatableSelectorForm where Self: RowFormer {
@@ -70,11 +61,7 @@ extension UpdatableSelectorForm where Self: RowFormer {
 
 public protocol Formable: class, SelectableForm, UpdatableForm, ConfigurableForm {}
 
-public protocol SelectableForm: class {
-    
-    // Needs NOT to implements
-    func onSelected(handler: (Self -> Void)) -> Self
-}
+public protocol SelectableForm: class {}
 
 public extension SelectableForm where Self: RowFormer {
     
@@ -86,12 +73,7 @@ public extension SelectableForm where Self: RowFormer {
     }
 }
 
-public protocol UpdatableForm: class {
-    
-    // Needs NOT to implements
-    func update(@noescape handler: (Self -> Void)) -> Self
-    func onUpdate(handler: (Self -> Void)) -> Self
-}
+public protocol UpdatableForm: class {}
 
 public extension UpdatableForm where Self: RowFormer {
     
@@ -109,11 +91,7 @@ public extension UpdatableForm where Self: RowFormer {
     }
 }
 
-public protocol ConfigurableForm: class {
-    
-    // Needs NOT to implements
-    func configure(@noescape handler: (Self -> Void)) -> Self
-}
+public protocol ConfigurableForm: class {}
 
 public extension ConfigurableForm where Self: RowFormer {
     

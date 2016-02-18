@@ -14,7 +14,7 @@ public protocol TextViewFormableRow: FormableRow {
     func formTextView() -> UITextView
 }
 
-public final class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
+public class TextViewRowFormer<T: UITableViewCell where T: TextViewFormableRow>
 : BaseRowFormer<T>, Formable {
     
     // MARK: Public

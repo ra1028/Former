@@ -15,7 +15,7 @@ public protocol StepperFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public final class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
+public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
 : BaseRowFormer<T>, Formable {
     
     // MARK: Public

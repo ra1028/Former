@@ -14,7 +14,7 @@ public protocol SegmentedFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public final class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
+public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
 : BaseRowFormer<T>, Formable {
     
     // MARK: Public
@@ -67,7 +67,7 @@ public final class SegmentedRowFormer<T: UITableViewCell where T: SegmentedForma
     private dynamic func valueChanged(segment: UISegmentedControl) {
         if enabled {
             let index = segment.selectedSegmentIndex
-            let selectedTitle = segment.titleForSegmentAtIndex(selectedIndex)!
+            let selectedTitle = segment.titleForSegmentAtIndex(index)!
             selectedIndex = index
             onSegmentSelected?(selectedIndex, selectedTitle)
         }

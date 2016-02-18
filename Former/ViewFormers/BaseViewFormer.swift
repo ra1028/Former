@@ -8,7 +8,8 @@
 
 import UIKit
 
-public class BaseViewFormer<T: UITableViewHeaderFooterView>: ViewFormer {
+public class BaseViewFormer<T: UITableViewHeaderFooterView>
+: ViewFormer, ConfigurableForm {
     
     // MARK: Public
     

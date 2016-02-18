@@ -71,6 +71,7 @@ final class DefaultsViewController: FormViewController {
             $0.titleLabel.text = "Segmented"
             }.configure {
                 $0.segmentTitles = ["Opt1", "Opt2", "Opt3"]
+                $0.selectedIndex = UISegmentedControlNoSegment
         }
         
         let sliderRow = SliderRowFormer<FormSliderCell>(){

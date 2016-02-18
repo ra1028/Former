@@ -14,7 +14,7 @@ public protocol SwitchFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public final class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
+public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
 : BaseRowFormer<T>, Formable {
     
     // MARK: Public

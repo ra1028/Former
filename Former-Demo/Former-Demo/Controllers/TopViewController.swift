@@ -68,7 +68,9 @@ final class TopViewContoller: FormViewController {
         // Create Headers and Footers
         
         let createHeader: (String -> ViewFormer) = { text in
-            return LabelViewFormer<FormLabelHeaderView>()
+            return LabelViewFormer<FormLabelHeaderView>() {
+                $0.contentView.backgroundColor = .blueColor()
+                }
                 .configure {
                     $0.text = text
                     $0.viewHeight = 40
@@ -76,7 +78,9 @@ final class TopViewContoller: FormViewController {
         }
         
         let createFooter: (String -> ViewFormer) = { text in
-            return LabelViewFormer<FormLabelFooterView>()
+            return LabelViewFormer<FormLabelFooterView>() {
+                $0.contentView.backgroundColor = .redColor()
+                }
                 .configure {
                     $0.text = text
                     $0.viewHeight = 100
