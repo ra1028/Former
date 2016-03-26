@@ -34,7 +34,7 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
     
     public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        cell.formSwitch().addTarget(self, action: "switchChanged:", forControlEvents: .ValueChanged)
+        cell.formSwitch().addTarget(self, action: #selector(SwitchRowFormer.switchChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     public override func update() {

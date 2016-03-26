@@ -290,7 +290,7 @@ final class ExampleViewController: FormViewController {
             ])
         }()
     
-    private func insertRows(sectionTop sectionTop: RowFormer, sectionBottom: RowFormer)(insert: Bool) {
+    private func insertRows(sectionTop sectionTop: RowFormer, sectionBottom: RowFormer, insert: Bool) {
         if insert {
             if insertRowPosition == .Below {
                 former.insertUpdate(rowFormers: subRowFormers, below: sectionBottom, rowAnimation: insertRowAnimation)
@@ -302,7 +302,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func insertSection(relate relate: SectionFormer)(insert: Bool) {
+    private func insertSection(relate relate: SectionFormer, insert: Bool) {
         if insert {
             if insertSectionPosition == .Below {
                 former.insertUpdate(sectionFormers: [subSectionFormer], below: relate, rowAnimation: insertSectionAnimation)
@@ -314,7 +314,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func pushSelectorRowSelected(options: [String])(rowFormer: RowFormer) {
+    private func pushSelectorRowSelected(options: [String], rowFormer: RowFormer) {
         if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
             let controller = TextSelectorViewContoller()
             controller.texts = options
@@ -327,7 +327,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func sheetSelectorRowSelected(options: [String])(rowFormer: RowFormer) {
+    private func sheetSelectorRowSelected(options: [String], rowFormer: RowFormer) {
         if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
             let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             options.forEach { title in

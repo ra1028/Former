@@ -36,7 +36,7 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
     
     public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        cell.formDatePicker().addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
+        cell.formDatePicker().addTarget(self, action: #selector(DatePickerRowFormer.dateChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     public override func update() {
