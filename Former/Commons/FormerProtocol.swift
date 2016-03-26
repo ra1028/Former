@@ -19,7 +19,7 @@ public protocol InlineForm: class {
 
 public protocol ConfigurableInlineForm: class, InlineForm {
     
-    typealias InlineCellType: UITableViewCell
+    associatedtype InlineCellType: UITableViewCell
 }
 
 extension ConfigurableInlineForm where Self: RowFormer {
@@ -45,7 +45,7 @@ public protocol SelectorForm: class {
 
 public protocol UpdatableSelectorForm: class, SelectorForm {
     
-    typealias SelectorViewType: UIView
+    associatedtype SelectorViewType: UIView
     var selectorView: SelectorViewType { get }
 }
 

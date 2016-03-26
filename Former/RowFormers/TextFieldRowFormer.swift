@@ -44,9 +44,9 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
         super.cellInitialized(cell)
         let textField = cell.formTextField()
         textField.delegate = observer
-        let events: [(Selector, UIControlEvents)] = [("textChanged:", .EditingChanged),
-            ("editingDidBegin:", .EditingDidBegin),
-            ("editingDidEnd:", .EditingDidEnd)]
+        let events: [(Selector, UIControlEvents)] = [(#selector(TextFieldRowFormer.textChanged(_:)), .EditingChanged),
+            (#selector(TextFieldRowFormer.editingDidBegin(_:)), .EditingDidBegin),
+            (#selector(TextFieldRowFormer.editingDidEnd(_:)), .EditingDidEnd)]
         events.forEach {
             textField.addTarget(self, action: $0.0, forControlEvents: $0.1)
         }

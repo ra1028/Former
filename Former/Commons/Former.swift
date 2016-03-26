@@ -174,7 +174,7 @@ public final class Former: NSObject {
         
         guard section < sectionFormers.count else { return false }
         if row < 0 {
-            section--
+            section -= 1
             guard section >= 0 else { return false }
             row = self[section].rowFormers.count - 1
         }
@@ -191,7 +191,8 @@ public final class Former: NSObject {
         
         guard section < sectionFormers.count else { return false }
         if row >= self[section].rowFormers.count {
-            guard ++section < sectionFormers.count else { return false }
+            section += 1
+            guard section < sectionFormers.count else { return false }
             row = 0
         }
         guard row < self[section].rowFormers.count else { return false }
@@ -207,7 +208,7 @@ public final class Former: NSObject {
             var row = (selectedIndexPath != nil) ? selectedIndexPath!.row - 1 : 0
             guard section < sectionFormers.count else { return self }
             if row < 0 {
-                section--
+                section -= 1
                 guard section >= 0 else { return self }
                 row = self[section].rowFormers.count - 1
             }
@@ -230,7 +231,8 @@ public final class Former: NSObject {
             var row = (selectedIndexPath != nil) ? selectedIndexPath!.row + 1 : 0
             guard section < sectionFormers.count else { return self }
             if row >= self[section].rowFormers.count {
-                guard ++section < sectionFormers.count else { return self }
+                section += 1
+                guard section < sectionFormers.count else { return self }
                 row = 0
             }
             guard row < self[section].rowFormers.count else { return self }
@@ -661,8 +663,8 @@ public final class Former: NSObject {
     private func setupTableView() {
         tableView?.delegate = self
         tableView?.dataSource = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillAppear:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillDisappear:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Former.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Former.keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
     private func removeCurrentInlineRow() -> NSIndexPath? {
@@ -691,7 +693,8 @@ public final class Former: NSObject {
             if sectionFormers.contains({ $0 === sectionFormer}) {
                 indexSet.addIndex(section)
                 remove(section: section)
-                if ++removedCount >= sectionFormers.count {
+                removedCount += 1
+                if removedCount >= sectionFormers.count {
                     return indexSet
                 }
             }
@@ -713,7 +716,8 @@ public final class Former: NSObject {
                         (inlineRowFormer as? InlineForm)?.editingDidEnd()
                         inlineRowFormer = nil
                     }
-                    if ++removedCount >= rowFormers.count {
+                    removedCount += 1
+                    if removedCount >= rowFormers.count {
                         return removeIndexPaths
                     }
                 }

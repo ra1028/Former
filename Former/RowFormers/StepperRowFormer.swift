@@ -40,7 +40,7 @@ public class StepperRowFormer<T: UITableViewCell where T: StepperFormableRow>
     
     public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        cell.formStepper().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        cell.formStepper().addTarget(self, action: #selector(StepperRowFormer.valueChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     public override func update() {
