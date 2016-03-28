@@ -34,7 +34,7 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     
     public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        cell.formSegmented().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        cell.formSegmented().addTarget(self, action: #selector(SegmentedRowFormer.valueChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     public override func update() {

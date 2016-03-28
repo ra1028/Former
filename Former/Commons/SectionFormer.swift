@@ -140,7 +140,8 @@ public final class SectionFormer {
         for (index, rowFormer) in self.rowFormers.enumerate() {
             if rowFormers.contains({ $0 === rowFormer }) {
                 remove(index)
-                if ++removedCount >= rowFormers.count {
+                removedCount += 1
+                if removedCount >= rowFormers.count {
                     return self
                 }
             }
@@ -154,7 +155,8 @@ public final class SectionFormer {
         for (index, rowFormer) in self.rowFormers.enumerate() {
             if rowFormers.contains({ $0 === rowFormer }) {
                 remove(index)
-                if ++removedCount >= rowFormers.count {
+                removedCount += 1
+                if removedCount >= rowFormers.count {
                     return self
                 }
             }

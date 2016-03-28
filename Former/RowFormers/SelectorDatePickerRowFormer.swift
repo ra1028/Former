@@ -35,7 +35,7 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     
     public private(set) final lazy var selectorView: UIDatePicker = { [unowned self] in
         let datePicker = UIDatePicker()
-        datePicker.addTarget(self, action: "dateChanged:", forControlEvents: .ValueChanged)
+        datePicker.addTarget(self, action: #selector(SelectorDatePickerRowFormer.dateChanged(_:)), forControlEvents: .ValueChanged)
         return datePicker
         }()
     

@@ -290,56 +290,66 @@ final class ExampleViewController: FormViewController {
             ])
         }()
     
-    private func insertRows(sectionTop sectionTop: RowFormer, sectionBottom: RowFormer)(insert: Bool) {
-        if insert {
-            if insertRowPosition == .Below {
-                former.insertUpdate(rowFormers: subRowFormers, below: sectionBottom, rowAnimation: insertRowAnimation)
-            } else if insertRowPosition == .Above {
-                former.insertUpdate(rowFormers: subRowFormers, above: sectionTop, rowAnimation: insertRowAnimation)
+    private func insertRows(sectionTop sectionTop: RowFormer, sectionBottom: RowFormer) -> Bool -> Void {
+        return { [weak self] insert in
+            guard let `self` = self else { return }
+            if insert {
+                if self.insertRowPosition == .Below {
+                    self.former.insertUpdate(rowFormers: self.subRowFormers, below: sectionBottom, rowAnimation: self.insertRowAnimation)
+                } else if self.insertRowPosition == .Above {
+                    self.former.insertUpdate(rowFormers: self.subRowFormers, above: sectionTop, rowAnimation: self.insertRowAnimation)
+                }
+            } else {
+                self.former.removeUpdate(rowFormers: self.subRowFormers, rowAnimation: self.insertRowAnimation)
             }
-        } else {
-            former.removeUpdate(rowFormers: subRowFormers, rowAnimation: insertRowAnimation)
         }
     }
     
-    private func insertSection(relate relate: SectionFormer)(insert: Bool) {
-        if insert {
-            if insertSectionPosition == .Below {
-                former.insertUpdate(sectionFormers: [subSectionFormer], below: relate, rowAnimation: insertSectionAnimation)
-            } else if insertSectionPosition == .Above {
-                former.insertUpdate(sectionFormers: [subSectionFormer], above: relate, rowAnimation: insertSectionAnimation)
+    private func insertSection(relate relate: SectionFormer) -> Bool -> Void {
+        return { [weak self] insert in
+            guard let `self` = self else { return }
+            if insert {
+                if self.insertSectionPosition == .Below {
+                    self.former.insertUpdate(sectionFormers: [self.subSectionFormer], below: relate, rowAnimation: self.insertSectionAnimation)
+                } else if self.insertSectionPosition == .Above {
+                    self.former.insertUpdate(sectionFormers: [self.subSectionFormer], above: relate, rowAnimation: self.insertSectionAnimation)
+                }
+            } else {
+                self.former.removeUpdate(sectionFormers: [self.subSectionFormer], rowAnimation: self.insertSectionAnimation)
             }
-        } else {
-            former.removeUpdate(sectionFormers: [subSectionFormer], rowAnimation: insertSectionAnimation)
         }
     }
     
-    private func pushSelectorRowSelected(options: [String])(rowFormer: RowFormer) {
-        if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
-            let controller = TextSelectorViewContoller()
-            controller.texts = options
-            controller.selectedText = rowFormer.subText
-            controller.onSelected = {
-                rowFormer.subText = $0
-                rowFormer.update()
+    private func pushSelectorRowSelected(options: [String]) -> RowFormer -> Void {
+        return { [weak self] rowFormer in
+            if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
+                let controller = TextSelectorViewContoller()
+                controller.texts = options
+                controller.selectedText = rowFormer.subText
+                controller.onSelected = {
+                    rowFormer.subText = $0
+                    rowFormer.update()
+                }
+                self?.navigationController?.pushViewController(controller, animated: true)
             }
-            navigationController?.pushViewController(controller, animated: true)
         }
     }
     
-    private func sheetSelectorRowSelected(options: [String])(rowFormer: RowFormer) {
-        if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
-            let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            options.forEach { title in
-                sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak rowFormer] _ in
-                    rowFormer?.subText = title
-                    rowFormer?.update()
-                    })
-                )
+    private func sheetSelectorRowSelected(options: [String]) -> RowFormer -> Void {
+        return { [weak self] rowFormer in
+            if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
+                let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+                options.forEach { title in
+                    sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak rowFormer] _ in
+                        rowFormer?.subText = title
+                        rowFormer?.update()
+                        })
+                    )
+                }
+                sheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                self?.presentViewController(sheet, animated: true, completion: nil)
+                self?.former.deselect(true)
             }
-            sheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-            presentViewController(sheet, animated: true, completion: nil)
-            former.deselect(true)
         }
     }
 }

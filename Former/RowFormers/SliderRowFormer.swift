@@ -50,7 +50,7 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     
     public override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
-        cell.formSlider().addTarget(self, action: "valueChanged:", forControlEvents: .ValueChanged)
+        cell.formSlider().addTarget(self, action: #selector(SliderRowFormer.valueChanged(_:)), forControlEvents: .ValueChanged)
     }
     
     public override func update() {
