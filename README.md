@@ -1,6 +1,6 @@
 ![Former](https://raw.githubusercontent.com/ra1028/Former/master/Logo.png)
 #### Former is a fully customizable Swift2 library for easy creating UITableView based form.
-![iOS 7.0+](https://img.shields.io/badge/iOS-7.0%2B-blue.svg) [![Swift2](https://img.shields.io/badge/swift2-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
+![iOS 7.0+](https://img.shields.io/badge/iOS-7.0%2B-blue.svg) [![Swift2](https://img.shields.io/badge/swift2.2-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
 [![CocoaPods Shield](https://img.shields.io/cocoapods/v/Former.svg)](https://cocoapods.org/pods/Former)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
@@ -23,9 +23,9 @@
 * [License](#license)
 
 ## Requirements  
-- Xcode 7+
-- iOS 7.0+
-- Swift 2.0+
+- Xcode 7.3
+- Swift 2.2
+- iOS 7.0 or later
 
 ## Installation
 ### iOS 8.0+
