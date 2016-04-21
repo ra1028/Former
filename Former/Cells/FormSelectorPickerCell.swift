@@ -26,11 +26,19 @@ public class FormSelectorPickerCell: FormCell, SelectorPickerFormableRow {
         return displayLabel
     }
     
+    public func formDefaultDisplayLabelText() -> String? {
+        return nil
+    }
+    
+    public func formDefaultSelectedRow() -> Int? {
+        return 0
+    }
+    
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         rightConst.constant = (accessoryType == .None) ? -15 : 0
     }
-    
+        
     public override func setup() {
         super.setup()
         

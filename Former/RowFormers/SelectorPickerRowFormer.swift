@@ -15,6 +15,9 @@ public protocol SelectorPickerFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
+    
+    func formDefaultSelectedRow() -> Int?
+    func formDefaultDisplayLabelText() -> String?
 }
 
 public class SelectorPickerItem<S>: PickerItem<S> {
@@ -35,7 +38,7 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
     }
     
     public var pickerItems: [SelectorPickerItem<S>] = []
-    public var selectedRow: Int = 0
+    public var selectedRow: Int? = nil
     public var inputAccessoryView: UIView?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
@@ -61,24 +64,32 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
     public override func update() {
         super.update()
         
-        selectorView.selectRow(selectedRow, inComponent: 0, animated: false)
-        cell.selectorPickerView = selectorView
-        cell.selectorAccessoryView = inputAccessoryView
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
+        
         if pickerItems.isEmpty {
             displayLabel?.text = ""
-        } else {
+        } else if let selectedRow = selectedRow {
+            selectorView.selectRow(selectedRow, inComponent: 0, animated: false)
             displayLabel?.text = pickerItems[selectedRow].title
             _ = pickerItems[selectedRow].displayTitle.map { displayLabel?.attributedText = $0 }
+        } else {
+            if let defaultText = cell.formDefaultDisplayLabelText() {
+               displayLabel?.text = defaultText
+            }
         }
+        cell.selectorPickerView = selectorView
+        cell.selectorAccessoryView = inputAccessoryView
+        
+        
         
         if enabled {
             if isEditing {
                 if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
                 _ = titleEditingColor.map { titleLabel?.textColor = $0 }
                 
-                if pickerItems[selectedRow].displayTitle == nil {
+                if let selectedRow = selectedRow
+                    where pickerItems[selectedRow].displayTitle == nil {
                     if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
                     _ = displayEditingColor.map { displayLabel?.textColor = $0 }
                 }
@@ -107,10 +118,13 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
             
             if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
-            
-            if pickerItems[selectedRow].displayTitle == nil {
+        
+            if let selectedRow = selectedRow
+                where pickerItems[selectedRow].displayTitle == nil {
+                
                 if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
                 _ = displayEditingColor.map { displayLabel?.textColor = $0 }
+
             }
             isEditing = true
         }
@@ -125,9 +139,11 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
             
-            if pickerItems[selectedRow].displayTitle == nil {
+            if let selectedRow = selectedRow
+                where pickerItems[selectedRow].displayTitle == nil {
                 _ = displayTextColor.map { displayLabel?.textColor = $0 }
             }
+            
             displayTextColor = nil
         } else {
             if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
