@@ -73,6 +73,11 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S where T: SelectorPick
             selectorView.selectRow(selectedRow, inComponent: 0, animated: false)
             displayLabel?.text = pickerItems[selectedRow].title
             _ = pickerItems[selectedRow].displayTitle.map { displayLabel?.attributedText = $0 }
+        } else if let defaultSelectedRow = cell.formDefaultSelectedRow() {
+            self.selectedRow = defaultSelectedRow
+            selectorView.selectRow(defaultSelectedRow, inComponent: 0, animated: false)
+            displayLabel?.text = pickerItems[defaultSelectedRow].title
+            _ = pickerItems[defaultSelectedRow].displayTitle.map { displayLabel?.attributedText = $0 }
         } else {
             if let defaultText = cell.formDefaultDisplayLabelText() {
                displayLabel?.text = defaultText
