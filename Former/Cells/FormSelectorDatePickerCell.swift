@@ -26,6 +26,14 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
         return displayLabel
     }
     
+    public func formDefaultDisplayLabelText() -> String? {
+        return "Not Set"
+    }
+    
+    public func formDefaultDisplayDate() -> NSDate? {
+        return NSDate()
+    }
+    
     public override func updateWithRowFormer(rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         rightConst.constant = (accessoryType == .None) ? -15 : 0

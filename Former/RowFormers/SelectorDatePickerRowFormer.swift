@@ -15,6 +15,11 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
+    
+    func formDefaultDisplayDate() -> NSDate?
+    
+    func formDefaultDisplayLabelText() -> String? //If formDefaultDisplayDate() returns a real date, the return value from this is ignored
+    
 }
 
 public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
@@ -26,7 +31,7 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         return enabled
     }
     
-    public var date: NSDate = NSDate()
+    public var date: NSDate? = nil
     public var inputAccessoryView: UIView?
     public var titleDisabledColor: UIColor? = .lightGrayColor()
     public var displayDisabledColor: UIColor? = .lightGrayColor()
@@ -61,7 +66,17 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
-        displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        
+        
+        if let date = date {
+            displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        } else if let defaultDate = cell.formDefaultDisplayDate()  {
+            self.date = defaultDate
+            displayLabel?.text = displayTextFromDate?(defaultDate) ?? "\(defaultDate)"
+        } else if let defaultDisplayText = cell.formDefaultDisplayLabelText() {
+            displayLabel?.text = defaultDisplayText
+        }
+        
         if self.enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             _ = displayTextColor.map { displayLabel?.textColor = $0 }
@@ -116,9 +131,10 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     private final var displayTextColor: UIColor?
     
     private dynamic func dateChanged(datePicker: UIDatePicker) {
-        let date = datePicker.date
-        self.date = date
-        cell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
-        onDateChanged?(date)
+        self.date = datePicker.date
+        if let date = self.date {
+            cell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
+            onDateChanged?(date)
+        }
     }
 }
