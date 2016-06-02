@@ -151,7 +151,7 @@ NSObject, UITextViewDelegate {
     private dynamic func textViewDidChange(textView: UITextView) {
         guard let textViewRowFormer = textViewRowFormer else { return }
         if textViewRowFormer.enabled {
-            if UIDevice.currentDevice().systemVersion.compare("8.0.0", options: .NumericSearch) == .OrderedAscending {
+            if UIDevice.currentDevice().systemVersion.compare("8.0.0", options: .NumericSearch) == .OrderedDescending {
                 textView.scrollRangeToVisible(textView.selectedRange)
             }
             let text = textView.text ?? ""
