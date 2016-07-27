@@ -53,10 +53,10 @@ public class ViewFormer {
             case .Class:
                 view = viewType.init(reuseIdentifier: nil)
             case .Nib(nibName: let nibName):
-                view = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+                view = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
             case .NibBundle(nibName: let nibName, bundle: let bundle):
-                view = bundle.loadNibNamed(nibName, owner: nil, options: nil).first as? UITableViewHeaderFooterView
+                view = bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (nibName: \(nibName)), bundle: (\(bundle)).")
             }
             _viewInstance = view
