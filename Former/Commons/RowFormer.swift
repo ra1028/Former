@@ -20,7 +20,7 @@ public class RowFormer {
     public internal(set) final weak var former: Former?
     public final let cellType: UITableViewCell.Type
     public final var rowHeight: CGFloat = 44
-    public internal(set) final var isEditing = false
+    public final var isEditing = false
     public final var enabled = true { didSet { update() } }
     public var canBecomeEditing: Bool {
         return false
