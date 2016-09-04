@@ -30,7 +30,6 @@ final class TopViewContoller: FormViewController {
         navigationItem.titleView = UIImageView(image: logo)
         let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButton
-        tableView.contentInset.top = 40
         
         // Create RowFormers
         

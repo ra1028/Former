@@ -12,10 +12,6 @@ import Former
 final class LoginViewController: UIViewController {
     
     // MARK: Public
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -155,10 +151,16 @@ private final class FadeTransitionAnimator: NSObject, UIViewControllerAnimatedTr
     }
     
     @objc func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        guard let containerView = transitionContext.containerView(),
-            fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey),
+        guard let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey),
             toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
             else { return }
+        
+        #if swift(>=2.3)
+            let containerView = transitionContext.containerView()
+        #else
+            let containerView = transitionContext.containerView()!
+        #endif
+        
         let duration = transitionDuration(transitionContext)
         
         if forwardTransition {

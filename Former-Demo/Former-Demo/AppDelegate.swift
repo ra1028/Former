@@ -28,14 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSForegroundColorAttributeName: UIColor.whiteColor(),
             NSFontAttributeName: UIFont.boldSystemFontOfSize(20)
         ]
-        navigationBar.barStyle = .BlackTranslucent
-        navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBar.translucent = false
         navigationBar.shadowImage = UIImage()
-        navigationBar.subviews.forEach {
-            if $0.isKindOfClass(NSClassFromString("_UINavigationBarBackground")!) {
-                $0.backgroundColor = .formerColor()
-            }
-        }
+        navigationBar.barTintColor = .formerColor()
     }
 
     func applicationWillResignActive(application: UIApplication) {
