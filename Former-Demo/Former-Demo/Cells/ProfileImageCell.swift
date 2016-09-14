@@ -20,10 +20,10 @@ final class ProfileImageCell: UITableViewCell, LabelFormableRow {
         super.awakeFromNib()
         titleLabel.textColor = .formerColor()
         iconView.backgroundColor = .formerColor()
-        iconView.layer.cornerRadius = CGRectGetHeight(iconView.bounds) / 2
+        iconView.layer.cornerRadius = iconView.bounds.height / 2
     }
     
-    override func setHighlighted(highlighted: Bool, animated: Bool) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if iconViewColor == nil {
             iconViewColor = iconView.backgroundColor
         }
@@ -33,7 +33,7 @@ final class ProfileImageCell: UITableViewCell, LabelFormableRow {
         }
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         if iconViewColor == nil {
             iconViewColor = iconView.backgroundColor
         }
@@ -51,7 +51,7 @@ final class ProfileImageCell: UITableViewCell, LabelFormableRow {
         return nil
     }
     
-    func updateWithRowFormer(rowFormer: RowFormer) {}
+    func updateWithRowFormer(_ rowFormer: RowFormer) {}
     
     // MARK: Private
     

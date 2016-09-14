@@ -18,29 +18,31 @@ public class BaseRowFormer<T: UITableViewCell>: RowFormer {
     
     required public init(
         instantiateType: Former.InstantiateType = .Class,
-        cellSetup: (T -> Void)? = nil) {
+        cellSetup: ((T) -> Void)? = nil) {
         super.init(
             cellType: T.self,
             instantiateType: instantiateType,
             cellSetup: cellSetup
             )
     }
-    
-    public final func cellSetup(handler: (T -> Void)) -> Self {
+
+    @discardableResult
+    public final func cellSetup(_ handler: @escaping ((T) -> Void)) -> Self {
         cellSetup = { handler(($0 as! T)) }
         return self
     }
     
-    public final func cellUpdate(@noescape update: (T -> Void)) -> Self {
+    @discardableResult
+    public final func cellUpdate(_ update: ((T) -> Void)) -> Self {
         update(cell)
         return self
     }
     
-    public func cellInitialized(cell: T) {}
+    public func cellInitialized(_ cell: T) {}
     
     // MARK: Internal
     
-    override func cellInstanceInitialized(cell: UITableViewCell) {
+    override func cellInstanceInitialized(_ cell: UITableViewCell) {
         cellInitialized(cell as! T)
     }
 }

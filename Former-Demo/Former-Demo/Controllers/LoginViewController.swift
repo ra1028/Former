@@ -15,7 +15,7 @@ final class LoginViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        modalPresentationStyle = .Custom
+        modalPresentationStyle = .custom
         transitioningDelegate = self
     }
     
@@ -27,7 +27,7 @@ final class LoginViewController: UIViewController {
     class func present(viewController: UIViewController) {
         let storyboard = UIStoryboard(name: "LoginViewController", bundle: nil)
         let loginVC = storyboard.instantiateInitialViewController() as! LoginViewController
-        viewController.presentViewController(loginVC, animated: true, completion: nil)
+        viewController.present(loginVC, animated: true, completion: nil)
     }
     
     // MARK: Private
@@ -52,7 +52,7 @@ final class LoginViewController: UIViewController {
         
         let idRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.textField.textColor = .formerSubColor()
-            $0.textField.font = .systemFontOfSize(15)
+            $0.textField.font = .systemFont(ofSize: 15)
             }.configure {
                 $0.placeholder = "User name"
                 $0.text = Login.sharedInstance.username
@@ -62,9 +62,9 @@ final class LoginViewController: UIViewController {
         }
         let passwordRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.textField.textColor = .formerSubColor()
-            $0.textField.font = .systemFontOfSize(15)
-            $0.textField.keyboardType = .DecimalPad
-            $0.textField.secureTextEntry = true
+            $0.textField.font = .systemFont(ofSize: 15)
+            $0.textField.keyboardType = .decimalPad
+            $0.textField.isSecureTextEntry = true
             }.configure {
                 $0.placeholder = "Password"
                 $0.text = Login.sharedInstance.password
@@ -77,7 +77,7 @@ final class LoginViewController: UIViewController {
             .configure {
                 $0.text = "Login"
             }.onSelected { [weak self] _ in
-                self?.dismissViewControllerAnimated(true, completion: nil)
+                self?.dismiss(animated: true, completion: nil)
         }
         
         self.idRow = idRow
@@ -89,15 +89,15 @@ final class LoginViewController: UIViewController {
         // Create Headers
         
         let descriptionHeader = LabelViewFormer<FormLabelHeaderView>() {
-            $0.contentView.backgroundColor = .clearColor()
-            $0.titleLabel.textColor = .whiteColor()
+            $0.contentView.backgroundColor = .clear
+            $0.titleLabel.textColor = .white
             }.configure {
                 $0.viewHeight = 80
                 $0.text = "Welcome to the Former demo app\nPlease login"
         }
         let createSpaceHeader: (() -> ViewFormer) = {
             return CustomViewFormer<FormHeaderFooterView>() {
-                $0.contentView.backgroundColor = .clearColor()
+                $0.contentView.backgroundColor = .clear
                 }.configure {
                     $0.viewHeight = 30
             }
@@ -122,7 +122,7 @@ final class LoginViewController: UIViewController {
     }
     
     @IBAction func tapBackground(sender: UIControl) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -146,28 +146,28 @@ private final class FadeTransitionAnimator: NSObject, UIViewControllerAnimatedTr
         self.forwardTransition = forwardTransition
     }
     
-    @objc func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    @objc func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
     
-    @objc func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey),
-            toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+    @objc func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from),
+            let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
             else { return }
         
         #if swift(>=2.3)
-            let containerView = transitionContext.containerView()
+            let containerView = transitionContext.containerView
         #else
-            let containerView = transitionContext.containerView()!
+            let containerView = transitionContext.containerView!
         #endif
         
-        let duration = transitionDuration(transitionContext)
+        let duration = transitionDuration(using: transitionContext)
         
         if forwardTransition {
             containerView.addSubview(toVC.view)
-            UIView.animateWithDuration(duration, delay: 0,
+            UIView.animate(withDuration: duration, delay: 0,
                 usingSpringWithDamping: 1, initialSpringVelocity: 0,
-                options: .BeginFromCurrentState,
+                options: .beginFromCurrentState,
                 animations: {
                     toVC.view.alpha = 0
                     toVC.view.alpha = 1
@@ -175,9 +175,9 @@ private final class FadeTransitionAnimator: NSObject, UIViewControllerAnimatedTr
                     transitionContext.completeTransition(true)
             }
         } else {
-            UIView.animateWithDuration(duration, delay: 0,
+            UIView.animate(withDuration: duration, delay: 0,
                 usingSpringWithDamping: 1, initialSpringVelocity: 0,
-                options: .BeginFromCurrentState,
+                options: .beginFromCurrentState,
                 animations: {
                     fromVC.view.alpha = 0
                 }) { _ in

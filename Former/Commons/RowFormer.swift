@@ -10,7 +10,7 @@ import UIKit
 
 public protocol FormableRow: class {
     
-    func updateWithRowFormer(rowFormer: RowFormer)
+    func updateWithRowFormer(_ rowFormer: RowFormer)
 }
 
 public class RowFormer {
@@ -29,19 +29,21 @@ public class RowFormer {
     internal init<T: UITableViewCell>(
         cellType: T.Type,
         instantiateType: Former.InstantiateType,
-        cellSetup: (T -> Void)? = nil) {
+        cellSetup: ((T) -> Void)? = nil) {
             self.cellType = cellType
             self.instantiateType = instantiateType
             self.cellSetup = { cellSetup?(($0 as! T)) }
             initialized()
     }
     
-    public final func cellSetup(handler: (UITableViewCell -> Void)) -> Self {
+    @discardableResult
+    public final func cellSetup(_ handler: @escaping ((UITableViewCell) -> Void)) -> Self {
         cellSetup = handler
         return self
     }
     
-    public final func dynamicRowHeight(handler: ((UITableView, NSIndexPath) -> CGFloat)) -> Self {
+    @discardableResult
+    public final func dynamicRowHeight(_ handler: @escaping ((UITableView, IndexPath) -> CGFloat)) -> Self {
         dynamicRowHeight = handler
         return self
     }
@@ -49,7 +51,7 @@ public class RowFormer {
     public func initialized() {}
     
     public func update() {
-        cellInstance.userInteractionEnabled = enabled
+        cellInstance.isUserInteractionEnabled = enabled
         onUpdate?(self)
         
         if let formableRow = cellInstance as? FormableRow {
@@ -66,7 +68,7 @@ public class RowFormer {
         }
     }
     
-    public func cellSelected(indexPath: NSIndexPath) {
+    public func cellSelected(indexPath: IndexPath) {
         if enabled {
             onSelected?(self)
         }
@@ -74,19 +76,19 @@ public class RowFormer {
 
     // MARK: Internal
 
-    internal final var cellSetup: (UITableViewCell -> Void)?
-    internal final var onSelected: (RowFormer -> Void)?
-    internal final var onUpdate: (RowFormer -> Void)?
-    internal final var dynamicRowHeight: ((UITableView, NSIndexPath) -> CGFloat)?
+    internal final var cellSetup: ((UITableViewCell) -> Void)?
+    internal final var onSelected: ((RowFormer) -> Void)?
+    internal final var onUpdate: ((RowFormer) -> Void)?
+    internal final var dynamicRowHeight: ((UITableView, IndexPath) -> CGFloat)?
     
     internal final var cellInstance: UITableViewCell {
         if _cellInstance == nil {
             var cell: UITableViewCell?
             switch instantiateType {
             case .Class:
-                cell = cellType.init(style: .Default, reuseIdentifier: nil)
+                cell = cellType.init(style: .default, reuseIdentifier: nil)
             case .Nib(nibName: let nibName):
-                cell = NSBundle.mainBundle().loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
+                cell = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
                 assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
             case .NibBundle(nibName: let nibName, bundle: let bundle):
                 cell = bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
@@ -99,7 +101,7 @@ public class RowFormer {
         return _cellInstance!
     }
     
-    internal func cellInstanceInitialized(cell: UITableViewCell) {}
+    internal func cellInstanceInitialized(_ cell: UITableViewCell) {}
     
     // MARK: Private
     

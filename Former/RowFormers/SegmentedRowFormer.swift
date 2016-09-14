@@ -14,47 +14,48 @@ public protocol SegmentedFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow>
-: BaseRowFormer<T>, Formable {
+public class SegmentedRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable where T: SegmentedFormableRow {
     
     // MARK: Public
     
     public var segmentTitles = [String]()
     public var selectedIndex: Int = 0
-    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var titleDisabledColor: UIColor? = .lightGray
     
-    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public final func onSegmentSelected(handler: ((Int, String) -> Void)) -> Self {
+    @discardableResult
+    public final func onSegmentSelected(_ handler: @escaping ((Int, String) -> Void)) -> Self {
         onSegmentSelected = handler
         return self
     }
     
-    public override func cellInitialized(cell: T) {
+    public override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
-        cell.formSegmented().addTarget(self, action: #selector(SegmentedRowFormer.valueChanged(_:)), forControlEvents: .ValueChanged)
+        cell.formSegmented().addTarget(self, action: #selector(SegmentedRowFormer.valueChanged(segment:)), for: .valueChanged)
     }
     
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let titleLabel = cell.formTitleLabel()
         let segment = cell.formSegmented()
         segment.removeAllSegments()
-        for (index, title) in segmentTitles.enumerate() {
-            segment.insertSegmentWithTitle(title, atIndex: index, animated: false)
+        for (index, title) in segmentTitles.enumerated() {
+            segment.insertSegment(withTitle: title, at: index, animated: false)
         }
         segment.selectedSegmentIndex = selectedIndex
-        segment.enabled = enabled
+        segment.isEnabled = enabled
         
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
         }
     }
@@ -67,7 +68,7 @@ public class SegmentedRowFormer<T: UITableViewCell where T: SegmentedFormableRow
     private dynamic func valueChanged(segment: UISegmentedControl) {
         if enabled {
             let index = segment.selectedSegmentIndex
-            let selectedTitle = segment.titleForSegmentAtIndex(index)!
+            let selectedTitle = segment.titleForSegment(at: index)!
             selectedIndex = index
             onSegmentSelected?(selectedIndex, selectedTitle)
         }

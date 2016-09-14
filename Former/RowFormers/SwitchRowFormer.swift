@@ -14,27 +14,28 @@ public protocol SwitchFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
-: BaseRowFormer<T>, Formable {
+public class SwitchRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable where T: SwitchFormableRow {
     
     // MARK: Public
     
     public var switched = false
     public var switchWhenSelected = false
-    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var titleDisabledColor: UIColor? = .lightGray
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public final func onSwitchChanged(handler: (Bool -> Void)) -> Self {
+    @discardableResult
+    public final func onSwitchChanged(_ handler: @escaping ((Bool) -> Void)) -> Self {
         onSwitchChanged = handler
         return self
     }
     
-    public override func cellInitialized(cell: T) {
+    public override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
-        cell.formSwitch().addTarget(self, action: #selector(SwitchRowFormer.switchChanged(_:)), forControlEvents: .ValueChanged)
+        cell.formSwitch().addTarget(self, action: #selector(SwitchRowFormer.switchChanged(_:)), for: .valueChanged)
     }
     
     public override func update() {
@@ -42,7 +43,7 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         
         if !switchWhenSelected {
             if selectionStyle == nil { selectionStyle = cell.selectionStyle }
-            cell.selectionStyle = .None
+            cell.selectionStyle = .none
         } else {
             _ = selectionStyle.map { cell.selectionStyle = $0 }
             selectionStyle = nil
@@ -50,36 +51,36 @@ public class SwitchRowFormer<T: UITableViewCell where T: SwitchFormableRow>
         
         let titleLabel = cell.formTitleLabel()
         let switchButton = cell.formSwitch()
-        switchButton.on = switched
-        switchButton.enabled = enabled
+        switchButton.isOn = switched
+        switchButton.isEnabled = enabled
         
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
         }
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {        
-        former?.deselect(true)
+    public override func cellSelected(indexPath: IndexPath) {        
+        former?.deselect(animated: true)
         if switchWhenSelected && enabled {
             let switchButton = cell.formSwitch()
-            switchButton.setOn(!switchButton.on, animated: true)
+            switchButton.setOn(!switchButton.isOn, animated: true)
             switchChanged(switchButton)
         }
     }
     
     // MARK: Private
     
-    private final var onSwitchChanged: (Bool -> Void)?
+    private final var onSwitchChanged: ((Bool) -> Void)?
     private final var titleColor: UIColor?
     private final var selectionStyle: UITableViewCellSelectionStyle?
     
-    private dynamic func switchChanged(switchButton: UISwitch) {
+    private dynamic func switchChanged(_ switchButton: UISwitch) {
         if self.enabled {
-            let switched = switchButton.on
+            let switched = switchButton.isOn
             self.switched = switched
             onSwitchChanged?(switched)
         }

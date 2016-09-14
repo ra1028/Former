@@ -15,7 +15,7 @@ final class Profile {
     var image: UIImage?
     var name: String?
     var gender: String?
-    var birthDay: NSDate?
+    var birthDay: Date?
     var introduction: String?
     var moreInformation = false
     var nickname: String?

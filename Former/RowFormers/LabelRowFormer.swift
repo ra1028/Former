@@ -14,17 +14,17 @@ public protocol LabelFormableRow: FormableRow {
     func formSubTextLabel() -> UILabel?
 }
 
-public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
-: BaseRowFormer<T>, Formable {
+public class LabelRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable where T: LabelFormableRow {
     
     // MARK: Public
     
     public var text: String?
     public var subText: String?
-    public var textDisabledColor: UIColor? = .lightGrayColor()
-    public var subTextDisabledColor: UIColor? = .lightGrayColor()
+    public var textDisabledColor: UIColor? = .lightGray
+    public var subTextDisabledColor: UIColor? = .lightGray
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -42,8 +42,8 @@ public class LabelRowFormer<T: UITableViewCell where T: LabelFormableRow>
             textColor = nil
             subTextColor = nil
         } else {
-            if textColor == nil { textColor = textLabel?.textColor ?? .blackColor() }
-            if subTextColor == nil { subTextColor = subTextLabel?.textColor ?? .blackColor() }
+            if textColor == nil { textColor = textLabel?.textColor ?? .black }
+            if subTextColor == nil { subTextColor = subTextLabel?.textColor ?? .black }
             textLabel?.textColor = textDisabledColor
             subTextLabel?.textColor = subTextDisabledColor
         }

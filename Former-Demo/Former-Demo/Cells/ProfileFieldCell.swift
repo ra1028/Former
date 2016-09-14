@@ -28,5 +28,5 @@ final class ProfileFieldCell: UITableViewCell, TextFieldFormableRow {
         return titleLabel
     }
     
-    func updateWithRowFormer(rowFormer: RowFormer) {}
+    func updateWithRowFormer(_ rowFormer: RowFormer) {}
 }

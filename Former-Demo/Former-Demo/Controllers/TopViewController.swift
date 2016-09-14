@@ -18,9 +18,9 @@ final class TopViewContoller: FormViewController {
         configure()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        former.deselect(true)
+        former.deselect(animated: true)
     }
     
     // MARK: Private
@@ -28,7 +28,7 @@ final class TopViewContoller: FormViewController {
     private func configure() {
         let logo = UIImage(named: "header_logo")!
         navigationItem.titleView = UIImageView(image: logo)
-        let backBarButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        let backBarButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backBarButton
         
         // Create RowFormers
@@ -36,8 +36,8 @@ final class TopViewContoller: FormViewController {
         let createMenu: ((String, (() -> Void)?) -> RowFormer) = { text, onSelected in
             return LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16)
-                $0.accessoryType = .DisclosureIndicator
+                $0.titleLabel.font = .boldSystemFont(ofSize: 16)
+                $0.accessoryType = .disclosureIndicator
                 }.configure {
                     $0.text = text
                 }.onSelected { _ in
@@ -51,8 +51,8 @@ final class TopViewContoller: FormViewController {
             self?.navigationController?.pushViewController(AddEventViewController(), animated: true)
         }
         let loginRow = createMenu("Login") { [weak self] in
-            _ = self.map { LoginViewController.present($0) }
-            self?.former.deselect(true)
+            _ = self.map { LoginViewController.present(viewController: $0) }
+            self?.former.deselect(animated: true)
         }
         let exampleRow = createMenu("Examples") { [weak self] in
             self?.navigationController?.pushViewController(ExampleViewController(), animated: true)
@@ -66,7 +66,7 @@ final class TopViewContoller: FormViewController {
         
         // Create Headers and Footers
         
-        let createHeader: (String -> ViewFormer) = { text in
+        let createHeader: ((String) -> ViewFormer) = { text in
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
                     $0.text = text
@@ -74,7 +74,7 @@ final class TopViewContoller: FormViewController {
             }
         }
         
-        let createFooter: (String -> ViewFormer) = { text in
+        let createFooter: ((String) -> ViewFormer) = { text in
             return LabelViewFormer<FormLabelFooterView>()
                 .configure {
                     $0.text = text

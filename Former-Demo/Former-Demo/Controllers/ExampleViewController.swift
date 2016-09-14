@@ -16,7 +16,7 @@ private extension UITableViewRowAnimation {
     }
     
     static func all() -> [UITableViewRowAnimation] {
-        return [.None, .Fade, .Right, .Left, .Top, .Bottom, .Middle, .Automatic]
+        return [.none, .fade, .right, .left, .top, .bottom, .middle, .automatic]
     }
 }
 
@@ -29,9 +29,9 @@ final class ExampleViewController: FormViewController {
         configure()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        former.deselect(true)
+        former.deselect(animated: true)
     }
     
     private func configure() {
@@ -46,11 +46,11 @@ final class ExampleViewController: FormViewController {
         let dateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
             $0.titleLabel.text = "Date"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .boldSystemFontOfSize(14)
+            $0.displayLabel.font = .boldSystemFont(ofSize: 14)
             }.inlineCellSetup {
-                $0.datePicker.datePickerMode = .DateAndTime
+                $0.datePicker.datePickerMode = .dateAndTime
             }.configure {
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.displayTextFromDate(String.mediumDateShortTime)
@@ -58,14 +58,14 @@ final class ExampleViewController: FormViewController {
         let switchDateStyleRow = SwitchRowFormer<FormSwitchCell>() {
             $0.titleLabel.text = "Switch Date Style"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.switchButton.onTintColor = .formerSubColor()
             }.configure {
                 $0.switched = false
             }.onSwitchChanged { switched in
                 dateRow.displayTextFromDate(switched ? String.fullDate : String.mediumDateShortTime)
                 dateRow.inlineCellUpdate {
-                    $0.datePicker.datePickerMode = switched ? .Date : .DateAndTime
+                    $0.datePicker.datePickerMode = switched ? .date : .dateAndTime
                 }
                 dateRow.update()
         }
@@ -75,9 +75,9 @@ final class ExampleViewController: FormViewController {
         let customCheckRow = CheckRowFormer<FormCheckCell>() {
             $0.titleLabel.text = "Custom Check Icon"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             }.configure {
-                let check = UIImage(named: "check")!.imageWithRenderingMode(.AlwaysTemplate)
+                let check = UIImage(named: "check")!.withRenderingMode(.alwaysTemplate)
                 let checkView = UIImageView(image: check)
                 checkView.tintColor = .formerSubColor()
                 $0.customCheckView = checkView
@@ -99,14 +99,14 @@ final class ExampleViewController: FormViewController {
         let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .boldSystemFontOfSize(14)
+            $0.displayLabel.font = .boldSystemFont(ofSize: 14)
             }.configure {
-                $0.pickerItems = UITableViewRowAnimation.names().enumerate().map {
-                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
+                $0.pickerItems = UITableViewRowAnimation.names().enumerated().map {
+                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.offset])
                 }
-                $0.selectedRow = UITableViewRowAnimation.all().indexOf(insertRowAnimation) ?? 0
+                $0.selectedRow = UITableViewRowAnimation.all().index(of: insertRowAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertRowAnimation = $0.value!
@@ -115,7 +115,7 @@ final class ExampleViewController: FormViewController {
         let insertRowsRow = SwitchRowFormer<FormSwitchCell> {
             $0.titleLabel.text = "Insert Rows"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.switchButton.onTintColor = .formerSubColor()
         }
         
@@ -124,7 +124,7 @@ final class ExampleViewController: FormViewController {
         let insertSectionRow = SwitchRowFormer<FormSwitchCell>() {
             $0.titleLabel.text = "Insert Section"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.switchButton.onTintColor = .formerSubColor()
         }
         
@@ -140,14 +140,14 @@ final class ExampleViewController: FormViewController {
         let insertSectionAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .boldSystemFontOfSize(14)
+            $0.displayLabel.font = .boldSystemFont(ofSize: 14)
             }.configure {
-                $0.pickerItems = UITableViewRowAnimation.names().enumerate().map {
-                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.index])
+                $0.pickerItems = UITableViewRowAnimation.names().enumerated().map {
+                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.offset])
                 }
-                $0.selectedRow = UITableViewRowAnimation.all().indexOf(insertSectionAnimation) ?? 0
+                $0.selectedRow = UITableViewRowAnimation.all().index(of: insertSectionAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertSectionAnimation = $0.value!
@@ -158,14 +158,14 @@ final class ExampleViewController: FormViewController {
         let createSelectorRow = { (
             text: String,
             subText: String,
-            onSelected: (RowFormer -> Void)?
+            onSelected: ((RowFormer) -> Void)?
             ) -> RowFormer in
             return LabelRowFormer<FormLabelCell>() {
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16)
+                $0.titleLabel.font = .boldSystemFont(ofSize: 16)
                 $0.subTextLabel.textColor = .formerSubColor()
-                $0.subTextLabel.font = .boldSystemFontOfSize(14)
-                $0.accessoryType = .DisclosureIndicator
+                $0.subTextLabel.font = .boldSystemFont(ofSize: 14)
+                $0.accessoryType = .disclosureIndicator
                 }.configure { form in
                     _ = onSelected.map { form.onSelected($0) }
                     form.text = text
@@ -174,20 +174,20 @@ final class ExampleViewController: FormViewController {
         }
         let options = ["Option1", "Option2", "Option3"]
         
-        let pushSelectorRow = createSelectorRow("Push", options[0], pushSelectorRowSelected(options))
+        let pushSelectorRow = createSelectorRow("Push", options[0], pushSelectorRowSelected(options: options))
         
-        let sheetSelectorRow = createSelectorRow("Sheet", options[0], sheetSelectorRowSelected(options))
+        let sheetSelectorRow = createSelectorRow("Sheet", options[0], sheetSelectorRowSelected(options: options))
         
         let pickerSelectorRow = SelectorPickerRowFormer<FormSelectorPickerCell, Any> {
             $0.titleLabel.text = "Picker"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .boldSystemFontOfSize(14)
-            $0.accessoryType = .DisclosureIndicator
+            $0.displayLabel.font = .boldSystemFont(ofSize: 14)
+            $0.accessoryType = .disclosureIndicator
             }.configure {
                 $0.selectorViewUpdate {
-                    $0.backgroundColor = .whiteColor()
+                    $0.backgroundColor = .white
                 }
                 $0.pickerItems = options.map { SelectorPickerItem(title: $0) }
                 $0.inputAccessoryView = inputAccessoryView
@@ -200,11 +200,11 @@ final class ExampleViewController: FormViewController {
             return TextFieldRowFormer<FormTextFieldCell>() {
                 $0.titleLabel.text = "Field\(index)"
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16)
+                $0.titleLabel.font = .boldSystemFont(ofSize: 16)
                 $0.textField.textColor = .formerSubColor()
-                $0.textField.font = .boldSystemFontOfSize(14)
+                $0.textField.font = .boldSystemFont(ofSize: 14)
                 $0.textField.inputAccessoryView = inputAccessoryView
-                $0.textField.returnKeyType = .Next
+                $0.textField.returnKeyType = .next
                 $0.tintColor = .formerColor()
                 }.configure {
                     $0.placeholder = "Example"
@@ -214,9 +214,9 @@ final class ExampleViewController: FormViewController {
         let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, Any>() {
             $0.titleLabel.text = "Inline Picker"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(16)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .boldSystemFontOfSize(14)
+            $0.displayLabel.font = .boldSystemFont(ofSize: 14)
             }.configure {
                 $0.pickerItems = (1...20).map { InlinePickerItem(title: "Option\($0)") }
                 $0.displayEditingColor = .formerHighlightedSubColor()
@@ -224,7 +224,7 @@ final class ExampleViewController: FormViewController {
         
         // Create Headers and Footers
         
-        let createHeader: (String -> ViewFormer) = { text in
+        let createHeader: ((String) -> ViewFormer) = { text in
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
                     $0.text = text
@@ -263,8 +263,8 @@ final class ExampleViewController: FormViewController {
         case Below, Above
     }
     
-    private var insertRowAnimation = UITableViewRowAnimation.Left
-    private var insertSectionAnimation = UITableViewRowAnimation.Fade
+    private var insertRowAnimation = UITableViewRowAnimation.left
+    private var insertSectionAnimation = UITableViewRowAnimation.fade
     private var insertRowPosition: InsertPosition = .Below
     private var insertSectionPosition: InsertPosition = .Below
     
@@ -273,7 +273,7 @@ final class ExampleViewController: FormViewController {
             return CheckRowFormer<FormCheckCell>() {
                 $0.titleLabel.text = "Check\(index)"
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16)
+                $0.titleLabel.font = .boldSystemFont(ofSize: 16)
                 $0.tintColor = .formerSubColor()
             }
         }
@@ -284,13 +284,13 @@ final class ExampleViewController: FormViewController {
             CheckRowFormer<FormCheckCell>() {
                 $0.titleLabel.text = "Check3"
                 $0.titleLabel.textColor = .formerColor()
-                $0.titleLabel.font = .boldSystemFontOfSize(16)
+                $0.titleLabel.font = .boldSystemFont(ofSize: 16)
                 $0.tintColor = .formerSubColor()
             }
             ])
         }()
     
-    private func insertRows(sectionTop sectionTop: RowFormer, sectionBottom: RowFormer) -> Bool -> Void {
+    private func insertRows(sectionTop: RowFormer, sectionBottom: RowFormer) -> (Bool) -> Void {
         return { [weak self] insert in
             guard let `self` = self else { return }
             if insert {
@@ -305,7 +305,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func insertSection(relate relate: SectionFormer) -> Bool -> Void {
+    private func insertSection(relate: SectionFormer) -> (Bool) -> Void {
         return { [weak self] insert in
             guard let `self` = self else { return }
             if insert {
@@ -320,7 +320,7 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func pushSelectorRowSelected(options: [String]) -> RowFormer -> Void {
+    private func pushSelectorRowSelected(options: [String]) -> (RowFormer) -> Void {
         return { [weak self] rowFormer in
             if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
                 let controller = TextSelectorViewContoller()
@@ -335,20 +335,20 @@ final class ExampleViewController: FormViewController {
         }
     }
     
-    private func sheetSelectorRowSelected(options: [String]) -> RowFormer -> Void {
+    private func sheetSelectorRowSelected(options: [String]) -> (RowFormer) -> Void {
         return { [weak self] rowFormer in
             if let rowFormer = rowFormer as? LabelRowFormer<FormLabelCell> {
-                let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+                let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
                 options.forEach { title in
-                    sheet.addAction(UIAlertAction(title: title, style: .Default, handler: { [weak rowFormer] _ in
+                    sheet.addAction(UIAlertAction(title: title, style: .default, handler: { [weak rowFormer] _ in
                         rowFormer?.subText = title
                         rowFormer?.update()
                         })
                     )
                 }
-                sheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-                self?.presentViewController(sheet, animated: true, completion: nil)
-                self?.former.deselect(true)
+                sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                self?.present(sheet, animated: true, completion: nil)
+                self?.former.deselect(animated: true)
             }
         }
     }

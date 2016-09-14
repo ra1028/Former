@@ -24,15 +24,15 @@ public class PickerItem<S> {
     }
 }
 
-public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
-: BaseRowFormer<T>, Formable {
+public class PickerRowFormer<T: UITableViewCell, S>
+: BaseRowFormer<T>, Formable where T: PickerFormableRow {
     
     // MARK: Public
     
     public var pickerItems: [PickerItem<S>] = []
     public var selectedRow: Int = 0
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -42,7 +42,8 @@ public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
         picker.dataSource = nil
     }
     
-    public final func onValueChanged(handler: (PickerItem<S> -> Void)) -> Self {
+    @discardableResult
+    public final func onValueChanged(_ handler: @escaping ((PickerItem<S>) -> Void)) -> Self {
         onValueChanged = handler
         return self
     }
@@ -52,7 +53,7 @@ public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
         rowHeight = 216
     }
     
-    public override func cellInitialized(cell: T) {
+    public override func cellInitialized(_ cell: T) {
         let picker = cell.formPickerView()
         picker.delegate = observer
         picker.dataSource = observer
@@ -61,30 +62,30 @@ public class PickerRowFormer<T: UITableViewCell, S where T: PickerFormableRow>
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let picker = cell.formPickerView()
         picker.selectRow(selectedRow, inComponent: 0, animated: false)
-        picker.userInteractionEnabled = enabled
+        picker.isUserInteractionEnabled = enabled
         picker.layer.opacity = enabled ? 1 : 0.5
     }
     
     // MARK: Private
     
-    private final var onValueChanged: (PickerItem<S> -> Void)?
+    fileprivate final var onValueChanged: ((PickerItem<S>) -> Void)?
     
     private lazy var observer: Observer<T, S> = Observer<T, S>(pickerRowFormer: self)
 }
 
-private class Observer<T: UITableViewCell, S where T: PickerFormableRow>
-: NSObject, UIPickerViewDelegate, UIPickerViewDataSource {
+private class Observer<T: UITableViewCell, S>
+: NSObject, UIPickerViewDelegate, UIPickerViewDataSource where T: PickerFormableRow {
     
-    private weak var pickerRowFormer: PickerRowFormer<T, S>?
+    fileprivate weak var pickerRowFormer: PickerRowFormer<T, S>?
     
     init(pickerRowFormer: PickerRowFormer<T, S>) {
         self.pickerRowFormer = pickerRowFormer
     }
     
-    private dynamic func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    fileprivate dynamic func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         guard let pickerRowFormer = pickerRowFormer else { return }
         if pickerRowFormer.enabled {
             pickerRowFormer.selectedRow = row
@@ -93,16 +94,16 @@ private class Observer<T: UITableViewCell, S where T: PickerFormableRow>
         }
     }
     
-    private dynamic func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    fileprivate dynamic func numberOfComponents(in: UIPickerView) -> Int {
         return 1
     }
     
-    private dynamic func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    fileprivate dynamic func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         guard let pickerRowFormer = pickerRowFormer else { return 0 }
         return pickerRowFormer.pickerItems.count
     }
     
-    private dynamic func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    fileprivate dynamic func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         guard let pickerRowFormer = pickerRowFormer else { return nil }
         return pickerRowFormer.pickerItems[row].title
     }

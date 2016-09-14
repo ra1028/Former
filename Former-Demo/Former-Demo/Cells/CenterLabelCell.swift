@@ -28,21 +28,21 @@ final class CenterLabelCell: FormCell, LabelFormableRow {
         
         let titleLabel = UILabel()
         titleLabel.textColor = .formerColor()
-        titleLabel.font = .boldSystemFontOfSize(15)
-        titleLabel.textAlignment = .Center
+        titleLabel.font = .boldSystemFont(ofSize: 15)
+        titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         self.titleLabel = titleLabel
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[titleLabel]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[titleLabel]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["titleLabel": titleLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-0-[titleLabel]-0-|",
+            NSLayoutConstraint.constraints(
+              withVisualFormat: "H:|-0-[titleLabel]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["titleLabel": titleLabel]

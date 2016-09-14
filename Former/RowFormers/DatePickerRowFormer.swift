@@ -13,18 +13,19 @@ public protocol DatePickerFormableRow: FormableRow {
     func formDatePicker() -> UIDatePicker
 }
 
-public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableRow>
-: BaseRowFormer<T>, Formable {
+public class DatePickerRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable where T: DatePickerFormableRow {
     
     // MARK: Public
     
-    public var date: NSDate = NSDate()
+    public var date: Date = Date()
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
+    @discardableResult
+    public final func onDateChanged(_ handler: @escaping ((Date) -> Void)) -> Self {
         onDateChanged = handler
         return self
     }
@@ -34,24 +35,24 @@ public class DatePickerRowFormer<T: UITableViewCell where T: DatePickerFormableR
         rowHeight = 216
     }
     
-    public override func cellInitialized(cell: T) {
+    public override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
-        cell.formDatePicker().addTarget(self, action: #selector(DatePickerRowFormer.dateChanged(_:)), forControlEvents: .ValueChanged)
+        cell.formDatePicker().addTarget(self, action: #selector(DatePickerRowFormer.dateChanged(datePicker:)), for: .valueChanged)
     }
     
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let datePicker = cell.formDatePicker()
         datePicker.setDate(date, animated: false)
-        datePicker.userInteractionEnabled = enabled
+        datePicker.isUserInteractionEnabled = enabled
         datePicker.layer.opacity = enabled ? 1 : 0.5
     }
     
     // MARK: Private
     
-    private final var onDateChanged: (NSDate -> Void)?
+    private final var onDateChanged: ((Date) -> Void)?
     
     private dynamic func dateChanged(datePicker: UIDatePicker) {
         if enabled {

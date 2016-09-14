@@ -121,7 +121,9 @@
 				2A65655D1BA43E9100C78E81 /* Former */,
 				2A7D956C1BA4528700F0B005 /* Former.framework */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		2A65655D1BA43E9100C78E81 /* Former */ = {
 			isa = PBXGroup;
@@ -471,7 +473,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryo.Former;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -490,7 +492,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ryo.Former;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
