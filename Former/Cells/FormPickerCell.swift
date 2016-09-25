@@ -23,18 +23,18 @@ public class FormPickerCell: FormCell, PickerFormableRow {
         
         let pickerView = UIPickerView()
         pickerView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(pickerView, atIndex: 0)
+        contentView.insertSubview(pickerView, at: 0)
         self.pickerView = pickerView
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-15-[picker]-15-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-15-[picker]-15-|",
                 options: [],
                 metrics: nil,
                 views: ["picker": pickerView]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-0-[picker]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-0-[picker]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["picker": pickerView]

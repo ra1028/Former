@@ -24,11 +24,11 @@ final class AddEventViewController: FormViewController {
         case Never, Daily, Weekly, Monthly, Yearly
         func title() -> String {
             switch self {
-            case Never: return "Never"
-            case Daily: return "Daily"
-            case Weekly: return "Weekly"
-            case Monthly: return "Monthly"
-            case Yearly: return "Yearly"
+            case .Never: return "Never"
+            case .Daily: return "Daily"
+            case .Weekly: return "Weekly"
+            case .Monthly: return "Monthly"
+            case .Yearly: return "Yearly"
             }
         }
         static func values() -> [Repeat] {
@@ -40,13 +40,13 @@ final class AddEventViewController: FormViewController {
         case None, AtTime, Five, Thirty, Hour, Day, Week
         func title() -> String {
             switch self {
-            case None: return "None"
-            case AtTime: return "At time of event"
-            case Five: return "5 minutes before"
-            case Thirty: return "30 minutes before"
-            case Hour: return "1 hour before"
-            case Day: return "1 day before"
-            case Week: return "1 week before"
+            case .None: return "None"
+            case .AtTime: return "At time of event"
+            case .Five: return "5 minutes before"
+            case .Thirty: return "30 minutes before"
+            case .Hour: return "1 hour before"
+            case .Day: return "1 day before"
+            case .Week: return "1 week before"
             }
         }
         static func values() -> [Alert] {
@@ -64,38 +64,38 @@ final class AddEventViewController: FormViewController {
         
         let titleRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.textField.textColor = .formerColor()
-            $0.textField.font = .systemFontOfSize(15)
+            $0.textField.font = .systemFont(ofSize: 15)
             }.configure {
                 $0.placeholder = "Event title"
         }
         let locationRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.textField.textColor = .formerColor()
-            $0.textField.font = .systemFontOfSize(15)
+            $0.textField.font = .systemFont(ofSize: 15)
             }.configure {
                 $0.placeholder = "Location"
         }
         let startRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
             $0.titleLabel.text = "Start"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .systemFontOfSize(15)
+            $0.displayLabel.font = .systemFont(ofSize: 15)
             }.inlineCellSetup {
-                $0.datePicker.datePickerMode = .DateAndTime
+                $0.datePicker.datePickerMode = .dateAndTime
             }.displayTextFromDate(String.mediumDateShortTime)
         let endRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
             $0.titleLabel.text = "Start"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .systemFontOfSize(15)
+            $0.displayLabel.font = .systemFont(ofSize: 15)
             }.inlineCellSetup {
-                $0.datePicker.datePickerMode = .DateAndTime
+                $0.datePicker.datePickerMode = .dateAndTime
             }.displayTextFromDate(String.mediumDateShortTime)
         let allDayRow = SwitchRowFormer<FormSwitchCell>() {
             $0.titleLabel.text = "All-day"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.switchButton.onTintColor = .formerSubColor()
             }.onSwitchChanged { on in
                 startRow.update {
@@ -104,7 +104,7 @@ final class AddEventViewController: FormViewController {
                     )
                 }
                 startRow.inlineCellUpdate {
-                    $0.datePicker.datePickerMode = on ? .Date : .DateAndTime
+                    $0.datePicker.datePickerMode = on ? .date : .dateAndTime
                 }
                 endRow.update {
                     $0.displayTextFromDate(
@@ -112,21 +112,21 @@ final class AddEventViewController: FormViewController {
                     )
                 }
                 endRow.inlineCellUpdate {
-                    $0.datePicker.datePickerMode = on ? .Date : .DateAndTime
+                    $0.datePicker.datePickerMode = on ? .date : .dateAndTime
                 }
         }
         let repeatRow = InlinePickerRowFormer<FormInlinePickerCell, Repeat>() {
             $0.titleLabel.text = "Repeat"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .systemFontOfSize(15)
+          $0.displayLabel.font = .systemFont(ofSize: 15)
             }.configure {
                 let never = Repeat.Never
                 $0.pickerItems.append(
                     InlinePickerItem(title: never.title(),
                         displayTitle: NSAttributedString(string: never.title(),
-                            attributes: [NSForegroundColorAttributeName: UIColor.lightGrayColor()]),
+                            attributes: [NSForegroundColorAttributeName: UIColor.lightGray]),
                         value: never)
                 )
                 $0.pickerItems += Repeat.values().map {
@@ -136,15 +136,15 @@ final class AddEventViewController: FormViewController {
         let alertRow = InlinePickerRowFormer<FormInlinePickerCell, Alert>() {
             $0.titleLabel.text = "Alert"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.displayLabel.textColor = .formerSubColor()
-            $0.displayLabel.font = .systemFontOfSize(15)
+            $0.displayLabel.font = .systemFont(ofSize: 15)
             }.configure {
                 let none = Alert.None
                 $0.pickerItems.append(
                     InlinePickerItem(title: none.title(),
                         displayTitle: NSAttributedString(string: none.title(),
-                            attributes: [NSForegroundColorAttributeName: UIColor.lightGrayColor()]),
+                            attributes: [NSForegroundColorAttributeName: UIColor.lightGray]),
                         value: none)
                 )
                 $0.pickerItems += Alert.values().map {
@@ -153,14 +153,14 @@ final class AddEventViewController: FormViewController {
         }
         let urlRow = TextFieldRowFormer<FormTextFieldCell>() {
             $0.textField.textColor = .formerSubColor()
-            $0.textField.font = .systemFontOfSize(15)
-            $0.textField.keyboardType = .Alphabet
+            $0.textField.font = .systemFont(ofSize: 15)
+            $0.textField.keyboardType = .alphabet
             }.configure {
                 $0.placeholder = "URL"
         }
         let noteRow = TextViewRowFormer<FormTextViewCell>() {
             $0.textView.textColor = .formerSubColor()
-            $0.textView.font = .systemFontOfSize(15)
+            $0.textView.font = .systemFont(ofSize: 15)
             }.configure {
                 $0.placeholder = "Note"
                 $0.rowHeight = 150

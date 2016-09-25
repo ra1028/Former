@@ -21,7 +21,7 @@ public final class Former: NSObject {
     public enum InstantiateType {
         case Class
         case Nib(nibName: String)
-        case NibBundle(nibName: String, bundle: NSBundle)
+        case NibBundle(nibName: String, bundle: Bundle)
     }
     
     /// All SectionFormers. Default is empty.
@@ -71,7 +71,7 @@ public final class Former: NSObject {
     deinit {
         tableView?.delegate = nil
         tableView?.dataSource = nil
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     public subscript(index: Int) -> SectionFormer {
@@ -81,93 +81,116 @@ public final class Former: NSObject {
     public subscript(range: Range<Int>) -> [SectionFormer] {
         return Array<SectionFormer>(sectionFormers[range])
     }
-    
+
+    public subscript(range: ClosedRange<Int>) -> [SectionFormer] {
+        return Array<SectionFormer>(sectionFormers[range])
+    }
+
+    public subscript(range: CountableRange<Int>) -> [SectionFormer] {
+        return Array<SectionFormer>(sectionFormers[range])
+    }
+
+    public subscript(range: CountableClosedRange<Int>) -> [SectionFormer] {
+        return Array<SectionFormer>(sectionFormers[range])
+    }
+
     /// To find RowFormer from indexPath.
-    @warn_unused_result
-    public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
+    public func rowFormer(indexPath: IndexPath) -> RowFormer {
         return self[indexPath.section][indexPath.row]
     }
     
     /// Call when cell has selected.
-    public func onCellSelected(handler: (NSIndexPath -> Void)) -> Self {
+    @discardableResult
+    public func onCellSelected(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
         onCellSelected = handler
         return self
     }
     
     /// Call when tableView has scrolled.
-    public func onScroll(handler: ((scrollView: UIScrollView) -> Void)) -> Self {
+    @discardableResult
+    public func onScroll(_ handler: @escaping ((UIScrollView) -> Void)) -> Self {
         onScroll = handler
         return self
     }
     
     /// Call when tableView had begin dragging.
-    public func onBeginDragging(handler: (UIScrollView -> Void)) -> Self {
+    @discardableResult
+    public func onBeginDragging(_ handler: @escaping ((UIScrollView) -> Void)) -> Self {
         onBeginDragging = handler
         return self
     }
     
     /// Call just before cell is deselect.
-    public func willDeselectCell(handler: (NSIndexPath -> NSIndexPath?)) -> Self {
+    @discardableResult
+    public func willDeselectCell(_ handler: @escaping ((IndexPath) -> IndexPath?)) -> Self {
         willDeselectCell = handler
         return self
     }
     
     /// Call just before cell is display.
-    public func willDisplayCell(handler: (NSIndexPath -> Void)) -> Self {
+    @discardableResult
+    public func willDisplayCell(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
         willDisplayCell = handler
         return self
     }
 
     /// Call just before header is display.
-    public func willDisplayHeader(handler: (/*section:*/Int -> Void)) -> Self {
+    @discardableResult
+    public func willDisplayHeader(_ handler: @escaping ((/*section:*/Int) -> Void)) -> Self {
         willDisplayHeader = handler
         return self
     }
     
     /// Call just before cell is display.
-    public func willDisplayFooter(handler: (/*section:*/Int -> Void)) -> Self {
+    @discardableResult
+    public func willDisplayFooter(_ handler: @escaping ((/*section:*/Int) -> Void)) -> Self {
         willDisplayFooter = handler
         return self
     }
     
     /// Call when cell has deselect.
-    public func didDeselectCell(handler: (NSIndexPath -> Void)) -> Self {
+    @discardableResult
+    public func didDeselectCell(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
         didDeselectCell = handler
         return self
     }
     
     /// Call when cell has Displayed.
-    public func didEndDisplayingCell(handler: (NSIndexPath -> Void)) -> Self {
+    @discardableResult
+    public func didEndDisplayingCell(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
         didEndDisplayingCell = handler
         return self
     }
     
     /// Call when header has displayed.
-    public func didEndDisplayingHeader(handler: (/*section:*/Int -> Void)) -> Self {
+    @discardableResult
+    public func didEndDisplayingHeader(_ handler: @escaping ((/*section:*/Int) -> Void)) -> Self {
         didEndDisplayingHeader = handler
         return self
     }
     
     /// Call when footer has displayed.
-    public func didEndDisplayingFooter(handler: (/*section:*/Int -> Void)) -> Self {
+    @discardableResult
+    public func didEndDisplayingFooter(_ handler: @escaping ((/*section:*/Int) -> Void)) -> Self {
         didEndDisplayingFooter = handler
         return self
     }
     
     /// Call when cell has highlighted.
-    public func didHighlightCell(handler: (NSIndexPath -> Void)) -> Self {
+    @discardableResult
+    public func didHighlightCell(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
         didHighlightCell = handler
         return self
     }
     
     /// Call when cell has unhighlighted.
-    public func didUnHighlightCell(handler: (NSIndexPath -> Void)) -> Self {
+    @discardableResult
+    public func didUnHighlightCell(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
         didUnHighlightCell = handler
         return self
     }
     
     /// 'true' iff can edit previous row.
-    @warn_unused_result
     public func canBecomeEditingPrevious() -> Bool {
         var section = selectedIndexPath?.section ?? 0
         var row = (selectedIndexPath != nil) ? selectedIndexPath!.row - 1 : 0
@@ -184,7 +207,6 @@ public final class Former: NSObject {
     }
     
     /// 'true' iff can edit next row.
-    @warn_unused_result
     public func canBecomeEditingNext() -> Bool {
         var section = selectedIndexPath?.section ?? 0
         var row = (selectedIndexPath != nil) ? selectedIndexPath!.row + 1 : 0
@@ -201,8 +223,9 @@ public final class Former: NSObject {
     }
     
     /// Edit previous row iff it can.
+    @discardableResult
     public func becomeEditingPrevious() -> Self {
-        if let tableView = tableView where canBecomeEditingPrevious() {
+        if let tableView = tableView, canBecomeEditingPrevious() {
             
             var section = selectedIndexPath?.section ?? 0
             var row = (selectedIndexPath != nil) ? selectedIndexPath!.row - 1 : 0
@@ -213,19 +236,20 @@ public final class Former: NSObject {
                 row = self[section].rowFormers.count - 1
             }
             guard row < self[section].rowFormers.count else { return self }
-            let indexPath = NSIndexPath(forRow: row, inSection: section)
+            let indexPath = IndexPath(row: row, section: section)
             select(indexPath: indexPath, animated: false)
             
-            let scrollIndexPath = (rowFormer(indexPath) is InlineForm) ?
-                NSIndexPath(forRow: row + 1, inSection: section) : indexPath
-            tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
+            let scrollIndexPath = (rowFormer(indexPath: indexPath) is InlineForm) ?
+                IndexPath(row: row + 1, section: section) : indexPath
+            tableView.scrollToRow(at: scrollIndexPath, at: .none, animated: false)
         }
         return self
     }
     
     /// Edit next row iff it can.
+    @discardableResult
     public func becomeEditingNext() -> Self {
-        if let tableView = tableView where canBecomeEditingNext() {
+        if let tableView = tableView, canBecomeEditingNext() {
             
             var section = selectedIndexPath?.section ?? 0
             var row = (selectedIndexPath != nil) ? selectedIndexPath!.row + 1 : 0
@@ -236,17 +260,18 @@ public final class Former: NSObject {
                 row = 0
             }
             guard row < self[section].rowFormers.count else { return self }
-            let indexPath = NSIndexPath(forRow: row, inSection: section)
+            let indexPath = IndexPath(row: row, section: section)
             select(indexPath: indexPath, animated: false)
             
-            let scrollIndexPath = (rowFormer(indexPath) is InlineForm) ?
-                NSIndexPath(forRow: row + 1, inSection: section) : indexPath
-            tableView.scrollToRowAtIndexPath(scrollIndexPath, atScrollPosition: .None, animated: false)
+            let scrollIndexPath = (rowFormer(indexPath: indexPath) is InlineForm) ?
+                IndexPath(row: row + 1, section: section) : indexPath
+            tableView.scrollToRow(at: scrollIndexPath, at: .none, animated: false)
         }
         return self
     }
-    
+
     /// To end editing of tableView.
+    @discardableResult
     public func endEditing() -> Self {
         tableView?.endEditing(true)
         if let selectorRowFormer = selectorRowFormer as? SelectorForm {
@@ -257,34 +282,38 @@ public final class Former: NSObject {
     }
     
     /// To select row from indexPath.
-    public func select(indexPath indexPath: NSIndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
+    @discardableResult
+    public func select(indexPath: IndexPath, animated: Bool, scrollPosition: UITableViewScrollPosition = .none) -> Self {
         if let tableView = tableView {
-            tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
-            self.tableView(tableView, willSelectRowAtIndexPath: indexPath)
-            self.tableView(tableView, didSelectRowAtIndexPath: indexPath)
+            tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
+            _ = self.tableView(tableView, willSelectRowAt: indexPath)
+            self.tableView(tableView, didSelectRowAt: indexPath)
         }
         return self
     }
     
     /// To select row from instance of RowFormer.
-    public func select(rowFormer rowFormer: RowFormer, animated: Bool, scrollPosition: UITableViewScrollPosition = .None) -> Self {
-        for (section, sectionFormer) in sectionFormers.enumerate() {
-            if let row = sectionFormer.rowFormers.indexOf({ $0 === rowFormer }) {
-                return select(indexPath: NSIndexPath(forRow: row, inSection: section), animated: animated, scrollPosition: scrollPosition)
+    @discardableResult
+    public func select(rowFormer: RowFormer, animated: Bool, scrollPosition: UITableViewScrollPosition = .none) -> Self {
+        for (section, sectionFormer) in sectionFormers.enumerated() {
+            if let row = sectionFormer.rowFormers.index(where: { $0 === rowFormer }) {
+                return select(indexPath: IndexPath(row: row, section: section), animated: animated, scrollPosition: scrollPosition)
             }
         }
         return self
     }
     
     /// To deselect current selecting cell.
+    @discardableResult
     public func deselect(animated: Bool) -> Self {
         if let indexPath = selectedIndexPath {
-            tableView?.deselectRowAtIndexPath(indexPath, animated: animated)
+            tableView?.deselectRow(at: indexPath, animated: animated)
         }
         return self
     }
     
     /// Reload All cells.
+    @discardableResult
     public func reload() -> Self {
         tableView?.reloadData()
         removeCurrentInlineRowUpdate()
@@ -292,71 +321,81 @@ public final class Former: NSObject {
     }
     
     /// Reload sections from section indexSet.
-    public func reload(sections sections: NSIndexSet, rowAnimation: UITableViewRowAnimation = .None) -> Self {
-        tableView?.reloadSections(sections, withRowAnimation: rowAnimation)
+    @discardableResult
+    public func reload(sections: IndexSet, rowAnimation: UITableViewRowAnimation = .none) -> Self {
+        tableView?.reloadSections(sections, with: rowAnimation)
         return self
     }
-    
+
     /// Reload sections from instance of SectionFormer.
-    public func reload(sectionFormer sectionFormer: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
-        guard let section = sectionFormers.indexOf({ $0 === sectionFormer }) else { return self }
-        return reload(sections: NSIndexSet(index: section), rowAnimation: rowAnimation)
+    @discardableResult
+    public func reload(sectionFormer: SectionFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
+        guard let section = sectionFormers.index(where: { $0 === sectionFormer }) else { return self }
+      return reload(sections: IndexSet(integer: section), rowAnimation: rowAnimation)
     }
     
     /// Reload rows from indesPaths.
-    public func reload(indexPaths indexPaths: [NSIndexPath], rowAnimation: UITableViewRowAnimation = .None) -> Self {
-        tableView?.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
+    @discardableResult
+    public func reload(indexPaths: [IndexPath], rowAnimation: UITableViewRowAnimation = .none) -> Self {
+        tableView?.reloadRows(at: indexPaths, with: rowAnimation)
         return self
     }
     
     /// Reload rows from instance of RowFormer.
-    public func reload(rowFormer rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
-        for (section, sectionFormer) in sectionFormers.enumerate() {
-            if let row = sectionFormer.rowFormers.indexOf({ $0 === rowFormer}) {
-                return reload(indexPaths: [NSIndexPath(forRow: row, inSection: section)], rowAnimation: rowAnimation)
+    @discardableResult
+    public func reload(rowFormer: RowFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
+        for (section, sectionFormer) in sectionFormers.enumerated() {
+            if let row = sectionFormer.rowFormers.index(where: { $0 === rowFormer}) {
+                return reload(indexPaths: [IndexPath(row: row, section: section)], rowAnimation: rowAnimation)
             }
         }
         return self
     }
     
     /// Append SectionFormer to last index.
-    public func append(sectionFormer sectionFormer: SectionFormer...) -> Self {
+    @discardableResult
+    public func append(sectionFormer: SectionFormer...) -> Self {
         return add(sectionFormers: sectionFormer)
     }
     
     /// Add SectionFormers to last index.
-    public func add(sectionFormers sectionFormers: [SectionFormer]) -> Self {
+    @discardableResult
+    public func add(sectionFormers: [SectionFormer]) -> Self {
         self.sectionFormers += sectionFormers
         return self
     }
     
     /// Insert SectionFormer to index of section with NO updates.
-    public func insert(sectionFormer sectionFormer: SectionFormer..., toSection: Int) -> Self {
+    @discardableResult
+    public func insert(sectionFormer: SectionFormer..., toSection: Int) -> Self {
         return insert(sectionFormers: sectionFormer, toSection: toSection)
     }
     
     /// Insert SectionFormers to index of section with NO updates.
-    public func insert(sectionFormers sectionFormers: [SectionFormer], toSection: Int) -> Self {
+    @discardableResult
+    public func insert(sectionFormers: [SectionFormer], toSection: Int) -> Self {
         let count = self.sectionFormers.count
         if count == 0 ||  toSection >= count {
             add(sectionFormers: sectionFormers)
             return self
         } else if toSection >= count {
-            self.sectionFormers.insertContentsOf(sectionFormers, at: 0)
+            self.sectionFormers.insert(contentsOf: sectionFormers, at: 0)
             return self
         }
-        self.sectionFormers.insertContentsOf(sectionFormers, at: toSection)
+        self.sectionFormers.insert(contentsOf: sectionFormers, at: toSection)
         return self
     }
     
     /// Insert SectionFormer to above other SectionFormer with NO updates.
-    public func insert(sectionFormer sectionFormer: SectionFormer..., above: SectionFormer) -> Self {
+    @discardableResult
+    public func insert(sectionFormer: SectionFormer..., above: SectionFormer) -> Self {
         return insert(sectionFormers: sectionFormer, above: above)
     }
     
     /// Insert SectionFormers to above other SectionFormer with NO updates.
-    public func insert(sectionFormers sectionFormers: [SectionFormer], above: SectionFormer) -> Self {
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+    @discardableResult
+    public func insert(sectionFormers: [SectionFormer], above: SectionFormer) -> Self {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
             if sectionFormer === above {
                 return insert(sectionFormers: sectionFormers, toSection: section - 1)
             }
@@ -365,8 +404,9 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormer to below other SectionFormer with NO updates.
-    public func insert(sectionFormer sectionFormer: SectionFormer..., below: SectionFormer) -> Self {
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+    @discardableResult
+    public func insert(sectionFormer: SectionFormer..., below: SectionFormer) -> Self {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
             if sectionFormer === below {
                 return insert(sectionFormers: sectionFormers, toSection: section + 1)
             }
@@ -376,8 +416,9 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormers to below other SectionFormer with NO updates.
-    public func insert(sectionFormers sectionFormers: [SectionFormer], below: SectionFormer) -> Self {
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+    @discardableResult
+    public func insert(sectionFormers: [SectionFormer], below: SectionFormer) -> Self {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
             if sectionFormer === below {
                 return insert(sectionFormers: sectionFormers, toSection: section + 1)
             }
@@ -386,35 +427,39 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormer to index of section with animated updates.
-    public func insertUpdate(sectionFormer sectionFormer: SectionFormer..., toSection: Int, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(sectionFormer: SectionFormer..., toSection: Int, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return insertUpdate(sectionFormers: sectionFormer, toSection: toSection, rowAnimation: rowAnimation)
     }
     
     /// Insert SectionFormers to index of section with animated updates.
-    public func insertUpdate(sectionFormers sectionFormers: [SectionFormer], toSection: Int, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(sectionFormers: [SectionFormer], toSection: Int, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         guard !sectionFormers.isEmpty else { return self }
         removeCurrentInlineRowUpdate()
         tableView?.beginUpdates()
         insert(sectionFormers: sectionFormers, toSection: toSection)
-        tableView?.insertSections(NSIndexSet(index: toSection), withRowAnimation: rowAnimation)
+        tableView?.insertSections(IndexSet(integer: toSection), with: rowAnimation)
         tableView?.endUpdates()
         return self
     }
     
     /// Insert SectionFormer to above other SectionFormer with animated updates.
-    public func insertUpdate(sectionFormer sectionFormer: SectionFormer..., above: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(sectionFormer: SectionFormer..., above: SectionFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return insertUpdate(sectionFormers: sectionFormer, above: above, rowAnimation: rowAnimation)
     }
     
     /// Insert SectionFormers to above other SectionFormer with animated updates.
-    public func insertUpdate(sectionFormers sectionFormers: [SectionFormer], above: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(sectionFormers: [SectionFormer], above: SectionFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         removeCurrentInlineRowUpdate()
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
             if sectionFormer === above {
-                let indexSet = NSIndexSet(indexesInRange: NSMakeRange(section, sectionFormers.count))
+                let indexSet = IndexSet(integersIn: section..<(section + sectionFormers.count))
                 tableView?.beginUpdates()
                 insert(sectionFormers: sectionFormers, toSection: section)
-                tableView?.insertSections(indexSet, withRowAnimation: rowAnimation)
+                tableView?.insertSections(indexSet, with: rowAnimation)
                 tableView?.endUpdates()
                 return self
             }
@@ -423,19 +468,21 @@ public final class Former: NSObject {
     }
     
     /// Insert SectionFormer to below other SectionFormer with animated updates.
-    public func insertUpdate(sectionFormer sectionFormer: SectionFormer..., below: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(sectionFormer: SectionFormer..., below: SectionFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return insertUpdate(sectionFormers: sectionFormer, below: below, rowAnimation: rowAnimation)
     }
     
     /// Insert SectionFormers to below other SectionFormer with animated updates.
-    public func insertUpdate(sectionFormers sectionFormers: [SectionFormer], below: SectionFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(sectionFormers: [SectionFormer], below: SectionFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         removeCurrentInlineRowUpdate()
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
             if sectionFormer === below {
-                let indexSet = NSIndexSet(indexesInRange: NSMakeRange(section + 1, sectionFormers.count))
+                let indexSet = IndexSet(integersIn: (section + 1)..<(section + 1 + sectionFormers.count))
                 tableView?.beginUpdates()
                 insert(sectionFormers: sectionFormers, toSection: section + 1)
-                tableView?.insertSections(indexSet, withRowAnimation: rowAnimation)
+                tableView?.insertSections(indexSet, with: rowAnimation)
                 tableView?.endUpdates()
                 return self
             }
@@ -444,26 +491,30 @@ public final class Former: NSObject {
     }
     
     /// Insert RowFormer with NO updates.
-    public func insert(rowFormer rowFormer: RowFormer..., toIndexPath: NSIndexPath) -> Self {
+    @discardableResult
+    public func insert(rowFormer: RowFormer..., toIndexPath: IndexPath) -> Self {
         return insert(rowFormers: rowFormer, toIndexPath: toIndexPath)
     }
     
     /// Insert RowFormers with NO updates.
-    public func insert(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath) -> Self {
+    @discardableResult
+    public func insert(rowFormers: [RowFormer], toIndexPath: IndexPath) -> Self {
         self[toIndexPath.section].insert(rowFormers: rowFormers, toIndex: toIndexPath.row)
         return self
     }
     
     /// Insert RowFormer to above other RowFormer with NO updates.
-    public func insert(rowFormer rowFormer: RowFormer..., above: RowFormer) -> Self {
+    @discardableResult
+    public func insert(rowFormer: RowFormer..., above: RowFormer) -> Self {
         return insert(rowFormers: rowFormer, above: above)
     }
     
     /// Insert RowFormers to above other RowFormer with NO updates.
-    public func insert(rowFormers rowFormers: [RowFormer], above: RowFormer) -> Self {
+    @discardableResult
+    public func insert(rowFormers: [RowFormer], above: RowFormer) -> Self {
         guard !rowFormers.isEmpty else { return self }
         for sectionFormer in self.sectionFormers {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerated() {
                 if rowFormer === above {
                     sectionFormer.insert(rowFormers: rowFormers, toIndex: row)
                     return self
@@ -474,15 +525,17 @@ public final class Former: NSObject {
     }
     
     /// Insert RowFormers to below other RowFormer with NO updates.
-    public func insert(rowFormer rowFormer: RowFormer..., below: RowFormer) -> Self {
+    @discardableResult
+    public func insert(rowFormer: RowFormer..., below: RowFormer) -> Self {
         return insert(rowFormers: rowFormer, below: below)
     }
     
     /// Insert RowFormers to below other RowFormer with NO updates.
-    public func insert(rowFormers rowFormers: [RowFormer], below: RowFormer) -> Self {
+    @discardableResult
+    public func insert(rowFormers: [RowFormer], below: RowFormer) -> Self {
         guard !rowFormers.isEmpty else { return self }
         for sectionFormer in self.sectionFormers {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerated() {
                 if rowFormer === below {
                     sectionFormer.insert(rowFormers: rowFormers, toIndex: row + 1)
                     return self
@@ -493,41 +546,45 @@ public final class Former: NSObject {
     }
     
     /// Insert RowFormer with animated updates.
-    public func insertUpdate(rowFormer rowFormer: RowFormer..., toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(rowFormer: RowFormer..., toIndexPath: IndexPath, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return insertUpdate(rowFormers: rowFormer, toIndexPath: toIndexPath, rowAnimation: rowAnimation)
     }
     
     /// Insert RowFormers with animated updates.
-    public func insertUpdate(rowFormers rowFormers: [RowFormer], toIndexPath: NSIndexPath, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(rowFormers: [RowFormer], toIndexPath: IndexPath, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         removeCurrentInlineRowUpdate()
         guard !rowFormers.isEmpty else { return self }
         tableView?.beginUpdates()
         insert(rowFormers: rowFormers, toIndexPath: toIndexPath)
         let insertIndexPaths = (0..<rowFormers.count).map {
-            NSIndexPath(forRow: toIndexPath.row + $0, inSection: toIndexPath.section)
+            IndexPath(row: toIndexPath.row + $0, section: toIndexPath.section)
         }
-        tableView?.insertRowsAtIndexPaths(insertIndexPaths, withRowAnimation: rowAnimation)
+        tableView?.insertRows(at: insertIndexPaths, with: rowAnimation)
         tableView?.endUpdates()
         return self
     }
     
     /// Insert RowFormer to above other RowFormer with animated updates.
-    public func insertUpdate(rowFormer rowFormer: RowFormer..., above: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(rowFormer: RowFormer..., above: RowFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return insertUpdate(rowFormers: rowFormer, above: above, rowAnimation: rowAnimation)
     }
     
     /// Insert RowFormers to above other RowFormer with animated updates.
-    public func insertUpdate(rowFormers rowFormers: [RowFormer], above: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(rowFormers: [RowFormer], above: RowFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         removeCurrentInlineRowUpdate()
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerated() {
                 if rowFormer === above {
                     let indexPaths = (row..<row + rowFormers.count).map {
-                        NSIndexPath(forRow: $0, inSection: section)
+                        IndexPath(row: $0, section: section)
                     }
                     tableView?.beginUpdates()
                     sectionFormer.insert(rowFormers: rowFormers, toIndex: row)
-                    tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
+                    tableView?.insertRows(at: indexPaths, with: rowAnimation)
                     tableView?.endUpdates()
                     return self
                 }
@@ -537,22 +594,24 @@ public final class Former: NSObject {
     }
     
     /// Insert RowFormer to below other RowFormer with animated updates.
-    public func insertUpdate(rowFormer rowFormer: RowFormer..., below: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(rowFormer: RowFormer..., below: RowFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return insertUpdate(rowFormers: rowFormer, below: below, rowAnimation: rowAnimation)
     }
     
     /// Insert RowFormers to below other RowFormer with animated updates.
-    public func insertUpdate(rowFormers rowFormers: [RowFormer], below: RowFormer, rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func insertUpdate(rowFormers: [RowFormer], below: RowFormer, rowAnimation: UITableViewRowAnimation = .none) -> Self {
         removeCurrentInlineRowUpdate()
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerated() {
                 if rowFormer === below {
                     let indexPaths = (row + 1..<row + 1 + rowFormers.count).map {
-                        NSIndexPath(forRow: $0, inSection: section)
+                        IndexPath(row: $0, section: section)
                     }
                     tableView?.beginUpdates()
                     sectionFormer.insert(rowFormers: rowFormers, toIndex: row + 1)
-                    tableView?.insertRowsAtIndexPaths(indexPaths, withRowAnimation: rowAnimation)
+                    tableView?.insertRows(at: indexPaths, with: rowAnimation)
                     tableView?.endUpdates()
                     return self
                 }
@@ -562,113 +621,124 @@ public final class Former: NSObject {
     }
     
     /// Remove All SectionFormers with NO updates.
+    @discardableResult
     public func removeAll() -> Self {
         sectionFormers = []
         return self
     }
     
     /// Remove All SectionFormers with animated updates.
-    public func removeAllUpdate(rowAnimation: UITableViewRowAnimation = .None) -> Self {
-        let indexSet = NSIndexSet(indexesInRange: NSMakeRange(0, sectionFormers.count))
+    @discardableResult
+    public func removeAllUpdate(rowAnimation: UITableViewRowAnimation = .none) -> Self {
+        let indexSet = IndexSet(integersIn: 0..<sectionFormers.count)
         sectionFormers = []
         guard indexSet.count > 0 else { return self }
         tableView?.beginUpdates()
-        tableView?.deleteSections(indexSet, withRowAnimation: rowAnimation)
+        tableView?.deleteSections(indexSet, with: rowAnimation)
         tableView?.endUpdates()
         return self
     }
     
     /// Remove SectionFormers from section index with NO updates.
-    public func remove(section section: Int) -> Self {
-        sectionFormers.removeAtIndex(section)
+    @discardableResult
+    public func remove(section: Int) -> Self {
+        sectionFormers.remove(at: section)
         return self
     }
     
     /// Remove SectionFormers from instances of SectionFormer with NO updates.
-    public func remove(sectionFormer sectionFormer: SectionFormer...) -> Self {
+    @discardableResult
+    public func remove(sectionFormer: SectionFormer...) -> Self {
         return remove(sectionFormers: sectionFormer)
     }
     
     /// Remove SectionFormers from instances of SectionFormer with NO updates.
-    public func remove(sectionFormers sectionFormers: [SectionFormer]) -> Self {
-        removeSectionFormers(sectionFormers)
+    @discardableResult
+    public func remove(sectionFormers: [SectionFormer]) -> Self {
+        _ = removeSectionFormers(sectionFormers)
         return self
     }
     
     /// Remove SectionFormers from instances of SectionFormer with animated updates.
-    public func removeUpdate(sectionFormer sectionFormer: SectionFormer..., rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func removeUpdate(sectionFormer: SectionFormer..., rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return removeUpdate(sectionFormers: sectionFormer, rowAnimation: rowAnimation)
     }
     
     /// Remove SectionFormers from instances of SectionFormer with animated updates.
-    public func removeUpdate(sectionFormers sectionFormers: [SectionFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func removeUpdate(sectionFormers: [SectionFormer], rowAnimation: UITableViewRowAnimation = .none) -> Self {
         guard !sectionFormers.isEmpty else { return self }
         let indexSet = removeSectionFormers(sectionFormers)
         guard indexSet.count > 0 else { return self }
         tableView?.beginUpdates()
-        tableView?.deleteSections(indexSet, withRowAnimation: rowAnimation)
+        tableView?.deleteSections(indexSet, with: rowAnimation)
         tableView?.endUpdates()
         return self
     }
     
     /// Remove RowFormer with NO updates.
-    public func remove(rowFormer rowFormer: RowFormer...) -> Self {
+    @discardableResult
+    public func remove(rowFormer: RowFormer...) -> Self {
         return remove(rowFormers: rowFormer)
     }
     
     /// Remove RowFormers with NO updates.
-    public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
-        removeRowFormers(rowFormers)
+    @discardableResult
+    public func remove(rowFormers: [RowFormer]) -> Self {
+        _ = removeRowFormers(rowFormers)
         return self
     }
     
     /// Remove RowFormers with animated updates.
-    public func removeUpdate(rowFormer rowFormer: RowFormer..., rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func removeUpdate(rowFormer: RowFormer..., rowAnimation: UITableViewRowAnimation = .none) -> Self {
         return removeUpdate(rowFormers: rowFormer, rowAnimation: rowAnimation)
     }
     
     /// Remove RowFormers with animated updates.
-    public func removeUpdate(rowFormers rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .None) -> Self {
+    @discardableResult
+    public func removeUpdate(rowFormers: [RowFormer], rowAnimation: UITableViewRowAnimation = .none) -> Self {
         removeCurrentInlineRowUpdate()
         guard !rowFormers.isEmpty else { return self }
         tableView?.beginUpdates()
         let oldIndexPaths = removeRowFormers(rowFormers)
-        tableView?.deleteRowsAtIndexPaths(oldIndexPaths, withRowAnimation: rowAnimation)
+        tableView?.deleteRows(at: oldIndexPaths, with: rowAnimation)
         tableView?.endUpdates()
         return self
     }
     
     // MARK: Private
     
-    private var onCellSelected: ((indexPath: NSIndexPath) -> Void)?
-    private var onScroll: ((scrollView: UIScrollView) -> Void)?
-    private var onBeginDragging: ((scrollView: UIScrollView) -> Void)?
-    private var willDeselectCell: ((indexPath: NSIndexPath) -> NSIndexPath?)?
-    private var willDisplayCell: ((indexPath: NSIndexPath) -> Void)?
-    private var willDisplayHeader: ((section: Int) -> Void)?
-    private var willDisplayFooter: ((section: Int) -> Void)?
-    private var didDeselectCell: ((indexPath: NSIndexPath) -> Void)?
-    private var didEndDisplayingCell: ((indexPath: NSIndexPath) -> Void)?
-    private var didEndDisplayingHeader: ((section: Int) -> Void)?
-    private var didEndDisplayingFooter: ((section: Int) -> Void)?
-    private var didHighlightCell: ((indexPath: NSIndexPath) -> Void)?
-    private var didUnHighlightCell: ((indexPath: NSIndexPath) -> Void)?
+    fileprivate var onCellSelected: ((IndexPath) -> Void)?
+    fileprivate var onScroll: ((UIScrollView) -> Void)?
+    fileprivate var onBeginDragging: ((UIScrollView) -> Void)?
+    fileprivate var willDeselectCell: ((IndexPath) -> IndexPath?)?
+    fileprivate var willDisplayCell: ((IndexPath) -> Void)?
+    fileprivate var willDisplayHeader: ((Int) -> Void)?
+    fileprivate var willDisplayFooter: ((Int) -> Void)?
+    fileprivate var didDeselectCell: ((IndexPath) -> Void)?
+    fileprivate var didEndDisplayingCell: ((IndexPath) -> Void)?
+    fileprivate var didEndDisplayingHeader: ((Int) -> Void)?
+    fileprivate var didEndDisplayingFooter: ((Int) -> Void)?
+    fileprivate var didHighlightCell: ((IndexPath) -> Void)?
+    fileprivate var didUnHighlightCell: ((IndexPath) -> Void)?
     
-    private weak var tableView: UITableView?
-    private weak var inlineRowFormer: RowFormer?
-    private weak var selectorRowFormer: RowFormer?
-    private var selectedIndexPath: NSIndexPath?
-    private var oldBottomContentInset: CGFloat?
+    fileprivate weak var tableView: UITableView?
+    fileprivate weak var inlineRowFormer: RowFormer?
+    fileprivate weak var selectorRowFormer: RowFormer?
+    fileprivate var selectedIndexPath: IndexPath?
+    fileprivate var oldBottomContentInset: CGFloat?
     
     private func setupTableView() {
         tableView?.delegate = self
         tableView?.dataSource = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Former.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(Former.keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Former.keyboardWillAppear(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Former.keyboardWillDisappear(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    private func removeCurrentInlineRow() -> NSIndexPath? {
-        var indexPath: NSIndexPath? = nil
+    fileprivate func removeCurrentInlineRow() -> IndexPath? {
+        var indexPath: IndexPath? = nil
         if let oldInlineRowFormer = (inlineRowFormer as? InlineForm)?.inlineRowFormer,
             let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
                 indexPath = removedIndexPath
@@ -678,20 +748,20 @@ public final class Former: NSObject {
         return indexPath
     }
     
-    private func removeCurrentInlineRowUpdate() {
+    fileprivate func removeCurrentInlineRowUpdate() {
         if let removedIndexPath = removeCurrentInlineRow() {
             tableView?.beginUpdates()
-            tableView?.deleteRowsAtIndexPaths([removedIndexPath], withRowAnimation: .Middle)
+            tableView?.deleteRows(at: [removedIndexPath], with: .middle)
             tableView?.endUpdates()
         }
     }
     
-    private func removeSectionFormers(sectionFormers: [SectionFormer]) -> NSIndexSet {
+    fileprivate func removeSectionFormers(_ sectionFormers: [SectionFormer]) -> IndexSet {
         var removedCount = 0
-        let indexSet = NSMutableIndexSet()
-        for (section, sectionFormer) in self.sectionFormers.enumerate() {
-            if sectionFormers.contains({ $0 === sectionFormer}) {
-                indexSet.addIndex(section)
+        var indexSet = IndexSet()
+        for (section, sectionFormer) in self.sectionFormers.enumerated() {
+            if sectionFormers.contains(where: { $0 === sectionFormer}) {
+                indexSet.insert(section)
                 remove(section: section)
                 removedCount += 1
                 if removedCount >= sectionFormers.count {
@@ -702,17 +772,17 @@ public final class Former: NSObject {
         return indexSet
     }
     
-    private func removeRowFormers(rowFormers: [RowFormer]) -> [NSIndexPath] {
+    fileprivate func removeRowFormers(_ rowFormers: [RowFormer]) -> [IndexPath] {
         var removedCount = 0
-        var removeIndexPaths = [NSIndexPath]()
-        for (section, sectionFormer) in sectionFormers.enumerate() {
-            for (row, rowFormer) in sectionFormer.rowFormers.enumerate() {
-                if rowFormers.contains({ $0 === rowFormer }) {
-                    removeIndexPaths.append(NSIndexPath(forRow: row, inSection: section))
+        var removeIndexPaths = [IndexPath]()
+        for (section, sectionFormer) in sectionFormers.enumerated() {
+            for (row, rowFormer) in sectionFormer.rowFormers.enumerated() {
+                if rowFormers.contains(where: { $0 === rowFormer }) {
+                    removeIndexPaths.append(IndexPath(row: row, section: section))
                     sectionFormer.remove(rowFormers: [rowFormer])
                     if let oldInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer {
-                        removeIndexPaths.append(NSIndexPath(forRow: row + 1, inSection: section))
-                        removeRowFormers([oldInlineRowFormer])
+                        removeIndexPaths.append(IndexPath(row: row + 1, section: section))
+                        _ = removeRowFormers([oldInlineRowFormer])
                         (inlineRowFormer as? InlineForm)?.editingDidEnd()
                         inlineRowFormer = nil
                     }
@@ -726,8 +796,8 @@ public final class Former: NSObject {
         return removeIndexPaths
     }
     
-    private func findFirstResponder(view: UIView?) -> UIView? {
-        if view?.isFirstResponder() ?? false {
+    private func findFirstResponder(_ view: UIView?) -> UIView? {
+        if view?.isFirstResponder ?? false {
             return view
         }
         for subView in view?.subviews ?? [] {
@@ -738,7 +808,7 @@ public final class Former: NSObject {
         return nil
     }
     
-    private func findCellWithSubView(view: UIView?) -> UITableViewCell? {
+    private func findCellWithSubView(_ view: UIView?) -> UITableViewCell? {
         if let view = view {
             if let cell = view as? UITableViewCell {
                 return cell
@@ -753,24 +823,24 @@ public final class Former: NSObject {
         
         if case let (tableView?, cell?) = (tableView, findCellWithSubView(findFirstResponder(tableView))) {
             
-            let frame = keyboardInfo[UIKeyboardFrameEndUserInfoKey]!.CGRectValue
-            let keyboardFrame = tableView.window!.convertRect(frame, toView: tableView.superview!)
-            let bottomInset = CGRectGetMinY(tableView.frame) + CGRectGetHeight(tableView.frame) - CGRectGetMinY(keyboardFrame)
+            let frame = (keyboardInfo[UIKeyboardFrameEndUserInfoKey]! as AnyObject).cgRectValue
+            let keyboardFrame = tableView.window!.convert(frame!, to: tableView.superview!)
+            let bottomInset = tableView.frame.minY + tableView.frame.height - keyboardFrame.minY
             guard bottomInset > 0 else { return }
             
             if oldBottomContentInset == nil {
                 oldBottomContentInset = tableView.contentInset.bottom
             }
-            let duration = keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue!
-            let curve = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
-            guard let indexPath = tableView.indexPathForCell(cell) else { return }
+            let duration = (keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]! as AnyObject).doubleValue!
+            let curve = (keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]! as AnyObject).integerValue!
+            guard let indexPath = tableView.indexPath(for: cell) else { return }
             
             UIView.beginAnimations(nil, context: nil)
             UIView.setAnimationDuration(duration)
             UIView.setAnimationCurve(UIViewAnimationCurve(rawValue: curve)!)
             tableView.contentInset.bottom = bottomInset
             tableView.scrollIndicatorInsets.bottom = bottomInset
-            tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .None, animated: false)
+            tableView.scrollToRow(at: indexPath, at: .none, animated: false)
             UIView.commitAnimations()
         }
     }
@@ -779,9 +849,9 @@ public final class Former: NSObject {
         guard let keyboardInfo = notification.userInfo else { return }
         
         if case let (tableView?, inset?) = (tableView, oldBottomContentInset) {
-            let duration = keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]!.doubleValue!
-            let curve = keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]!.integerValue
-            
+            let duration = (keyboardInfo[UIKeyboardAnimationDurationUserInfoKey]! as AnyObject).doubleValue!
+            let curve = (keyboardInfo[UIKeyboardAnimationCurveUserInfoKey]! as AnyObject).integerValue!
+
             UIView.beginAnimations(nil, context: nil)
             UIView.setAnimationDuration(duration)
             UIView.setAnimationCurve(UIViewAnimationCurve(rawValue: curve)!)
@@ -795,81 +865,81 @@ public final class Former: NSObject {
 
 extension Former: UITableViewDelegate, UITableViewDataSource {
     
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         endEditing()
-        onBeginDragging?(scrollView: scrollView)
+        onBeginDragging?(scrollView)
     }
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
-        onScroll?(scrollView: scrollView)
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onScroll?(scrollView)
     }
     
-    public func tableView(tableView: UITableView, willDeselectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return willDeselectCell?(indexPath: indexPath) ?? indexPath
+    public func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+        return willDeselectCell?(indexPath) ?? indexPath
     }
     
-    public func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        willDisplayCell?(indexPath: indexPath)
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        willDisplayCell?(indexPath)
     }
     
-    public func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        willDisplayHeader?(section: section)
+    public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        willDisplayHeader?(section)
     }
     
-    public func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        willDisplayFooter?(section: section)
+    public func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        willDisplayFooter?(section)
     }
     
-    public func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        didDeselectCell?(indexPath: indexPath)
+    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        didDeselectCell?(indexPath)
     }
     
-    public func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        didEndDisplayingCell?(indexPath: indexPath)
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        didEndDisplayingCell?(indexPath)
     }
     
-    public func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
-        didEndDisplayingHeader?(section: section)
+    public func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        didEndDisplayingHeader?(section)
     }
     
-    public func tableView(tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
-        didEndDisplayingFooter?(section: section)
+    public func tableView(_ tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
+        didEndDisplayingFooter?(section)
     }
     
-    public func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
-        didHighlightCell?(indexPath: indexPath)
+    public func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        didHighlightCell?(indexPath)
     }
     
-    public func tableView(tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
-        didUnHighlightCell?(indexPath: indexPath)
+    public func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        didUnHighlightCell?(indexPath)
     }
     
-    public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         endEditing()
-        deselect(false)
+        deselect(animated: false)
         selectedIndexPath = indexPath
         return indexPath
     }
     
-    public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let rowFormer = self.rowFormer(indexPath)
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let rowFormer = self.rowFormer(indexPath: indexPath)
         guard rowFormer.enabled else { return }
-        
-        rowFormer.cellSelected(indexPath)
-        onCellSelected?(indexPath: indexPath)
+
+        rowFormer.cellSelected(indexPath: indexPath)
+        onCellSelected?(indexPath)
         
         // InlineRow
         if let oldInlineRowFormer = (inlineRowFormer as? InlineForm)?.inlineRowFormer {
-            if let currentInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer
-                where rowFormer !== inlineRowFormer {
+            if let currentInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer,
+                rowFormer !== inlineRowFormer {
                     self.tableView?.beginUpdates()
                     if let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
                         let insertIndexPath =
                         (removedIndexPath.section == indexPath.section && removedIndexPath.row < indexPath.row)
-                            ? indexPath : NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
+                            ? indexPath : IndexPath(row: indexPath.row + 1, section: indexPath.section)
                         insert(rowFormers: [currentInlineRowFormer], toIndexPath: insertIndexPath)
-                        self.tableView?.deleteRowsAtIndexPaths([removedIndexPath], withRowAnimation: .Middle)
-                        self.tableView?.insertRowsAtIndexPaths([insertIndexPath], withRowAnimation: .Middle)
+                        self.tableView?.deleteRows(at: [removedIndexPath], with: .middle)
+                        self.tableView?.insertRows(at: [insertIndexPath], with: .middle)
                     }
                     self.tableView?.endUpdates()
                     (inlineRowFormer as? InlineForm)?.editingDidEnd()
@@ -879,8 +949,8 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
                 removeCurrentInlineRowUpdate()
             }
         } else if let inlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer {
-            let inlineIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
-            insertUpdate(rowFormers: [inlineRowFormer], toIndexPath: inlineIndexPath, rowAnimation: .Middle)
+            let inlineIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+            insertUpdate(rowFormers: [inlineRowFormer], toIndexPath: inlineIndexPath, rowAnimation: .middle)
             (rowFormer as? InlineForm)?.editingDidBegin()
             self.inlineRowFormer = rowFormer
         }
@@ -899,43 +969,43 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    public func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
-    public func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
     
     // for Cell
     
-    public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    public func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self[section].numberOfRows
     }
-    
-    public func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let rowFormer = self.rowFormer(indexPath)
+
+    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let rowFormer = self.rowFormer(indexPath: indexPath)
         if let dynamicRowHeight = rowFormer.dynamicRowHeight {
             rowFormer.rowHeight = dynamicRowHeight(tableView, indexPath)
         }
         return rowFormer.rowHeight
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let rowFormer = self.rowFormer(indexPath)
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let rowFormer = self.rowFormer(indexPath: indexPath)
         if let dynamicRowHeight = rowFormer.dynamicRowHeight {
             rowFormer.rowHeight = dynamicRowHeight(tableView, indexPath)
         }
         return rowFormer.rowHeight
     }
     
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let rowFormer = self.rowFormer(indexPath)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let rowFormer = self.rowFormer(indexPath: indexPath)
         if rowFormer.former == nil { rowFormer.former = self }
         rowFormer.update()
         return rowFormer.cellInstance
@@ -944,7 +1014,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     // for HeaderFooterView
 
     // Not implemented for iOS8 estimatedHeight bug
-//    public func tableView(tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+//    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
 //        let headerViewFormer = self[section].headerViewFormer
 //        if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
 //            headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
@@ -952,7 +1022,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
 //        return headerViewFormer?.viewHeight ?? 0
 //    }
     
-    public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let headerViewFormer = self[section].headerViewFormer
         if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
             headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
@@ -961,7 +1031,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     // Not implemented for iOS8 estimatedHeight bug
-//    public func tableView(tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+//    public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
 //        let footerViewFormer = self[section].footerViewFormer
 //        if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
 //            footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
@@ -969,7 +1039,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
 //        return footerViewFormer?.viewHeight ?? 0
 //    }
     
-    public func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let footerViewFormer = self[section].footerViewFormer
         if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
             footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
@@ -977,13 +1047,13 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return footerViewFormer?.viewHeight ?? 0
     }
     
-    public func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let viewFormer = self[section].headerViewFormer else { return nil }
         viewFormer.update()
         return viewFormer.viewInstance
     }
     
-    public func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {        
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard let viewFormer = self[section].footerViewFormer else { return nil }
         viewFormer.update()
         return viewFormer.viewInstance

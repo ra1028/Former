@@ -19,7 +19,7 @@ public class BaseViewFormer<T: UITableViewHeaderFooterView>
     
     required public init(
         instantiateType: Former.InstantiateType = .Class,
-        viewSetup: (T -> Void)? = nil) {
+        viewSetup: ((T) -> Void)? = nil) {
         super.init(
             viewType: T.self,
             instantiateType: instantiateType,
@@ -27,14 +27,14 @@ public class BaseViewFormer<T: UITableViewHeaderFooterView>
             )
     }
     
-    public final func viewUpdate(@noescape update: (T -> Void)) -> Self {
+    public final func viewUpdate(update: ((T) -> Void)) -> Self {
         update(view)
         return self
     }
     
-    public func viewInitialized(view: T) {}
+    public func viewInitialized(_ view: T) {}
     
-    override func viewInstanceInitialized(view: UITableViewHeaderFooterView) {
+    override func viewInstanceInitialized(_ view: UITableViewHeaderFooterView) {
         viewInitialized(view as! T)
     }
 }

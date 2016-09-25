@@ -15,16 +15,16 @@ public protocol SliderFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
-: BaseRowFormer<T>, Formable {
+public class SliderRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable where T: SliderFormableRow {
     
     // MARK: Public
     
     public var value: Float = 0
-    public var titleDisabledColor: UIColor? = .lightGrayColor()
-    public var displayDisabledColor: UIColor? = .lightGrayColor()
+    public var titleDisabledColor: UIColor? = .lightGray
+    public var displayDisabledColor: UIColor? = .lightGray
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
@@ -33,35 +33,38 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
         rowHeight = 88
     }
     
-    public final func onValueChanged(handler: (Float -> Void)) -> Self {
+    @discardableResult
+    public final func onValueChanged(_ handler: @escaping ((Float) -> Void)) -> Self {
         onValueChanged = handler
         return self
     }
     
-    public final func displayTextFromValue(handler: (Float -> String)) -> Self {
+    @discardableResult
+    public final func displayTextFromValue(_ handler: @escaping ((Float) -> String)) -> Self {
         displayTextFromValue = handler
         return self
     }
     
-    public final func adjustedValueFromValue(handler: (Float -> Float)) -> Self {
+    @discardableResult
+    public final func adjustedValueFromValue(_ handler: @escaping ((Float) -> Float)) -> Self {
         adjustedValueFromValue = handler
         return self
     }
     
-    public override func cellInitialized(cell: T) {
+    public override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
-        cell.formSlider().addTarget(self, action: #selector(SliderRowFormer.valueChanged(_:)), forControlEvents: .ValueChanged)
+        cell.formSlider().addTarget(self, action: #selector(SliderRowFormer.valueChanged(slider:)), for: .valueChanged)
     }
     
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
         let slider = cell.formSlider()
         slider.value = adjustedValueFromValue?(value) ?? value
-        slider.enabled = enabled
+        slider.isEnabled = enabled
         displayLabel?.text = displayTextFromValue?(value) ?? "\(value)"
         
         if enabled {
@@ -70,8 +73,8 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
             titleColor = nil
             displayColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayColor == nil { displayColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayColor == nil { displayColor = displayLabel?.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
@@ -79,9 +82,9 @@ public class SliderRowFormer<T: UITableViewCell where T: SliderFormableRow>
     
     // MARK: Private
     
-    private final var onValueChanged: (Float -> Void)?
-    private final var displayTextFromValue: (Float -> String)?
-    private final var adjustedValueFromValue: (Float -> Float)?
+    private final var onValueChanged: ((Float) -> Void)?
+    private final var displayTextFromValue: ((Float) -> String)?
+    private final var adjustedValueFromValue: ((Float) -> Float)?
     private final var titleColor: UIColor?
     private final var displayColor: UIColor?
     

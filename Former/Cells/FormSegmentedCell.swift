@@ -28,29 +28,29 @@ public class FormSegmentedCell: FormCell, SegmentedFormableRow {
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel
         
         let segmentedControl = UISegmentedControl()
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(segmentedControl, atIndex: 0)
+        contentView.insertSubview(segmentedControl, at: 0)
         self.segmentedControl = segmentedControl
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[title]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[title]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:[segment(30)]",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[segment(30)]",
                 options: [],
                 metrics: nil,
                 views: ["segment": segmentedControl]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]->=0-[segment(>=0)]-15-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-15-[title(>=0)]->=0-[segment(>=0)]-15-|",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "segment": segmentedControl]
@@ -58,10 +58,10 @@ public class FormSegmentedCell: FormCell, SegmentedFormableRow {
             ].flatMap { $0 }
         let centerYConst = NSLayoutConstraint(
             item: segmentedControl,
-            attribute: .CenterY,
-            relatedBy: .Equal,
+            attribute: .centerY,
+            relatedBy: .equal,
             toItem: contentView,
-            attribute: .CenterY,
+            attribute: .centerY,
             multiplier: 1,
             constant: 0
         )

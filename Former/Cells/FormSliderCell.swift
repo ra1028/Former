@@ -33,41 +33,41 @@ public class FormSliderCell: FormCell, SliderFormableRow {
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
-        displayLabel.textColor = .lightGrayColor()
+        displayLabel.textColor = .lightGray
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(displayLabel, atIndex: 0)
+        contentView.insertSubview(displayLabel, at: 0)
         self.displayLabel = displayLabel
         
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(slider, atIndex: 0)
+        contentView.insertSubview(slider, at: 0)
         self.slider = slider
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-10-[title(>=0)]->=0-[slider(>=0)]-10-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-10-[title(>=0)]->=0-[slider(>=0)]-10-|",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "slider": slider]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-10-[display(>=0)]->=0-[slider(>=0)]",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-10-[display(>=0)]->=0-[slider(>=0)]",
                 options: [],
                 metrics: nil,
                 views: ["display": displayLabel, "slider": slider]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title(>=0)]->=0-[display(>=0)]-15-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-15-[title(>=0)]->=0-[display(>=0)]-15-|",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-20-[slider]-20-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-20-[slider]-20-|",
                 options: [],
                 metrics: nil,
                 views: ["slider": slider]

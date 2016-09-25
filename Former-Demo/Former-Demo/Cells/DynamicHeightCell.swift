@@ -35,7 +35,7 @@ final class DynamicHeightCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .None
+        selectionStyle = .none
         titleLabel.textColor = .formerColor()
     }
     

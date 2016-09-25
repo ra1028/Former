@@ -22,10 +22,10 @@ public class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
         setup()
     }
     
-    public func updateWithViewFormer(viewFormer: ViewFormer) {}
+    public func updateWithViewFormer(_ viewFormer: ViewFormer) {}
     
     public func setup() {
-        contentView.backgroundColor = .groupTableViewBackgroundColor()
-        contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        contentView.backgroundColor = .groupTableViewBackground
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 }

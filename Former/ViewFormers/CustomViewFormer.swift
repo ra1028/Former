@@ -13,7 +13,7 @@ public class CustomViewFormer<T: UITableViewHeaderFooterView>
     
     // MARK: Public
     
-    required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: (T -> Void)? = nil) {
+    required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: ((T) -> Void)? = nil) {
             super.init(instantiateType: instantiateType, viewSetup: viewSetup)
     }
 }

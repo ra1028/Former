@@ -12,7 +12,7 @@ extension UITableViewCell {
     
     // For SelectorRow
     
-    override public var inputView: UIView? {
+    override open var inputView: UIView? {
         if let pickerRow = self as? SelectorPickerFormableRow {
             return pickerRow.selectorPickerView
         } else if let datePickerRow = self as? SelectorDatePickerFormableRow {
@@ -21,7 +21,7 @@ extension UITableViewCell {
         return super.inputView
     }
     
-    override public var inputAccessoryView: UIView? {
+    override open var inputAccessoryView: UIView? {
         if let pickerRow = self as? SelectorPickerFormableRow {
             return pickerRow.selectorAccessoryView
         } else if let datePickerRow = self as? SelectorDatePickerFormableRow {
@@ -29,12 +29,12 @@ extension UITableViewCell {
         }
         return super.inputAccessoryView
     }
-    
-    override public func canBecomeFirstResponder() -> Bool {
+
+    override open var canBecomeFirstResponder: Bool {
         if self is SelectorPickerFormableRow ||
             self is SelectorDatePickerFormableRow {
                 return true
         }        
-        return super.canBecomeFirstResponder()
+        return super.canBecomeFirstResponder
     }
 }

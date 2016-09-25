@@ -13,13 +13,13 @@ public protocol LabelFormableView: FormableView {
     func formTitleLabel() -> UILabel
 }
 
-public final class LabelViewFormer<T: UITableViewHeaderFooterView where T: LabelFormableView>: BaseViewFormer<T> {
+public final class LabelViewFormer<T: UITableViewHeaderFooterView>: BaseViewFormer<T> where T: LabelFormableView {
     
     // MARK: Public
     
     public var text: String?
     
-    required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: (T -> Void)? = nil) {
+    required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, viewSetup: viewSetup)
     }
     

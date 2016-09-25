@@ -23,10 +23,10 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
         return titleLabel
     }
     
-    public override func updateWithRowFormer(rowFormer: RowFormer) {
+    public override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5 : 15
-        rightConst.constant = (textField.textAlignment == .Right) ? -15 : 0
+        rightConst.constant = (textField.textAlignment == .right) ? -15 : 0
     }
     
     public override func setup() {
@@ -34,34 +34,34 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(500, forAxis: UILayoutConstraintAxis.Horizontal)
-        titleLabel.setContentCompressionResistancePriority(1000, forAxis: .Horizontal)
+        titleLabel.setContentHuggingPriority(500, for: UILayoutConstraintAxis.horizontal)
+        titleLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel
         
         let textField = UITextField()
-        textField.backgroundColor = .clearColor()
-        textField.clearButtonMode = .WhileEditing
+        textField.backgroundColor = .clear
+        textField.clearButtonMode = .whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(textField, atIndex: 0)
+        contentView.insertSubview(textField, at: 0)
         self.textField = textField
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[label]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[label]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["label": titleLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[field]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[field]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["field": textField]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:[label]-10-[field]",
+            NSLayoutConstraint.constraints(
+              withVisualFormat: "H:[label]-10-[field]",
                 options: [],
                 metrics: nil,
                 views: ["label": titleLabel, "field": textField]
@@ -69,19 +69,19 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
             ].flatMap { $0 }
         let leftConst = NSLayoutConstraint(
             item: titleLabel,
-            attribute: .Leading,
-            relatedBy: .Equal,
+            attribute: .leading,
+            relatedBy: .equal,
             toItem: contentView,
-            attribute: .Leading,
+            attribute: .leading,
             multiplier: 1,
             constant: 15
         )
         let rightConst = NSLayoutConstraint(
             item: textField,
-            attribute: .Trailing,
-            relatedBy: .Equal,
+            attribute: .trailing,
+            relatedBy: .equal,
             toItem: contentView,
-            attribute: .Trailing,
+            attribute: .trailing,
             multiplier: 1,
             constant: 0
         )

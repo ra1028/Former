@@ -56,7 +56,7 @@ final class CustomCellViewController: FormViewController {
         
         let colorListRow = CustomRowFormer<ColorListCell>(instantiateType: .Nib(nibName: "ColorListCell")) {
             $0.colors = colors
-            $0.select(0)
+            $0.select(item: 0)
             $0.onColorSelected = { color in
                 dynamicHeightRow.cellUpdate {
                     $0.bodyColor = color

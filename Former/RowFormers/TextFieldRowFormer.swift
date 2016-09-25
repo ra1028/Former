@@ -14,8 +14,8 @@ public protocol TextFieldFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow>
-: BaseRowFormer<T>, Formable {
+public class TextFieldRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable where T: TextFieldFormableRow {
     
     // MARK: Public
     
@@ -26,46 +26,47 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     public var text: String?
     public var placeholder: String?
     public var attributedPlaceholder: NSAttributedString?
-    public var textDisabledColor: UIColor? = .lightGrayColor()
-    public var titleDisabledColor: UIColor? = .lightGrayColor()
+    public var textDisabledColor: UIColor? = .lightGray
+    public var titleDisabledColor: UIColor? = .lightGray
     public var titleEditingColor: UIColor?
     public var returnToNextRow = true
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public final func onTextChanged(handler: (String -> Void)) -> Self {
+    @discardableResult
+    public final func onTextChanged(_ handler: @escaping ((String) -> Void)) -> Self {
         onTextChanged = handler
         return self
     }
     
-    public override func cellInitialized(cell: T) {
+    public override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         let textField = cell.formTextField()
         textField.delegate = observer
-        let events: [(Selector, UIControlEvents)] = [(#selector(TextFieldRowFormer.textChanged(_:)), .EditingChanged),
-            (#selector(TextFieldRowFormer.editingDidBegin(_:)), .EditingDidBegin),
-            (#selector(TextFieldRowFormer.editingDidEnd(_:)), .EditingDidEnd)]
+        let events: [(Selector, UIControlEvents)] = [(#selector(TextFieldRowFormer.textChanged(textField:)), .editingChanged),
+            (#selector(TextFieldRowFormer.editingDidBegin(textField:)), .editingDidBegin),
+            (#selector(TextFieldRowFormer.editingDidEnd(textField:)), .editingDidEnd)]
         events.forEach {
-            textField.addTarget(self, action: $0.0, forControlEvents: $0.1)
+            textField.addTarget(self, action: $0.0, for: $0.1)
         }
     }
     
     public override func update() {
         super.update()
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let titleLabel = cell.formTitleLabel()
         let textField = cell.formTextField()
         textField.text = text
         _ = placeholder.map { textField.placeholder = $0 }
         _ = attributedPlaceholder.map { textField.attributedPlaceholder = $0 }
-        textField.userInteractionEnabled = false
+        textField.isUserInteractionEnabled = false
         
         if enabled {
             if isEditing {
-                if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+                if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
                 _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             } else {
                 _ = titleColor.map { titleLabel?.textColor = $0 }
@@ -74,24 +75,24 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
             _ = textColor.map { textField.textColor = $0 }
             textColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if textColor == nil { textColor = textField.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if textColor == nil { textColor = textField.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
             textField.textColor = textDisabledColor
         }
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {        
+    public override func cellSelected(indexPath: IndexPath) {        
         let textField = cell.formTextField()
-        if !textField.editing {
-            textField.userInteractionEnabled = true
+        if !textField.isEditing {
+            textField.isUserInteractionEnabled = true
             textField.becomeFirstResponder()
         }
     }
     
     // MARK: Private
     
-    private final var onTextChanged: (String -> Void)?
+    private final var onTextChanged: ((String) -> Void)?
     private final var textColor: UIColor?
     private final var titleColor: UIColor?
     
@@ -107,7 +108,7 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
     
     private dynamic func editingDidBegin(textField: UITextField) {
         let titleLabel = cell.formTitleLabel()
-        if titleColor == nil { textColor = textField.textColor ?? .blackColor() }
+        if titleColor == nil { textColor = textField.textColor ?? .black }
         _ = titleEditingColor.map { titleLabel?.textColor = $0 }
     }
     
@@ -117,28 +118,28 @@ public class TextFieldRowFormer<T: UITableViewCell where T: TextFieldFormableRow
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
         }
-        cell.formTextField().userInteractionEnabled = false
+        cell.formTextField().isUserInteractionEnabled = false
     }
 }
 
-private class Observer<T: UITableViewCell where T: TextFieldFormableRow>: NSObject, UITextFieldDelegate {
+private class Observer<T: UITableViewCell>: NSObject, UITextFieldDelegate where T: TextFieldFormableRow {
     
-    private weak var textFieldRowFormer: TextFieldRowFormer<T>?
+    fileprivate weak var textFieldRowFormer: TextFieldRowFormer<T>?
     
     init(textFieldRowFormer: TextFieldRowFormer<T>) {
         self.textFieldRowFormer = textFieldRowFormer
     }
     
-    private dynamic func textFieldShouldReturn(textField: UITextField) -> Bool {
+    fileprivate dynamic func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let textFieldRowFormer = textFieldRowFormer else { return false }
         if textFieldRowFormer.returnToNextRow {
             let returnToNextRow = (textFieldRowFormer.former?.canBecomeEditingNext() ?? false) ?
                 textFieldRowFormer.former?.becomeEditingNext :
                 textFieldRowFormer.former?.endEditing
-            returnToNextRow?()
+            _ = returnToNextRow?()
         }
         return !textFieldRowFormer.returnToNextRow
     }
