@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormSliderCell: FormCell, SliderFormableRow {
+open class FormSliderCell: FormCell, SliderFormableRow {
     
     // MARK: Public
     
@@ -28,7 +28,7 @@ public class FormSliderCell: FormCell, SliderFormableRow {
         return slider
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

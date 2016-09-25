@@ -8,12 +8,12 @@
 
 import UIKit
 
-public class FormSelectorPickerCell: FormCell, SelectorPickerFormableRow {
+open class FormSelectorPickerCell: FormCell, SelectorPickerFormableRow {
     
     // MARK: Public
     
-    public var selectorPickerView: UIPickerView?
-    public var selectorAccessoryView: UIView?
+    open var selectorPickerView: UIPickerView?
+    open var selectorAccessoryView: UIView?
     
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
@@ -26,12 +26,12 @@ public class FormSelectorPickerCell: FormCell, SelectorPickerFormableRow {
         return displayLabel
     }
     
-    public override func updateWithRowFormer(_ rowFormer: RowFormer) {
+    open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         rightConst.constant = (accessoryType == .none) ? -15 : 0
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

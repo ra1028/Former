@@ -14,14 +14,14 @@ public protocol SwitchFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SwitchRowFormer<T: UITableViewCell>
+open class SwitchRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: SwitchFormableRow {
     
     // MARK: Public
     
-    public var switched = false
-    public var switchWhenSelected = false
-    public var titleDisabledColor: UIColor? = .lightGray
+    open var switched = false
+    open var switchWhenSelected = false
+    open var titleDisabledColor: UIColor? = .lightGray
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -33,12 +33,12 @@ public class SwitchRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         cell.formSwitch().addTarget(self, action: #selector(SwitchRowFormer.switchChanged(_:)), for: .valueChanged)
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         if !switchWhenSelected {

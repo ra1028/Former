@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormCheckCell: FormCell, CheckFormableRow {
+open class FormCheckCell: FormCell, CheckFormableRow {
     
     // MARK: Public
     
@@ -18,7 +18,7 @@ public class FormCheckCell: FormCell, CheckFormableRow {
         return titleLabel
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()        

@@ -13,11 +13,11 @@ public protocol FormableView: class {
     func updateWithViewFormer(_ viewFormer: ViewFormer)
 }
 
-public class ViewFormer {
+open class ViewFormer {
     
     // MARK: Public
     
-    public var viewHeight: CGFloat = 10
+    open var viewHeight: CGFloat = 10
     
     internal init<T: UITableViewHeaderFooterView>(
         viewType: T.Type,
@@ -35,7 +35,7 @@ public class ViewFormer {
         return self
     }
     
-    public func initialized() {}
+    open func initialized() {}
     
     public func update() {
         if let formableView = viewInstance as? FormableView {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CustomViewFormer<T: UITableViewHeaderFooterView>
+open class CustomViewFormer<T: UITableViewHeaderFooterView>
 : BaseViewFormer<T> {
     
     // MARK: Public

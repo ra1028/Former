@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormStepperCell: FormCell, StepperFormableRow {
+open class FormStepperCell: FormCell, StepperFormableRow {
     
     // MARK: Public
     
@@ -28,7 +28,7 @@ public class FormStepperCell: FormCell, StepperFormableRow {
         return stepper
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

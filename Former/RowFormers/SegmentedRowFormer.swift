@@ -14,14 +14,14 @@ public protocol SegmentedFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class SegmentedRowFormer<T: UITableViewCell>
+open class SegmentedRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: SegmentedFormableRow {
     
     // MARK: Public
     
-    public var segmentTitles = [String]()
-    public var selectedIndex: Int = 0
-    public var titleDisabledColor: UIColor? = .lightGray
+    open var segmentTitles = [String]()
+    open var selectedIndex: Int = 0
+    open var titleDisabledColor: UIColor? = .lightGray
     
     required public init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -33,12 +33,12 @@ public class SegmentedRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         cell.formSegmented().addTarget(self, action: #selector(SegmentedRowFormer.valueChanged(segment:)), for: .valueChanged)
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormInlinePickerCell: FormCell, InlinePickerFormableRow {
+open class FormInlinePickerCell: FormCell, InlinePickerFormableRow {
     
     // MARK: Public
     
@@ -23,12 +23,12 @@ public class FormInlinePickerCell: FormCell, InlinePickerFormableRow {
         return displayLabel
     }
     
-    public override func updateWithRowFormer(_ rowFormer: RowFormer) {
+    open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)        
         rightConst.constant = (accessoryType == .none && accessoryView == nil) ? -15 : 0
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

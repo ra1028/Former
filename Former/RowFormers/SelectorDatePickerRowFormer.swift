@@ -17,21 +17,21 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SelectorDatePickerRowFormer<T: UITableViewCell>
+open class SelectorDatePickerRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable, UpdatableSelectorForm where T: SelectorDatePickerFormableRow {
     
     // MARK: Public
     
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var date: Date = Date()
-    public var inputAccessoryView: UIView?
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var displayDisabledColor: UIColor? = .lightGray
-    public var titleEditingColor: UIColor?
-    public var displayEditingColor: UIColor?
+    open var date: Date = Date()
+    open var inputAccessoryView: UIView?
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayDisabledColor: UIColor? = .lightGray
+    open var titleEditingColor: UIColor?
+    open var displayEditingColor: UIColor?
     
     public private(set) final lazy var selectorView: UIDatePicker = { [unowned self] in
         let datePicker = UIDatePicker()
@@ -55,7 +55,7 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectorDatePicker = selectorView

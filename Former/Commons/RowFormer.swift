@@ -13,7 +13,7 @@ public protocol FormableRow: class {
     func updateWithRowFormer(_ rowFormer: RowFormer)
 }
 
-public class RowFormer {
+open class RowFormer {
     
     // MARK: Public
     
@@ -22,7 +22,7 @@ public class RowFormer {
     public final var rowHeight: CGFloat = 44
     public final var isEditing = false
     public final var enabled = true { didSet { update() } }
-    public var canBecomeEditing: Bool {
+    open var canBecomeEditing: Bool {
         return false
     }
     
@@ -48,9 +48,9 @@ public class RowFormer {
         return self
     }
     
-    public func initialized() {}
+    open func initialized() {}
     
-    public func update() {
+    open func update() {
         cellInstance.isUserInteractionEnabled = enabled
         onUpdate?(self)
         

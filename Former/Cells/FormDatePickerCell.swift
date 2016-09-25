@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormDatePickerCell: FormCell, DatePickerFormableRow {
+open class FormDatePickerCell: FormCell, DatePickerFormableRow {
     
     // MARK: Public
     
@@ -18,7 +18,7 @@ public class FormDatePickerCell: FormCell, DatePickerFormableRow {
         return datePicker
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let datePicker = UIDatePicker()

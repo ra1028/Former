@@ -22,7 +22,7 @@ open class FormCell: UITableViewCell, FormableRow {
         setup()
     }
     
-    public func updateWithRowFormer(_ rowFormer: RowFormer) {}
+    open func updateWithRowFormer(_ rowFormer: RowFormer) {}
     
     open func setup() {
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

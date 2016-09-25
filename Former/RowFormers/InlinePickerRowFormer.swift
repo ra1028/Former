@@ -14,7 +14,7 @@ public protocol InlinePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class InlinePickerItem<S>: PickerItem<S> {
+open class InlinePickerItem<S>: PickerItem<S> {
     
     public let displayTitle: NSAttributedString?
     public init(title: String, displayTitle: NSAttributedString? = nil, value: S? = nil) {
@@ -23,7 +23,7 @@ public class InlinePickerItem<S>: PickerItem<S> {
     }
 }
 
-public class InlinePickerRowFormer<T: UITableViewCell, S>
+open class InlinePickerRowFormer<T: UITableViewCell, S>
 : BaseRowFormer<T>, Formable, ConfigurableInlineForm where T: InlinePickerFormableRow {
     
     // MARK: Public
@@ -31,16 +31,16 @@ public class InlinePickerRowFormer<T: UITableViewCell, S>
     public typealias InlineCellType = FormPickerCell
     
     public let inlineRowFormer: RowFormer
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var pickerItems: [InlinePickerItem<S>] = []
-    public var selectedRow: Int = 0
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var displayDisabledColor: UIColor? = .lightGray
-    public var titleEditingColor: UIColor?
-    public var displayEditingColor: UIColor?
+    open var pickerItems: [InlinePickerItem<S>] = []
+    open var selectedRow: Int = 0
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayDisabledColor: UIColor? = .lightGray
+    open var titleEditingColor: UIColor?
+    open var displayEditingColor: UIColor?
     
     required public init(
         instantiateType: Former.InstantiateType = .Class,
@@ -55,7 +55,7 @@ public class InlinePickerRowFormer<T: UITableViewCell, S>
         return self
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         let titleLabel = cell.formTitleLabel()

@@ -13,12 +13,12 @@ public protocol DatePickerFormableRow: FormableRow {
     func formDatePicker() -> UIDatePicker
 }
 
-public class DatePickerRowFormer<T: UITableViewCell>
+open class DatePickerRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: DatePickerFormableRow {
     
     // MARK: Public
     
-    public var date: Date = Date()
+    open var date: Date = Date()
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -30,17 +30,17 @@ public class DatePickerRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func initialized() {
+    open override func initialized() {
         super.initialized()
         rowHeight = 216
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         cell.formDatePicker().addTarget(self, action: #selector(DatePickerRowFormer.dateChanged(datePicker:)), for: .valueChanged)
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none

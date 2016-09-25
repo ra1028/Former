@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
+open class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
     
     // MARK: Public
     
@@ -18,7 +18,7 @@ public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
         return titleLabel
     }
     
-    override public func setup() {
+    override open func setup() {
         super.setup()
         
         let titleLabel = UILabel()

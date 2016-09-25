@@ -14,7 +14,7 @@ public protocol InlineDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class InlineDatePickerRowFormer<T: UITableViewCell>
+open class InlineDatePickerRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable, ConfigurableInlineForm where T: InlineDatePickerFormableRow {
     
     // MARK: Public
@@ -22,15 +22,15 @@ public class InlineDatePickerRowFormer<T: UITableViewCell>
     public typealias InlineCellType = FormDatePickerCell
     
     public let inlineRowFormer: RowFormer
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var date: Date = Date()
-    public var displayDisabledColor: UIColor? = .lightGray
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var displayEditingColor: UIColor?
-    public var titleEditingColor: UIColor?
+    open var date: Date = Date()
+    open var displayDisabledColor: UIColor? = .lightGray
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayEditingColor: UIColor?
+    open var titleEditingColor: UIColor?
     
     required public init(
         instantiateType: Former.InstantiateType = .Class,
@@ -51,7 +51,7 @@ public class InlineDatePickerRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         let titleLabel = cell.formTitleLabel()

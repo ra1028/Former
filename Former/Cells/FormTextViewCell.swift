@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormTextViewCell: FormCell, TextViewFormableRow {
+open class FormTextViewCell: FormCell, TextViewFormableRow {
     
     // MARK: Public
     
@@ -23,12 +23,12 @@ public class FormTextViewCell: FormCell, TextViewFormableRow {
         return titleLabel
     }
     
-    public override func updateWithRowFormer(_ rowFormer: RowFormer) {
+    open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5 : 15
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

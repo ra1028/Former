@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormSwitchCell: FormCell, SwitchFormableRow {
+open class FormSwitchCell: FormCell, SwitchFormableRow {
     
     // MARK: Public
     
@@ -23,7 +23,7 @@ public class FormSwitchCell: FormCell, SwitchFormableRow {
         return switchButton
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

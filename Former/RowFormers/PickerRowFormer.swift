@@ -13,7 +13,7 @@ public protocol PickerFormableRow: FormableRow {
     func formPickerView() -> UIPickerView
 }
 
-public class PickerItem<S> {
+open class PickerItem<S> {
     
     public let title: String
     public let value: S?
@@ -24,13 +24,13 @@ public class PickerItem<S> {
     }
 }
 
-public class PickerRowFormer<T: UITableViewCell, S>
+open class PickerRowFormer<T: UITableViewCell, S>
 : BaseRowFormer<T>, Formable where T: PickerFormableRow {
     
     // MARK: Public
     
-    public var pickerItems: [PickerItem<S>] = []
-    public var selectedRow: Int = 0
+    open var pickerItems: [PickerItem<S>] = []
+    open var selectedRow: Int = 0
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -48,18 +48,18 @@ public class PickerRowFormer<T: UITableViewCell, S>
         return self
     }
     
-    public override func initialized() {
+    open override func initialized() {
         super.initialized()
         rowHeight = 216
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         let picker = cell.formPickerView()
         picker.delegate = observer
         picker.dataSource = observer
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none

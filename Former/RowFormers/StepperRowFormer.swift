@@ -15,14 +15,14 @@ public protocol StepperFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class StepperRowFormer<T: UITableViewCell>
+open class StepperRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: StepperFormableRow {
     
     // MARK: Public
     
-    public var value: Double = 0
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var displayDisabledColor: UIColor? = .lightGray
+    open var value: Double = 0
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayDisabledColor: UIColor? = .lightGray
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -40,12 +40,12 @@ public class StepperRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         cell.formStepper().addTarget(self, action: #selector(StepperRowFormer.valueChanged(stepper:)), for: .valueChanged)
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none

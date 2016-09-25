@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class BaseViewFormer<T: UITableViewHeaderFooterView>
+open class BaseViewFormer<T: UITableViewHeaderFooterView>
 : ViewFormer, ConfigurableForm {
     
     // MARK: Public
@@ -32,7 +32,7 @@ public class BaseViewFormer<T: UITableViewHeaderFooterView>
         return self
     }
     
-    public func viewInitialized(_ view: T) {}
+    open func viewInitialized(_ view: T) {}
     
     override func viewInstanceInitialized(_ view: UITableViewHeaderFooterView) {
         viewInitialized(view as! T)

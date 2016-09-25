@@ -14,21 +14,21 @@ public protocol LabelFormableRow: FormableRow {
     func formSubTextLabel() -> UILabel?
 }
 
-public class LabelRowFormer<T: UITableViewCell>
+open class LabelRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: LabelFormableRow {
     
     // MARK: Public
     
-    public var text: String?
-    public var subText: String?
-    public var textDisabledColor: UIColor? = .lightGray
-    public var subTextDisabledColor: UIColor? = .lightGray
+    open var text: String?
+    open var subText: String?
+    open var textDisabledColor: UIColor? = .lightGray
+    open var subTextDisabledColor: UIColor? = .lightGray
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         let textLabel = cell.formTextLabel()

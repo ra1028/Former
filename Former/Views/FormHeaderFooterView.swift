@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
+open class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
     
     // MARK: Public
     
@@ -22,9 +22,9 @@ public class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
         setup()
     }
     
-    public func updateWithViewFormer(_ viewFormer: ViewFormer) {}
+    open func updateWithViewFormer(_ viewFormer: ViewFormer) {}
     
-    public func setup() {
+    open func setup() {
         contentView.backgroundColor = .groupTableViewBackground
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }

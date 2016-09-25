@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormTextFieldCell: FormCell, TextFieldFormableRow {
+open class FormTextFieldCell: FormCell, TextFieldFormableRow {
     
     // MARK: Public
     
@@ -23,13 +23,13 @@ public class FormTextFieldCell: FormCell, TextFieldFormableRow {
         return titleLabel
     }
     
-    public override func updateWithRowFormer(_ rowFormer: RowFormer) {
+    open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         leftConst.constant = titleLabel.text?.isEmpty ?? true ? 5 : 15
         rightConst.constant = (textField.textAlignment == .right) ? -15 : 0
     }
     
-    public override func setup() {
+    open override func setup() {
         
         super.setup()
         

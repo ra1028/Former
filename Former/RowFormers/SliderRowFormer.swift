@@ -15,20 +15,20 @@ public protocol SliderFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SliderRowFormer<T: UITableViewCell>
+open class SliderRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: SliderFormableRow {
     
     // MARK: Public
     
-    public var value: Float = 0
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var displayDisabledColor: UIColor? = .lightGray
+    open var value: Float = 0
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayDisabledColor: UIColor? = .lightGray
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public override func initialized() {
+    open override func initialized() {
         super.initialized()
         rowHeight = 88
     }
@@ -51,12 +51,12 @@ public class SliderRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         cell.formSlider().addTarget(self, action: #selector(SliderRowFormer.valueChanged(slider:)), for: .valueChanged)
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none

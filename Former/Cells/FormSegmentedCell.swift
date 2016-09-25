@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormSegmentedCell: FormCell, SegmentedFormableRow {
+open class FormSegmentedCell: FormCell, SegmentedFormableRow {
     
     // MARK: Public
     
@@ -23,7 +23,7 @@ public class FormSegmentedCell: FormCell, SegmentedFormableRow {
         return segmentedControl
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()

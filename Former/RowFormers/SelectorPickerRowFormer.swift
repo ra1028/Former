@@ -17,7 +17,7 @@ public protocol SelectorPickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class SelectorPickerItem<S>: PickerItem<S> {
+open class SelectorPickerItem<S>: PickerItem<S> {
     public let displayTitle: NSAttributedString?
     public init(title: String, displayTitle: NSAttributedString? = nil, value: S? = nil) {
         self.displayTitle = displayTitle
@@ -25,22 +25,22 @@ public class SelectorPickerItem<S>: PickerItem<S> {
     }
 }
 
-public class SelectorPickerRowFormer<T: UITableViewCell, S>
+open class SelectorPickerRowFormer<T: UITableViewCell, S>
 : BaseRowFormer<T>, Formable, UpdatableSelectorForm where T: SelectorPickerFormableRow {
     
     // MARK: Public
     
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var pickerItems: [SelectorPickerItem<S>] = []
-    public var selectedRow: Int = 0
-    public var inputAccessoryView: UIView?
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var displayDisabledColor: UIColor? = .lightGray
-    public var titleEditingColor: UIColor?
-    public var displayEditingColor: UIColor?
+    open var pickerItems: [SelectorPickerItem<S>] = []
+    open var selectedRow: Int = 0
+    open var inputAccessoryView: UIView?
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayDisabledColor: UIColor? = .lightGray
+    open var titleEditingColor: UIColor?
+    open var displayEditingColor: UIColor?
     
     public private(set) final lazy var selectorView: UIPickerView = { [unowned self] in
         let picker = UIPickerView()
@@ -59,7 +59,7 @@ public class SelectorPickerRowFormer<T: UITableViewCell, S>
         return self
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         selectorView.selectRow(selectedRow, inComponent: 0, animated: false)

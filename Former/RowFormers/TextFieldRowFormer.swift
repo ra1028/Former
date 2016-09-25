@@ -14,22 +14,22 @@ public protocol TextFieldFormableRow: FormableRow {
     func formTitleLabel() -> UILabel?
 }
 
-public class TextFieldRowFormer<T: UITableViewCell>
+open class TextFieldRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: TextFieldFormableRow {
     
     // MARK: Public
     
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var text: String?
-    public var placeholder: String?
-    public var attributedPlaceholder: NSAttributedString?
-    public var textDisabledColor: UIColor? = .lightGray
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var titleEditingColor: UIColor?
-    public var returnToNextRow = true
+    open var text: String?
+    open var placeholder: String?
+    open var attributedPlaceholder: NSAttributedString?
+    open var textDisabledColor: UIColor? = .lightGray
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var titleEditingColor: UIColor?
+    open var returnToNextRow = true
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -41,7 +41,7 @@ public class TextFieldRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         let textField = cell.formTextField()
         textField.delegate = observer
@@ -53,7 +53,7 @@ public class TextFieldRowFormer<T: UITableViewCell>
         }
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none

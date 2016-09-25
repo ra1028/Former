@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormPickerCell: FormCell, PickerFormableRow {
+open class FormPickerCell: FormCell, PickerFormableRow {
     
     // MARK: Public
     
@@ -18,7 +18,7 @@ public class FormPickerCell: FormCell, PickerFormableRow {
         return pickerView
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let pickerView = UIPickerView()

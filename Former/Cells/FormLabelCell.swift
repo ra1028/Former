@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormLabelCell: FormCell, LabelFormableRow {
+open class FormLabelCell: FormCell, LabelFormableRow {
     
     // MARK: Public
     
@@ -23,12 +23,12 @@ public class FormLabelCell: FormCell, LabelFormableRow {
         return subTextLabel
     }
     
-    public override func updateWithRowFormer(_ rowFormer: RowFormer) {
+    open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         rightConst.constant = (accessoryType == .none) ? -15 : 0
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()
