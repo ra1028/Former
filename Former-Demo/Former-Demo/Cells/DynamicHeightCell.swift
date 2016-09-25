@@ -24,14 +24,6 @@ final class DynamicHeightCell: UITableViewCell {
         get { return bodyLabel.textColor }
         set { bodyLabel.textColor = newValue }
     }
-    
-    /** Dynamic height row for iOS 7
-     override func layoutSubviews() {
-         super.layoutSubviews()
-         titleLabel.preferredMaxLayoutWidth = titleLabel.bounds.width
-         bodyLabel.preferredMaxLayoutWidth = bodyLabel.bounds.width
-     }
-     **/
 
     override func awakeFromNib() {
         super.awakeFromNib()

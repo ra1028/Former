@@ -45,14 +45,6 @@ final class CustomCellViewController: FormViewController {
             }.configure {
                 $0.rowHeight = UITableViewAutomaticDimension
         }
-        /** [Tips] Dynamic height row for iOS 7
-         ** Set as follows, and set preferredMaxLayoutWidth to cell. refer to DynamicHeightCell.swift **
-         dynamicHeightRow.dynamicRowHeight { [weak dynamicHeightRow] tableView, _ in
-             dynamicHeightRow?.cell.bounds.size.width = tableView.bounds.width
-             dynamicHeightRow?.cell.layoutIfNeeded()
-             return dynamicHeightRow?.cell.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height ?? 0
-         }
-        **/
         
         let colorListRow = CustomRowFormer<ColorListCell>(instantiateType: .Nib(nibName: "ColorListCell")) {
             $0.colors = colors

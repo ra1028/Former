@@ -152,9 +152,6 @@ NSObject, UITextViewDelegate where T: TextViewFormableRow {
     fileprivate dynamic func textViewDidChange(_ textView: UITextView) {
         guard let textViewRowFormer = textViewRowFormer else { return }
         if textViewRowFormer.enabled {
-            if UIDevice.current.systemVersion.compare("8.0.0", options: .numeric) == .orderedAscending {
-                textView.scrollRangeToVisible(textView.selectedRange)
-            }
             let text = textView.text ?? ""
             textViewRowFormer.text = text
             textViewRowFormer.onTextChanged?(text)

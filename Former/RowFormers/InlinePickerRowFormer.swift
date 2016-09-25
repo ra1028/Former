@@ -94,9 +94,6 @@ open class InlinePickerRowFormer<T: UITableViewCell, S>
             $0.pickerItems = pickerItems
             $0.selectedRow = selectedRow
             $0.enabled = enabled
-            if UIDevice.current.systemVersion.compare("8.0.0", options: .numeric) == .orderedAscending {
-                $0.cell.pickerView.reloadAllComponents()
-            }
         }.onValueChanged(valueChanged).update()
     }
 
