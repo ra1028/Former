@@ -1,6 +1,6 @@
 ![Former](https://raw.githubusercontent.com/ra1028/Former/master/Logo.png)
-#### Former is a fully customizable Swift2 library for easy creating UITableView based form.
-![iOS 7.0+](https://img.shields.io/badge/iOS-7.0%2B-blue.svg) [![Swift2.3](https://img.shields.io/badge/swift2.3-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
+#### Former is a fully customizable Swift library for easy creating UITableView based form.
+[![Swift3](https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
 [![CocoaPods Shield](https://img.shields.io/cocoapods/v/Former.svg)](https://cocoapods.org/pods/Former)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
@@ -23,12 +23,14 @@
 * [License](#license)
 
 ## Requirements  
-- Xcode 7.3 or 8
-- Swift 2.2 or 2.3
-- iOS 7.0 or later
+- Xcode 8
+- Swift 3
+- iOS 8.0 or later
+
+_Still wanna use iOS7 and swift 2.2 or 2.3?_  
+-> You can use [1.4.0](https://github.com/ra1028/Former/tree/1.4.0) instead.  
 
 ## Installation
-### iOS 8 or later
 #### [CocoaPods](https://cocoapods.org/)
 Add the following line to your Podfile:
 ```ruby
@@ -42,18 +44,6 @@ end
 Add the following line to your Cartfile:
 ```ruby
 github "ra1028/Former"
-```
-
-### iOS 7
-#### [git submodule](http://git-scm.com/docs/git-submodule)
-Run the following command:
-```shell
-git submodule add https://github.com/ra1028/Former.git
-```
-#### [CocoaSeeds](https://github.com/devxoul/CocoaSeeds)
-Add the following line to your Seedfile:
-```ruby
-github "ra1028/Former", :files => "Former/**/*.{swift,h}"
 ```
 
 ## Usage
@@ -461,13 +451,13 @@ public final class DoubleTextFieldRowFormer<T: UITableViewCell where T: DoubleTe
         return self
     }
 
-    public override func cellInitialized(cell: T) {
+    open override func cellInitialized(cell: T) {
         super.cellInitialized(cell)
         cell.formTextField1().addTarget(self, action: "text1Changed:", forControlEvents: .EditingChanged)
         cell.formTextField2().addTarget(self, action: "text2Changed:", forControlEvents: .EditingChanged)
     }
 
-    public override func update() {
+    open override func update() {
         super.update()
 
         cell.selectionStyle = .None
