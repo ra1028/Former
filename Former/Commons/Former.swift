@@ -657,7 +657,7 @@ public final class Former: NSObject {
     private weak var tableView: UITableView?
     private weak var inlineRowFormer: RowFormer?
     private weak var selectorRowFormer: RowFormer?
-    private var selectedIndexPath: NSIndexPath?
+    private(set) var selectedIndexPath: NSIndexPath?
     private var oldBottomContentInset: CGFloat?
     
     private func setupTableView() {
