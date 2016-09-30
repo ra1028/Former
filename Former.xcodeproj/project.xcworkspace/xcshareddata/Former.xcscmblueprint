@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "310647561607FCF8FD41271698A7DE5ED6387596",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5B598E61C716C8DF181FB43EC6BAB9B4E67230C8" : 0,
+    "310647561607FCF8FD41271698A7DE5ED6387596" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "C4E65BC9-68A7-41D1-B0E9-5E8CF9542086",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5B598E61C716C8DF181FB43EC6BAB9B4E67230C8" : "..",
+    "310647561607FCF8FD41271698A7DE5ED6387596" : "Former\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Former",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Former.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/linksmt\/Former.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "310647561607FCF8FD41271698A7DE5ED6387596"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com:443\/mapo80\/iTextSharp-Monotouch.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5B598E61C716C8DF181FB43EC6BAB9B4E67230C8"
+    }
+  ]
+}

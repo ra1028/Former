@@ -87,6 +87,12 @@ public final class Former: NSObject {
     public func rowFormer(indexPath: NSIndexPath) -> RowFormer {
         return self[indexPath.section][indexPath.row]
     }
+
+    /// Call when cell has selected.
+    public func onCellWillSelect(handler: (NSIndexPath -> Void)) -> Self {
+        onCellWillSelect = handler
+        return self
+    }
     
     /// Call when cell has selected.
     public func onCellSelected(handler: (NSIndexPath -> Void)) -> Self {
@@ -639,7 +645,7 @@ public final class Former: NSObject {
     }
     
     // MARK: Private
-    
+    private var onCellWillSelect: ((indexPath: NSIndexPath) -> Void)?
     private var onCellSelected: ((indexPath: NSIndexPath) -> Void)?
     private var onScroll: ((scrollView: UIScrollView) -> Void)?
     private var onBeginDragging: ((scrollView: UIScrollView) -> Void)?
@@ -845,6 +851,9 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        
+        onCellWillSelected?(indexPath: indexPath)
+        
         endEditing()
         deselect(false)
         selectedIndexPath = indexPath
