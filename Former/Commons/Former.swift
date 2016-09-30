@@ -852,7 +852,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     
     public func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
-        onCellWillSelected?(indexPath: indexPath)
+        onCellWillSelect?(indexPath: indexPath)
         
         endEditing()
         deselect(false)
