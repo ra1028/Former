@@ -662,7 +662,7 @@ public final class Former: NSObject {
     
     private weak var tableView: UITableView?
     private weak var inlineRowFormer: RowFormer?
-    private weak var selectorRowFormer: RowFormer?
+    public private(set) weak var selectorRowFormer: RowFormer?
     public private(set) var selectedIndexPath: NSIndexPath?
     private var oldBottomContentInset: CGFloat?
     
