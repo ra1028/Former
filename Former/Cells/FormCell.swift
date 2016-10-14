@@ -17,7 +17,7 @@ open class FormCell: UITableViewCell, FormableRow {
         setup()
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
