@@ -23,7 +23,7 @@ open class FormViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    public lazy var former: Former = Former(tableView: self.tableView)
+    public private(set) lazy var former: Former = Former(tableView: self.tableView)
     
     open override func viewDidLoad() {
         super.viewDidLoad()
