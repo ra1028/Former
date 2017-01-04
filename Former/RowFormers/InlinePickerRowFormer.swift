@@ -55,12 +55,12 @@ open class InlinePickerRowFormer<T: UITableViewCell, S>
         return self
     }
 
-    public final func onEditingBegin(handler: @escaping ((InlinePickerItem<S>) -> Void)) -> Self {
+    public final func onEditingBegin(handler: @escaping ((InlinePickerItem<S>, T) -> Void)) -> Self {
         onEditingBegin = handler
         return self
     }
 
-    public final func onEditingEnded(handler: @escaping ((InlinePickerItem<S>) -> Void)) -> Self {
+    public final func onEditingEnded(handler: @escaping ((InlinePickerItem<S>, T) -> Void)) -> Self {
         onEditingEnded = handler
         return self
     }
@@ -125,7 +125,7 @@ open class InlinePickerRowFormer<T: UITableViewCell, S>
             }
             isEditing = true
         }
-        onEditingBegin?(pickerItems[selectedRow])
+        onEditingBegin?(pickerItems[selectedRow], cell)
     }
     
     public func editingDidEnd() {
@@ -147,14 +147,14 @@ open class InlinePickerRowFormer<T: UITableViewCell, S>
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
-        onEditingEnded?(pickerItems[selectedRow])
+        onEditingEnded?(pickerItems[selectedRow], cell)
     }
     
     // MARK: Private
     
     private final var onValueChanged: ((InlinePickerItem<S>) -> Void)?
-    private final var onEditingBegin: ((InlinePickerItem<S>) -> Void)?
-    private final var onEditingEnded: ((InlinePickerItem<S>) -> Void)?
+    private final var onEditingBegin: ((InlinePickerItem<S>, T) -> Void)?
+    private final var onEditingEnded: ((InlinePickerItem<S>, T) -> Void)?
     private final var titleColor: UIColor?
     private final var displayTextColor: UIColor?
     
