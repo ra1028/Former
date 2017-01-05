@@ -22,14 +22,14 @@ final class EditProfileViewController: FormViewController {
     
     private lazy var formerInputAccessoryView: FormerInputAccessoryView = FormerInputAccessoryView(former: self.former)
     
-    private lazy var imageRow: LabelRowFormer<ProfileImageCell> = {
+    fileprivate lazy var imageRow: LabelRowFormer<ProfileImageCell> = {
         LabelRowFormer<ProfileImageCell>(instantiateType: .Nib(nibName: "ProfileImageCell")) {
             $0.iconView.image = Profile.sharedInstance.image
             }.configure {
                 $0.text = "Choose profile image from library"
                 $0.rowHeight = 60
             }.onSelected { [weak self] _ in
-                self?.former.deselect(true)
+                self?.former.deselect(animated: true)
                 self?.presentImagePicker()
         }
     }()
@@ -55,7 +55,7 @@ final class EditProfileViewController: FormViewController {
         }
         let phoneRow = TextFieldRowFormer<ProfileFieldCell>(instantiateType: .Nib(nibName: "ProfileFieldCell")) { [weak self] in
             $0.titleLabel.text = "Phone"
-            $0.textField.keyboardType = .NumberPad
+            $0.textField.keyboardType = .numberPad
             $0.textField.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your phone number"
@@ -99,7 +99,7 @@ final class EditProfileViewController: FormViewController {
                     InlinePickerItem(title: $0)
                 }
                 if let gender = Profile.sharedInstance.gender {
-                    $0.selectedRow = genders.indexOf(gender) ?? 0
+                    $0.selectedRow = genders.index(of: gender) ?? 0
                 }
             }.onValueChanged {
                 Profile.sharedInstance.gender = $0.title
@@ -107,17 +107,17 @@ final class EditProfileViewController: FormViewController {
         let birthdayRow = InlineDatePickerRowFormer<ProfileLabelCell>(instantiateType: .Nib(nibName: "ProfileLabelCell")) {
             $0.titleLabel.text = "Birthday"
             }.configure {
-                $0.date = Profile.sharedInstance.birthDay ?? NSDate()
+                $0.date = Profile.sharedInstance.birthDay ?? Date()
             }.inlineCellSetup {
-                $0.datePicker.datePickerMode = .Date
+                $0.datePicker.datePickerMode = .date
             }.displayTextFromDate {
-                return String.mediumDateNoTime($0)
+                return String.mediumDateNoTime(date: $0)
             }.onDateChanged {
                 Profile.sharedInstance.birthDay = $0
         }
         let introductionRow = TextViewRowFormer<FormTextViewCell>() { [weak self] in
             $0.textView.textColor = .formerSubColor()
-            $0.textView.font = .systemFontOfSize(15)
+            $0.textView.font = .systemFont(ofSize: 15)
             $0.textView.inputAccessoryView = self?.formerInputAccessoryView
             }.configure {
                 $0.placeholder = "Add your self-introduction"
@@ -128,7 +128,7 @@ final class EditProfileViewController: FormViewController {
         let moreRow = SwitchRowFormer<FormSwitchCell>() {
             $0.titleLabel.text = "Add more information ?"
             $0.titleLabel.textColor = .formerColor()
-            $0.titleLabel.font = .boldSystemFontOfSize(15)
+            $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.switchButton.onTintColor = .formerSubColor()
             }.configure {
                 $0.switched = Profile.sharedInstance.moreInformation
@@ -140,7 +140,7 @@ final class EditProfileViewController: FormViewController {
         
         // Create Headers
         
-        let createHeader: (String -> ViewFormer) = { text in
+        let createHeader: ((String) -> ViewFormer) = { text in
             return LabelViewFormer<FormLabelHeaderView>()
                 .configure {
                     $0.viewHeight = 40
@@ -171,16 +171,16 @@ final class EditProfileViewController: FormViewController {
     private func presentImagePicker() {
         let picker = UIImagePickerController()
         picker.delegate = self
-        picker.sourceType = .PhotoLibrary
+        picker.sourceType = .photoLibrary
         picker.allowsEditing = false
-        presentViewController(picker, animated: true, completion: nil)
+        present(picker, animated: true, completion: nil)
     }
     
     private func switchInfomationSection() {
         if Profile.sharedInstance.moreInformation {
-            former.insertUpdate(sectionFormer: informationSection, toSection: former.numberOfSections, rowAnimation: .Top)
+            former.insertUpdate(sectionFormer: informationSection, toSection: former.numberOfSections, rowAnimation: .top)
         } else {
-            former.removeUpdate(sectionFormer: informationSection, rowAnimation: .Top)
+            former.removeUpdate(sectionFormer: informationSection, rowAnimation: .top)
         }
     }
 }
@@ -188,7 +188,7 @@ final class EditProfileViewController: FormViewController {
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
         Profile.sharedInstance.image = image
         imageRow.cellUpdate {
             $0.iconView.image = image

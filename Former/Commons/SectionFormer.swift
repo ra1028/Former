@@ -53,42 +53,47 @@ public final class SectionFormer {
     }
     
     /// Append RowFormer to last index.
-    public func append(rowFormer rowFormer: RowFormer...) -> Self {
+    @discardableResult
+    public func append(rowFormer: RowFormer...) -> Self {
         add(rowFormers: rowFormer)
         return self
     }
     
     /// Add RowFormers to last index.
-    public func add(rowFormers rowFormers: [RowFormer]) -> Self {
+    @discardableResult
+    public func add(rowFormers: [RowFormer]) -> Self {
         self.rowFormers += rowFormers
         return self
     }
     
     /// Insert RowFormer to any index.
-    public func insert(rowFormer rowFormer: RowFormer..., toIndex: Int) -> Self {
+    @discardableResult
+    public func insert(rowFormer: RowFormer..., toIndex: Int) -> Self {
         let count = self.rowFormers.count
         if count == 0 ||  toIndex >= count {
             add(rowFormers: rowFormers)
             return self
         }
-        self.rowFormers.insertContentsOf(rowFormers, at: toIndex)
+        self.rowFormers.insert(contentsOf: rowFormers, at: toIndex)
         return self
     }
     
     /// Insert RowFormers to any index.
-    public func insert(rowFormers rowFormers: [RowFormer], toIndex: Int) -> Self {
+    @discardableResult
+    public func insert(rowFormers: [RowFormer], toIndex: Int) -> Self {
         let count = self.rowFormers.count
         if count == 0 ||  toIndex >= count {
             add(rowFormers: rowFormers)
             return self
         }
-        self.rowFormers.insertContentsOf(rowFormers, at: toIndex)
+        self.rowFormers.insert(contentsOf: rowFormers, at: toIndex)
         return self
     }
     
     /// Insert RowFormer to above other SectionFormer.
-    public func insert(rowFormer rowFormer: RowFormer..., above: RowFormer) -> Self {
-        for (row, rowFormer) in self.rowFormers.enumerate() {
+    @discardableResult
+    public func insert(rowFormer: RowFormer..., above: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerated() {
             if rowFormer === above {
                 insert(rowFormers: [rowFormer], toIndex: row)
                 return self
@@ -99,8 +104,9 @@ public final class SectionFormer {
     }
     
     /// Insert RowFormers to above other SectionFormer.
-    public func insert(rowFormers rowFormers: [RowFormer], above: RowFormer) -> Self {
-        for (row, rowFormer) in self.rowFormers.enumerate() {
+    @discardableResult
+    public func insert(rowFormers: [RowFormer], above: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerated() {
             if rowFormer === above {
                 insert(rowFormers: [rowFormer], toIndex: row)
                 return self
@@ -111,8 +117,9 @@ public final class SectionFormer {
     }
     
     /// Insert RowFormer to below other SectionFormer.
-    public func insert(rowFormer rowFormer: RowFormer..., below: RowFormer) -> Self {
-        for (row, rowFormer) in self.rowFormers.enumerate() {
+    @discardableResult
+    public func insert(rowFormer: RowFormer..., below: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerated() {
             if rowFormer === below {
                 insert(rowFormers: [rowFormer], toIndex: row + 1)
                 return self
@@ -123,8 +130,9 @@ public final class SectionFormer {
     }
     
     /// Insert RowFormers to below other SectionFormer.
-    public func insert(rowFormers rowFormers: [RowFormer], below: RowFormer) -> Self {
-        for (row, rowFormer) in self.rowFormers.enumerate() {
+    @discardableResult
+    public func insert(rowFormers: [RowFormer], below: RowFormer) -> Self {
+        for (row, rowFormer) in self.rowFormers.enumerated() {
             if rowFormer === below {
                 insert(rowFormers: [rowFormer], toIndex: row + 1)
                 return self
@@ -135,11 +143,12 @@ public final class SectionFormer {
     }
     
     /// Remove RowFormers from instances of RowFormer.
-    public func remove(rowFormer rowFormer: RowFormer...) -> Self {
+    @discardableResult
+    public func remove(rowFormer: RowFormer...) -> Self {
         var removedCount = 0
-        for (index, rowFormer) in self.rowFormers.enumerate() {
-            if rowFormers.contains({ $0 === rowFormer }) {
-                remove(index)
+        for (index, rowFormer) in self.rowFormers.enumerated() {
+            if rowFormers.contains(where: { $0 === rowFormer }) {
+                remove(atIndex: index)
                 removedCount += 1
                 if removedCount >= rowFormers.count {
                     return self
@@ -150,11 +159,12 @@ public final class SectionFormer {
     }
     
     /// Remove RowFormers from instances of RowFormer.
-    public func remove(rowFormers rowFormers: [RowFormer]) -> Self {
+    @discardableResult
+    public func remove(rowFormers: [RowFormer]) -> Self {
         var removedCount = 0
-        for (index, rowFormer) in self.rowFormers.enumerate() {
-            if rowFormers.contains({ $0 === rowFormer }) {
-                remove(index)
+        for (index, rowFormer) in self.rowFormers.enumerated() {
+            if rowFormers.contains(where: { $0 === rowFormer }) {
+                remove(atIndex: index)
                 removedCount += 1
                 if removedCount >= rowFormers.count {
                     return self
@@ -165,24 +175,28 @@ public final class SectionFormer {
     }
     
     /// Remove RowFormer from index.
+    @discardableResult
     public func remove(atIndex: Int) -> Self {
-        rowFormers.removeAtIndex(atIndex)
+        rowFormers.remove(at: atIndex)
         return self
     }
     
     /// Remove RowFormers from range.
-    public func remove(range: Range<Int>) -> Self{
-        rowFormers.removeRange(range)
+    @discardableResult
+    public func remove(range: Range<Int>) -> Self {
+        rowFormers.removeSubrange(range)
         return self
     }
     
     /// Set ViewFormer to apply section header.
+    @discardableResult
     public func set(headerViewFormer viewFormer: ViewFormer?) -> Self {
         headerViewFormer = viewFormer
         return self
     }
     
     /// Set ViewFormer to apply section footer.
+    @discardableResult
     public func set(footerViewFormer viewFormer: ViewFormer?) -> Self {
         footerViewFormer = viewFormer
         return self

@@ -28,5 +28,5 @@ final class ProfileLabelCell: UITableViewCell, InlineDatePickerFormableRow, Inli
         return displayLabel
     }
     
-    func updateWithRowFormer(rowFormer: RowFormer) {}
+    func updateWithRowFormer(_ rowFormer: RowFormer) {}
 }

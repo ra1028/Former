@@ -23,14 +23,14 @@ final class TextSelectorViewContoller: FormViewController {
         didSet {
             former.rowFormers.forEach {
                 if let LabelRowFormer = $0 as? LabelRowFormer<FormLabelCell>
-                 where LabelRowFormer.text == selectedText {
-                    LabelRowFormer.cellUpdate({ $0.accessoryType = .Checkmark })
+                 , LabelRowFormer.text == selectedText {
+                    LabelRowFormer.cellUpdate({ $0.accessoryType = .checkmark })
                 }
             }
         }
     }
     
-    var onSelected: (String -> Void)?
+    var onSelected: ((String) -> Void)?
     
     private func reloadForm() {
         
@@ -40,15 +40,15 @@ final class TextSelectorViewContoller: FormViewController {
             return LabelRowFormer<FormLabelCell>() { [weak self] in
                 if let sSelf = self {
                     $0.titleLabel.textColor = .formerColor()
-                    $0.titleLabel.font = .boldSystemFontOfSize(16)
+                    $0.titleLabel.font = .boldSystemFont(ofSize: 16)
                     $0.tintColor = .formerSubColor()
-                    $0.accessoryType = (text == sSelf.selectedText) ? .Checkmark : .None
+                    $0.accessoryType = (text == sSelf.selectedText) ? .checkmark : .none
                 }
                 }.configure {
                     $0.text = text
                 }.onSelected { [weak self] _ in
                     self?.onSelected?(text)
-                    self?.navigationController?.popViewControllerAnimated(true)
+                    _ = self?.navigationController?.popViewController(animated: true)
             }
         }
         

@@ -8,12 +8,12 @@
 
 import UIKit
 
-public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
+open class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
     
     // MARK: Public
     
-    public var selectorDatePicker: UIDatePicker?
-    public var selectorAccessoryView: UIView?
+    open var selectorDatePicker: UIDatePicker?
+    open var selectorAccessoryView: UIView?
     
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
@@ -26,50 +26,42 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
         return displayLabel
     }
     
-    public func formDefaultDisplayLabelText() -> String? {
-        return "Not Set"
-    }
-    
-    public func formDefaultDisplayDate() -> NSDate? {
-        return NSDate()
-    }
-    
-    public override func updateWithRowFormer(rowFormer: RowFormer) {
+    open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
-        rightConst.constant = (accessoryType == .None) ? -15 : 0
+        rightConst.constant = (accessoryType == .none) ? -15 : 0
     }
     
-    public override func setup() {
+    open override func setup() {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(500, forAxis: .Horizontal)
+        titleLabel.setContentHuggingPriority(500, for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel
         
         let displayLabel = UILabel()
-        displayLabel.textColor = .lightGrayColor()
-        displayLabel.textAlignment = .Right
+        displayLabel.textColor = .lightGray
+        displayLabel.textAlignment = .right
         displayLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(displayLabel, atIndex: 0)
+        contentView.insertSubview(displayLabel, at: 0)
         self.displayLabel = displayLabel
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[title]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[title]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[display]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[display]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["display": displayLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[title]-10-[display(>=0)]",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-15-[title]-10-[display(>=0)]",
                 options: [],
                 metrics: nil,
                 views: ["title": titleLabel, "display": displayLabel]
@@ -77,10 +69,10 @@ public class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow
             ].flatMap { $0 }
         let rightConst = NSLayoutConstraint(
             item: displayLabel,
-            attribute: .Trailing,
-            relatedBy: .Equal,
+            attribute: .trailing,
+            relatedBy: .equal,
             toItem: contentView,
-            attribute: .Trailing,
+            attribute: .trailing,
             multiplier: 1,
             constant: 0
         )

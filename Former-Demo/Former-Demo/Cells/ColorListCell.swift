@@ -13,7 +13,7 @@ final class ColorListCell: UITableViewCell {
     // MARK: Public
     
     var colors = [UIColor]()
-    var onColorSelected: (UIColor -> Void)?
+    var onColorSelected: ((UIColor) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,8 +21,8 @@ final class ColorListCell: UITableViewCell {
     }
     
     func select(item: Int, animated: Bool = false) {
-        let indexPath = NSIndexPath(forItem: item, inSection: 0)
-        collectionView.selectItemAtIndexPath(indexPath, animated: animated, scrollPosition: .None)
+        let indexPath = IndexPath(item: item, section: 0)
+        collectionView.selectItem(at: indexPath, animated: animated, scrollPosition: [])
     }
     
     // MARK: Private
@@ -30,35 +30,35 @@ final class ColorListCell: UITableViewCell {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private func configure() {
-        selectionStyle = .None
+        selectionStyle = .none
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.registerClass(ColorCell.self, forCellWithReuseIdentifier: "ColorCell")
+        collectionView.register(ColorCell.self, forCellWithReuseIdentifier: "ColorCell")
     }
 }
 
 extension ColorListCell: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let length = collectionView.bounds.height
         return CGSize(width: length, height: length)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ColorCell", forIndexPath: indexPath) as! ColorCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ColorCell", for: indexPath) as! ColorCell
         cell.color = colors[indexPath.item]
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let color = colors[indexPath.item]
         onColorSelected?(color)
     }
@@ -72,12 +72,12 @@ private class ColorCell: UICollectionViewCell {
         get { return contentView.backgroundColor }
         set { contentView.backgroundColor = newValue }
     }
-    override var selected: Bool {
-        didSet { selectedView.hidden = !selected }
+    override var isSelected: Bool {
+        didSet { selectedView.isHidden = !isSelected }
     }
     
-    override var highlighted: Bool {
-        didSet { contentView.alpha = highlighted ? 0.9 : 1 }
+    override var isHighlighted: Bool {
+        didSet { contentView.alpha = isHighlighted ? 0.9 : 1 }
     }
     
     override init(frame: CGRect) {
@@ -96,22 +96,22 @@ private class ColorCell: UICollectionViewCell {
     private func configure() {
         let selectedView = UIView()
         selectedView.layer.borderWidth = 4
-        selectedView.layer.borderColor = selectedView.tintColor.CGColor
-        selectedView.userInteractionEnabled = false
-        selectedView.hidden = !selected
+        selectedView.layer.borderColor = selectedView.tintColor.cgColor
+        selectedView.isUserInteractionEnabled = false
+        selectedView.isHidden = !isSelected
         selectedView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(selectedView)
         self.selectedView = selectedView
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:|-0-[view]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-0-[view]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["view": selectedView]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-0-[view]-0-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-0-[view]-0-|",
                 options: [],
                 metrics: nil,
                 views: ["view": selectedView]
