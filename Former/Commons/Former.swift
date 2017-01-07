@@ -780,9 +780,9 @@ public final class Former: NSObject {
                 if rowFormers.contains(where: { $0 === rowFormer }) {
                     removeIndexPaths.append(IndexPath(row: row, section: section))
                     sectionFormer.remove(rowFormers: [rowFormer])
-                    if let oldInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer {
+                    if let oldInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer,
+                        let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
                         removeIndexPaths.append(IndexPath(row: row + 1, section: section))
-                        _ = removeRowFormers([oldInlineRowFormer])
                         (inlineRowFormer as? InlineForm)?.editingDidEnd()
                         inlineRowFormer = nil
                     }
