@@ -97,7 +97,7 @@ open class InlinePickerRowFormer<T: UITableViewCell, S>
         }.onValueChanged(valueChanged).update()
     }
 
-    public override func cellSelected(indexPath: IndexPath) {
+    open override func cellSelected(indexPath: IndexPath) {
         former?.deselect(animated: true)
     }
     

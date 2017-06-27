@@ -108,7 +108,7 @@ open class TextViewRowFormer<T: UITableViewCell>
         }
     }
     
-    public override func cellSelected(indexPath: IndexPath) {
+    open override func cellSelected(indexPath: IndexPath) {
         let textView = cell.formTextView()
         textView.becomeFirstResponder()
         textView.isUserInteractionEnabled = enabled
