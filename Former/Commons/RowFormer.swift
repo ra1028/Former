@@ -68,7 +68,7 @@ open class RowFormer {
         }
     }
     
-    public func cellSelected(indexPath: IndexPath) {
+    open func cellSelected(indexPath: IndexPath) {
         if enabled {
             onSelected?(self)
         }
