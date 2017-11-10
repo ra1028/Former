@@ -818,7 +818,7 @@ public final class Former: NSObject {
         return nil
     }
     
-    private dynamic func keyboardWillAppear(notification: NSNotification) {
+    @objc private dynamic func keyboardWillAppear(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo else { return }
         
         if case let (tableView?, cell?) = (tableView, findCellWithSubView(findFirstResponder(tableView))) {
@@ -845,7 +845,7 @@ public final class Former: NSObject {
         }
     }
     
-    private dynamic func keyboardWillDisappear(notification: NSNotification) {
+    @objc private dynamic func keyboardWillDisappear(notification: NSNotification) {
         guard let keyboardInfo = notification.userInfo else { return }
         
         if case let (tableView?, inset?) = (tableView, oldBottomContentInset) {

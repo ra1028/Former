@@ -125,8 +125,7 @@ final class AddEventViewController: FormViewController {
                 let never = Repeat.Never
                 $0.pickerItems.append(
                     InlinePickerItem(title: never.title(),
-                        displayTitle: NSAttributedString(string: never.title(),
-                            attributes: [NSForegroundColorAttributeName: UIColor.lightGray]),
+                        displayTitle: NSAttributedString(string: never.title(), attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray]),
                         value: never)
                 )
                 $0.pickerItems += Repeat.values().map {
@@ -143,8 +142,7 @@ final class AddEventViewController: FormViewController {
                 let none = Alert.None
                 $0.pickerItems.append(
                     InlinePickerItem(title: none.title(),
-                        displayTitle: NSAttributedString(string: none.title(),
-                            attributes: [NSForegroundColorAttributeName: UIColor.lightGray]),
+                        displayTitle: NSAttributedString(string: none.title(), attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray]),
                         value: none)
                 )
                 $0.pickerItems += Alert.values().map {

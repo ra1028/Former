@@ -117,7 +117,7 @@ open class SelectorDatePickerRowFormer<T: UITableViewCell>
     private final var titleColor: UIColor?
     private final var displayTextColor: UIColor?
     
-    private dynamic func dateChanged(datePicker: UIDatePicker) {
+    @objc private dynamic func dateChanged(datePicker: UIDatePicker) {
         let date = datePicker.date
         self.date = date
         cell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"

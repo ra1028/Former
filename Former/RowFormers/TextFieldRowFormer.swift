@@ -98,7 +98,7 @@ open class TextFieldRowFormer<T: UITableViewCell>
     
     private lazy var observer: Observer<T> = Observer<T>(textFieldRowFormer: self)
     
-    private dynamic func textChanged(textField: UITextField) {
+    @objc private dynamic func textChanged(textField: UITextField) {
         if enabled {
             let text = textField.text ?? ""
             self.text = text
@@ -106,13 +106,13 @@ open class TextFieldRowFormer<T: UITableViewCell>
         }
     }
     
-    private dynamic func editingDidBegin(textField: UITextField) {
+    @objc private dynamic func editingDidBegin(textField: UITextField) {
         let titleLabel = cell.formTitleLabel()
         if titleColor == nil { textColor = textField.textColor ?? .black }
         _ = titleEditingColor.map { titleLabel?.textColor = $0 }
     }
     
-    private dynamic func editingDidEnd(textField: UITextField) {
+    @objc private dynamic func editingDidEnd(textField: UITextField) {
         let titleLabel = cell.formTitleLabel()
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }

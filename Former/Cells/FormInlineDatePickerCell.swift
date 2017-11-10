@@ -35,7 +35,7 @@ open class FormInlineDatePickerCell: FormCell, InlineDatePickerFormableRow {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(500, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel

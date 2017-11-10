@@ -81,7 +81,7 @@ open class StepperRowFormer<T: UITableViewCell>
     private final var displayColor: UIColor?
     private final var stepperTintColor: UIColor?
     
-    private dynamic func valueChanged(stepper: UIStepper) {
+    @objc private dynamic func valueChanged(stepper: UIStepper) {
         let value = stepper.value
         self.value = value
         cell.formDisplayLabel()?.text = displayTextFromValue?(value) ?? "\(value)"
