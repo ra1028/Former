@@ -54,7 +54,7 @@ open class DatePickerRowFormer<T: UITableViewCell>
     
     private final var onDateChanged: ((Date) -> Void)?
     
-    private dynamic func dateChanged(datePicker: UIDatePicker) {
+    @objc private dynamic func dateChanged(datePicker: UIDatePicker) {
         if enabled {
             let date = datePicker.date
             self.date = date

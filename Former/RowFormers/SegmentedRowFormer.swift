@@ -65,7 +65,7 @@ open class SegmentedRowFormer<T: UITableViewCell>
     private final var onSegmentSelected: ((Int, String) -> Void)?
     private final var titleColor: UIColor?
     
-    private dynamic func valueChanged(segment: UISegmentedControl) {
+    @objc private dynamic func valueChanged(segment: UISegmentedControl) {
         if enabled {
             let index = segment.selectedSegmentIndex
             let selectedTitle = segment.titleForSegment(at: index)!

@@ -78,7 +78,7 @@ open class SwitchRowFormer<T: UITableViewCell>
     private final var titleColor: UIColor?
     private final var selectionStyle: UITableViewCellSelectionStyle?
     
-    private dynamic func switchChanged(_ switchButton: UISwitch) {
+    @objc private dynamic func switchChanged(_ switchButton: UISwitch) {
         if self.enabled {
             let switched = switchButton.isOn
             self.switched = switched

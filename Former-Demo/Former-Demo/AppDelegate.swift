@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureNavigationBar(navigationBar: UINavigationBar) {        
         navigationBar.tintColor = .white
         navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.white,
-            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)
+            NSAttributedStringKey.foregroundColor: UIColor.white,
+            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)
         ]
         navigationBar.isTranslucent = false
         navigationBar.shadowImage = UIImage()

@@ -32,7 +32,7 @@ open class FormLabelCell: FormCell, LabelFormableRow {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(500, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel

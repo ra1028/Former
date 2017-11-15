@@ -88,7 +88,7 @@ open class SliderRowFormer<T: UITableViewCell>
     private final var titleColor: UIColor?
     private final var displayColor: UIColor?
     
-    private dynamic func valueChanged(slider: UISlider) {
+    @objc private dynamic func valueChanged(slider: UISlider) {
         let displayLabel = cell.formDisplayLabel()
         let value = slider.value
         let adjustedValue = adjustedValueFromValue?(value) ?? value

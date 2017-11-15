@@ -120,17 +120,17 @@ final class FormerInputAccessoryView: UIToolbar {
         addConstraints(constraints.flatMap { $0 })
     }
     
-    private dynamic func handleBackButton() {
+    @objc private dynamic func handleBackButton() {
         update()
         former?.becomeEditingPrevious()
     }
     
-    private dynamic func handleForwardButton() {
+    @objc private dynamic func handleForwardButton() {
         update()
         former?.becomeEditingNext()
     }
     
-    private dynamic func handleDoneButton() {
+    @objc private dynamic func handleDoneButton() {
         former?.endEditing()
     }
 }
