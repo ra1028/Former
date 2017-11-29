@@ -168,15 +168,15 @@ Default provided RowFormer classes and the protocols that corresponding to it ar
 </tr>
 <tr>
 <td><img src="http://i.imgur.com/jUn8Get.gif" width="200"></td>
-<td>SelecterPickerRowFormer</td>
-<td>SelecterPickerFormableRow</td>
-<td>FormSelecterPickerCell</td>
+<td>SelectorPickerRowFormer</td>
+<td>SelectorPickerFormableRow</td>
+<td>FormSelectorPickerCell</td>
 </tr>
 <tr>
 <td><img src="http://i.imgur.com/VfxaKoL.gif" width="200"></td>
-<td>SelecterDatePickerRowFormer</td>
-<td>SelecterDatePickerFormableRow</td>
-<td>FormSelecterDatePickerCell</td>
+<td>SelectorDatePickerRowFormer</td>
+<td>SelectorDatePickerFormableRow</td>
+<td>FormSelectorDatePickerCell</td>
 </tr>
 <tr>
 <td><img src="http://i.imgur.com/NHb6SXy.gif" width="200"></td>
