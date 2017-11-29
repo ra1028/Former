@@ -61,9 +61,15 @@ open class PickerRowFormer<T: UITableViewCell, S>
     
     open override func update() {
         super.update()
-        
         cell.selectionStyle = .none
+        
+        // UPDATES SELECTED ROW TO 0, IN CASE THE COUNT OF UPDATED PICKER ITEMS ARRAY IS LESS THAN PRIOR ARRAY
+        self.selectedRow = 0
+        
+        // RELOADS PICKER VIEW TO UPDATE ITEMS IN INLINE PICKER
         let picker = cell.formPickerView()
+        
+        picker.reloadAllComponents()
         picker.selectRow(selectedRow, inComponent: 0, animated: false)
         picker.isUserInteractionEnabled = enabled
         picker.layer.opacity = enabled ? 1 : 0.5
