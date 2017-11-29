@@ -45,6 +45,16 @@ open class InlineDatePickerRowFormer<T: UITableViewCell>
         return self
     }
     
+    public final func onEditingBegin(handler: @escaping ((Date, T) -> Void)) -> Self {
+        onEditingBegin = handler
+        return self
+    }
+    
+    public final func onEditingEnded(handler: @escaping ((Date, T) -> Void)) -> Self {
+        onEditingEnded = handler
+        return self
+    }
+
     @discardableResult
     public final func displayTextFromDate(_ handler: @escaping ((Date) -> String)) -> Self {
         displayTextFromDate = handler
@@ -107,6 +117,7 @@ open class InlineDatePickerRowFormer<T: UITableViewCell>
             _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             isEditing = true
         }
+        onEditingBegin?(date, cell)
     }
     
     public func editingDidEnd() {
@@ -124,11 +135,14 @@ open class InlineDatePickerRowFormer<T: UITableViewCell>
             displayLabel?.textColor = displayDisabledColor
         }
         isEditing = false
+        onEditingEnded?(date, cell)
     }
     
     // MARK: Private
     
     private final var onDateChanged: ((Date) -> Void)?
+    private final var onEditingBegin: ((Date, T) -> Void)?
+    private final var onEditingEnded: ((Date, T) -> Void)?
     private final var displayTextFromDate: ((Date) -> String)?
     private final var titleColor: UIColor?
     private final var displayTextColor: UIColor?
