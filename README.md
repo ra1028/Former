@@ -502,7 +502,7 @@ If you're interesting in helping us improve and maintain Former, it is highly en
 If you do chose to submit a pull request, please make sure to clearly document what changes you have made in the description of the PR. 
 
 ## Submitting Issues
-If you find yourself having any issues with Former, feel free to submit an issue using the following format ONLY:
+If you find yourself having any issues with Former, feel free to submit an issue. Please BE SURE to include the following:
 
 * TITLE
 * ISSUE DESCRIPTION
