@@ -85,7 +85,7 @@ open class InlineDatePickerRowFormer<T: UITableViewCell>
         }.update()
     }
     
-    public override func cellSelected(indexPath: IndexPath) {
+    open override func cellSelected(indexPath: IndexPath) {
         former?.deselect(animated: true)
     }
     

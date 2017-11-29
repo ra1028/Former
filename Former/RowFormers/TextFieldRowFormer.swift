@@ -82,7 +82,7 @@ open class TextFieldRowFormer<T: UITableViewCell>
         }
     }
     
-    public override func cellSelected(indexPath: IndexPath) {        
+    open override func cellSelected(indexPath: IndexPath) {        
         let textField = cell.formTextField()
         if !textField.isEditing {
             textField.isUserInteractionEnabled = true
