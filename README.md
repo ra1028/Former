@@ -1,11 +1,12 @@
 ![Former](https://raw.githubusercontent.com/ra1028/Former/master/Logo.png)
+
 #### Former is a fully customizable Swift library for easy creating UITableView based form.
 [![Swift3](https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
 [![CocoaPods Shield](https://img.shields.io/cocoapods/v/Former.svg)](https://cocoapods.org/pods/Former)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
 
-## Overview
+## Demo
 <img src="http://i.imgur.com/1gOwZZN.gif" width="220">
 <img src="http://i.imgur.com/g9yeTtV.gif" width="220">
 <img src="http://i.imgur.com/ouM1SsG.gif" width="220">
@@ -20,6 +21,8 @@
   + [SectionFormer](#sectionformer)
   + [Former](#former)
   + [Customizability](#customizability)
+* [Contributing](#contributing)
+* [Submitting Issues](#submitting-issues)
 * [License](#license)
 
 ## Requirements  
@@ -37,7 +40,9 @@ Add the following line to your Podfile:
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-  pod "Former"
+
+  pod 'Former'
+  
 end
 ```
 #### [Carthage](https://github.com/Carthage/Carthage)
@@ -48,7 +53,8 @@ github "ra1028/Former"
 
 ## Usage
 You can set the cell's appearance and events-callback at the same time.  
-ViewController and Cell do not need to override the provided defaults.  
+ViewController and Cell do not need to override the provided defaults. 
+
 ### Simple Example
 ```Swift
 import Former
@@ -489,6 +495,20 @@ public final class DoubleTextFieldRowFormer<T: UITableViewCell where T: DoubleTe
     }
 }
 ```
+
+## Contributing
+If you're interesting in helping us improve and maintain Former, it is highly encouraged that you fork the repository and submit a pull request with your updates.
+
+If you do chose to submit a pull request, please make sure to clearly document what changes you have made in the description of the PR. 
+
+## Submitting Issues
+If you find yourself having any issues with Former, feel free to submit an issue. Please BE SURE to include the following:
+
+* TITLE
+* ISSUE DESCRIPTION
+* HOW TO REPLICATE ISSUE
+
+If your issue dont not contain this information, it will be closed due to lack of information.
 
 ## License
 Former is available under the MIT license. See the LICENSE file for more info.
