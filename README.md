@@ -508,7 +508,7 @@ If you find yourself having any issues with Former, feel free to submit an issue
 * ISSUE DESCRIPTION
 * HOW TO REPLICATE ISSUE
 
-If your issue dont not contain this information, it will be closed due to lack of information.
+If your issue doesn't contain this information, it will be closed due to lack of information.
 
 ## License
 Former is available under the MIT license. See the LICENSE file for more info.
