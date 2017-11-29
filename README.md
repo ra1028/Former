@@ -21,6 +21,8 @@
   + [SectionFormer](#sectionformer)
   + [Former](#former)
   + [Customizability](#customizability)
+* [Contributing](#contributing)
+* [Submitting Issues](#submitting-issues)
 * [License](#license)
 
 ## Requirements  
@@ -38,7 +40,9 @@ Add the following line to your Podfile:
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-  pod "Former"
+
+  pod 'Former'
+  
 end
 ```
 #### [Carthage](https://github.com/Carthage/Carthage)
@@ -49,7 +53,8 @@ github "ra1028/Former"
 
 ## Usage
 You can set the cell's appearance and events-callback at the same time.  
-ViewController and Cell do not need to override the provided defaults.  
+ViewController and Cell do not need to override the provided defaults. 
+
 ### Simple Example
 ```Swift
 import Former
@@ -490,6 +495,20 @@ public final class DoubleTextFieldRowFormer<T: UITableViewCell where T: DoubleTe
     }
 }
 ```
+
+## Contributing
+If you're interesting in helping us improve and maintain Former, it is highly encouraged that you fork the repository and submit a pull request with your updates.
+
+If you do chose to submit a pull request, please make sure to clearly document what changes you have made in the description of the PR. 
+
+## Submitting Issues
+If you find yourself having any issues with Former, feel free to submit an issue using the following format ONLY:
+
+* TITLE
+* ISSUE DESCRIPTION
+* HOW TO REPLICATE ISSUE
+
+If your issue dont not contain this information, it will be closed due to lack of information.
 
 ## License
 Former is available under the MIT license. See the LICENSE file for more info.
