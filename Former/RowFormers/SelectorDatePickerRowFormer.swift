@@ -15,6 +15,12 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
+    
+    
+    func formDefaultDisplayDate() -> NSDate?
+    
+    func formDefaultDisplayLabelText() -> String? //If formDefaultDisplayDate() returns a real date, the return value from this is ignored
+    
 }
 
 open class SelectorDatePickerRowFormer<T: UITableViewCell>
@@ -26,7 +32,7 @@ open class SelectorDatePickerRowFormer<T: UITableViewCell>
         return enabled
     }
     
-    open var date: Date = Date()
+    open var date: Date? = nil
     open var inputAccessoryView: UIView?
     open var titleDisabledColor: UIColor? = .lightGray
     open var displayDisabledColor: UIColor? = .lightGray
@@ -63,7 +69,16 @@ open class SelectorDatePickerRowFormer<T: UITableViewCell>
         
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
-        displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        
+        if let date = date {
+            displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        } else if let defaultDate = cell.formDefaultDisplayDate()  {
+            self.date = defaultDate as Date
+            displayLabel?.text = displayTextFromDate?(defaultDate as Date) ?? "\(defaultDate)"
+        } else if let defaultDisplayText = cell.formDefaultDisplayLabelText() {
+            displayLabel?.text = defaultDisplayText
+        }        
+
         if self.enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             _ = displayTextColor.map { displayLabel?.textColor = $0 }

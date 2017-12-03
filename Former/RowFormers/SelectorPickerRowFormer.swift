@@ -15,6 +15,10 @@ public protocol SelectorPickerFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
+    
+    
+    func formDefaultSelectedRow() -> Int?
+    func formDefaultDisplayLabelText() -> String?
 }
 
 open class SelectorPickerItem<S>: PickerItem<S> {
@@ -35,7 +39,7 @@ open class SelectorPickerRowFormer<T: UITableViewCell, S>
     }
     
     open var pickerItems: [SelectorPickerItem<S>] = []
-    open var selectedRow: Int = 0
+    open var selectedRow: Int? = nil
     open var inputAccessoryView: UIView?
     open var titleDisabledColor: UIColor? = .lightGray
     open var displayDisabledColor: UIColor? = .lightGray
@@ -62,24 +66,35 @@ open class SelectorPickerRowFormer<T: UITableViewCell, S>
     open override func update() {
         super.update()
         
-        selectorView.selectRow(selectedRow, inComponent: 0, animated: false)
-        cell.selectorPickerView = selectorView
-        cell.selectorAccessoryView = inputAccessoryView
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
         if pickerItems.isEmpty {
             displayLabel?.text = ""
-        } else {
+        } else if let selectedRow = selectedRow {
+            selectorView.selectRow(selectedRow, inComponent: 0, animated: false)
             displayLabel?.text = pickerItems[selectedRow].title
             _ = pickerItems[selectedRow].displayTitle.map { displayLabel?.attributedText = $0 }
+        } else if let defaultSelectedRow = cell.formDefaultSelectedRow() {
+            self.selectedRow = defaultSelectedRow
+            selectorView.selectRow(defaultSelectedRow, inComponent: 0, animated: false)
+            displayLabel?.text = pickerItems[defaultSelectedRow].title
+            _ = pickerItems[defaultSelectedRow].displayTitle.map { displayLabel?.attributedText = $0 }
+        } else {
+            if let defaultText = cell.formDefaultDisplayLabelText() {
+                displayLabel?.text = defaultText
+            }
         }
+        cell.selectorPickerView = selectorView
+        cell.selectorAccessoryView = inputAccessoryView
+        
+        
         
         if enabled {
             if isEditing {
                 if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
                 _ = titleEditingColor.map { titleLabel?.textColor = $0 }
                 
-                if pickerItems[selectedRow].displayTitle == nil {
+                if let selectedRow = selectedRow, pickerItems[selectedRow].displayTitle == nil {
                     if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
                     _ = displayEditingColor.map { displayLabel?.textColor = $0 }
                 }
@@ -109,7 +124,9 @@ open class SelectorPickerRowFormer<T: UITableViewCell, S>
             if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             
-            if pickerItems[selectedRow].displayTitle == nil {
+            
+            if let selectedRow = selectedRow, pickerItems[selectedRow].displayTitle == nil {
+                
                 if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
                 _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             }
@@ -122,7 +139,7 @@ open class SelectorPickerRowFormer<T: UITableViewCell, S>
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
         
-        if enabled {
+        if let selectedRow = selectedRow, enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             titleColor = nil
             
