@@ -115,4 +115,11 @@ public extension ConfigurableForm where Self: ViewFormer {
         handler(self)
         return self
     }
+    
+    @discardableResult
+    func update(_ handler: ((Self) -> Void)) -> Self {
+        handler(self)
+        self.update()
+        return self
+    }
 }
