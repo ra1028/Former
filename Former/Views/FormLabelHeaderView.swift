@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
+open class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
     
     // MARK: Public
     
@@ -18,26 +18,26 @@ public class FormLabelHeaderView: FormHeaderFooterView, LabelFormableView {
         return titleLabel
     }
     
-    override public func setup() {
+    override open func setup() {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.textColor = .lightGrayColor()
-        titleLabel.font = .systemFontOfSize(14)
+        titleLabel.textColor = .lightGray
+        titleLabel.font = .systemFont(ofSize: 14)
         titleLabel.numberOfLines = 0
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.insertSubview(titleLabel, atIndex: 0)
+        contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel
         
         let constraints = [
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "V:[label(>=0)]-5-|",
+          NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[label(>=0)]-5-|",
                 options: [],
                 metrics: nil,
                 views: ["label": titleLabel]
             ),
-            NSLayoutConstraint.constraintsWithVisualFormat(
-                "H:|-15-[label]-15-|",
+            NSLayoutConstraint.constraints(
+              withVisualFormat: "H:|-15-[label]-15-|",
                 options: [],
                 metrics: nil,
                 views: ["label": titleLabel]

@@ -14,42 +14,54 @@ public protocol InlineDatePickerFormableRow: FormableRow {
     func formDisplayLabel() -> UILabel?
 }
 
-public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePickerFormableRow>
-: BaseRowFormer<T>, Formable, ConfigurableInlineForm {
+open class InlineDatePickerRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable, ConfigurableInlineForm where T: InlineDatePickerFormableRow {
     
     // MARK: Public
     
     public typealias InlineCellType = FormDatePickerCell
     
     public let inlineRowFormer: RowFormer
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var date: NSDate = NSDate()
-    public var displayDisabledColor: UIColor? = .lightGrayColor()
-    public var titleDisabledColor: UIColor? = .lightGrayColor()
-    public var displayEditingColor: UIColor?
-    public var titleEditingColor: UIColor?
+    open var date: Date = Date()
+    open var displayDisabledColor: UIColor? = .lightGray
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayEditingColor: UIColor?
+    open var titleEditingColor: UIColor?
     
     required public init(
         instantiateType: Former.InstantiateType = .Class,
-        cellSetup: (T -> Void)?) {
+        cellSetup: ((T) -> Void)?) {
             inlineRowFormer = DatePickerRowFormer<InlineCellType>(instantiateType: .Class)
             super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
+    @discardableResult
+    public final func onDateChanged(_ handler: @escaping ((Date) -> Void)) -> Self {
         onDateChanged = handler
         return self
     }
     
-    public final func displayTextFromDate(handler: (NSDate -> String)) -> Self {
+    public final func onEditingBegin(handler: @escaping ((Date, T) -> Void)) -> Self {
+        onEditingBegin = handler
+        return self
+    }
+    
+    public final func onEditingEnded(handler: @escaping ((Date, T) -> Void)) -> Self {
+        onEditingEnded = handler
+        return self
+    }
+
+    @discardableResult
+    public final func displayTextFromDate(_ handler: @escaping ((Date) -> String)) -> Self {
         displayTextFromDate = handler
         return self
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         let titleLabel = cell.formTitleLabel()
@@ -58,8 +70,8 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         
         if enabled {
             if isEditing {
-                if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-                if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+                if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+                if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
                 _ = titleEditingColor.map { titleLabel?.textColor = $0 }
                 _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             } else {
@@ -69,8 +81,8 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
                 displayTextColor = nil
             }
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
             _ = titleDisabledColor.map { titleLabel?.textColor = $0 }
             _ = displayDisabledColor.map { displayLabel?.textColor = $0 }
         }
@@ -83,11 +95,11 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         }.update()
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {
-        former?.deselect(true)
+    open override func cellSelected(indexPath: IndexPath) {
+        former?.deselect(animated: true)
     }
     
-    private func dateChanged(date: NSDate) {
+    private func dateChanged(date: Date) {
         if enabled {
             self.date = date
             cell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
@@ -99,12 +111,13 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
         if enabled {
             let titleLabel = cell.formTitleLabel()
             let displayLabel = cell.formDisplayLabel()
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             _ = displayEditingColor.map { displayLabel?.textColor = $0 }
             isEditing = true
         }
+        onEditingBegin?(date, cell)
     }
     
     public func editingDidEnd() {
@@ -116,18 +129,21 @@ public class InlineDatePickerRowFormer<T: UITableViewCell where T: InlineDatePic
             titleColor = nil
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
         isEditing = false
+        onEditingEnded?(date, cell)
     }
     
     // MARK: Private
     
-    private final var onDateChanged: (NSDate -> Void)?
-    private final var displayTextFromDate: (NSDate -> String)?
+    private final var onDateChanged: ((Date) -> Void)?
+    private final var onEditingBegin: ((Date, T) -> Void)?
+    private final var onEditingEnded: ((Date, T) -> Void)?
+    private final var displayTextFromDate: ((Date) -> String)?
     private final var titleColor: UIColor?
     private final var displayTextColor: UIColor?
 }

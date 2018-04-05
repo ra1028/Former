@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class FormCell: UITableViewCell, FormableRow {
+open class FormCell: UITableViewCell, FormableRow {
     
     // MARK: Public
     
@@ -17,15 +17,15 @@ public class FormCell: UITableViewCell, FormableRow {
         setup()
     }
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
     
-    public func updateWithRowFormer(rowFormer: RowFormer) {}
+    open func updateWithRowFormer(_ rowFormer: RowFormer) {}
     
-    public func setup() {
-        contentView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        textLabel?.backgroundColor = .clearColor()
+    open func setup() {
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        textLabel?.backgroundColor = .clear
     }
 }

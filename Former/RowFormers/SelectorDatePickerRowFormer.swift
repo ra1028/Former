@@ -15,45 +15,53 @@ public protocol SelectorDatePickerFormableRow: FormableRow {
     
     func formTitleLabel() -> UILabel?
     func formDisplayLabel() -> UILabel?
+    
+    
+    func formDefaultDisplayDate() -> NSDate?
+    
+    func formDefaultDisplayLabelText() -> String? //If formDefaultDisplayDate() returns a real date, the return value from this is ignored
+    
 }
 
-public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDatePickerFormableRow>
-: BaseRowFormer<T>, Formable, UpdatableSelectorForm {
+open class SelectorDatePickerRowFormer<T: UITableViewCell>
+: BaseRowFormer<T>, Formable, UpdatableSelectorForm where T: SelectorDatePickerFormableRow {
     
     // MARK: Public
     
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var date: NSDate = NSDate()
-    public var inputAccessoryView: UIView?
-    public var titleDisabledColor: UIColor? = .lightGrayColor()
-    public var displayDisabledColor: UIColor? = .lightGrayColor()
-    public var titleEditingColor: UIColor?
-    public var displayEditingColor: UIColor?
+    open var date: Date? = nil
+    open var inputAccessoryView: UIView?
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var displayDisabledColor: UIColor? = .lightGray
+    open var titleEditingColor: UIColor?
+    open var displayEditingColor: UIColor?
     
     public private(set) final lazy var selectorView: UIDatePicker = { [unowned self] in
         let datePicker = UIDatePicker()
-        datePicker.addTarget(self, action: #selector(SelectorDatePickerRowFormer.dateChanged(_:)), forControlEvents: .ValueChanged)
+        datePicker.addTarget(self, action: #selector(SelectorDatePickerRowFormer.dateChanged(datePicker:)), for: .valueChanged)
         return datePicker
         }()
     
-    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: (T -> Void)? = nil) {
+    public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
     }
     
-    public final func onDateChanged(handler: (NSDate -> Void)) -> Self {
+    @discardableResult
+    public final func onDateChanged(_ handler: @escaping ((Date) -> Void)) -> Self {
         onDateChanged = handler
         return self
     }
     
-    public final func displayTextFromDate(handler: (NSDate -> String)) -> Self {
+    @discardableResult
+    public final func displayTextFromDate(_ handler: @escaping ((Date) -> String)) -> Self {
         displayTextFromDate = handler
         return self
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectorDatePicker = selectorView
@@ -61,30 +69,39 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
         
         let titleLabel = cell.formTitleLabel()
         let displayLabel = cell.formDisplayLabel()
-        displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        
+        if let date = date {
+            displayLabel?.text = displayTextFromDate?(date) ?? "\(date)"
+        } else if let defaultDate = cell.formDefaultDisplayDate()  {
+            self.date = defaultDate as Date
+            displayLabel?.text = displayTextFromDate?(defaultDate as Date) ?? "\(defaultDate)"
+        } else if let defaultDisplayText = cell.formDefaultDisplayLabelText() {
+            displayLabel?.text = defaultDisplayText
+        }        
+
         if self.enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
             _ = displayTextColor.map { displayLabel?.textColor = $0 }
             titleColor = nil
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
     }
     
-    public override func cellSelected(indexPath: NSIndexPath) {
-        former?.deselect(true)
+    open override func cellSelected(indexPath: IndexPath) {
+        former?.deselect(animated: true)
     }
     
     public func editingDidBegin() {
         if enabled {
             let titleLabel = cell.formTitleLabel()
             let displayLabel = cell.formDisplayLabel()
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
             _ = titleEditingColor.map { titleLabel?.textColor = $0 }
             _ = displayEditingColor.map { displayEditingColor = $0 }
             isEditing = true
@@ -101,8 +118,8 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
             titleColor = nil
             displayTextColor = nil
         } else {
-            if titleColor == nil { titleColor = titleLabel?.textColor ?? .blackColor() }
-            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .blackColor() }
+            if titleColor == nil { titleColor = titleLabel?.textColor ?? .black }
+            if displayTextColor == nil { displayTextColor = displayLabel?.textColor ?? .black }
             titleLabel?.textColor = titleDisabledColor
             displayLabel?.textColor = displayDisabledColor
         }
@@ -110,12 +127,12 @@ public class SelectorDatePickerRowFormer<T: UITableViewCell where T: SelectorDat
     
     // MARK: Private
     
-    private final var onDateChanged: (NSDate -> Void)?
-    private final var displayTextFromDate: (NSDate -> String)?
+    private final var onDateChanged: ((Date) -> Void)?
+    private final var displayTextFromDate: ((Date) -> String)?
     private final var titleColor: UIColor?
     private final var displayTextColor: UIColor?
     
-    private dynamic func dateChanged(datePicker: UIDatePicker) {
+    @objc private dynamic func dateChanged(datePicker: UIDatePicker) {
         let date = datePicker.date
         self.date = date
         cell.formDisplayLabel()?.text = displayTextFromDate?(date) ?? "\(date)"
