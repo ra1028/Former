@@ -84,7 +84,7 @@ final class AddEventViewController: FormViewController {
                 $0.datePicker.datePickerMode = .dateAndTime
             }.displayTextFromDate(String.mediumDateShortTime)
         let endRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
-            $0.titleLabel.text = "Start"
+            $0.titleLabel.text = "End"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.displayLabel.textColor = .formerSubColor()
