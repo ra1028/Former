@@ -884,9 +884,9 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return willDeselectCell?(indexPath) ?? indexPath
     }
     
-    @objc public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        willDisplayCell?(indexPath)
-    }
+//    @objc public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        willDisplayCell?(indexPath)
+//    }
     
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         willDisplayHeader?(section)
