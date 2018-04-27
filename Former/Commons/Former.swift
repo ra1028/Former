@@ -871,7 +871,7 @@ public final class Former: NSObject {
 
 extension Former: UITableViewDelegate, UITableViewDataSource {
     
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    @objc public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         endEditing()
         onBeginDragging?(scrollView)
     }
@@ -884,7 +884,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return willDeselectCell?(indexPath) ?? indexPath
     }
     
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    @objc public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         willDisplayCell?(indexPath)
     }
     
