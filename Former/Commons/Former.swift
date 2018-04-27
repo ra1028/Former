@@ -135,7 +135,7 @@ public final class Former: NSObject {
     
     /// Call just before cell is display.
     @discardableResult
-    public func willDisplayCell(_ handler: @escaping ((IndexPath) -> Void)) -> Self {
+    public func willDisplayCell(_ handler: @escaping ((_ cell: UITableViewCell, _ indexPath: IndexPath) -> Void)) -> Self {
         willDisplayCell = handler
         return self
     }
@@ -720,7 +720,7 @@ public final class Former: NSObject {
     fileprivate var onScroll: ((UIScrollView) -> Void)?
     fileprivate var onBeginDragging: ((UIScrollView) -> Void)?
     fileprivate var willDeselectCell: ((IndexPath) -> IndexPath?)?
-    fileprivate var willDisplayCell: ((IndexPath) -> Void)?
+    fileprivate var willDisplayCell: ((_ cell: UITableViewCell, _ indexPath: IndexPath) -> Void)?
     fileprivate var willDisplayHeader: ((Int) -> Void)?
     fileprivate var willDisplayFooter: ((Int) -> Void)?
     fileprivate var didDeselectCell: ((IndexPath) -> Void)?
@@ -884,9 +884,9 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
         return willDeselectCell?(indexPath) ?? indexPath
     }
     
-//    @objc public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        willDisplayCell?(indexPath)
-//    }
+    @objc public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        willDisplayCell?(cell, indexPath)
+    }
     
     public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         willDisplayHeader?(section)
