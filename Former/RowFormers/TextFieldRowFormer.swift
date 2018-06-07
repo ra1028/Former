@@ -95,13 +95,13 @@ open class TextFieldRowFormer<T: UITableViewCell>
             textField.becomeFirstResponder()
         }
     }
-
+    
     // MARK: Fileprivate
-
+    
     fileprivate final var onReturn: (() -> Void)?
     
     // MARK: Private
-
+    
     private final var onTextChanged: ((String) -> Void)?
     private final var textColor: UIColor?
     private final var titleColor: UIColor?
