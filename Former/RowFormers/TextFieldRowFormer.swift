@@ -42,7 +42,7 @@ open class TextFieldRowFormer<T: UITableViewCell>
     }
 
     @discardableResult
-    public final func onReturn(_ handler: @escaping (() -> Void)) -> Self {
+    public final func onReturn(_ handler: @escaping ((String) -> Void)) -> Self {
         onReturn = handler
         return self
     }
@@ -98,7 +98,7 @@ open class TextFieldRowFormer<T: UITableViewCell>
     
     // MARK: Fileprivate
     
-    fileprivate final var onReturn: (() -> Void)?
+    fileprivate final var onReturn: ((String) -> Void)?
     
     // MARK: Private
     
@@ -146,7 +146,7 @@ private class Observer<T: UITableViewCell>: NSObject, UITextFieldDelegate where 
     fileprivate dynamic func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let textFieldRowFormer = textFieldRowFormer else { return false }
         if let returnHandler = textFieldRowFormer.onReturn {
-            returnHandler()
+            returnHandler(textField.text ?? "")
             return false
         }
         if textFieldRowFormer.returnToNextRow {
