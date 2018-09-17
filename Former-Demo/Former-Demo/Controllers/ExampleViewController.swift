@@ -9,13 +9,13 @@
 import UIKit
 import Former
 
-private extension UITableViewRowAnimation {
+private extension UITableView.RowAnimation {
     
     static func names() -> [String] {
         return ["None", "Fade", "Right", "Left", "Top", "Bottom", "Middle", "Automatic"]
     }
     
-    static func all() -> [UITableViewRowAnimation] {
+    static func all() -> [UITableView.RowAnimation] {
         return [.none, .fade, .right, .left, .top, .bottom, .middle, .automatic]
     }
 }
@@ -96,17 +96,17 @@ final class ExampleViewController: FormViewController {
                 self?.insertRowPosition = InsertPosition(rawValue: index)!
         }
         
-        let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
+        let insertRowAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableView.RowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFont(ofSize: 14)
             }.configure {
-                $0.pickerItems = UITableViewRowAnimation.names().enumerated().map {
-                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.offset])
+                $0.pickerItems = UITableView.RowAnimation.names().enumerated().map {
+                    InlinePickerItem(title: $0.element, value: UITableView.RowAnimation.all()[$0.offset])
                 }
-                $0.selectedRow = UITableViewRowAnimation.all().index(of: insertRowAnimation) ?? 0
+                $0.selectedRow = UITableView.RowAnimation.all().index(of: insertRowAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertRowAnimation = $0.value!
@@ -137,17 +137,17 @@ final class ExampleViewController: FormViewController {
                 self?.insertSectionPosition = InsertPosition(rawValue: index)!
         }
         
-        let insertSectionAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableViewRowAnimation>(instantiateType: .Class) {
+        let insertSectionAnimationRow = InlinePickerRowFormer<FormInlinePickerCell, UITableView.RowAnimation>(instantiateType: .Class) {
             $0.titleLabel.text = "Animation"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFont(ofSize: 16)
             $0.displayLabel.textColor = .formerSubColor()
             $0.displayLabel.font = .boldSystemFont(ofSize: 14)
             }.configure {
-                $0.pickerItems = UITableViewRowAnimation.names().enumerated().map {
-                    InlinePickerItem(title: $0.element, value: UITableViewRowAnimation.all()[$0.offset])
+                $0.pickerItems = UITableView.RowAnimation.names().enumerated().map {
+                    InlinePickerItem(title: $0.element, value: UITableView.RowAnimation.all()[$0.offset])
                 }
-                $0.selectedRow = UITableViewRowAnimation.all().index(of: insertSectionAnimation) ?? 0
+                $0.selectedRow = UITableView.RowAnimation.all().index(of: insertSectionAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertSectionAnimation = $0.value!
@@ -263,8 +263,8 @@ final class ExampleViewController: FormViewController {
         case Below, Above
     }
     
-    private var insertRowAnimation = UITableViewRowAnimation.left
-    private var insertSectionAnimation = UITableViewRowAnimation.fade
+    private var insertRowAnimation = UITableView.RowAnimation.left
+    private var insertSectionAnimation = UITableView.RowAnimation.fade
     private var insertRowPosition: InsertPosition = .Below
     private var insertSectionPosition: InsertPosition = .Below
     
