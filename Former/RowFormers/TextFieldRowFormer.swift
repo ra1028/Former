@@ -40,6 +40,12 @@ open class TextFieldRowFormer<T: UITableViewCell>
         onTextChanged = handler
         return self
     }
+
+    @discardableResult
+    public final func onReturn(_ handler: @escaping ((String) -> Void)) -> Self {
+        onReturn = handler
+        return self
+    }
     
     open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
@@ -90,6 +96,10 @@ open class TextFieldRowFormer<T: UITableViewCell>
         }
     }
     
+    // MARK: Fileprivate
+    
+    fileprivate final var onReturn: ((String) -> Void)?
+    
     // MARK: Private
     
     private final var onTextChanged: ((String) -> Void)?
@@ -135,6 +145,10 @@ private class Observer<T: UITableViewCell>: NSObject, UITextFieldDelegate where 
     
     fileprivate dynamic func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let textFieldRowFormer = textFieldRowFormer else { return false }
+        if let returnHandler = textFieldRowFormer.onReturn {
+            returnHandler(textField.text ?? "")
+            return false
+        }
         if textFieldRowFormer.returnToNextRow {
             let returnToNextRow = (textFieldRowFormer.former?.canBecomeEditingNext() ?? false) ?
                 textFieldRowFormer.former?.becomeEditingNext :
