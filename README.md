@@ -6,6 +6,11 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
 
+## Maintainers Wanted
+I'm losing `Former` development willingness now.  
+If you are willing to develop in place of me, please feel free to contact me.  
+I'll grant you authority associated with `Former` development.  
+
 ## Demo
 <img src="http://i.imgur.com/1gOwZZN.gif" width="220">
 <img src="http://i.imgur.com/g9yeTtV.gif" width="220">
