@@ -34,7 +34,7 @@ open class FormTextFieldCell: FormCell, TextFieldFormableRow {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: UILayoutConstraintAxis.horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: NSLayoutConstraint.Axis.horizontal)
         titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, at: 0)
