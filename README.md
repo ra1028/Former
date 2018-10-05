@@ -28,6 +28,7 @@ I'll grant you authority associated with `Former` development.
   + [Customizability](#customizability)
 * [Contributing](#contributing)
 * [Submitting Issues](#submitting-issues)
+* [Submitting Feature Requests](#submitting-feature-requests)
 * [License](#license)
 
 ## Requirements  
