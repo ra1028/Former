@@ -84,7 +84,7 @@ final class AddEventViewController: FormViewController {
                 $0.datePicker.datePickerMode = .dateAndTime
             }.displayTextFromDate(String.mediumDateShortTime)
         let endRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
-            $0.titleLabel.text = "Start"
+            $0.titleLabel.text = "End"
             $0.titleLabel.textColor = .formerColor()
             $0.titleLabel.font = .boldSystemFont(ofSize: 15)
             $0.displayLabel.textColor = .formerSubColor()
@@ -125,7 +125,7 @@ final class AddEventViewController: FormViewController {
                 let never = Repeat.Never
                 $0.pickerItems.append(
                     InlinePickerItem(title: never.title(),
-                        displayTitle: NSAttributedString(string: never.title(), attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray]),
+                                     displayTitle: NSAttributedString(string: never.title(), attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]),
                         value: never)
                 )
                 $0.pickerItems += Repeat.values().map {
@@ -142,7 +142,7 @@ final class AddEventViewController: FormViewController {
                 let none = Alert.None
                 $0.pickerItems.append(
                     InlinePickerItem(title: none.title(),
-                        displayTitle: NSAttributedString(string: none.title(), attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray]),
+                                     displayTitle: NSAttributedString(string: none.title(), attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray]),
                         value: none)
                 )
                 $0.pickerItems += Alert.values().map {

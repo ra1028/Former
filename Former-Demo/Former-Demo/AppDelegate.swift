@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let navigationController = UINavigationController(rootViewController: TopViewContoller())
         configureNavigationBar(navigationBar: navigationController.navigationBar)
@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureNavigationBar(navigationBar: UINavigationBar) {        
         navigationBar.tintColor = .white
         navigationBar.titleTextAttributes = [
-            NSAttributedStringKey.foregroundColor: UIColor.white,
-            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 20)
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)
         ]
         navigationBar.isTranslucent = false
         navigationBar.shadowImage = UIImage()

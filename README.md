@@ -6,6 +6,11 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
 
+## Maintainers Wanted
+I'm losing `Former` development willingness now.  
+If you are willing to develop in place of me, please feel free to contact me.  
+I'll grant you authority associated with `Former` development.  
+
 ## Demo
 <img src="http://i.imgur.com/1gOwZZN.gif" width="220">
 <img src="http://i.imgur.com/g9yeTtV.gif" width="220">
@@ -23,6 +28,7 @@
   + [Customizability](#customizability)
 * [Contributing](#contributing)
 * [Submitting Issues](#submitting-issues)
+* [Submitting Feature Requests](#submitting-feature-requests)
 * [License](#license)
 
 ## Requirements  
@@ -502,13 +508,10 @@ If you're interesting in helping us improve and maintain Former, it is highly en
 If you do chose to submit a pull request, please make sure to clearly document what changes you have made in the description of the PR. 
 
 ## Submitting Issues
-If you find yourself having any issues with Former, feel free to submit an issue. Please BE SURE to include the following:
+Click [HERE](https://github.com/ra1028/Former/issues/new?template=bug_report.md) to get started with filing a bug report. Please use this template to ensure that your issue doesn't get closed due to lack of information.
 
-* TITLE
-* ISSUE DESCRIPTION
-* HOW TO REPLICATE ISSUE
-
-If your issue doesn't contain this information, it will be closed due to lack of information.
+## Submitting Feature Requests
+Click [HERE](https://github.com/ra1028/Former/issues/new?template=feature_request.md) to get started with filing a feature request. Please use this template to ensure that your feature request doesn't get denied due to lack of information. Also please keep in mind that while we desire to make this work as well as possible for everyone we won't be able to accomodate all feature requests due to lack of time or alignment with the direction of the plugin, and you may need to consider contributing even if we agree that a feature would benefit the plugin.
 
 ## License
 Former is available under the MIT license. See the LICENSE file for more info.

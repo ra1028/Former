@@ -40,12 +40,18 @@ open class TextFieldRowFormer<T: UITableViewCell>
         onTextChanged = handler
         return self
     }
+
+    @discardableResult
+    public final func onReturn(_ handler: @escaping ((String) -> Void)) -> Self {
+        onReturn = handler
+        return self
+    }
     
     open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         let textField = cell.formTextField()
         textField.delegate = observer
-        let events: [(Selector, UIControlEvents)] = [(#selector(TextFieldRowFormer.textChanged(textField:)), .editingChanged),
+        let events: [(Selector, UIControl.Event)] = [(#selector(TextFieldRowFormer.textChanged(textField:)), .editingChanged),
             (#selector(TextFieldRowFormer.editingDidBegin(textField:)), .editingDidBegin),
             (#selector(TextFieldRowFormer.editingDidEnd(textField:)), .editingDidEnd)]
         events.forEach {
@@ -89,6 +95,10 @@ open class TextFieldRowFormer<T: UITableViewCell>
             textField.becomeFirstResponder()
         }
     }
+    
+    // MARK: Fileprivate
+    
+    fileprivate final var onReturn: ((String) -> Void)?
     
     // MARK: Private
     
@@ -135,6 +145,10 @@ private class Observer<T: UITableViewCell>: NSObject, UITextFieldDelegate where 
     
     fileprivate dynamic func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let textFieldRowFormer = textFieldRowFormer else { return false }
+        if let returnHandler = textFieldRowFormer.onReturn {
+            returnHandler(textField.text ?? "")
+            return false
+        }
         if textFieldRowFormer.returnToNextRow {
             let returnToNextRow = (textFieldRowFormer.former?.canBecomeEditingNext() ?? false) ?
                 textFieldRowFormer.former?.becomeEditingNext :

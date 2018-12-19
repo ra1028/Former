@@ -37,10 +37,10 @@ final class FormerInputAccessoryView: UIToolbar {
         isUserInteractionEnabled = true
         
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let leftArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 105)!, target: self, action: #selector(FormerInputAccessoryView.handleBackButton))
+        let leftArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem(rawValue: 105)!, target: self, action: #selector(FormerInputAccessoryView.handleBackButton))
         let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         space.width = 20
-        let rightArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem(rawValue: 106)!, target: self, action: #selector(FormerInputAccessoryView.handleForwardButton))
+        let rightArrow = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem(rawValue: 106)!, target: self, action: #selector(FormerInputAccessoryView.handleForwardButton))
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(FormerInputAccessoryView.handleDoneButton))
         let rightSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         setItems([leftArrow, space, rightArrow, flexible, doneButton, rightSpace], animated: false)
