@@ -17,7 +17,7 @@ open class FormHeaderFooterView: UITableViewHeaderFooterView, FormableView {
         setup()
     }
     
-    override init(reuseIdentifier: String?) {
+    override public init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setup()
     }
