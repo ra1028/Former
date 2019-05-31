@@ -26,6 +26,7 @@ public final class Former: NSObject {
     public enum InstantiateType {
         case Class
         case Nib(nibName: String)
+		case NibWithID(nibName: String, id:String)
         case NibBundle(nibName: String, bundle: Bundle)
     }
     

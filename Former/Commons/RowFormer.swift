@@ -90,6 +90,10 @@ open class RowFormer {
             case .Nib(nibName: let nibName):
                 cell = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
                 assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
+			case .NibWithID(nibName: let nibName, id: let id):
+				let nibComponents = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!
+				cell = nibComponents.first {($0 as? UIView)?.restorationIdentifier == id} as? UITableViewCell
+				assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
             case .NibBundle(nibName: let nibName, bundle: let bundle):
                 cell = bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
                 assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName), bundle: \(bundle)).")

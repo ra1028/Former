@@ -56,6 +56,10 @@ open class ViewFormer {
             case .Nib(nibName: let nibName):
                 view = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
+			case .NibWithID(nibName: let nibName, id: let id):
+				let nibComponents = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!
+				view = nibComponents.first {($0 as? UIView)?.restorationIdentifier == id} as? UITableViewHeaderFooterView
+				assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
             case .NibBundle(nibName: let nibName, bundle: let bundle):
                 view = bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (nibName: \(nibName)), bundle: (\(bundle)).")
