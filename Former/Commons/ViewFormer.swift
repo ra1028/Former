@@ -56,9 +56,17 @@ open class ViewFormer {
             case .Nib(nibName: let nibName):
                 view = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (\(nibName)).")
+			case .NibTag(nibName: let nibName, tag: let tag):
+				let nibChildren = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!
+				view = nibChildren.first {($0 as? UIView)?.tag == tag} as? UITableViewHeaderFooterView
+				assert(view != nil, "[Former] Failed to load header footer view from nib (nibName: \(nibName)), tag: (\(tag)).")
             case .NibBundle(nibName: let nibName, bundle: let bundle):
                 view = bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewHeaderFooterView
                 assert(view != nil, "[Former] Failed to load header footer view from nib (nibName: \(nibName)), bundle: (\(bundle)).")
+			case .NibBundleTag(nibName: let nibName, bundle: let bundle, tag: let tag):
+				let nibChildren = bundle.loadNibNamed(nibName, owner: nil, options: nil)!
+				view = nibChildren.first {($0 as? UIView)?.tag == tag} as? UITableViewHeaderFooterView
+				assert(view != nil, "[Former] Failed to load header footer from nib (nibName: \(nibName), bundle: \(bundle), tag: \(tag)).")
             }
             _viewInstance = view
             viewInstanceInitialized(view!)

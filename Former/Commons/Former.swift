@@ -26,7 +26,9 @@ public final class Former: NSObject {
     public enum InstantiateType {
         case Class
         case Nib(nibName: String)
+		case NibTag(nibName: String, tag:Int)
         case NibBundle(nibName: String, bundle: Bundle)
+		case NibBundleTag(nibName: String, bundle: Bundle, tag:Int)
     }
     
     /// All SectionFormers. Default is empty.
