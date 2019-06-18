@@ -295,7 +295,7 @@ public final class Former: NSObject {
     @discardableResult
     public func select(rowFormer: RowFormer, animated: Bool, scrollPosition:UITableView.ScrollPosition = .none) -> Self {
         for (section, sectionFormer) in sectionFormers.enumerated() {
-            if let row = sectionFormer.rowFormers.index(where: { $0 === rowFormer }) {
+            if let row = sectionFormer.rowFormers.firstIndex(where: { $0 === rowFormer }) {
                 return select(indexPath: IndexPath(row: row, section: section), animated: animated, scrollPosition: scrollPosition)
             }
         }
@@ -329,7 +329,7 @@ public final class Former: NSObject {
     /// Reload sections from instance of SectionFormer.
     @discardableResult
     public func reload(sectionFormer: SectionFormer, rowAnimation: UITableView.RowAnimation = .none) -> Self {
-        guard let section = sectionFormers.index(where: { $0 === sectionFormer }) else { return self }
+        guard let section = sectionFormers.firstIndex(where: { $0 === sectionFormer }) else { return self }
       return reload(sections: IndexSet(integer: section), rowAnimation: rowAnimation)
     }
     
@@ -344,7 +344,7 @@ public final class Former: NSObject {
     @discardableResult
     public func reload(rowFormer: RowFormer, rowAnimation: UITableView.RowAnimation = .none) -> Self {
         for (section, sectionFormer) in sectionFormers.enumerated() {
-            if let row = sectionFormer.rowFormers.index(where: { $0 === rowFormer}) {
+            if let row = sectionFormer.rowFormers.firstIndex(where: { $0 === rowFormer}) {
                 return reload(indexPaths: [IndexPath(row: row, section: section)], rowAnimation: rowAnimation)
             }
         }
