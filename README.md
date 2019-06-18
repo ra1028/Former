@@ -31,8 +31,8 @@ Click [HERE](https://github.com/ra1028/Former/issues/new?template=feature_reques
 * [License](#license)
 
 ## Requirements  
-- Xcode 8
-- Swift 3
+- Xcode 10+
+- Swift 4.2+
 - iOS 8.0 or later
 
 _Still wanna use iOS7 and swift 2.2 or 2.3?_  
