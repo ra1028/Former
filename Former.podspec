@@ -11,5 +11,5 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.ios.deployment_target = '10.0'
   spec.ios.frameworks = ['UIKit', 'Foundation']
-  spec.swift_version = '5.0'
+  spec.swift_version = '4.2'
 end
