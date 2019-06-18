@@ -4,12 +4,7 @@
 [![Swift3](https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat)](https://developer.apple.com/swift)
 [![CocoaPods Shield](https://img.shields.io/cocoapods/v/Former.svg)](https://cocoapods.org/pods/Former)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE)
-
-## Maintainers Wanted
-I'm losing `Former` development willingness now.  
-If you are willing to develop in place of me, please feel free to contact me.  
-I'll grant you authority associated with `Former` development.  
+[![MIT License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://raw.githubusercontent.com/ra1028/Former/master/LICENSE) 
 
 ## Submitting Issues
 Click [HERE](https://github.com/ra1028/Former/issues/new?template=bug_report.md) to get started with filing a bug report. Please use this template to ensure that your issue doesn't get closed due to lack of information.
