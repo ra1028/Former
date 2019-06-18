@@ -13,9 +13,7 @@ Click [HERE](https://github.com/ra1028/Former/issues/new?template=bug_report.md)
 Click [HERE](https://github.com/ra1028/Former/issues/new?template=feature_request.md) to get started with filing a feature request. Please use this template to ensure that your feature request doesn't get denied due to lack of information. Also please keep in mind that while we desire to make this work as well as possible for everyone we won't be able to accomodate all feature requests due to lack of time or alignment with the direction of the plugin, and you may need to consider contributing even if we agree that a feature would benefit the plugin.
 
 ## Demo
-<img src="http://i.imgur.com/1gOwZZN.gif" width="220">
-<img src="http://i.imgur.com/g9yeTtV.gif" width="220">
-<img src="http://i.imgur.com/ouM1SsG.gif" width="220">
+<img src="http://i.imgur.com/1gOwZZN.gif" width="220"> <img src="http://i.imgur.com/g9yeTtV.gif" width="220"> <img src="http://i.imgur.com/ouM1SsG.gif" width="220">
 
 ## Contents
 * [Requirements](#Requirements)
