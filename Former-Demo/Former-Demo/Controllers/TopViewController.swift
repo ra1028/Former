@@ -90,7 +90,7 @@ final class TopViewContoller: FormViewController {
             .set(headerViewFormer: createHeader("Use Case"))
         let defaultSection = SectionFormer(rowFormer: defaultRow)
             .set(headerViewFormer: createHeader("Default UI"))
-            .set(footerViewFormer: createFooter("Former is a fully customizable Swift2 library for easy creating UITableView based form.\n\nMIT License (MIT)"))
+            .set(footerViewFormer: createFooter("Former is a fully customizable Swift5+ library for easy creating UITableView based form.\n\nMIT License (MIT)"))
         
         former.append(sectionFormer: realExampleSection, useCaseSection, defaultSection)
     }
