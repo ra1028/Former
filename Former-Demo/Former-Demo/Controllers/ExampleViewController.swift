@@ -106,7 +106,7 @@ final class ExampleViewController: FormViewController {
                 $0.pickerItems = UITableView.RowAnimation.names().enumerated().map {
                     InlinePickerItem(title: $0.element, value: UITableView.RowAnimation.all()[$0.offset])
                 }
-                $0.selectedRow = UITableView.RowAnimation.all().index(of: insertRowAnimation) ?? 0
+                $0.selectedRow = UITableView.RowAnimation.all().firstIndex(of: insertRowAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertRowAnimation = $0.value!
@@ -147,7 +147,7 @@ final class ExampleViewController: FormViewController {
                 $0.pickerItems = UITableView.RowAnimation.names().enumerated().map {
                     InlinePickerItem(title: $0.element, value: UITableView.RowAnimation.all()[$0.offset])
                 }
-                $0.selectedRow = UITableView.RowAnimation.all().index(of: insertSectionAnimation) ?? 0
+                $0.selectedRow = UITableView.RowAnimation.all().firstIndex(of: insertSectionAnimation) ?? 0
                 $0.displayEditingColor = .formerHighlightedSubColor()
             }.onValueChanged { [weak self] in
                 self?.insertSectionAnimation = $0.value!
