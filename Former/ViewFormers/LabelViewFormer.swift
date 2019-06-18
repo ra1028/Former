@@ -17,7 +17,7 @@ public final class LabelViewFormer<T: UITableViewHeaderFooterView>: BaseViewForm
     
     // MARK: Public
     
-    open var text: String?
+    public var text: String?
     
     required public init(instantiateType: Former.InstantiateType = .Class, viewSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, viewSetup: viewSetup)
@@ -28,7 +28,7 @@ public final class LabelViewFormer<T: UITableViewHeaderFooterView>: BaseViewForm
         viewHeight = 30
     }
     
-    open override func update() {
+    public override func update() {
         super.update()
         view.formTitleLabel().text = text
     }

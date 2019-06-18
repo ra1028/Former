@@ -17,7 +17,7 @@ public protocol InlineForm: class {
     func editingDidEnd()
 }
 
-public protocol ConfigurableInlineForm: class, InlineForm {
+public protocol ConfigurableInlineForm: InlineForm {
     
     associatedtype InlineCellType: UITableViewCell
 }
@@ -45,7 +45,7 @@ public protocol SelectorForm: class {
     func editingDidEnd()
 }
 
-public protocol UpdatableSelectorForm: class, SelectorForm {
+public protocol UpdatableSelectorForm: SelectorForm {
     
     associatedtype SelectorViewType: UIView
     var selectorView: SelectorViewType { get }
@@ -62,7 +62,7 @@ extension UpdatableSelectorForm where Self: RowFormer {
 
 // MARK: RowFormer
 
-public protocol Formable: class, SelectableForm, UpdatableForm, ConfigurableForm {}
+public protocol Formable: SelectableForm, UpdatableForm, ConfigurableForm {}
 
 public protocol SelectableForm: class {}
 

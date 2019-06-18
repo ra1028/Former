@@ -99,7 +99,7 @@ final class EditProfileViewController: FormViewController {
                     InlinePickerItem(title: $0)
                 }
                 if let gender = Profile.sharedInstance.gender {
-                    $0.selectedRow = genders.index(of: gender) ?? 0
+                    $0.selectedRow = genders.firstIndex(of: gender) ?? 0
                 }
             }.onValueChanged {
                 Profile.sharedInstance.gender = $0.title
