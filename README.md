@@ -33,7 +33,7 @@ Click [HERE](https://github.com/ra1028/Former/issues/new?template=feature_reques
 ## Requirements  
 - Xcode 10+
 - Swift 4.2+
-- iOS 8.0 or later
+- iOS 10.0+
 
 _Still wanna use iOS7 and swift 2.2 or 2.3?_  
 -> You can use [1.4.0](https://github.com/ra1028/Former/tree/1.4.0) instead.  
