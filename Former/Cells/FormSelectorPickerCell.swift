@@ -15,6 +15,10 @@ open class FormSelectorPickerCell: FormCell, SelectorPickerFormableRow {
     open var selectorPickerView: UIPickerView?
     open var selectorAccessoryView: UIView?
     
+    open override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
     

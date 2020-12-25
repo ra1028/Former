@@ -15,6 +15,10 @@ open class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
     open var selectorDatePicker: UIDatePicker?
     open var selectorAccessoryView: UIView?
     
+    open override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
     public private(set) weak var titleLabel: UILabel!
     public private(set) weak var displayLabel: UILabel!
     
