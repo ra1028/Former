@@ -21,6 +21,8 @@ open class RowFormer {
     public final let cellType: UITableViewCell.Type
     public final var rowHeight: CGFloat = 44
     public final var isEditing = false
+    public final var isCanDeleted = false
+    public final var deletedTitle = "Delete"
     public final var enabled = true { didSet { update() } }
     open var canBecomeEditing: Bool {
         return false
@@ -45,6 +47,12 @@ open class RowFormer {
     @discardableResult
     public final func dynamicRowHeight(_ handler: @escaping ((UITableView, IndexPath) -> CGFloat)) -> Self {
         dynamicRowHeight = handler
+        return self
+    }
+    
+    @discardableResult
+    public final func deletingCompleted(_ handler: @escaping ((RowFormer, IndexPath) -> Void)) -> Self {
+        deletingCompleted = handler
         return self
     }
     
@@ -79,6 +87,7 @@ open class RowFormer {
     internal final var cellSetup: ((UITableViewCell) -> Void)?
     internal final var onSelected: ((RowFormer) -> Void)?
     internal final var onUpdate: ((RowFormer) -> Void)?
+    internal final var deletingCompleted: ((RowFormer, IndexPath) -> Void)?
     internal final var dynamicRowHeight: ((UITableView, IndexPath) -> CGFloat)?
     
     internal final var cellInstance: UITableViewCell {
@@ -90,17 +99,17 @@ open class RowFormer {
             case .Nib(nibName: let nibName):
                 cell = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
                 assert(cell != nil, "[Former] Failed to load cell from nib (\(nibName)).")
-			case .NibTag(nibName: let nibName, tag: let tag):
-				let nibChildren = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!
-				cell = nibChildren.first {($0 as? UIView)?.tag == tag} as? UITableViewCell
-				assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName)), tag: (\(tag)).")
+            case .NibTag(nibName: let nibName, tag: let tag):
+                let nibChildren = Bundle.main.loadNibNamed(nibName, owner: nil, options: nil)!
+                cell = nibChildren.first {($0 as? UIView)?.tag == tag} as? UITableViewCell
+                assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName)), tag: (\(tag)).")
             case .NibBundle(nibName: let nibName, bundle: let bundle):
                 cell = bundle.loadNibNamed(nibName, owner: nil, options: nil)!.first as? UITableViewCell
                 assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName), bundle: \(bundle)).")
-			case .NibBundleTag(nibName: let nibName, bundle: let bundle, tag: let tag):
-				let nibChildren = bundle.loadNibNamed(nibName, owner: nil, options: nil)!
-				cell = nibChildren.first {($0 as? UIView)?.tag == tag} as? UITableViewCell
-				assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName), bundle: \(bundle), tag: \(tag)).")
+            case .NibBundleTag(nibName: let nibName, bundle: let bundle, tag: let tag):
+                let nibChildren = bundle.loadNibNamed(nibName, owner: nil, options: nil)!
+                cell = nibChildren.first {($0 as? UIView)?.tag == tag} as? UITableViewCell
+                assert(cell != nil, "[Former] Failed to load cell from nib (nibName: \(nibName), bundle: \(bundle), tag: \(tag)).")
             }
             _cellInstance = cell
             cellInstanceInitialized(cell!)
