@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181DCBF025D26E6D002C780F /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DCBEF25D26E6D002C780F /* DeleteViewController.swift */; };
 		2A53250E1BE48C3F00E4A3F2 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */; };
 		2A5325101BE4935700E4A3F2 /* ProfileImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A53250F1BE4935700E4A3F2 /* ProfileImageCell.swift */; };
 		2A5325151BE4A55D00E4A3F2 /* ProfileFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5325141BE4A55D00E4A3F2 /* ProfileFieldCell.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		181DCBEF25D26E6D002C780F /* DeleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
 		2A53250D1BE48C3F00E4A3F2 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		2A53250F1BE4935700E4A3F2 /* ProfileImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageCell.swift; sourceTree = "<group>"; };
 		2A5325141BE4A55D00E4A3F2 /* ProfileFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFieldCell.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				2AA777A41BECED6200900B01 /* AddEventViewController.swift */,
 				2AA777B21BEE80A800900B01 /* LoginViewController.swift */,
 				2AA777AA1BED4BF000900B01 /* CustomCellViewController.swift */,
+				181DCBEF25D26E6D002C780F /* DeleteViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				2AC381531BA447D3009C7EFF /* ExampleViewController.swift in Sources */,
 				2AC3814E1BA447D3009C7EFF /* AppDelegate.swift in Sources */,
 				2AA777B31BEE80A800900B01 /* LoginViewController.swift in Sources */,
+				181DCBF025D26E6D002C780F /* DeleteViewController.swift in Sources */,
 				2AA777A51BECED6200900B01 /* AddEventViewController.swift in Sources */,
 				2AA777B51BEE86B000900B01 /* Login.swift in Sources */,
 				2A53250E1BE48C3F00E4A3F2 /* EditProfileViewController.swift in Sources */,

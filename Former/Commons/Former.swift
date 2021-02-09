@@ -18,17 +18,17 @@ public final class Former: NSObject {
     // MARK: Public
     
     /**
-    InstantiateType is type of instantiate of Cell or HeaderFooterView.
-    If the cell or HeaderFooterView to instantiate from the nib of mainBudnle , use the case 'Nib(nibName: String)'.
-    Using the '.NibBundle(nibName: String, bundle: NSBundle)' If also using the custom bundle.
-    Or if without xib, use '.Class'.
-    **/
+     InstantiateType is type of instantiate of Cell or HeaderFooterView.
+     If the cell or HeaderFooterView to instantiate from the nib of mainBudnle , use the case 'Nib(nibName: String)'.
+     Using the '.NibBundle(nibName: String, bundle: NSBundle)' If also using the custom bundle.
+     Or if without xib, use '.Class'.
+     **/
     public enum InstantiateType {
         case Class
         case Nib(nibName: String)
-		case NibTag(nibName: String, tag:Int)
+        case NibTag(nibName: String, tag:Int)
         case NibBundle(nibName: String, bundle: Bundle)
-		case NibBundleTag(nibName: String, bundle: Bundle, tag:Int)
+        case NibBundleTag(nibName: String, bundle: Bundle, tag:Int)
     }
     
     /// All SectionFormers. Default is empty.
@@ -45,7 +45,7 @@ public final class Former: NSObject {
     }
     
     /// Number of all rows.
-    public var numberOfRows: Int {        
+    public var numberOfRows: Int {
         return rowFormers.count
     }
     
@@ -88,11 +88,11 @@ public final class Former: NSObject {
     public subscript(range: Range<Int>) -> [SectionFormer] {
         return Array<SectionFormer>(sectionFormers[range])
     }
-
+    
     public subscript(range: ClosedRange<Int>) -> [SectionFormer] {
         return Array<SectionFormer>(sectionFormers[range])
     }
-
+    
     /// To find RowFormer from indexPath.
     public func rowFormer(indexPath: IndexPath) -> RowFormer {
         return self[indexPath.section][indexPath.row]
@@ -132,7 +132,7 @@ public final class Former: NSObject {
         willDisplayCell = handler
         return self
     }
-
+    
     /// Call just before header is display.
     @discardableResult
     public func willDisplayHeader(_ handler: @escaping ((/*section:*/Int) -> Void)) -> Self {
@@ -268,7 +268,7 @@ public final class Former: NSObject {
         }
         return self
     }
-
+    
     /// To end editing of tableView.
     @discardableResult
     public func endEditing() -> Self {
@@ -325,12 +325,12 @@ public final class Former: NSObject {
         tableView?.reloadSections(sections, with: rowAnimation)
         return self
     }
-
+    
     /// Reload sections from instance of SectionFormer.
     @discardableResult
     public func reload(sectionFormer: SectionFormer, rowAnimation: UITableView.RowAnimation = .none) -> Self {
         guard let section = sectionFormers.firstIndex(where: { $0 === sectionFormer }) else { return self }
-      return reload(sections: IndexSet(integer: section), rowAnimation: rowAnimation)
+        return reload(sections: IndexSet(integer: section), rowAnimation: rowAnimation)
     }
     
     /// Reload rows from indesPaths.
@@ -740,10 +740,10 @@ public final class Former: NSObject {
     fileprivate func removeCurrentInlineRow() -> IndexPath? {
         var indexPath: IndexPath? = nil
         if let oldInlineRowFormer = (inlineRowFormer as? InlineForm)?.inlineRowFormer,
-            let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
-                indexPath = removedIndexPath
-                (inlineRowFormer as? InlineForm)?.editingDidEnd()
-                inlineRowFormer = nil
+           let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
+            indexPath = removedIndexPath
+            (inlineRowFormer as? InlineForm)?.editingDidEnd()
+            inlineRowFormer = nil
         }
         return indexPath
     }
@@ -781,7 +781,7 @@ public final class Former: NSObject {
                     removeIndexPaths.append(IndexPath(row: row, section: section))
                     sectionFormer.remove(rowFormers: [rowFormer])
                     if let oldInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer,
-                        let _ = removeRowFormers([oldInlineRowFormer]).first {
+                       let _ = removeRowFormers([oldInlineRowFormer]).first {
                         removeIndexPaths.append(IndexPath(row: row + 1, section: section))
                         (inlineRowFormer as? InlineForm)?.editingDidEnd()
                         inlineRowFormer = nil
@@ -851,7 +851,7 @@ public final class Former: NSObject {
         if case let (tableView?, inset?) = (tableView, oldBottomContentInset) {
             let duration = (keyboardInfo[UIResponder.keyboardAnimationDurationUserInfoKey]! as AnyObject).doubleValue!
             let curve = (keyboardInfo[UIResponder.keyboardAnimationCurveUserInfoKey]! as AnyObject).integerValue!
-
+            
             UIView.beginAnimations(nil, context: nil)
             UIView.setAnimationDuration(duration)
             UIView.setAnimationCurve(UIView.AnimationCurve(rawValue: curve)!)
@@ -924,27 +924,27 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let rowFormer = self.rowFormer(indexPath: indexPath)
         guard rowFormer.enabled else { return }
-
+        
         rowFormer.cellSelected(indexPath: indexPath)
         onCellSelected?(indexPath)
         
         // InlineRow
         if let oldInlineRowFormer = (inlineRowFormer as? InlineForm)?.inlineRowFormer {
             if let currentInlineRowFormer = (rowFormer as? InlineForm)?.inlineRowFormer,
-                rowFormer !== inlineRowFormer {
-                    self.tableView?.beginUpdates()
-                    if let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
-                        let insertIndexPath =
+               rowFormer !== inlineRowFormer {
+                self.tableView?.beginUpdates()
+                if let removedIndexPath = removeRowFormers([oldInlineRowFormer]).first {
+                    let insertIndexPath =
                         (removedIndexPath.section == indexPath.section && removedIndexPath.row < indexPath.row)
-                            ? indexPath : IndexPath(row: indexPath.row + 1, section: indexPath.section)
-                        insert(rowFormers: [currentInlineRowFormer], toIndexPath: insertIndexPath)
-                        self.tableView?.deleteRows(at: [removedIndexPath], with: .middle)
-                        self.tableView?.insertRows(at: [insertIndexPath], with: .middle)
-                    }
-                    self.tableView?.endUpdates()
-                    (inlineRowFormer as? InlineForm)?.editingDidEnd()
-                    (rowFormer as? InlineForm)?.editingDidBegin()
-                    inlineRowFormer = rowFormer
+                        ? indexPath : IndexPath(row: indexPath.row + 1, section: indexPath.section)
+                    insert(rowFormers: [currentInlineRowFormer], toIndexPath: insertIndexPath)
+                    self.tableView?.deleteRows(at: [removedIndexPath], with: .middle)
+                    self.tableView?.insertRows(at: [insertIndexPath], with: .middle)
+                }
+                self.tableView?.endUpdates()
+                (inlineRowFormer as? InlineForm)?.editingDidEnd()
+                (rowFormer as? InlineForm)?.editingDidBegin()
+                inlineRowFormer = rowFormer
             } else {
                 removeCurrentInlineRowUpdate()
             }
@@ -970,16 +970,39 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return false
+        if #available(iOSApplicationExtension 11.0, *) {
+            return self.rowFormer(indexPath: indexPath).isCanDeleted
+        }
+        else{
+            return false
+        }
     }
     
     public func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
+    public func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    @available(iOSApplicationExtension 11.0, *)
+    public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let rowFormer = self.rowFormer(indexPath: indexPath)
+        let deleteAction = UIContextualAction.init(style: .destructive, title: rowFormer.deletedTitle) { (action, view, completion) in
+            let rowFormer = self.rowFormer(indexPath: indexPath)
+            if let deletingCompleted = rowFormer.deletingCompleted{
+                deletingCompleted(rowFormer, indexPath)
+                self.removeUpdate(rowFormer: rowFormer)
+            }
+            completion(true)
+        }
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
+    }
     
     // for Cell
-    
     public func numberOfSections(in tableView: UITableView) -> Int {
         return numberOfSections
     }
@@ -987,7 +1010,7 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self[section].numberOfRows
     }
-
+    
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let rowFormer = self.rowFormer(indexPath: indexPath)
         if let dynamicRowHeight = rowFormer.dynamicRowHeight {
@@ -1012,15 +1035,15 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     // for HeaderFooterView
-
+    
     // Not implemented for iOS8 estimatedHeight bug
-//    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-//        let headerViewFormer = self[section].headerViewFormer
-//        if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
-//            headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
-//        }
-//        return headerViewFormer?.viewHeight ?? 0
-//    }
+    //    public func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+    //        let headerViewFormer = self[section].headerViewFormer
+    //        if let dynamicViewHeight = headerViewFormer?.dynamicViewHeight {
+    //            headerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
+    //        }
+    //        return headerViewFormer?.viewHeight ?? 0
+    //    }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         let headerViewFormer = self[section].headerViewFormer
@@ -1031,13 +1054,13 @@ extension Former: UITableViewDelegate, UITableViewDataSource {
     }
     
     // Not implemented for iOS8 estimatedHeight bug
-//    public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-//        let footerViewFormer = self[section].footerViewFormer
-//        if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
-//            footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
-//        }
-//        return footerViewFormer?.viewHeight ?? 0
-//    }
+    //    public func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+    //        let footerViewFormer = self[section].footerViewFormer
+    //        if let dynamicViewHeight = footerViewFormer?.dynamicViewHeight {
+    //            footerViewFormer?.viewHeight = dynamicViewHeight(tableView, section)
+    //        }
+    //        return footerViewFormer?.viewHeight ?? 0
+    //    }
     
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let footerViewFormer = self[section].footerViewFormer

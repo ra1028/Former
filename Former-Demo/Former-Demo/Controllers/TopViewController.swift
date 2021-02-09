@@ -63,6 +63,10 @@ final class TopViewContoller: FormViewController {
         let defaultRow = createMenu("All Defaults") { [weak self] in
             self?.navigationController?.pushViewController(DefaultsViewController(), animated: true)
         }
+        let deleteRow = createMenu("Delete Cell") { [weak self] in
+            self?.navigationController?.pushViewController(DeleteViewController(), animated: true)
+        }
+        
         
         // Create Headers and Footers
         
@@ -84,7 +88,7 @@ final class TopViewContoller: FormViewController {
         
         // Create SectionFormers
         
-        let realExampleSection = SectionFormer(rowFormer: editProfileRow, addEventRow, loginRow)
+        let realExampleSection = SectionFormer(rowFormer: editProfileRow, addEventRow, loginRow, deleteRow)
             .set(headerViewFormer: createHeader("Real Examples"))
         let useCaseSection = SectionFormer(rowFormer: exampleRow, customCellRow)
             .set(headerViewFormer: createHeader("Use Case"))
